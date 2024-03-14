@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controlled Vocabulary Features</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2>Author Information Form</h2>
+    <form id="author-form">
+      <div id="metadata_author" class="form-group">
+        <label for="author">Author:</label>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="edit-compound-field">
+              <label for="authorName">Name:</label>
+              <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="edit-compound-field">
+              <label for="authorAffiliation">Affiliation:</label>
+              <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="edit-compound-field">
+              <label for="authorIdentifierType">Identifier Type:</label>
+              <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="edit-compound-field">
+              <label for="authorIdentifier">Identifier:</label>
+              <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+
+    var personSelector = "div#metadata_author div.edit-compound-field";
+    var authorNameField = "#authorName";
+    var authorIdentifierField = "#authorIdentifier";
+
+    $(document).ready(function() {
+        expandPeople();
+    });
+
+    function expandPeople() {
+      $(authorNameField).on('input', function() {
+        var authorName = $(this).val().trim();
+        if (authorName.length > 3) {
+              searchForOrcidId(authorName);
+          }
+      });
+    }
+
+    // Function to search for ORCID ID based on author's name
+    function searchForOrcidId(authorName) {
+      // API endpoint for ORCID search
+      var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorName);
+      console.log(apiUrl)
+      // Perform an AJAX request to the ORCID API
+      $.ajax({
+        url: apiUrl,
+        headers: {
+            "Accept": "application/vnd.orcid+json"
+        },
+        success: function(response) {
+          // Check if the response contains any results
+          var results = response["expanded-result"];
+          if (results && results.length > 0) {
+            // Iterate over the results to find the corresponding ORCID ID
+            for (var i = 0; i < results.length; i++) {
+              var result = results[i];
+              if (result["given-names"] + " " + result["family-names"] === authorName) {
+                // Populate the authorIdentifierField with the retrieved ORCID ID
+                $(authorIdentifierField).val(result["orcid-id"]);
+                break; // Stop iterating once a match is found
+              }
+            }
+            //populateSuggestions(results);
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          // Handle errors
+          console.error("Error:", textStatus, errorThrown);
+        }
+      });
+    }
+    // Function to populate suggestions box with matching names
+    function populateSuggestions(results) {
+      // Clear previous suggestions
+      $('#suggestions').empty();
+      
+      // Iterate over results and add suggestions
+      results.forEach(function(result) {
+        var fullName = result["given-names"] + " " + result["family-names"];
+        var suggestionItem = $("<div>").addClass("suggestion-item").text(fullName);
+        $('#suggestions').append(suggestionItem);
+      });
+      
+      // Show suggestions box
+      $('#suggestions').show();
+    }
+
+    // Hide suggestions box when clicking outside of it
+    $(document).click(function(e) {
+      if (!$(e.target).closest('#suggestions').length && !$(e.target).is(authorNameField)) {
+          $('#suggestions').hide();
+      }
+    });
+
+    // Event listener for selecting a suggestion
+    $('#suggestions').on('click', '.suggestion-item', function() {
+      var selectedName = $(this).text();
+      $(authorNameField).val(selectedName);
+      $('#suggestions').hide();
+      
+      // Populate author identifier field
+      var authorName = $(authorNameField).val().trim();
+      searchForOrcidIdAndPopulateIdentifier(authorName);
+    });
+
+    // Function to search for ORCID ID based on author's name and populate the identifier field
+    function searchForOrcidIdAndPopulateIdentifier(authorName) {
+      // API endpoint for ORCID search
+      var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorName);
+
+      // Perform an AJAX request to the ORCID API
+      $.ajax({
+        url: apiUrl,
+        headers: {
+          "Accept": "application/vnd.orcid+json"
+        },
+        success: function(response) {
+          // Check if the response contains any results
+          var results = response["expanded-result"];
+          if (results && results.length > 0) {
+              // Populate the authorIdentifierField with the retrieved ORCID ID
+              $(authorIdentifierField).val(results[0]["orcid-id"]);
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          // Handle errors
+          console.error("Error:", textStatus, errorThrown);
+        }
+      });
+    }    
+  </script>
+</body>
+</html>
