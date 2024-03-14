@@ -48,8 +48,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script>
 
-    var personSelector = "div#metadata_author div.edit-compound-field";
+    // var personSelector = "div#metadata_author div.edit-compound-field";
     var authorNameField = "#authorName";
+    var authorAffiliationField = "#authorAffiliation";
+    var authorIdentifierTypeField = "#authorIdentifierType";
     var authorIdentifierField = "#authorIdentifier";
 
     $(document).ready(function() {
@@ -85,7 +87,11 @@
               var result = results[i];
               if (result["given-names"] + " " + result["family-names"] === authorName) {
                 // Populate the authorIdentifierField with the retrieved ORCID ID
+                $(authorAffiliationField).val(result["institution-name"]);
+                // Populate the authorIdentifierField with the retrieved ORCID ID
                 $(authorIdentifierField).val(result["orcid-id"]);
+                // Populate the authorIdentifierTypeField with the type of identifier (e.g., ORCID)
+                $(authorIdentifierTypeField).val("ORCID");
                 break; // Stop iterating once a match is found
               }
             }
