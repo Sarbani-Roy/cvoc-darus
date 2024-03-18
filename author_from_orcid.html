@@ -18,6 +18,7 @@
             <div class="edit-compound-field">
               <label for="authorName">Name:</label>
               <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
+              <div id="suggestionBox"></div>
             </div>
           </div>
           <div class="col-sm-6">
@@ -63,6 +64,9 @@
         var authorName = $(this).val().trim();
         if (authorName.length > 3) {
               searchForOrcidId(authorName);
+          }else {
+            // Clear suggestion box if input length is less than or equal to 3
+            $("#suggestionBox").empty();
           }
       });
     }
@@ -75,93 +79,74 @@
       $.ajax({
         url: apiUrl,
         headers: {
-            "Accept": "application/vnd.orcid+json"
+          "Accept": "application/vnd.orcid+json"
         },
         success: function(response) {
           // Check if the response contains any results
           var results = response["expanded-result"];
           if (results && results.length > 0) {
-            // Iterate over the results to find the corresponding ORCID ID
+            var suggestionBox = $("#suggestionBox");
+            suggestionBox.empty();
+            var maxSuggestions = 5;
             for (var i = 0; i < results.length; i++) {
               var result = results[i];
-              console.log(result["given-names"] + " " + result["family-names"], result["orcid-id"], result["institution-name"])
-              if (result["given-names"] + " " + result["family-names"] === authorName) {
-                // Populate the authorIdentifierField with the retrieved ORCID ID
-                $(authorAffiliationField).val(result["institution-name"]);
-                // Populate the authorIdentifierField with the retrieved ORCID ID
-                $(authorIdentifierField).val(result["orcid-id"]);
-                // Populate the authorIdentifierTypeField with the type of identifier (e.g., ORCID)
-                $(authorIdentifierTypeField).val("ORCID");
-                break; // Stop iterating once a match is found
+              // Create suggestion element
+              var suggestion = $("<div>");
+              var name = "";
+              if (result["given-names"]) {
+                name += result["given-names"];
               }
+              if (result["family-names"]) {
+                if (name.length > 0) {
+                    name += " ";
+                }
+                name += result["family-names"];
+              }
+              if (name.length > 0) {
+                  suggestion.text(name);
+              }
+              if (result["orcid-id"]) {
+                  suggestion.append(" - " + result["orcid-id"]);
+              }
+              if (result["institution-name"] && result["institution-name"].length > 0) {
+                  var institutionName = Array.isArray(result["institution-name"]) ? result["institution-name"][0] : result["institution-name"];
+                  suggestion.append(" - " + institutionName);
+              }
+              // Add click event to populate fields with suggestion data
+              suggestion.click(function() {
+                var clickedName = $(this).text().split(' - ')[0]; // Extracting the name from the clicked suggestion
+                var clickedOrcid = $(this).text().split(' - ')[1]; // Extracting the ORCID from the clicked suggestion
+                var clickedInstitution = $(this).text().split(' - ')[2]; // Extracting the institution name from the clicked suggestion
+                $(authorNameField).val(clickedName);
+                $(authorAffiliationField).val(clickedInstitution);
+                $(authorIdentifierField).val(clickedOrcid);
+                $(authorIdentifierTypeField).val("ORCID");
+                // Clear suggestion box after selecting a suggestion
+                suggestionBox.empty();
+              });
+              // Append suggestion to suggestion box
+              suggestionBox.append(suggestion);
             }
+            // If there are more suggestions than the maximum, allow scrolling
+            if (results.length > maxSuggestions) {
+              suggestionBox.css("overflow-y", "scroll");
+              suggestionBox.css("max-height", "200px");
+            } else {
+                suggestionBox.css("overflow-y", "auto");
+                suggestionBox.css("max-height", "none");
+            }
+          } else {
+            // Empty suggestion box if no results found
+            $("#suggestionBox").empty();
           }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-          // Handle errors
           console.error("Error:", textStatus, errorThrown);
+          // Empty suggestion box on error
+          $("#suggestionBox").empty();
         }
       });
     }
-    // // Function to populate suggestions box with matching names
-    // function populateSuggestions(results) {
-    //   // Clear previous suggestions
-    //   $('#suggestions').empty();
-      
-    //   // Iterate over results and add suggestions
-    //   results.forEach(function(result) {
-    //     var fullName = result["given-names"] + " " + result["family-names"];
-    //     var suggestionItem = $("<div>").addClass("suggestion-item").text(fullName);
-    //     $('#suggestions').append(suggestionItem);
-    //   });
-      
-    //   // Show suggestions box
-    //   $('#suggestions').show();
-    // }
-
-    // // Hide suggestions box when clicking outside of it
-    // $(document).click(function(e) {
-    //   if (!$(e.target).closest('#suggestions').length && !$(e.target).is(authorNameField)) {
-    //       $('#suggestions').hide();
-    //   }
-    // });
-
-    // // Event listener for selecting a suggestion
-    // $('#suggestions').on('click', '.suggestion-item', function() {
-    //   var selectedName = $(this).text();
-    //   $(authorNameField).val(selectedName);
-    //   $('#suggestions').hide();
-      
-    //   // Populate author identifier field
-    //   var authorName = $(authorNameField).val().trim();
-    //   searchForOrcidIdAndPopulateIdentifier(authorName);
-    // });
-
-    // // Function to search for ORCID ID based on author's name and populate the identifier field
-    // function searchForOrcidIdAndPopulateIdentifier(authorName) {
-    //   // API endpoint for ORCID search
-    //   var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorName);
-
-    //   // Perform an AJAX request to the ORCID API
-    //   $.ajax({
-    //     url: apiUrl,
-    //     headers: {
-    //       "Accept": "application/vnd.orcid+json"
-    //     },
-    //     success: function(response) {
-    //       // Check if the response contains any results
-    //       var results = response["expanded-result"];
-    //       if (results && results.length > 0) {
-    //           // Populate the authorIdentifierField with the retrieved ORCID ID
-    //           $(authorIdentifierField).val(results[0]["orcid-id"]);
-    //       }
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
-    //       // Handle errors
-    //       console.error("Error:", textStatus, errorThrown);
-    //     }
-    //   });
-    // }    
   </script>
 </body>
 </html>
