@@ -6,6 +6,24 @@
   <title>Controlled Vocabulary Features</title>
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .selected-suggestion {
+      background-color: #729df129; /* Change to whatever highlight color you prefer */
+    }
+    .suggestion-box {
+      position: relative;
+    }
+    #suggestionBox {
+      display: none;
+      position: absolute;
+      width: 100%;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      z-index: 1000;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -13,33 +31,22 @@
     <form id="author-form">
       <div id="metadata_author" class="form-group">
         <label for="author">Author:</label>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="edit-compound-field">
-              <label for="authorName">Name:</label>
-              <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
-              <div id="suggestionBox"></div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="edit-compound-field">
-              <label for="authorAffiliation">Affiliation:</label>
-              <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="edit-compound-field">
-              <label for="authorIdentifierType">Identifier Type:</label>
-              <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="edit-compound-field">
-              <label for="authorIdentifier">Identifier:</label>
-              <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
-            </div>
-          </div>
+        <div class="suggestion-box">
+          <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
+          <div id="suggestionBox"></div>
         </div>
+      </div>
+      <div class="form-group">
+        <label for="authorAffiliation">Affiliation:</label>
+        <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
+      </div>
+      <div class="form-group">
+        <label for="authorIdentifierType">Identifier Type:</label>
+        <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
+      </div>
+      <div class="form-group">
+        <label for="authorIdentifier">Identifier:</label>
+        <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
       </div>
     </form>
   </div>
@@ -48,50 +55,86 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script>
-
-    // var personSelector = "div#metadata_author div.edit-compound-field";
     var authorNameField = "#authorName";
     var authorAffiliationField = "#authorAffiliation";
     var authorIdentifierTypeField = "#authorIdentifierType";
     var authorIdentifierField = "#authorIdentifier";
 
     $(document).ready(function() {
-        expandPeople();
+      expandPeople();
     });
 
     function expandPeople() {
       $(authorNameField).on('input', function() {
         var authorName = $(this).val().trim();
         if (authorName.length > 3) {
-              searchForOrcidId(authorName);
-          }else {
-            // Clear suggestion box if input length is less than or equal to 3
-            $("#suggestionBox").empty();
-          }
+          searchForOrcidId(authorName);
+        } else {
+          $("#suggestionBox").empty().hide();
+        }
+      }).on('keydown', function(e) {
+        var suggestionBox = $("#suggestionBox");
+        var suggestions = suggestionBox.find('.suggestion');
+        var selectedSuggestion = suggestionBox.find('.selected-suggestion');
+        var currentIndex = suggestions.index(selectedSuggestion);
+
+        switch(e.which) {
+          case 38: // Up arrow
+            e.preventDefault();
+            scrollSuggestions('up');
+            break;
+          case 40: // Down arrow
+            e.preventDefault();
+            scrollSuggestions('down');
+            break;
+          case 13: // Enter key
+            e.preventDefault();
+            if (selectedSuggestion.length > 0) {
+              selectedSuggestion.click();
+            }
+            break;
+        }
       });
     }
 
-    // Function to search for ORCID ID based on author's name
+    function scrollSuggestions(direction) {
+      const suggestionList = $("#suggestionBox");
+      const suggestions = suggestionList.find('.suggestion');
+      var selectedSuggestion = suggestionList.find('.selected-suggestion');
+      var currentIndex = suggestions.index(selectedSuggestion);
+
+      if (direction === 'up') {
+        currentIndex = Math.max(0, currentIndex - 1);
+      } else if (direction === 'down') {
+        currentIndex = Math.min(suggestions.length - 1, currentIndex + 1);
+      }
+
+      suggestions.removeClass('selected-suggestion');
+      selectedSuggestion = suggestions.eq(currentIndex);
+      selectedSuggestion.addClass('selected-suggestion');
+      selectedSuggestion[0].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start'
+      });
+    }
+
+
     function searchForOrcidId(authorName) {
-      // API endpoint for ORCID search
       var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorName);
-      // Perform an AJAX request to the ORCID API
       $.ajax({
         url: apiUrl,
         headers: {
           "Accept": "application/vnd.orcid+json"
         },
         success: function(response) {
-          // Check if the response contains any results
           var results = response["expanded-result"];
           if (results && results.length > 0) {
             var suggestionBox = $("#suggestionBox");
-            suggestionBox.empty();
-            var maxSuggestions = 5;
+            suggestionBox.empty().show();
             for (var i = 0; i < results.length; i++) {
               var result = results[i];
-              // Create suggestion element
-              var suggestion = $("<div>");
+              var suggestion = $("<div class='suggestion'>");
               var name = "";
               if (result["given-names"]) {
                 name += result["given-names"];
@@ -103,47 +146,34 @@
                 name += result["family-names"];
               }
               if (name.length > 0) {
-                  suggestion.text(name);
+                suggestion.text(name);
               }
               if (result["orcid-id"]) {
-                  suggestion.append(" - " + result["orcid-id"]);
+                suggestion.append(" - " + result["orcid-id"]);
               }
               if (result["institution-name"] && result["institution-name"].length > 0) {
-                  var institutionName = Array.isArray(result["institution-name"]) ? result["institution-name"][0] : result["institution-name"];
-                  suggestion.append(" - " + institutionName);
+                var institutionName = Array.isArray(result["institution-name"]) ? result["institution-name"][0] : result["institution-name"];
+                suggestion.append(" - " + institutionName);
               }
-              // Add click event to populate fields with suggestion data
               suggestion.click(function() {
-                var clickedName = $(this).text().split(' - ')[0]; // Extracting the name from the clicked suggestion
-                var clickedOrcid = $(this).text().split(' - ')[1]; // Extracting the ORCID from the clicked suggestion
-                var clickedInstitution = $(this).text().split(' - ')[2]; // Extracting the institution name from the clicked suggestion
+                var clickedName = $(this).text().split(' - ')[0];
+                var clickedOrcid = $(this).text().split(' - ')[1];
+                var clickedInstitution = $(this).text().split(' - ')[2];
                 $(authorNameField).val(clickedName);
                 $(authorAffiliationField).val(clickedInstitution);
                 $(authorIdentifierField).val(clickedOrcid);
                 $(authorIdentifierTypeField).val("ORCID");
-                // Clear suggestion box after selecting a suggestion
-                suggestionBox.empty();
+                suggestionBox.empty().hide();
               });
-              // Append suggestion to suggestion box
               suggestionBox.append(suggestion);
             }
-            // If there are more suggestions than the maximum, allow scrolling
-            if (results.length > maxSuggestions) {
-              suggestionBox.css("overflow-y", "scroll");
-              suggestionBox.css("max-height", "200px");
-            } else {
-                suggestionBox.css("overflow-y", "auto");
-                suggestionBox.css("max-height", "none");
-            }
           } else {
-            // Empty suggestion box if no results found
-            $("#suggestionBox").empty();
+            $("#suggestionBox").empty().hide();
           }
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.error("Error:", textStatus, errorThrown);
-          // Empty suggestion box on error
-          $("#suggestionBox").empty();
+          $("#suggestionBox").empty().hide();
         }
       });
     }
