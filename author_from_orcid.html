@@ -13,6 +13,9 @@
     .suggestion-box {
       position: relative;
     }
+    .suggestion {
+      padding: 5px 10px; /* Add padding inside the suggestion box */
+    }
     #suggestionBox {
       display: none;
       position: absolute;
@@ -23,6 +26,25 @@
       max-height: 200px;
       overflow-y: auto;
     }
+    /* Custom CSS for three-column layout */
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .row {
+      margin-left: -15px;
+      margin-right: -15px;
+    }
+    .col-third {
+      float: left;
+      position: relative;
+      width: 33.33%;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .col-third:nth-child(3n+1) {
+      clear: left;
+    }
   </style>
 </head>
 <body>
@@ -30,23 +52,42 @@
     <h2>Author Information Form</h2>
     <form id="author-form">
       <div id="metadata_author" class="form-group">
-        <label for="author">Author:</label>
-        <div class="suggestion-box">
-          <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
-          <div id="suggestionBox"></div>
+        <div class="row">
+          <label class="col-third" for="author">Author:</label>
+          <div class="col-third">
+            <div class="edit-compound-field">
+              <div class="suggestion-box">
+                <label for="authorName">Name:</label>
+                <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
+                <div id="suggestionBox"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-third">
+            <div class="edit-compound-field">
+              <label for="authorAffiliation">Affiliation:</label>
+              <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
+            </div>
+          </div>
+        </div>      
+        <div class="row">
+          <div class="col-third">
+            <div class="edit-compound-field">
+            </div>
+          </div>
+          <div class="col-third">
+            <div class="edit-compound-field">
+              <label for="authorIdentifierType">Identifier Type:</label>
+              <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
+            </div>
+          </div>
+          <div class="col-third">
+            <div class="edit-compound-field">
+              <label for="authorIdentifier">Identifier:</label>
+              <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="authorAffiliation">Affiliation:</label>
-        <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
-      </div>
-      <div class="form-group">
-        <label for="authorIdentifierType">Identifier Type:</label>
-        <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
-      </div>
-      <div class="form-group">
-        <label for="authorIdentifier">Identifier:</label>
-        <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
       </div>
     </form>
   </div>
