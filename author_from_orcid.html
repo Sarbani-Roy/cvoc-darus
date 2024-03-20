@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Controlled Vocabulary Features</title>
+  <title>ORCID Feature</title>
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -49,7 +49,7 @@
 </head>
 <body>
   <div class="container">
-    <h2>Author Information Form</h2>
+    <h3>Automated Extraction of Author's ORCID Information</h3>
     <form id="author-form">
       <div id="metadata_author" class="form-group">
         <div class="row">
@@ -192,8 +192,13 @@
               if (result["orcid-id"]) {
                 suggestion.append(" - " + result["orcid-id"]);
               }
-              if (result["institution-name"] && result["institution-name"].length > 0) {
-                var institutionName = Array.isArray(result["institution-name"]) ? result["institution-name"][0] : result["institution-name"];
+              // if (result["institution-name"] && result["institution-name"].length > 0) {
+              //   var institutionName = Array.isArray(result["institution-name"]) ? result["institution-name"][0] : result["institution-name"];
+              //   suggestion.append(" - " + institutionName);
+              // }
+              var institutionNames = Array.isArray(result["institution-name"]) ? result["institution-name"] : [result["institution-name"]];
+              var institutionName = institutionNames.pop(); // Get the last institution name
+              if (institutionName && institutionName.length > 0) {
                 suggestion.append(" - " + institutionName);
               }
               suggestion.click(function() {
