@@ -26,27 +26,26 @@
       max-height: 200px;
       overflow-y: auto;
     }
-    /* Custom CSS for three-column layout */
-    .form-group {
-      margin-bottom: 15px;
+    #orcidContainer .orcid-group {
+      padding: 15px;
     }
     .col {
       float: left;
       position: relative;
       padding-left: 15px;
       padding-right: 15px;
-      width: 33.33%;
+      width: 25%;
     }
     .row {
       margin-left: 0.2%;
       margin-right: 0.2%;
     }
-    .row:before,
-    .row:after {
+    .col:before,
+    .col:after {
       content: " ";
       display: table;
     }
-    .row:after {
+    .col:after {
       clear: both;
     }
   </style>
@@ -54,38 +53,107 @@
 <body>
   <div class="container">
     <h3>Automated Extraction of Author's ORCID Information</h3>
-    <form id="author-form">
-      <div id="metadata_author" class="form-group">
-        <div class="col">
+    <form id="author-form"> 
+      <div id="orcidContainer">
+        <div class="orcid-group">
           <div class="row">
-            <label>Author:</label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row">
-            <div class="suggestion-box">
-              <label for="authorName">Name:</label>
-              <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
-              <div id="suggestionBox"></div>
+            <div class="col">
+              <label>Author:</label>
             </div>
-          </div>
-          <div class="row">
-            <label for="authorAffiliation">Affiliation:</label>
-            <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
-          </div>
-        </div>
-        <div class="col">
-          <div class="row">
-            <label for="authorIdentifierType">Identifier Type:</label>
-            <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
-          </div>
-          <div class="row">
-            <label for="authorIdentifier">Identifier:</label>
-            <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
+            <div class="col">
+              <div class="row-col">
+                <div class="suggestion-box">
+                  <label for="authorName">Name:</label>
+                  <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
+                  <div class="suggestion" id="suggestionBox"></div>
+                </div>
+              </div>
+              <div class="row-col">
+                <label for="authorAffiliation">Affiliation:</label>
+                <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
+              </div>            
+            </div>
+            <div class="col">
+              <div class="row-col">
+                <label for="authorIdentifierType">Identifier Type:</label>
+                <input type="text" class="form-control" id="authorIdentifierType" placeholder="Identifier type">
+              </div>
+              <div class="row-col">
+                <label for="authorIdentifier">Identifier:</label>
+                <input type="text" class="form-control" id="authorIdentifier" placeholder="Author's identifier">
+              </div>            
+            </div>
+            <div class="col">
+              <button type="button" onclick="removeInput(this)">-</button>
+              <button type="button" onclick="addInput('orcidContainer')">+</button>
+            </div>
           </div>
         </div>
       </div>
     </form>
   </div>
+
+  <script>
+
+    function addInput(containerId) {
+      var container = document.getElementById(containerId);
+      console.log(container)
+      console.log(getgroup(containerId))
+
+      // Clone the original input group within the specified container
+      var originalGroup = container.querySelector(getgroup(containerId));
+      var newGroup = originalGroup.cloneNode(true);
+
+      // Reset values in the cloned input group and append the new input group to the container
+      //var inputs = newGroup.querySelector
+      var inputs = newGroup.querySelectorAll('input[type="text"]');
+      inputs.forEach(function (input) {
+          input.value = '';
+      });
+
+      // Create a new row wrapper and append the cloned group to it
+      var newRow = document.createElement('div');
+      newRow.classList.add('row');
+      newRow.appendChild(newGroup);
+      container.appendChild(newGroup);
+
+      // Append the new input group, add button, and remove button to the container
+      // var newContainer = document.createElement('div');
+      // newContainer.classList.add(getContainerClass(containerId));
+      // newContainer.appendChild(newGroup);
+      // container.parentNode.insertBefore(newContainer, container.nextSibling);
+    }
+    function removeInput(button) {
+      var container = button.parentNode.parentNode.parentNode;
+      container.parentNode.removeChild(container);
+    }
+
+    // function removeInput(button) {
+    //   var container = button.parentNode.parentNode.parentNode;
+    //   var containerClass = container.classList[0];
+    //   if (document.querySelectorAll('.' + containerClass).length >= 1) {
+    //       container.parentNode.removeChild(container);
+    //   }
+    // }
+
+
+    function getContainerClass(containerId) {
+      switch (containerId) {
+        case 'orcidContainer':
+          return 'orcid-container';
+        default:
+          return '';
+      }
+    }
+
+    function getgroup(containerId) {
+      switch (containerId) {
+        case 'orcidContainer':
+          return '.orcid-group';
+        default:
+          return '';
+      }
+    }
+  </script>
 </body>
 </html>
