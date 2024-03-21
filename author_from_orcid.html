@@ -30,20 +30,24 @@
     .form-group {
       margin-bottom: 15px;
     }
-    .row {
-      margin-left: -15px;
-      margin-right: -15px;
-    }
-    .col-third {
+    .col {
       float: left;
       position: relative;
-      width: 33.33%;
-      min-height: 1px;
       padding-left: 15px;
       padding-right: 15px;
+      width: 33.33%;
     }
-    .col-third:nth-child(3n+1) {
-      clear: left;
+    .row {
+      margin-left: 0.2%;
+      margin-right: 0.2%;
+    }
+    .row:before,
+    .row:after {
+      content: " ";
+      display: table;
+    }
+    .row:after {
+      clear: both;
     }
   </style>
 </head>
@@ -52,40 +56,32 @@
     <h3>Automated Extraction of Author's ORCID Information</h3>
     <form id="author-form">
       <div id="metadata_author" class="form-group">
-        <div class="row">
-          <label class="col-third" for="author">Author:</label>
-          <div class="col-third">
-            <div class="edit-compound-field">
-              <div class="suggestion-box">
-                <label for="authorName">Name:</label>
-                <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
-                <div id="suggestionBox"></div>
-              </div>
+        <div class="col">
+          <div class="row">
+            <label>Author:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="suggestion-box">
+              <label for="authorName">Name:</label>
+              <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
+              <div id="suggestionBox"></div>
             </div>
           </div>
-          <div class="col-third">
-            <div class="edit-compound-field">
-              <label for="authorAffiliation">Affiliation:</label>
-              <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
-            </div>
+          <div class="row">
+            <label for="authorAffiliation">Affiliation:</label>
+            <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
           </div>
-        </div>      
-        <div class="row">
-          <div class="col-third">
-            <div class="edit-compound-field">
-            </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <label for="authorIdentifierType">Identifier Type:</label>
+            <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
           </div>
-          <div class="col-third">
-            <div class="edit-compound-field">
-              <label for="authorIdentifierType">Identifier Type:</label>
-              <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
-            </div>
-          </div>
-          <div class="col-third">
-            <div class="edit-compound-field">
-              <label for="authorIdentifier">Identifier:</label>
-              <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
-            </div>
+          <div class="row">
+            <label for="authorIdentifier">Identifier:</label>
+            <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
           </div>
         </div>
       </div>
