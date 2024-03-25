@@ -235,7 +235,17 @@
       authorLabel.textContent = ''; 
       var inputs = newGroup.querySelectorAll('input[type="text"]');
       inputs.forEach(function (input) {
-          input.value = '';
+        input.value = '';
+        if (input.id === "authorName") {
+          input.addEventListener('input', function() {
+              var authorName = input.value.trim();
+              if (authorName.length > 3) {
+                  searchForOrcidId(authorName);
+              } else {
+                  $("#suggestionBox").empty().hide();
+              }
+          });
+        }
       });
 
       // Create a new row wrapper and append the cloned group to it
