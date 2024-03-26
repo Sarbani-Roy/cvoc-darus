@@ -26,7 +26,7 @@
       max-height: 200px;
       overflow-y: auto;
     }
-    #orcidContainer .orcid-group {
+    #authorContainer .author-group {
       padding: 15px;
     }
     .col {
@@ -54,116 +54,62 @@
   <div class="container">
     <h3>Automated Extraction of Author's ORCID Information</h3>
     <form id="author-form"> 
-      <div id="orcidContainer">
-        <div class="orcid-group">
+      <div id="authorContainer">
+        <div class="author-group">
           <div class="row">
             <div class="col">
               <label>Author:</label>
             </div>
             <div class="col">
-              <div class="row-col">
                 <div class="suggestion-box">
                   <label for="authorName">Name:</label>
                   <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
                   <div class="suggestion" id="suggestionBox"></div>
                 </div>
-              </div>
-              <div class="row-col">
+              <div class="authorAffiliation">
                 <label for="authorAffiliation">Affiliation:</label>
                 <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
               </div>            
             </div>
             <div class="col">
-              <div class="row-col">
+              <div class="authorIdentifierType">
                 <label for="authorIdentifierType">Identifier Type:</label>
                 <input type="text" class="form-control" id="authorIdentifierType" placeholder="Identifier type">
               </div>
-              <div class="row-col">
+              <div class="authorIdentifier">
                 <label for="authorIdentifier">Identifier:</label>
                 <input type="text" class="form-control" id="authorIdentifier" placeholder="Author's identifier">
               </div>            
             </div>
             <div class="col">
               <button type="button" onclick="removeInput(this)">-</button>
-              <button type="button" onclick="addInput('orcidContainer')">+</button>
+              <button type="button" onclick="addInput('authorContainer')">+</button>
             </div>
           </div>
         </div>
       </div>
     </form>
   </div>
-
-  <!-- JavaScript Libraries -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
-    var authorNameField = "#authorName";
-    var authorAffiliationField = "#authorAffiliation";
-    var authorIdentifierTypeField = "#authorIdentifierType";
-    var authorIdentifierField = "#authorIdentifier";
 
     $(document).ready(function() {
       expandPeople();
-    });
-
+    })
+    
     function expandPeople() {
-      $(authorNameField).on('input', function() {
-        var authorName = $(this).val().trim();
-        if (authorName.length > 3) {
-          searchForOrcidId(authorName);
-        } else {
-          $("#suggestionBox").empty().hide();
-        }
-      }).on('keydown', function(e) {
-        var suggestionBox = $("#suggestionBox");
-        var suggestions = suggestionBox.find('.suggestion');
-        var selectedSuggestion = suggestionBox.find('.selected-suggestion');
-        var currentIndex = suggestions.index(selectedSuggestion);
-
-        switch(e.which) {
-          case 38: // Up arrow
-            e.preventDefault();
-            scrollSuggestions('up');
-            break;
-          case 40: // Down arrow
-            e.preventDefault();
-            scrollSuggestions('down');
-            break;
-          case 13: // Enter key
-            e.preventDefault();
-            if (selectedSuggestion.length > 0) {
-              selectedSuggestion.click();
-            }
-            break;
+      $(document).on('input', '.author-group', function() {
+        var authorNameValue = $(this).find('#authorName').val();
+        var authorAffiliationField = $(this).find('#authorAffiliation');
+        console.log(authorNameValue);
+        if (authorNameValue.length > 3) {
+          searchForOrcidId(authorNameValue, authorAffiliationField);
         }
       });
     }
 
-    function scrollSuggestions(direction) {
-      const suggestionList = $("#suggestionBox");
-      const suggestions = suggestionList.find('.suggestion');
-      var selectedSuggestion = suggestionList.find('.selected-suggestion');
-      var currentIndex = suggestions.index(selectedSuggestion);
-
-      if (direction === 'up') {
-        currentIndex = Math.max(0, currentIndex - 1);
-      } else if (direction === 'down') {
-        currentIndex = Math.min(suggestions.length - 1, currentIndex + 1);
-      }
-
-      suggestions.removeClass('selected-suggestion');
-      selectedSuggestion = suggestions.eq(currentIndex);
-      selectedSuggestion.addClass('selected-suggestion');
-      selectedSuggestion[0].scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'start'
-      });
-    }
-
-
-    function searchForOrcidId(authorName) {
-      var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorName);
+    function searchForOrcidId(authorNameValue, authorAffiliationField) {
+      var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorNameValue);
       $.ajax({
         url: apiUrl,
         headers: {
@@ -172,55 +118,12 @@
         success: function(response) {
           var results = response["expanded-result"];
           if (results && results.length > 0) {
-            var suggestionBox = $("#suggestionBox");
-            suggestionBox.empty().show();
-            for (var i = 0; i < results.length; i++) {
-              var result = results[i];
-              var suggestion = $("<div class='suggestion'>");
-              var name = "";
-              if (result["given-names"]) {
-                name += result["given-names"];
-              }
-              if (result["family-names"]) {
-                if (name.length > 0) {
-                    name += " ";
-                }
-                name += result["family-names"];
-              }
-              if (name.length > 0) {
-                suggestion.text(name);
-              }
-              if (result["orcid-id"]) {
-                suggestion.append(" - " + result["orcid-id"]);
-              }
-              // if (result["institution-name"] && result["institution-name"].length > 0) {
-              //   var institutionName = Array.isArray(result["institution-name"]) ? result["institution-name"][0] : result["institution-name"];
-              //   suggestion.append(" - " + institutionName);
-              // }
-              var institutionNames = Array.isArray(result["institution-name"]) ? result["institution-name"] : [result["institution-name"]];
-              var institutionName = institutionNames.pop(); // Get the last institution name
-              if (institutionName && institutionName.length > 0) {
-                suggestion.append(" - " + institutionName);
-              }
-              suggestion.click(function() {
-                var clickedName = $(this).text().split(' - ')[0];
-                var clickedOrcid = $(this).text().split(' - ')[1];
-                var clickedInstitution = $(this).text().split(' - ')[2];
-                $(authorNameField).val(clickedName);
-                $(authorAffiliationField).val(clickedInstitution);
-                $(authorIdentifierField).val(clickedOrcid);
-                $(authorIdentifierTypeField).val("ORCID");
-                suggestionBox.empty().hide();
-              });
-              suggestionBox.append(suggestion);
-            }
-          } else {
-            $("#suggestionBox").empty().hide();
+            console.log(results.length);
+            $(authorAffiliationField).val(results.length);         
           }
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.error("Error:", textStatus, errorThrown);
-          $("#suggestionBox").empty().hide();
         }
       });
     }
@@ -236,23 +139,13 @@
       var inputs = newGroup.querySelectorAll('input[type="text"]');
       inputs.forEach(function (input) {
         input.value = '';
-        if (input.id === "authorName") {
-          input.addEventListener('input', function() {
-              var authorName = input.value.trim();
-              if (authorName.length > 3) {
-                  searchForOrcidId(authorName);
-              } else {
-                  $("#suggestionBox").empty().hide();
-              }
-          });
-        }
       });
 
       // Create a new row wrapper and append the cloned group to it
       var newRow = document.createElement('div');
       newRow.classList.add('row');
       newRow.appendChild(newGroup);
-      container.appendChild(newGroup);     
+      container.appendChild(newGroup);      
     }
 
     function removeInput(button) {
@@ -262,8 +155,8 @@
 
     function getContainerClass(containerId) {
       switch (containerId) {
-        case 'orcidContainer':
-          return 'orcid-container';
+        case 'authorContainer':
+          return 'author-container';
         default:
           return '';
       }
@@ -271,13 +164,12 @@
 
     function getgroup(containerId) {
       switch (containerId) {
-        case 'orcidContainer':
-          return '.orcid-group';
+        case 'authorContainer':
+          return '.author-group';
         default:
           return '';
       }
     }
-
   </script>
 </body>
 </html>
