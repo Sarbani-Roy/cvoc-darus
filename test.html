@@ -26,26 +26,27 @@
       max-height: 200px;
       overflow-y: auto;
     }
-    #authorContainer .author-group {
-      padding: 15px;
+    /* Custom CSS for three-column layout */
+    .form-group {
+      margin-bottom: 15px;
     }
     .col {
       float: left;
       position: relative;
       padding-left: 15px;
       padding-right: 15px;
-      width: 25%;
+      width: 33.33%;
     }
     .row {
       margin-left: 0.2%;
       margin-right: 0.2%;
     }
-    .col:before,
-    .col:after {
+    .row:before,
+    .row:after {
       content: " ";
       display: table;
     }
-    .col:after {
+    .row:after {
       clear: both;
     }
   </style>
@@ -53,67 +54,63 @@
 <body>
   <div class="container">
     <h3>Automated Extraction of Author's ORCID Information</h3>
-    <form id="author-form"> 
-      <div id="authorContainer">
-        <div class="author-group">
+    <form id="author-form">
+      <div id="metadata_author" class="form-group">
+        <div class="col">
           <div class="row">
-            <div class="col">
-              <label>Author:</label>
+            <label>Author:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="suggestion-box">
+              <label for="authorName">Name:</label>
+              <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
+              <div id="suggestionBox"></div>
             </div>
-            <div class="col">
-                <div class="suggestion-box">
-                  <label for="authorName">Name:</label>
-                  <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
-                  <div class="suggestion" id="suggestionBox"></div>
-                </div>
-              <div class="authorAffiliation">
-                <label for="authorAffiliation">Affiliation:</label>
-                <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
-              </div>            
-            </div>
-            <div class="col">
-              <div class="authorIdentifierType">
-                <label for="authorIdentifierType">Identifier Type:</label>
-                <input type="text" class="form-control" id="authorIdentifierType" placeholder="Identifier type">
-              </div>
-              <div class="authorIdentifier">
-                <label for="authorIdentifier">Identifier:</label>
-                <input type="text" class="form-control" id="authorIdentifier" placeholder="Author's identifier">
-              </div>            
-            </div>
-            <div class="col">
-              <button type="button" onclick="removeInput(this)">-</button>
-              <button type="button" onclick="addInput('authorContainer')">+</button>
-            </div>
+          </div>
+          <div class="row">
+            <label for="authorAffiliation">Affiliation:</label>
+            <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <label for="authorIdentifierType">Identifier Type:</label>
+            <input type="text" class="form-control" id="authorIdentifierType" placeholder="Enter identifier type">
+          </div>
+          <div class="row">
+            <label for="authorIdentifier">Identifier:</label>
+            <input type="text" class="form-control" id="authorIdentifier" placeholder="Enter author's identifier">
           </div>
         </div>
       </div>
     </form>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script>
+    var authorNameField = "#authorName";
+    var authorAffiliationField = "#authorAffiliation";
+    var authorIdentifierTypeField = "#authorIdentifierType";
+    var authorIdentifierField = "#authorIdentifier";
 
     $(document).ready(function() {
       expandPeople();
-    })
-    
+    });
+
     function expandPeople() {
-      var suggestionBox;
-      $(document).on('input', '.author-group', function() {
-        var authorNameValue = $(this).find('#authorName').val();
-        var authorNameField = $(this).find('#authorName');
-        var authorAffiliationField = $(this).find('#authorAffiliation');
-        var authorIdentifierField = $(this).find('#authorIdentifier');
-        var authorIdentifierTypeField = $(this).find('#authorIdentifierType');
-        suggestionBox = $(this).find('#suggestionBox');
-        console.log(authorNameValue);
-        if (authorNameValue.length > 3) {
-          searchForOrcidId(authorNameValue, suggestionBox, authorNameField, authorAffiliationField, authorIdentifierField, authorIdentifierTypeField);
+      $(authorNameField).on('input', function() {
+        var authorName = $(this).val().trim();
+        if (authorName.length > 3) {
+          searchForOrcidId(authorName);
         } else {
-          suggestionBox.empty().hide();
+          $("#suggestionBox").empty().hide();
         }
       }).on('keydown', function(e) {
-        //var suggestionBox = $(this).find('#suggestionBox');
+        var suggestionBox = $("#suggestionBox");
         var suggestions = suggestionBox.find('.suggestion');
         var selectedSuggestion = suggestionBox.find('.selected-suggestion');
         var currentIndex = suggestions.index(selectedSuggestion);
@@ -121,11 +118,11 @@
         switch(e.which) {
           case 38: // Up arrow
             e.preventDefault();
-            scrollSuggestions(suggestionBox, 'up');
+            scrollSuggestions('up');
             break;
           case 40: // Down arrow
             e.preventDefault();
-            scrollSuggestions(suggestionBox, 'down');
+            scrollSuggestions('down');
             break;
           case 13: // Enter key
             e.preventDefault();
@@ -137,8 +134,8 @@
       });
     }
 
-    function scrollSuggestions(suggestionBox, direction) {
-      const suggestionList = suggestionBox;
+    function scrollSuggestions(direction) {
+      const suggestionList = $("#suggestionBox");
       const suggestions = suggestionList.find('.suggestion');
       var selectedSuggestion = suggestionList.find('.selected-suggestion');
       var currentIndex = suggestions.index(selectedSuggestion);
@@ -160,8 +157,8 @@
     }
 
 
-    function searchForOrcidId(authorNameValue, suggestionBox, authorNameField, authorAffiliationField, authorIdentifierField, authorIdentifierTypeField) {
-      var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorNameValue);
+    function searchForOrcidId(authorName) {
+      var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorName);
       $.ajax({
         url: apiUrl,
         headers: {
@@ -170,12 +167,10 @@
         success: function(response) {
           var results = response["expanded-result"];
           if (results && results.length > 0) {
-            // console.log(results.length);
-            // $(authorAffiliationField).val(results.length); 
+            var suggestionBox = $("#suggestionBox");
             suggestionBox.empty().show();
             for (var i = 0; i < results.length; i++) {
               var result = results[i];
-              console.log(result)
               var suggestion = $("<div class='suggestion'>");
               var name = "";
               if (result["given-names"]) {
@@ -213,59 +208,18 @@
                 suggestionBox.empty().hide();
               });
               suggestionBox.append(suggestion);
-            }       
+            }
           } else {
-            $suggestionBox.empty().hide();
+            $("#suggestionBox").empty().hide();
           }
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.error("Error:", textStatus, errorThrown);
+          $("#suggestionBox").empty().hide();
         }
       });
-    }
-
-    function addInput(containerId) {
-      var container = document.getElementById(containerId);
-      var originalGroup = container.querySelector(getgroup(containerId));
-      var newGroup = originalGroup.cloneNode(true);
-
-      // Reset values in the cloned input group and append the new input group to the container
-      var authorLabel = newGroup.querySelector(getgroup(containerId) + ' .col label');
-      authorLabel.textContent = ''; 
-      var inputs = newGroup.querySelectorAll('input[type="text"]');
-      inputs.forEach(function (input) {
-        input.value = '';
-      });
-
-      // Create a new row wrapper and append the cloned group to it
-      var newRow = document.createElement('div');
-      newRow.classList.add('row');
-      newRow.appendChild(newGroup);
-      container.appendChild(newGroup);      
-    }
-
-    function removeInput(button) {
-      var container = button.parentNode.parentNode.parentNode;
-      container.parentNode.removeChild(container);
-    }
-
-    function getContainerClass(containerId) {
-      switch (containerId) {
-        case 'authorContainer':
-          return 'author-container';
-        default:
-          return '';
-      }
-    }
-
-    function getgroup(containerId) {
-      switch (containerId) {
-        case 'authorContainer':
-          return '.author-group';
-        default:
-          return '';
-      }
     }
   </script>
 </body>
 </html>
+
