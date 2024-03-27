@@ -101,14 +101,17 @@
       $(document).on('input', '.author-group', function() {
         var authorNameValue = $(this).find('#authorName').val();
         var authorAffiliationField = $(this).find('#authorAffiliation');
+        var suggestionBox = $(this).find('#suggestionBox');
         console.log(authorNameValue);
         if (authorNameValue.length > 3) {
-          searchForOrcidId(authorNameValue, authorAffiliationField);
+          searchForOrcidId(authorNameValue, suggestionBox, authorAffiliationField);
+        } else {
+          suggestionBox.empty().hide();
         }
       });
     }
 
-    function searchForOrcidId(authorNameValue, authorAffiliationField) {
+    function searchForOrcidId(authorNameValue, suggestionBox, authorAffiliationField) {
       var apiUrl = "https://pub.orcid.org/v3.0/expanded-search/?q=" + encodeURIComponent(authorNameValue);
       $.ajax({
         url: apiUrl,
@@ -119,7 +122,39 @@
           var results = response["expanded-result"];
           if (results && results.length > 0) {
             console.log(results.length);
-            $(authorAffiliationField).val(results.length);         
+            $(authorAffiliationField).val(results.length); 
+            suggestionBox.empty().show();
+            for (var i = 0; i < results.length; i++) {
+              var result = results[i];
+              console.log(result)
+              var suggestion = $("<div class='suggestion'>");
+              var name = "";
+              if (result["given-names"]) {
+                name += result["given-names"];
+              }
+              if (result["family-names"]) {
+                if (name.length > 0) {
+                    name += " ";
+                }
+                name += result["family-names"];
+              }
+              if (name.length > 0) {
+                suggestion.text(name);
+              }
+              if (result["orcid-id"]) {
+                suggestion.append(" - " + result["orcid-id"]);
+              }
+              // if (result["institution-name"] && result["institution-name"].length > 0) {
+              //   var institutionName = Array.isArray(result["institution-name"]) ? result["institution-name"][0] : result["institution-name"];
+              //   suggestion.append(" - " + institutionName);
+              // }
+              var institutionNames = Array.isArray(result["institution-name"]) ? result["institution-name"] : [result["institution-name"]];
+              var institutionName = institutionNames.pop(); // Get the last institution name
+              if (institutionName && institutionName.length > 0) {
+                suggestion.append(" - " + institutionName);
+              }
+              suggestionBox.append(suggestion);
+            }       
           }
         },
         error: function(jqXHR, textStatus, errorThrown) {
