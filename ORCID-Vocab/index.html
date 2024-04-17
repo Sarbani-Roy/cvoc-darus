@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORCID Feature</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .selected-suggestion {
+      background-color: #729df129; /* Change to whatever highlight color you prefer */
+    }
+    .suggestion-box {
+      position: relative;
+    }
+    .suggestion {
+      padding: 5px 10px; /* Add padding inside the suggestion box */
+    }
+    #suggestionBox {
+      display: none;
+      position: absolute;
+      width: 100%;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      z-index: 1000;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    #authorContainer .author-group {
+      padding: 15px;
+    }
+    .col {
+      float: left;
+      position: relative;
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 25%;
+    }
+    .row {
+      margin-left: 0.2%;
+      margin-right: 0.2%;
+    }
+    .col:before,
+    .col:after {
+      content: " ";
+      display: table;
+    }
+    .col:after {
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>Automated Extraction of Author's ORCID Information</h3>
+    <form id="author-form"> 
+      <div id="authorContainer">
+        <div class="author-group">
+          <div class="row">
+            <div class="col">
+              <label>Author:</label>
+            </div>
+            <div class="col">
+              <div class="suggestion-box">
+                <label for="authorName">Name:</label>
+                <input type="text" class="form-control" id="authorName" placeholder="Enter author's name">
+                <div class="suggestion" id="suggestionBox"></div>
+              </div>
+              <div class="authorAffiliation">
+                <label for="authorAffiliation">Affiliation:</label>
+                <input type="text" class="form-control" id="authorAffiliation" placeholder="Enter author's affiliation">
+              </div>            
+            </div>
+            <div class="col">
+              <div class="authorIdentifierType">
+                <label for="authorIdentifierType">Identifier Type:</label>
+                <input type="text" class="form-control" id="authorIdentifierType" placeholder="Identifier type">
+              </div>
+              <div class="authorIdentifier">
+                <label for="authorIdentifier">Identifier:</label>
+                <input type="text" class="form-control" id="authorIdentifier" placeholder="Author's identifier">
+              </div>            
+            </div>
+            <div class="col">
+              <button type="button" onclick="removeInput(this)">-</button>
+              <button type="button" onclick="addInput('authorContainer')">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- JavaScript libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="author_from_orcid.js"></script> <!-- Separate JavaScript file -->
+</body>
+</html>
