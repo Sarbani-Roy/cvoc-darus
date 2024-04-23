@@ -1,7 +1,7 @@
 {
-    "field-name": "Author",
-    "term-uri-field": "author",
-    "js-url": "https://github.tik.uni-stuttgart.de/fokus/CVOC_for_DaRUS/blob/main/ORCID-Vocab/author_from_orcid.js",
+    "field-name": "authorName",
+    "term-uri-field": "authorName",
+    "js-url": "https://raw.githubusercontent.com/Sarbani-Roy/cvoc-darus/main/ORCID-Vocab/people.js",
     "protocol": "orcid",
     "retrieval-uri": "https://pub.orcid.org/v3.0/{0}/person",
     "allow-free-text": true,
