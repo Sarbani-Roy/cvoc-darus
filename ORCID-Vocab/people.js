@@ -236,4 +236,6 @@ function markMatch(text, term) {
     $result.append(text.substring(match + term.length));
 
     return $result;
+
+    
 }
