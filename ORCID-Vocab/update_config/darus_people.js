@@ -93,6 +93,7 @@ function updatePeopleInputs() {
 
                     //markMatch bolds the search term if/where it appears in the result
                     var $result = markMatch(item.text, term);
+                    console.log(result)
                     return $result;
                 },
                 templateSelection: function(item) {
@@ -146,6 +147,7 @@ function updatePeopleInputs() {
                                 .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
                                 .map(
                                     function(x) {
+                                        console.log(x)
                                         return {
                                             text: x['given-names'] + " " + x['family-names'] +
                                                 ", " +
@@ -173,6 +175,7 @@ function updatePeopleInputs() {
                         'Accept': 'application/json'
                     },
                     success: function(person, status) {
+                        console.log(person)
                         var name = person.name['given-names'].value + " " + person.name['family-name'].value;
                         var text = name + ", " + id;
                         if (person.emails.email.length > 0) {
