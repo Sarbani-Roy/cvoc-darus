@@ -1,6 +1,5 @@
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
-console.log(personSelector)
 
 $(document).ready(function() {
     expandPeople();
@@ -11,6 +10,7 @@ function expandPeople() {
     //Check each selected element
     $(personSelector).each(function() {
         var personElement = this;
+        console.log(personElement)
         //If it hasn't already been processed
         if (!$(personElement).hasClass('expanded')) {
             //Mark it as processed
@@ -82,6 +82,7 @@ function updatePeopleInputs() {
     //For each input element within personInputSelector elements 
     $(personInputSelector).each(function() {
         var personInput = this;
+        console.log(personInput)
         if (!personInput.hasAttribute('data-person')) {
             //Random identifier
             let num = Math.floor(Math.random() * 100000000000);
