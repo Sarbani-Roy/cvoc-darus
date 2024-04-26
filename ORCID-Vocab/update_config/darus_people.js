@@ -187,13 +187,15 @@ function updatePeopleInputs() {
                         'Accept': 'application/json'
                     },
                     success: function(person, status) {
+                        console.log(person)
                         var name = person.name['given-names'].value + " " + person.name['family-name'].value;
                         var text = name + ", " + id;
                         if (person.emails.email.length > 0) {
                             text = text + ", " + person.emails.email[0].email;
                         }
-                        if (person.institution-names.institution-name.length > 0) {
-                            text = text + ", " + person.institution-names.pop().institution-name;
+                        // In case of errors check this first
+                        if (person.institutionNames.institutionName.length > 0) {
+                            text = text + ", " + person.institutionNames.pop().institutionName;
                         }
                         var newOption = new Option(text, id, true, true);
                         newOption.title = 'Open in new tab to view ORCID page';
