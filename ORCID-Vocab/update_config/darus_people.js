@@ -48,7 +48,7 @@ function expandPeople() {
                     //If institution-name is public, show it using the jquery popover functionality
                     if (person.institution-names.institution-name.length > 0) {
                         $(personElement).popover({
-                            content: person.institution-names.institution-name[0].institution-name,
+                            content: person.institution-names.pop().institution-name,
                             placement: 'top',
                             template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
                         });
@@ -164,7 +164,7 @@ function updatePeopleInputs() {
                                                 ", " +
                                                 x['orcid-id'] +
                                                 ((x.email.length > 0) ? ", " + x.email[0] : "")+
-                                                ((x['institution-name'].length > 0) ? ", " + x['institution-name'][0]: ""),
+                                                ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop(): ""),
                                             id: x['orcid-id'],
                                             //Since clicking in the selection re-opens the choice list, one has to use a right click/open in new tab/window to view the ORCID page
                                             //Using title to provide that hint as a popup
@@ -193,7 +193,7 @@ function updatePeopleInputs() {
                             text = text + ", " + person.emails.email[0].email;
                         }
                         if (person.institution-names.institution-name.length > 0) {
-                            text = text + ", " + person.institution-names.institution-name[0].institution-name;
+                            text = text + ", " + person.institution-names.pop().institution-name;
                         }
                         var newOption = new Option(text, id, true, true);
                         newOption.title = 'Open in new tab to view ORCID page';
