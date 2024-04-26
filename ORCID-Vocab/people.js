@@ -45,6 +45,20 @@ function expandPeople() {
                             $(this).popover('hide');
                         };
                     }
+                    //If institution-name is public, show it using the jquery popover functionality
+                    if (person.institution-names.institution-name.length > 0) {
+                        $(personElement).popover({
+                            content: person.institution-names.pop().institution-name,
+                            placement: 'top',
+                            template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                        });
+                        personElement.onmouseenter = function() {
+                            $(this).popover('show');
+                        };
+                        personElement.onmouseleave = function() {
+                            $(this).popover('hide');
+                        };
+                    }
                     //Store the most recent 100 ORCIDs - could cache results, but currently using this just to prioritized recently used ORCIDs in search results
                     if (localStorage.length > 100) {
                         localStorage.removeItem(localStorage.key(0));
@@ -144,11 +158,13 @@ function updatePeopleInputs() {
                                 .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
                                 .map(
                                     function(x) {
+                                        console.log(x)
                                         return {
                                             text: x['given-names'] + " " + x['family-names'] +
                                                 ", " +
                                                 x['orcid-id'] +
-                                                ((x.email.length > 0) ? ", " + x.email[0] : ""),
+                                                ((x.email.length > 0) ? ", " + x.email[0] : "")+
+                                                ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop(): ""),
                                             id: x['orcid-id'],
                                             //Since clicking in the selection re-opens the choice list, one has to use a right click/open in new tab/window to view the ORCID page
                                             //Using title to provide that hint as a popup
@@ -171,11 +187,16 @@ function updatePeopleInputs() {
                         'Accept': 'application/json'
                     },
                     success: function(person, status) {
+                        console.log(person)
                         var name = person.name['given-names'].value + " " + person.name['family-name'].value;
                         var text = name + ", " + id;
                         if (person.emails.email.length > 0) {
                             text = text + ", " + person.emails.email[0].email;
                         }
+                        // Institution-names is not available from this api call
+                        // if (person.institution-names.institution-name.length > 0) {
+                        //     text = text + ", " + person.institution-names.pop().institution-name;
+                        // }
                         var newOption = new Option(text, id, true, true);
                         newOption.title = 'Open in new tab to view ORCID page';
                         $('#' + selectId).append(newOption).trigger('change');
@@ -235,6 +256,10 @@ function markMatch(text, term) {
     // Put in whatever is after the match
     $result.append(text.substring(match + term.length));
 
-    return $result;    
+    return $result; 
 }
+
+
+
+
 
