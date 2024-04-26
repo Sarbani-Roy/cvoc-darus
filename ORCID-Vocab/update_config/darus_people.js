@@ -15,7 +15,6 @@ function expandPeople() {
             //Mark it as processed
             $(personElement).addClass('expanded');
             var id = personElement.textContent;
-            console.log("Id at expand people:" + id)
             if (id.startsWith("https://orcid.org/")) {
                 id = id.substring(18);
             }
@@ -32,7 +31,6 @@ function expandPeople() {
                     var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
                     var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
                     personElement.innerHTML = html;
-                    console.log(person)
                     // //If email is public, show it using the jquery popover functionality
                     // if (person.emails.email.length > 0) {
                     //     $(personElement).popover({
@@ -93,7 +91,6 @@ function updatePeopleInputs() {
 
                     //markMatch bolds the search term if/where it appears in the result
                     var $result = markMatch(item.text, term);
-                    console.log(result)
                     return $result;
                 },
                 templateSelection: function(item) {
@@ -175,7 +172,6 @@ function updatePeopleInputs() {
                         'Accept': 'application/json'
                     },
                     success: function(person, status) {
-                        console.log(person)
                         var name = person.name['given-names'].value + " " + person.name['family-name'].value;
                         var text = name + ", " + id;
                         if (person.emails.email.length > 0) {
