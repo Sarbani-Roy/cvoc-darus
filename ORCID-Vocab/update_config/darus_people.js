@@ -193,10 +193,10 @@ function updatePeopleInputs() {
                         if (person.emails.email.length > 0) {
                             text = text + ", " + person.emails.email[0].email;
                         }
-                        // In case of errors check this first
-                        if (person.institutionNames.institutionName.length > 0) {
-                            text = text + ", " + person.institutionNames.pop().institutionName;
-                        }
+                        // Institution-names is not available from this api call
+                        // if (person.institution-names.institution-name.length > 0) {
+                        //     text = text + ", " + person.institution-names.pop().institution-name;
+                        // }
                         var newOption = new Option(text, id, true, true);
                         newOption.title = 'Open in new tab to view ORCID page';
                         $('#' + selectId).append(newOption).trigger('change');
