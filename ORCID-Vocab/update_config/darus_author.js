@@ -45,20 +45,21 @@ function expandPeople() {
                             $(this).popover('hide');
                         };
                     }
-                    //If institution-name is public, show it using the jquery popover functionality
-                    if (person.institution-names.institution-name.length > 0) {
-                        $(personElement).popover({
-                            content: person.institution-names.pop().institution-name,
-                            placement: 'top',
-                            template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-                        });
-                        personElement.onmouseenter = function() {
-                            $(this).popover('show');
-                        };
-                        personElement.onmouseleave = function() {
-                            $(this).popover('hide');
-                        };
-                    }
+                    // Institution name can not be extracted from this query response
+                    // //If institution-name is public, show it using the jquery popover functionality
+                    // if (person.institution-names.institution-name.length > 0) {
+                    //     $(personElement).popover({
+                    //         content: person.institution-names.pop().institution-name,
+                    //         placement: 'top',
+                    //         template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                    //     });
+                    //     personElement.onmouseenter = function() {
+                    //         $(this).popover('show');
+                    //     };
+                    //     personElement.onmouseleave = function() {
+                    //         $(this).popover('hide');
+                    //     };
+                    // }
                     //Store the most recent 100 ORCIDs - could cache results, but currently using this just to prioritized recently used ORCIDs in search results
                     if (localStorage.length > 100) {
                         localStorage.removeItem(localStorage.key(0));

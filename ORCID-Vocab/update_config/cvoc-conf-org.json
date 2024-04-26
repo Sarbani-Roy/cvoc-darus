@@ -2,7 +2,7 @@
     {
         "field-name": "authorName",
         "term-uri-field": "authorName",
-        "js-url": "__dataverse_previewers__/js/darus_people.js",
+        "js-url": "__dataverse_previewers__/js/darus_author.js",
         "protocol": "orcid",
         "retrieval-uri": "https://pub.orcid.org/v3.0/{0}/person",
         "allow-free-text": true,
