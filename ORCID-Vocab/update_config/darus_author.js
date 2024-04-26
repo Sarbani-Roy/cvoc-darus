@@ -1,5 +1,6 @@
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
+console.log(personSelector)
 
 $(document).ready(function() {
     expandPeople();
