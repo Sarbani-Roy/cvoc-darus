@@ -15,6 +15,11 @@ $(document).ready(function() {
 
 function expandPeople() {
     console.log("expandPeople function called.");
+
+    // Check if the selector matches any elements
+    var authorElements = $(authorSelector);
+    console.log("Number of elements found with authorSelector: ", authorElements.length);
+
     $(authorSelector).each(function() {
         var authorElement = this;
         console.log("Author Element found: ", authorElement);
@@ -69,6 +74,11 @@ function expandPeople() {
 
 function updatePeopleInputs() {
     console.log("updatePeopleInputs function called.");
+
+    // Check if the selector matches any elements
+    var authorElements = $(authorSelector);
+    console.log("Number of elements found with authorSelector: ", authorElements.length);
+
     $(authorSelector).each(function() {
         var authorElement = this;
         console.log("Author Element found: ", authorElement);
