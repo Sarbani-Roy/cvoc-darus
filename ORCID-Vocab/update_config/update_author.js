@@ -2,8 +2,6 @@
 var authorSelector = "div.form-group.form-col-container.col-sm-9.edit-compound-field";
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
-console.log(personSelector)
-console.log(personSelector)
 
 $(document).ready(function() {
     console.log("Document is ready.");
@@ -13,16 +11,9 @@ $(document).ready(function() {
 
 function expandPeople() {
     console.log("expandPeople function called.");
-
-    // Log intermediate elements to ensure correct targeting
-    //var container = $("div#content.container");
-    //var form = container.find("form#datasetForm");
-    //var panel = form.find("div.panel-group div.panel.panel-default div#panelCollapse0.collapse.in div.panel-body");
-    //var authorElements = panel.find("div.form-group.form-col-container.col-sm-9.edit-compound-field");
-    //console.log("Number of elements found with authorSelector: ", authorElements.length);
-
     $(authorSelector).each(function() {
         var authorElement = this;
+        console.log("Author Element found: ", authorElement);
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
             console.log("Person Element found: ", personElement);
