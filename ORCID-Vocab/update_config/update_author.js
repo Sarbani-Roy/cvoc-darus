@@ -1,5 +1,5 @@
 
-var authorSelector = "div#metadata_author ~ div.dataset-field-values";
+var authorSelector = "div#metadata_author ~ div.dataset-field-values div.edit-compound-field";
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
