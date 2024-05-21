@@ -1,3 +1,7 @@
+// Selector for all the author compound fields
+var authorSelector = "div#metadata_author ~ div.dataset-field-values div.edit-compound-field";
+console.log(authorSelector)
+
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
