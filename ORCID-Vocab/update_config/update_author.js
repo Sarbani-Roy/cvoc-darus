@@ -1,4 +1,5 @@
 
+var authorSelector = "div.form-group.form-col-container.col-sm-9.edit-compound-field";
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
 console.log(personSelector)
