@@ -14,6 +14,10 @@ function expandPeople() {
     
     $(authorSelector).each(function() {
         var authorElement = this;
+
+         var numChildren = authorElement.children.length;
+        console.log("Number of children in authorElement: ", numChildren);
+        
         // Get all div children of authorElement
         // var divChildren = $(authorElement).find('div');
         // console.log("Div children of Author Element:", divChildren);
