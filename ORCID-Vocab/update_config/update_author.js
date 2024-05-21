@@ -17,76 +17,74 @@ function expandPeople() {
         var numChildren = authorElement.children.length;
         console.log("Number of children in authorElement: ", numChildren);
         
-        if (numChildren>4){
-            // 2nd child contains the input field for author affiliation
-            let authorAffiliation = authorElement.children[1].querySelector('input');
-            // 3rd child is the identifier scheme wrapper and contains multiple elements:
-            // - a label element that shows the current selected value
-            let authorIdentifierSchemeText = authorElement.children[2].querySelector('.ui-selectonemenu-label');
-            // - a select element that contains the drop-down
-            let authorIdentifierSchemeSelect = authorElement.children[2].querySelector('select');
-            // 4th child contains the input element for the identifier
-            let authorIdentifier = authorElement.children[3].querySelector('input');
+        // // 2nd child contains the input field for author affiliation
+        // let authorAffiliation = authorElement.children[1].querySelector('input');
+        // // 3rd child is the identifier scheme wrapper and contains multiple elements:
+        // // - a label element that shows the current selected value
+        // let authorIdentifierSchemeText = authorElement.children[2].querySelector('.ui-selectonemenu-label');
+        // // - a select element that contains the drop-down
+        // let authorIdentifierSchemeSelect = authorElement.children[2].querySelector('select');
+        // // 4th child contains the input element for the identifier
+        // let authorIdentifier = authorElement.children[3].querySelector('input');
 
-            $(authorElement).find(personSelector).each(function() {
-                var personElement = this;
-                console.log("Person Element found: ", personElement);
-                if (!$(personElement).hasClass('expanded')) {
-                    $(personElement).addClass('expanded');
-                    var id = personElement.textContent;
-                    if (id.startsWith("https://orcid.org/")) {
-                        id = id.substring(18);
-                    }
-                    $.ajax({
-                        type: "GET",
-                        url: "https://pub.orcid.org/v3.0/" + id + "/person",
-                        dataType: 'json',
-                        headers: {
-                            'Accept': 'application/json'
-                        },
-                        success: function(person, status) {
-                            var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
-                            var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
-                            personElement.innerHTML = html;
-
-                            // Fill author affiliation
-                            if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
-                                var employment = person['activities-summary']['employments']['employment-summary'][0];
-                                authorAffiliation.value = employment['organization']['name'];
-                            }
-
-                            // Fill author identifier scheme and identifier
-                            authorIdentifierSchemeSelect.value = "ORCID"; // Assuming ORCID is the scheme
-                            authorIdentifierSchemeText.innerHTML = "ORCID";
-                            authorIdentifier.value = id;
-
-                            if (person.emails.email.length > 0) {
-                                $(personElement).popover({
-                                    content: person.emails.email[0].email,
-                                    placement: 'top',
-                                    template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-                                });
-                                personElement.onmouseenter = function() {
-                                    $(this).popover('show');
-                                };
-                                personElement.onmouseleave = function() {
-                                    $(this).popover('hide');
-                                };
-                            }
-                            if (localStorage.length > 100) {
-                                localStorage.removeItem(localStorage.key(0));
-                            }
-                            localStorage.setItem(id, name);
-                        },
-                        failure: function(jqXHR, textStatus, errorThrown) {
-                            if (jqXHR.status != 404) {
-                                console.error("The following error occurred: " + textStatus, errorThrown);
-                            }
-                        }
-                    });
+        $(authorElement).find(personSelector).each(function() {
+            var personElement = this;
+            console.log("Person Element found: ", personElement);
+            if (!$(personElement).hasClass('expanded')) {
+                $(personElement).addClass('expanded');
+                var id = personElement.textContent;
+                if (id.startsWith("https://orcid.org/")) {
+                    id = id.substring(18);
                 }
-            });
-        }
+                $.ajax({
+                    type: "GET",
+                    url: "https://pub.orcid.org/v3.0/" + id + "/person",
+                    dataType: 'json',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function(person, status) {
+                        var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
+                        var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
+                        personElement.innerHTML = html;
+
+                        // // Fill author affiliation
+                        // if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
+                        //     var employment = person['activities-summary']['employments']['employment-summary'][0];
+                        //     authorAffiliation.value = employment['organization']['name'];
+                        // }
+
+                        // // Fill author identifier scheme and identifier
+                        // authorIdentifierSchemeSelect.value = "ORCID"; // Assuming ORCID is the scheme
+                        // authorIdentifierSchemeText.innerHTML = "ORCID";
+                        // authorIdentifier.value = id;
+
+                        if (person.emails.email.length > 0) {
+                            $(personElement).popover({
+                                content: person.emails.email[0].email,
+                                placement: 'top',
+                                template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                            });
+                            personElement.onmouseenter = function() {
+                                $(this).popover('show');
+                            };
+                            personElement.onmouseleave = function() {
+                                $(this).popover('hide');
+                            };
+                        }
+                        if (localStorage.length > 100) {
+                            localStorage.removeItem(localStorage.key(0));
+                        }
+                        localStorage.setItem(id, name);
+                    },
+                    failure: function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status != 404) {
+                            console.error("The following error occurred: " + textStatus, errorThrown);
+                        }
+                    }
+                });
+            }
+        });
     });
 }
 
@@ -99,15 +97,15 @@ function updatePeopleInputs() {
         // var divChildren = $(authorElement).find('div');
         // console.log("Div children of Author Element:", divChildren);
 
-        // 2nd child contains the input field for author affiliation
-        let authorAffiliation = authorElement.children[1].querySelector('input');
-        // 3rd child is the identifier scheme wrapper and contains multiple elements:
-        // - a label element that shows the current selected value
-        let authorIdentifierSchemeText = authorElement.children[2].querySelector('.ui-selectonemenu-label');
-        // - a select element that contains the drop-down
-        let authorIdentifierSchemeSelect = authorElement.children[2].querySelector('select');
-        // 4th child contains the input element for the identifier
-        let authorIdentifier = authorElement.children[3].querySelector('input');
+        // // 2nd child contains the input field for author affiliation
+        // let authorAffiliation = authorElement.children[1].querySelector('input');
+        // // 3rd child is the identifier scheme wrapper and contains multiple elements:
+        // // - a label element that shows the current selected value
+        // let authorIdentifierSchemeText = authorElement.children[2].querySelector('.ui-selectonemenu-label');
+        // // - a select element that contains the drop-down
+        // let authorIdentifierSchemeSelect = authorElement.children[2].querySelector('select');
+        // // 4th child contains the input element for the identifier
+        // let authorIdentifier = authorElement.children[3].querySelector('input');
 
         
         $(authorElement).find(personInputSelector).each(function() {
@@ -210,16 +208,16 @@ function updatePeopleInputs() {
                             newOption.title = 'Open in new tab to view ORCID page';
                             $('#' + selectId).append(newOption).trigger('change');
 
-                            // Fill author affiliation
-                            if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
-                                var employment = person['activities-summary']['employments']['employment-summary'][0];
-                                authorAffiliation.value = employment['organization']['name'];
-                            }
+                            // // Fill author affiliation
+                            // if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
+                            //     var employment = person['activities-summary']['employments']['employment-summary'][0];
+                            //     authorAffiliation.value = employment['organization']['name'];
+                            // }
 
-                            // Fill author identifier scheme and identifier
-                            authorIdentifierSchemeSelect.value = "ORCID"; // Assuming ORCID is the scheme
-                            authorIdentifierSchemeText.innerHTML = "ORCID";
-                            authorIdentifier.value = id;
+                            // // Fill author identifier scheme and identifier
+                            // authorIdentifierSchemeSelect.value = "ORCID"; // Assuming ORCID is the scheme
+                            // authorIdentifierSchemeText.innerHTML = "ORCID";
+                            // authorIdentifier.value = id;
                         },
                         failure: function(jqXHR, textStatus, errorThrown) {
                             if (jqXHR.status != 404) {
