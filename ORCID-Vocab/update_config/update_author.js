@@ -11,9 +11,12 @@ $(document).ready(function() {
 
 function expandPeople() {
     console.log("expandPeople function called.");
+    // Get all div children of authorElement
+    var divChildren = $(authorElement).find('div');
+    console.log("Div children of Author Element:", divChildren);
+
     $(authorSelector).each(function() {
         var authorElement = this;
-        console.log("Author Element found: ", authorElement);
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
             console.log("Person Element found: ", personElement);
@@ -66,10 +69,12 @@ function expandPeople() {
 function updatePeopleInputs() {
     console.log("updatePeopleInputs function called.");
 
-    // Check if the selector matches any elements
-    var authorElements = $(authorSelector);
     $(authorSelector).each(function() {
         var authorElement = this;
+        // Get all div children of authorElement
+        var divChildren = $(authorElement).find('div');
+        console.log("Div children of Author Element:", divChildren);
+
         
         $(authorElement).find(personInputSelector).each(function() {
             var personInput = this;
