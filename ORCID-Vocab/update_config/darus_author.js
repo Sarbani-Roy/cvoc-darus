@@ -11,6 +11,9 @@ $(document).ready(function() {
 });
 
 function expandPeople() {
+    $(authorSelector).each(function() {
+        var authorElement = this;
+        console.log(authorElement)
     //Check each selected element
     $(personSelector).each(function() {
         var personElement = this;
@@ -83,6 +86,9 @@ function expandPeople() {
 }
 
 function updatePeopleInputs() {
+    $(authorSelector).each(function() {
+        var authorElement = this;
+        console.log(authorElement)
     //For each input element within personInputSelector elements 
     $(personInputSelector).each(function() {
         var personInput = this;
