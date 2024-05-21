@@ -1,5 +1,5 @@
 // Selector for all the author compound fields
-var authorSelector = "div#metadata_author";
+var authorSelector = $("div.form-group.form-col-container.col-sm-9.edit-compound-field");
 console.log("Author Selector: ", authorSelector);
 
 var personSelector = "span[data-cvoc-protocol='orcid']";
