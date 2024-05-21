@@ -1,6 +1,6 @@
 // Selector for all the author compound fields
 var authorSelector = "div#metadata_author ~ div.dataset-field-values div.edit-compound-field";
-console.log(authorSelector)
+console.log("Author Selector: ", authorSelector);
 
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
@@ -8,17 +8,19 @@ console.log(personSelector)
 console.log(personSelector)
 
 $(document).ready(function() {
+    console.log("Document is ready.");
     expandPeople();
     updatePeopleInputs();
 });
 
 function expandPeople() {
+    console.log("expandPeople function called.");
     $(authorSelector).each(function() {
         var authorElement = this;
-        console.log(authorElement);
+        console.log("Author Element found: ", authorElement);
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
-            console.log(personElement);
+            console.log("Person Element found: ", personElement);
             if (!$(personElement).hasClass('expanded')) {
                 $(personElement).addClass('expanded');
                 var id = personElement.textContent;
@@ -66,12 +68,15 @@ function expandPeople() {
 }
 
 function updatePeopleInputs() {
+    console.log("updatePeopleInputs function called.");
     $(authorSelector).each(function() {
         var authorElement = this;
-        console.log(authorElement);
+        console.log("Author Element found: ", authorElement);
+        
         $(authorElement).find(personInputSelector).each(function() {
             var personInput = this;
-            console.log(personInput);
+            console.log("Person Input Element found: ", personInput);
+            
             if (!personInput.hasAttribute('data-person')) {
                 let num = Math.floor(Math.random() * 100000000000);
                 $(personInput).hide();
