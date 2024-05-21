@@ -15,11 +15,11 @@ function expandPeople() {
     console.log("expandPeople function called.");
 
     // Log intermediate elements to ensure correct targeting
-    var container = $("div#content.container");
-    var form = container.find("form#datasetForm");
-    var panel = form.find("div.panel-group div.panel.panel-default div#panelCollapse0.collapse.in div.panel-body");
-    var authorElements = panel.find("div.form-group.form-col-container.col-sm-9.edit-compound-field");
-    console.log("Number of elements found with authorSelector: ", authorElements.length);
+    //var container = $("div#content.container");
+    //var form = container.find("form#datasetForm");
+    //var panel = form.find("div.panel-group div.panel.panel-default div#panelCollapse0.collapse.in div.panel-body");
+    //var authorElements = panel.find("div.form-group.form-col-container.col-sm-9.edit-compound-field");
+    //console.log("Number of elements found with authorSelector: ", authorElements.length);
 
     $(authorSelector).each(function() {
         var authorElement = this;
