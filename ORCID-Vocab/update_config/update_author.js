@@ -1,6 +1,3 @@
-// Selector for all the author compound fields
-var authorSelector = "div.form-group.form-col-container.col-sm-9.edit-compound-field";
-console.log("Author Selector: ", authorSelector);
 
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
@@ -18,20 +15,13 @@ function expandPeople() {
 
     // Log intermediate elements to ensure correct targeting
     var container = $("div#content.container");
-    console.log("Container: ", container);
-
     var form = container.find("form#datasetForm");
-    console.log("Form: ", form);
-
     var panel = form.find("div.panel-group div.panel.panel-default div#panelCollapse0.collapse.in div.panel-body");
-    console.log("Panel: ", panel);
-
     var authorElements = panel.find("div.form-group.form-col-container.col-sm-9.edit-compound-field");
     console.log("Number of elements found with authorSelector: ", authorElements.length);
 
     $(authorSelector).each(function() {
         var authorElement = this;
-        console.log("Author Element found: ", authorElement);
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
             console.log("Person Element found: ", personElement);
@@ -86,11 +76,8 @@ function updatePeopleInputs() {
 
     // Check if the selector matches any elements
     var authorElements = $(authorSelector);
-    console.log("Number of elements found with authorSelector: ", authorElements.length);
-
     $(authorSelector).each(function() {
         var authorElement = this;
-        console.log("Author Element found: ", authorElement);
         
         $(authorElement).find(personInputSelector).each(function() {
             var personInput = this;
