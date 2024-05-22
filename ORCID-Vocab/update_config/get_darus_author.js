@@ -19,6 +19,7 @@ function expandPeople() {
             var firstChildOfSecondSibling = secondSibling.children().first();
             authorElement = firstChildOfSecondSibling;
             if (authorElement.children().length > 3) {
+                authorName = authorElement.children().eq(0).find('input');
                 authorAffiliation = authorElement.children().eq(1).find('input');
                 authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
                 authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
@@ -169,6 +170,7 @@ function updatePeopleInputs() {
                     },
                     success: function(person, status) {
                         var name = person.name['given-names'].value + " " + person.name['family-name'].value;
+                        $(authorName).val(orcid);
                         var text = name + ", " + id;
                         if (person.emails.email.length > 0) {
                             text = text + ", " + person.emails.email[0].email;
