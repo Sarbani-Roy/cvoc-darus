@@ -56,18 +56,6 @@ function expandPeople() {
                         var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
                         personElement.innerHTML = html;
 
-                        console.log(person)
-                        // // Fill author affiliation
-                        // if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
-                        //     var employment = person['activities-summary']['employments']['employment-summary'][0];
-                        //     authorAffiliation.value = employment['organization']['name'];
-                        // }
-
-                        // // Fill author identifier scheme and identifier
-                        // $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
-                        // $(authorIdentifierSchemeText).innerHTML = "ORCID";
-                        // $(authorIdentifier).value = person.id;
-
                         if (person.emails.email.length > 0) {
                             $(personElement).popover({
                                 content: person.emails.email[0].email,
@@ -115,7 +103,7 @@ function updatePeopleInputs() {
                     tags: $(personInput).attr('data-cvoc-allowfreetext'),
                     delay: 500,
                     templateResult: function(item) {
-                        console.log(item)
+                        // console.log(item)
                         if (item.loading) {
                             return item.text;
                         }
@@ -124,12 +112,13 @@ function updatePeopleInputs() {
                     },
                     templateSelection: function(item) {
                         console.log(item)
+                        console.log($(authorIdentifier).val)
                         var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                         if (pos >= 0) {
                             var orcid = item.text.substr(pos, 19);
-                            $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
+                            $(authorIdentifierSchemeSelect).value = "ORCID";
                             $(authorIdentifierSchemeText).innerHTML = "ORCID";
-                            $(authorIdentifier).value = "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>";
+                            $(authorIdentifier).val(orcid);
                             return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                         }
                         return item.text;
@@ -204,19 +193,6 @@ function updatePeopleInputs() {
                             var newOption = new Option(text, id, true, true);
                             newOption.title = 'Open in new tab to view ORCID page';
                             $('#' + selectId).append(newOption).trigger('change');
-
-
-
-                            // // Fill author affiliation
-                            // if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
-                            //     var employment = person['activities-summary']['employments']['employment-summary'][0];
-                            //     authorAffiliation.value = employment['organization']['name'];
-                            // }
-
-                            // // Fill author identifier scheme and identifier
-                            // $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
-                            // $(authorIdentifierSchemeText).innerHTML = "ORCID";
-                            // $(authorIdentifier).value = id;
                         },
                         failure: function(jqXHR, textStatus, errorThrown) {
                             if (jqXHR.status != 404) {
