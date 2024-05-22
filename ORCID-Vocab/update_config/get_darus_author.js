@@ -1,4 +1,4 @@
-var authorSelector = "div#metadata_author";
+var authorParentSelector = "div#metadata_author";
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
@@ -11,29 +11,30 @@ $(document).ready(function() {
 function expandPeople() {
     console.log("expandPeople function called.");
     
-    $(authorSelector).each(function() {
-        var authorElement = this;
+    $(authorParentSelector).each(function() {
+        // var authorParentElement = this;
 
-        var parentElement = $(authorSelector).parent();
+        var parentElement = $(authorParentSelector).parent();
         var parentSiblings = parentElement.siblings();
         
         if (parentSiblings.length >= 2) {
             var secondSibling = $(parentSiblings[1]);
             var firstChildOfSecondSibling = secondSibling.children().first();
+            var authorElement = firstChildOfSecondSibling
 
-            console.log("Parent's second sibling's first child element: ", firstChildOfSecondSibling);
+            console.log("Parent's second sibling's first child element: ", authorElement);
 
             // Ensure firstChildOfSecondSibling has children before accessing
-            if (firstChildOfSecondSibling.children().length > 3) {
+            if (authorElement.children().length > 3) {
                 // 2nd child contains the input field for author affiliation
-                var authorAffiliation = firstChildOfSecondSibling.children().eq(1).find('input');
+                var authorAffiliation = authorElement.children().eq(1).find('input');
                 // 3rd child is the identifier scheme wrapper and contains multiple elements:
                 // - a label element that shows the current selected value
-                var authorIdentifierSchemeText = firstChildOfSecondSibling.children().eq(2).find('.ui-selectonemenu-label');
+                var authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
                 // - a select element that contains the drop-down
-                var authorIdentifierSchemeSelect = firstChildOfSecondSibling.children().eq(2).find('select');
+                var authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
                 // 4th child contains the input element for the identifier
-                var authorIdentifier = firstChildOfSecondSibling.children().eq(3).find('input');
+                var authorIdentifier = fauthorElement.children().eq(3).find('input');
 
                 console.log("Author Affiliation Input: ", authorAffiliation);
                 console.log("Author Identifier Scheme Text: ", authorIdentifierSchemeText);
