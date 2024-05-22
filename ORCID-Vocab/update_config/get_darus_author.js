@@ -3,7 +3,6 @@ var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
 $(document).ready(function() {
-    // console.log("Document is ready.");
     expandPeople();
     updatePeopleInputs();
 });
@@ -19,25 +18,16 @@ function expandPeople() {
             var secondSibling = $(parentSiblings[1]);
             var firstChildOfSecondSibling = secondSibling.children().first();
             authorElement = firstChildOfSecondSibling;
-
-            // console.log("Parent's second sibling's first child element: ", authorElement);
-
             if (authorElement.children().length > 3) {
                 authorAffiliation = authorElement.children().eq(1).find('input');
                 authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
                 authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
                 authorIdentifier = authorElement.children().eq(3).find('input');
-
-                // console.log("Author Affiliation Input: ", authorAffiliation);
-                console.log("Author Identifier Scheme Text: ", authorIdentifierSchemeText);
-                console.log("Author Identifier Scheme Select: ", authorIdentifierSchemeSelect);
-                // console.log("Author Identifier Input: ", authorIdentifier);
             } 
         }
 
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
-            // console.log("Person Element found: ", personElement);
             if (!$(personElement).hasClass('expanded')) {
                 $(personElement).addClass('expanded');
                 var id = personElement.textContent;
@@ -86,138 +76,130 @@ function expandPeople() {
 }
 
 function updatePeopleInputs() {
-    console.log("updatePeopleInputs function called.");
-        
-        $(authorElement).find(personInputSelector).each(function() {
-            var personInput = this;
-            // console.log("Person Input Element found: ", personInput);
-            
-            if (!personInput.hasAttribute('data-person')) {
-                let num = Math.floor(Math.random() * 100000000000);
-                $(personInput).hide();
-                $(personInput).attr('data-person', num);
-                var selectId = "personAddSelect_" + num;
-                $(personInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
-                $("#" + selectId).select2({
-                    theme: "classic",
-                    tags: $(personInput).attr('data-cvoc-allowfreetext'),
-                    delay: 500,
-                    templateResult: function(item) {
-                        // console.log(item)
-                        if (item.loading) {
-                            return item.text;
-                        }
-                        var $result = markMatch(item.text, term);
-                        return $result;
-                    },
-                    templateSelection: function(item) {
-                        console.log(item)
-                        //console.log($(authorIdentifier).val)
-                        var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
-                        if (pos >= 0) {
-                            var orcid = item.text.substr(pos, 19);
-                            $(authorIdentifierSchemeSelect).val("ORCID").change();
-                            $(authorIdentifierSchemeText).text("ORCID");
-                            $(authorIdentifier).val(orcid);
-                            return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
-                        }
+    console.log("updatePeopleInputs function called.");       
+    $(authorElement).find(personInputSelector).each(function() {
+        var personInput = this;
+        if (!personInput.hasAttribute('data-person')) {
+            let num = Math.floor(Math.random() * 100000000000);
+            $(personInput).hide();
+            $(personInput).attr('data-person', num);
+            var selectId = "personAddSelect_" + num;
+            $(personInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
+            $("#" + selectId).select2({
+                theme: "classic",
+                tags: $(personInput).attr('data-cvoc-allowfreetext'),
+                delay: 500,
+                templateResult: function(item) {
+                    if (item.loading) {
                         return item.text;
-                    },
-                    language: {
-                        searching: function(params) {
-                            return 'Search by name, email, or ORCID…';
-                        }
-                    },
-                    placeholder: personInput.hasAttribute("data-cvoc-placeholder") ? $(personInput).attr('data-cvoc-placeholder') : "Select a Person",
-                    minimumInputLength: 3,
-                    allowClear: true,
-                    ajax: {
-                        url: function(params) {
-                            var term = params.term;
-                            if (!term) {
-                                term = "";
-                            }
-                            return "https://pub.orcid.org/v3.0/expanded-search";
-                        },
-                        data: function(params) {
-                            term = params.term;
-                            if (!term) {
-                                term = "";
-                            }
-                            var query = {
-                                q: term,
-                                rows: 10
-                            };
-                            return query;
-                        },
-                        headers: {
-                            'Accept': 'application/json'
-                        },
-                        processResults: function(data, page) {
-                            return {
-                                results: data['expanded-result']
-                                    .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
-                                    .map(function(x) {
-                                        //console.log(x);
-                                        return {
-                                            text: x['given-names'] + " " + x['family-names'] +
-                                                ", " +
-                                                x['orcid-id'] +
-                                                ((x.email.length > 0) ? ", " + x.email[0] : "") +
-                                                ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
-                                            id: x['orcid-id'],
-                                            title: 'Open in new tab to view ORCID page'
-                                        };
-                                    })
-                            };
-                        }
                     }
-                });
-                var id = $(personInput).val();
-                if (id.startsWith("https://orcid.org")) {
-                    id = id.substring(18);
-                    $.ajax({
-                        type: "GET",
-                        url: "https://pub.orcid.org/v3.0/" + id + "/person",
-                        dataType: 'json',
-                        headers: {
-                            'Accept': 'application/json'
-                        },
-                        success: function(person, status) {
-                            //console.log(person);
-                            var name = person.name['given-names'].value + " " + person.name['family-name'].value;
-                            var text = name + ", " + id;
-                            if (person.emails.email.length > 0) {
-                                text = text + ", " + person.emails.email[0].email;
-                            }
-                            var newOption = new Option(text, id, true, true);
-                            newOption.title = 'Open in new tab to view ORCID page';
-                            $('#' + selectId).append(newOption).trigger('change');
-                        },
-                        failure: function(jqXHR, textStatus, errorThrown) {
-                            if (jqXHR.status != 404) {
-                                console.error("The following error occurred: " + textStatus, errorThrown);
-                            }
+                    var $result = markMatch(item.text, term);
+                    return $result;
+                },
+                templateSelection: function(item) {
+                    console.log(item)
+                    var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
+                    if (pos >= 0) {
+                        var orcid = item.text.substr(pos, 19);
+                        $(authorIdentifierSchemeSelect).val("ORCID").change();
+                        $(authorIdentifierSchemeText).text("ORCID");
+                        $(authorIdentifier).val(orcid);
+                        return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
+                    }
+                    return item.text;
+                },
+                language: {
+                    searching: function(params) {
+                        return 'Search by name, email, or ORCID…';
+                    }
+                },
+                placeholder: personInput.hasAttribute("data-cvoc-placeholder") ? $(personInput).attr('data-cvoc-placeholder') : "Select a Person",
+                minimumInputLength: 3,
+                allowClear: true,
+                ajax: {
+                    url: function(params) {
+                        var term = params.term;
+                        if (!term) {
+                            term = "";
                         }
-                    });
-                } else {
-                    var newOption = new Option(id, id, true, true);
-                    $('#' + selectId).append(newOption).trigger('change');
+                        return "https://pub.orcid.org/v3.0/expanded-search";
+                    },
+                    data: function(params) {
+                        term = params.term;
+                        if (!term) {
+                            term = "";
+                        }
+                        var query = {
+                            q: term,
+                            rows: 10
+                        };
+                        return query;
+                    },
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    processResults: function(data, page) {
+                        return {
+                            results: data['expanded-result']
+                                .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
+                                .map(function(x) {
+                                    return {
+                                        text: x['given-names'] + " " + x['family-names'] +
+                                            ", " +
+                                            x['orcid-id'] +
+                                            ((x.email.length > 0) ? ", " + x.email[0] : "") +
+                                            ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
+                                        id: x['orcid-id'],
+                                        title: 'Open in new tab to view ORCID page'
+                                    };
+                                })
+                        };
+                    }
                 }
-                $('#' + selectId).on('select2:select', function(e) {
-                    var data = e.params.data;
-                    if (data.id != data.text) {
-                        $("input[data-person='" + num + "']").val("https://orcid.org/" + data.id);
-                    } else {
-                        $("input[data-person='" + num + "']").val(data.id);
+            });
+            var id = $(personInput).val();
+            if (id.startsWith("https://orcid.org")) {
+                id = id.substring(18);
+                $.ajax({
+                    type: "GET",
+                    url: "https://pub.orcid.org/v3.0/" + id + "/person",
+                    dataType: 'json',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function(person, status) {
+                        var name = person.name['given-names'].value + " " + person.name['family-name'].value;
+                        var text = name + ", " + id;
+                        if (person.emails.email.length > 0) {
+                            text = text + ", " + person.emails.email[0].email;
+                        }
+                        var newOption = new Option(text, id, true, true);
+                        newOption.title = 'Open in new tab to view ORCID page';
+                        $('#' + selectId).append(newOption).trigger('change');
+                    },
+                    failure: function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status != 404) {
+                            console.error("The following error occurred: " + textStatus, errorThrown);
+                        }
                     }
                 });
-                $('#' + selectId).on('select2:clear', function(e) {
-                    $("input[data-person='" + num + "']").attr('value', '');
-                });
+            } else {
+                var newOption = new Option(id, id, true, true);
+                $('#' + selectId).append(newOption).trigger('change');
             }
-        });
-    // });
+            $('#' + selectId).on('select2:select', function(e) {
+                var data = e.params.data;
+                if (data.id != data.text) {
+                    $("input[data-person='" + num + "']").val("https://orcid.org/" + data.id);
+                } else {
+                    $("input[data-person='" + num + "']").val(data.id);
+                }
+            });
+            $('#' + selectId).on('select2:clear', function(e) {
+                $("input[data-person='" + num + "']").attr('value', '');
+            });
+        }
+    });
 }
 
 function markMatch(text, term) {
