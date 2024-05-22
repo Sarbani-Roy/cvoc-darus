@@ -16,6 +16,13 @@ function expandPeople() {
         var authorElement = this;
         var numChildren = authorElement.children.length;
         console.log("Number of children in authorElement: ", numChildren);
+
+        $(authorElement).children().each(function() {
+            // Assuming the name is within a span element or similar
+            var childElement = $(this);
+            var name = childElement.find("span.name").text(); 
+            console.log("Child name: ", name);
+        });
         
         // // 2nd child contains the input field for author affiliation
         // let authorAffiliation = authorElement.children[1].querySelector('input');
