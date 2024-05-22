@@ -13,8 +13,8 @@ function expandPeople() {
     
     $(authorSelector).each(function() {
         var authorElement = this;
-        var numChildren = authorElement.children.length;
-        console.log("Number of children in authorElement: ", numChildren);
+        // var numChildren = authorElement.children.length;
+        // console.log("Number of children in authorElement: ", numChildren);
 
         // Get the parent of the div#metadata_author
         var parentElement = $(authorSelector).parent();
@@ -22,7 +22,7 @@ function expandPeople() {
         // Get the siblings of the parent element
         parentElement.siblings().each(function() {
             var siblingElement = $(this);
-            console.log("Parent's sibling element tag name: ", siblingElement.prop("tagName"));
+            console.log("Parent's sibling element: ", siblingElement);
 
             var numChildren = siblingElement.children.length;
             console.log("Number of children in authorElement: ", numChildren);
@@ -30,7 +30,7 @@ function expandPeople() {
             // Iterate through the children of each sibling
             siblingElement.children().each(function() {
                 var childElement = $(this);
-                console.log("Child element tag name: ", childElement.prop("tagName"));
+                console.log("Child element: ", childElement);
             });
         });
         
