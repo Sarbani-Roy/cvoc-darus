@@ -63,10 +63,10 @@ function expandPeople() {
                         //     authorAffiliation.value = employment['organization']['name'];
                         // }
 
-                        // Fill author identifier scheme and identifier
-                        $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
-                        $(authorIdentifierSchemeText).innerHTML = "ORCID";
-                        $(authorIdentifier).value = person.id;
+                        // // Fill author identifier scheme and identifier
+                        // $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
+                        // $(authorIdentifierSchemeText).innerHTML = "ORCID";
+                        // $(authorIdentifier).value = person.id;
 
                         if (person.emails.email.length > 0) {
                             $(personElement).popover({
@@ -164,13 +164,18 @@ function updatePeopleInputs() {
                                 results: data['expanded-result']
                                     .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
                                     .map(function(x) {
-                                        console.log(x);
+                                        // console.log(x);
                                         return {
-                                            text: x['given-names'] + " " + x['family-names'] +
-                                                ", " +
-                                                x['orcid-id'] +
-                                                ((x.email.length > 0) ? ", " + x.email[0] : "") +
-                                                ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
+                                            // text: x['given-names'] + " " + x['family-names'] +
+                                            //     ", " +
+                                            //     x['orcid-id'] +
+                                            //     ((x.email.length > 0) ? ", " + x.email[0] : "") +
+                                            //     ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
+                                            // id: x['orcid-id'],
+                                            // title: 'Open in new tab to view ORCID page'
+                                            text: x['given-names'] + " " + x['family-names'], 
+                                            email: ((x.email.length > 0) ? ", " + x.email[0] : "") ,
+                                            instName: ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
                                             id: x['orcid-id'],
                                             title: 'Open in new tab to view ORCID page'
                                         };
@@ -190,7 +195,7 @@ function updatePeopleInputs() {
                             'Accept': 'application/json'
                         },
                         success: function(person, status) {
-                            //console.log(person);
+                            console.log(person);
                             var name = person.name['given-names'].value + " " + person.name['family-name'].value;
                             var text = name + ", " + id;
                             if (person.emails.email.length > 0) {
@@ -208,10 +213,10 @@ function updatePeopleInputs() {
                             //     authorAffiliation.value = employment['organization']['name'];
                             // }
 
-                            // Fill author identifier scheme and identifier
-                            $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
-                            $(authorIdentifierSchemeText).innerHTML = "ORCID";
-                            $(authorIdentifier).value = id;
+                            // // Fill author identifier scheme and identifier
+                            // $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
+                            // $(authorIdentifierSchemeText).innerHTML = "ORCID";
+                            // $(authorIdentifier).value = id;
                         },
                         failure: function(jqXHR, textStatus, errorThrown) {
                             if (jqXHR.status != 404) {
