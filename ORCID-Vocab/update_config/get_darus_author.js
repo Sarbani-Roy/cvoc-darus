@@ -23,6 +23,9 @@ function expandPeople() {
         parentElement.siblings().each(function() {
             var siblingElement = $(this);
             console.log("Parent's sibling element tag name: ", siblingElement.prop("tagName"));
+
+            var numChildren = siblingElement.children.length;
+            console.log("Number of children in authorElement: ", numChildren);
             
             // Iterate through the children of each sibling
             siblingElement.children().each(function() {
