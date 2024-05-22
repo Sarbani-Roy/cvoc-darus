@@ -209,9 +209,14 @@ function updatePeopleInputs() {
                             // }
 
                             // Fill author identifier scheme and identifier
-                            $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
-                            $(authorIdentifierSchemeText).innerHTML = "ORCID";
-                            $(authorIdentifier).value = id;
+                            authorIdentifier.value = id;
+                            // Setting the dropdown box is trickier:
+                            // First get the option from the select list whose text content matches the value you want to set
+                            let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
+                            // Then get the value from that option and set the select element's value with it
+                            authorIdentifierSchemeSelect.value = option.getAttribute('value');
+                            // But you should also set the label field or your selection will not display
+                            authorIdentifierSchemeText.textContent = 'ORCID';
                         },
                         failure: function(jqXHR, textStatus, errorThrown) {
                             if (jqXHR.status != 404) {
