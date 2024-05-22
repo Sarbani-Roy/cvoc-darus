@@ -25,11 +25,15 @@ function expandPeople() {
         
         parentSiblings.each(function() {
             var siblingElement = $(this);
-            console.log("Parent's sibling element tag name: ", siblingElement.prop("tagName"));
+            console.log("Parent's sibling element: ", siblingElement);
             
             // Get the first child of each sibling and add it to the jQuery object
             var firstChild = siblingElement.children().first();
             parentSiblingFirstChildElements = parentSiblingFirstChildElements.add(firstChild);
+            console.log("parentSiblingFirstChildElements: ", parentSiblingFirstChildElements)
+
+            var numChildren = authorsElement.children.length;
+            console.log("Number of children in authorsElement: ", numChildren);
             });
             
             // Now you can use parentSiblingFirstChildElements as a selector
