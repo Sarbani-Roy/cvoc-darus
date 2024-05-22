@@ -16,10 +16,15 @@ function expandPeople() {
         var numChildren = authorElement.children.length;
         console.log("Number of children in authorElement: ", numChildren);
 
-        $(authorSelector).siblings().each(function() {
+        // Get the parent of the div#metadata_author
+        var parentElement = $(authorSelector).parent();
+        
+        // Get the siblings of the parent element
+        parentElement.siblings().each(function() {
             var siblingElement = $(this);
-            console.log("Sibling element tag name: ", siblingElement.prop("tagName"));
+            console.log("Parent's sibling element tag name: ", siblingElement.prop("tagName"));
             
+            // Iterate through the children of each sibling
             siblingElement.children().each(function() {
                 var childElement = $(this);
                 console.log("Child element tag name: ", childElement.prop("tagName"));
