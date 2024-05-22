@@ -16,12 +16,14 @@ function expandPeople() {
         var numChildren = authorElement.children.length;
         console.log("Number of children in authorElement: ", numChildren);
 
-        var siblingElement = $(this);
-        console.log("Sibling element tag name: ", siblingElement);
-        
-        siblingElement.children().each(function() {
-            var childElement = $(this);
-            console.log("Child element tag name: ", childElement.prop("tagName"));
+        $(authorSelector).siblings().each(function() {
+            var siblingElement = $(this);
+            console.log("Sibling element tag name: ", siblingElement.prop("tagName"));
+            
+            siblingElement.children().each(function() {
+                var childElement = $(this);
+                console.log("Child element tag name: ", childElement.prop("tagName"));
+            });
         });
         
         // // 2nd child contains the input field for author affiliation
