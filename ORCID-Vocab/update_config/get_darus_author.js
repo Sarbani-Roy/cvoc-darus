@@ -22,39 +22,40 @@ function expandPeople() {
             var firstChildOfSecondSibling = secondSibling.children().first();
 
             console.log("Parent's second sibling's first child element: ", firstChildOfSecondSibling);
-            console.log("Parent's second sibling's first child element tag name: ", firstChildOfSecondSibling.prop("tagName"));
+
+            // 2nd child contains the input field for author affiliation
+            let authorAffiliation = authorElement.children[1].querySelector('input');
+            // 3rd child is the identifier scheme wrapper and contains multiple elements:
+            // - a label element that shows the current selected value
+            let authorIdentifierSchemeText = authorElement.children[2].querySelector('.ui-selectonemenu-label');
+            // - a select element that contains the drop-down
+            let authorIdentifierSchemeSelect = authorElement.children[2].querySelector('select');
+            // 4th child contains the input element for the identifier
+            let authorIdentifier = authorElement.children[3].querySelector('input');
         } else {
             console.log("The parent does not have at least two siblings.");
         }
             
 
-        // Get the parent of the div#metadata_author
-        var parentElement = $(authorSelector).parent();
+        // // Get the parent of the div#metadata_author
+        // var parentElement = $(authorSelector).parent();
         
-        // Get the siblings of the parent element
-        parentElement.siblings().each(function() {
-            var siblingElement = $(this);
-            console.log("Parent's sibling element: ", siblingElement);
+        // // Get the siblings of the parent element
+        // parentElement.siblings().each(function() {
+        //     var siblingElement = $(this);
+        //     console.log("Parent's sibling element: ", siblingElement);
 
-            var numChildren = siblingElement.children.length;
-            console.log("Number of children in authorElement: ", numChildren);
+        //     var numChildren = siblingElement.children.length;
+        //     console.log("Number of children in authorElement: ", numChildren);
             
-            // Iterate through the children of each sibling
-            siblingElement.children().each(function() {
-                var childElement = $(this);
-                console.log("child element: ", childElement);
-            });
-        });
+        //     // Iterate through the children of each sibling
+        //     siblingElement.children().each(function() {
+        //         var childElement = $(this);
+        //         console.log("child element: ", childElement);
+        //     });
+        // });
         
-        // // 2nd child contains the input field for author affiliation
-        // let authorAffiliation = authorElement.children[1].querySelector('input');
-        // // 3rd child is the identifier scheme wrapper and contains multiple elements:
-        // // - a label element that shows the current selected value
-        // let authorIdentifierSchemeText = authorElement.children[2].querySelector('.ui-selectonemenu-label');
-        // // - a select element that contains the drop-down
-        // let authorIdentifierSchemeSelect = authorElement.children[2].querySelector('select');
-        // // 4th child contains the input element for the identifier
-        // let authorIdentifier = authorElement.children[3].querySelector('input');
+        
 
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
