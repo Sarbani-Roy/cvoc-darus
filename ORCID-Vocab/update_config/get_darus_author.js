@@ -170,7 +170,7 @@ function updatePeopleInputs() {
                     },
                     success: function(person, status) {
                         var name = person.name['given-names'].value + " " + person.name['family-name'].value;
-                        $(authorName).val(orcid);
+                        $(authorName).val(name);
                         var text = name + ", " + id;
                         if (person.emails.email.length > 0) {
                             text = text + ", " + person.emails.email[0].email;
