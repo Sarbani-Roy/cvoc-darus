@@ -1,4 +1,4 @@
-var authorSelector = "div#metadata_author".parent().siblings().children().first();
+var authorSelector = "div#metadata_author";
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
