@@ -112,12 +112,12 @@ function updatePeopleInputs() {
                     },
                     templateSelection: function(item) {
                         console.log(item)
-                        console.log($(authorIdentifier).val)
+                        //console.log($(authorIdentifier).val)
                         var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                         if (pos >= 0) {
                             var orcid = item.text.substr(pos, 19);
-                            $(authorIdentifierSchemeSelect).value = "ORCID";
-                            $(authorIdentifierSchemeText).innerHTML = "ORCID";
+                            $(authorIdentifierSchemeSelect).val("ORCID").change();
+                            $(authorIdentifierSchemeText).text("ORCID");
                             $(authorIdentifier).val(orcid);
                             return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                         }
