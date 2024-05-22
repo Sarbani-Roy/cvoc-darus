@@ -164,7 +164,7 @@ function updatePeopleInputs() {
                                 results: data['expanded-result']
                                     .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
                                     .map(function(x) {
-                                        // console.log(x);
+                                        console.log(x);
                                         return {
                                             text: x['given-names'] + " " + x['family-names'] +
                                                 ", " +
