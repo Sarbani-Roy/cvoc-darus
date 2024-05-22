@@ -127,6 +127,9 @@ function updatePeopleInputs() {
                         var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                         if (pos >= 0) {
                             var orcid = item.text.substr(pos, 19);
+                            $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
+                            $(authorIdentifierSchemeText).innerHTML = "ORCID";
+                            $(authorIdentifier).value = ('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                             return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                         }
                         return item.text;
