@@ -115,6 +115,7 @@ function updatePeopleInputs() {
                     tags: $(personInput).attr('data-cvoc-allowfreetext'),
                     delay: 500,
                     templateResult: function(item) {
+                        console.log(item)
                         if (item.loading) {
                             return item.text;
                         }
@@ -122,6 +123,7 @@ function updatePeopleInputs() {
                         return $result;
                     },
                     templateSelection: function(item) {
+                        console.log(item)
                         var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                         if (pos >= 0) {
                             var orcid = item.text.substr(pos, 19);
@@ -164,18 +166,13 @@ function updatePeopleInputs() {
                                 results: data['expanded-result']
                                     .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
                                     .map(function(x) {
-                                        // console.log(x);
+                                        //console.log(x);
                                         return {
-                                            // text: x['given-names'] + " " + x['family-names'] +
-                                            //     ", " +
-                                            //     x['orcid-id'] +
-                                            //     ((x.email.length > 0) ? ", " + x.email[0] : "") +
-                                            //     ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
-                                            // id: x['orcid-id'],
-                                            // title: 'Open in new tab to view ORCID page'
-                                            text: x['given-names'] + " " + x['family-names'], 
-                                            email: ((x.email.length > 0) ? ", " + x.email[0] : "") ,
-                                            instName: ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
+                                            text: x['given-names'] + " " + x['family-names'] +
+                                                ", " +
+                                                x['orcid-id'] +
+                                                ((x.email.length > 0) ? ", " + x.email[0] : "") +
+                                                ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
                                             id: x['orcid-id'],
                                             title: 'Open in new tab to view ORCID page'
                                         };
@@ -195,7 +192,7 @@ function updatePeopleInputs() {
                             'Accept': 'application/json'
                         },
                         success: function(person, status) {
-                            console.log(person);
+                            //console.log(person);
                             var name = person.name['given-names'].value + " " + person.name['family-name'].value;
                             var text = name + ", " + id;
                             if (person.emails.email.length > 0) {
