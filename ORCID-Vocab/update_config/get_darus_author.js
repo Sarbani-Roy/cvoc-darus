@@ -20,21 +20,15 @@ function expandPeople() {
         if (parentSiblings.length >= 2) {
             var secondSibling = $(parentSiblings[1]);
             var firstChildOfSecondSibling = secondSibling.children().first();
-            const authorElement = firstChildOfSecondSibling
+            authorElement = firstChildOfSecondSibling;
 
             console.log("Parent's second sibling's first child element: ", authorElement);
 
-            // Ensure firstChildOfSecondSibling has children before accessing
             if (authorElement.children().length > 3) {
-                // 2nd child contains the input field for author affiliation
-                var authorAffiliation = authorElement.children().eq(1).find('input');
-                // 3rd child is the identifier scheme wrapper and contains multiple elements:
-                // - a label element that shows the current selected value
-                var authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
-                // - a select element that contains the drop-down
-                var authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
-                // 4th child contains the input element for the identifier
-                var authorIdentifier = authorElement.children().eq(3).find('input');
+                authorAffiliation = authorElement.children().eq(1).find('input');
+                authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
+                authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
+                authorIdentifier = authorElement.children().eq(3).find('input');
 
                 console.log("Author Affiliation Input: ", authorAffiliation);
                 console.log("Author Identifier Scheme Text: ", authorIdentifierSchemeText);
