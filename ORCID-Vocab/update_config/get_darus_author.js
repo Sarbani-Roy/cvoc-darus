@@ -60,16 +60,16 @@ function expandPeople() {
                         var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
                         personElement.innerHTML = html;
 
-                        // // Fill author affiliation
-                        // if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
-                        //     var employment = person['activities-summary']['employments']['employment-summary'][0];
-                        //     authorAffiliation.value = employment['organization']['name'];
-                        // }
+                        // Fill author affiliation
+                        if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
+                            var employment = person['activities-summary']['employments']['employment-summary'][0];
+                            authorAffiliation.value = employment['organization']['name'];
+                        }
 
-                        // // Fill author identifier scheme and identifier
-                        // authorIdentifierSchemeSelect.value = "ORCID"; // Assuming ORCID is the scheme
-                        // authorIdentifierSchemeText.innerHTML = "ORCID";
-                        // authorIdentifier.value = id;
+                        // Fill author identifier scheme and identifier
+                        authorIdentifierSchemeSelect.value = "ORCID"; // Assuming ORCID is the scheme
+                        authorIdentifierSchemeText.innerHTML = "ORCID";
+                        authorIdentifier.value = id;
 
                         if (person.emails.email.length > 0) {
                             $(personElement).popover({
@@ -203,16 +203,16 @@ function updatePeopleInputs() {
                             newOption.title = 'Open in new tab to view ORCID page';
                             $('#' + selectId).append(newOption).trigger('change');
 
-                            // // Fill author affiliation
-                            // if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
-                            //     var employment = person['activities-summary']['employments']['employment-summary'][0];
-                            //     authorAffiliation.value = employment['organization']['name'];
-                            // }
+                            // Fill author affiliation
+                            if (person['activities-summary'] && person['activities-summary']['employments'] && person['activities-summary']['employments']['employment-summary']) {
+                                var employment = person['activities-summary']['employments']['employment-summary'][0];
+                                authorAffiliation.value = employment['organization']['name'];
+                            }
 
-                            // // Fill author identifier scheme and identifier
-                            // authorIdentifierSchemeSelect.value = "ORCID"; // Assuming ORCID is the scheme
-                            // authorIdentifierSchemeText.innerHTML = "ORCID";
-                            // authorIdentifier.value = id;
+                            // Fill author identifier scheme and identifier
+                            authorIdentifierSchemeSelect.value = "ORCID"; // Assuming ORCID is the scheme
+                            authorIdentifierSchemeText.innerHTML = "ORCID";
+                            authorIdentifier.value = id;
                         },
                         failure: function(jqXHR, textStatus, errorThrown) {
                             if (jqXHR.status != 404) {
