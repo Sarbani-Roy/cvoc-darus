@@ -24,14 +24,14 @@ function expandPeople() {
             console.log("Parent's second sibling's first child element: ", firstChildOfSecondSibling);
 
             // 2nd child contains the input field for author affiliation
-            let authorAffiliation = authorElement.children[1].querySelector('input');
+            let authorAffiliation = firstChildOfSecondSibling.children[1].querySelector('input');
             // 3rd child is the identifier scheme wrapper and contains multiple elements:
             // - a label element that shows the current selected value
-            let authorIdentifierSchemeText = authorElement.children[2].querySelector('.ui-selectonemenu-label');
+            let authorIdentifierSchemeText = firstChildOfSecondSibling.children[2].querySelector('.ui-selectonemenu-label');
             // - a select element that contains the drop-down
-            let authorIdentifierSchemeSelect = authorElement.children[2].querySelector('select');
+            let authorIdentifierSchemeSelect = firstChildOfSecondSibling.children[2].querySelector('select');
             // 4th child contains the input element for the identifier
-            let authorIdentifier = authorElement.children[3].querySelector('input');
+            let authorIdentifier = firstChildOfSecondSibling.children[3].querySelector('input');
         } else {
             console.log("The parent does not have at least two siblings.");
         }
