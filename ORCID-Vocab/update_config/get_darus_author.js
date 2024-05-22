@@ -1,4 +1,4 @@
-var authorSelector = "div#metadata_author~";
+var authorSelector = "div#metadata_author";
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
@@ -16,11 +16,12 @@ function expandPeople() {
         var numChildren = authorElement.children.length;
         console.log("Number of children in authorElement: ", numChildren);
 
-        $(authorElement).children().each(function() {
-            // Assuming the name is within a span element or similar
+        var siblingElement = $(this);
+        console.log("Sibling element tag name: ", siblingElement.prop("tagName"));
+        
+        siblingElement.children().each(function() {
             var childElement = $(this);
-            var name = childElement.find("span.name").text(); 
-            console.log("Child name: ", name);
+            console.log("Child element tag name: ", childElement.prop("tagName"));
         });
         
         // // 2nd child contains the input field for author affiliation
