@@ -14,53 +14,53 @@ function expandPeople() {
     $(authorSelector).each(function() {
         var authorElement = this;
 
-        // Get the parent of div#metadata_author
-        var parentElement = $(authorSelector).parent();
-        
-        // Get the siblings of the parent element
-        var parentSiblings = parentElement.siblings();
-        
-        // Create a jQuery object to hold the first children of the parent's siblings
-        var parentSiblingFirstChildElements = $();
-        
-        parentSiblings.each(function() {
-            var siblingElement = $(this);
-            console.log("Parent's sibling element: ", siblingElement);
-            
-            // Get the first child of each sibling and add it to the jQuery object
-            var firstChild = siblingElement.children().first();
-            parentSiblingFirstChildElements = parentSiblingFirstChildElements.add(firstChild);
-            console.log("parentSiblingFirstChildElements: ", parentSiblingFirstChildElements)
-
-            var numChildren = authorsElement.children.length;
-            console.log("Number of children in authorsElement: ", numChildren);
-            });
-            
-            // Now you can use parentSiblingFirstChildElements as a selector
-            parentSiblingFirstChildElements.each(function() {
-                var authorsElement = $(this);
-                var numChildren = authorsElement.children.length;
-                console.log("Number of children in authorsElement: ", numChildren);
-            });
-            
-
-        // // Get the parent of the div#metadata_author
+        // // Get the parent of div#metadata_author
         // var parentElement = $(authorSelector).parent();
         
         // // Get the siblings of the parent element
-        // parentElement.siblings().each(function() {
+        // var parentSiblings = parentElement.siblings();
+        
+        // // Create a jQuery object to hold the first children of the parent's siblings
+        // var parentSiblingFirstChildElements = $();
+        
+        // parentSiblings.each(function() {
         //     var siblingElement = $(this);
         //     console.log("Parent's sibling element: ", siblingElement);
-
-        //     var numChildren = siblingElement.children.length;
-        //     console.log("Number of children in authorElement: ", numChildren);
             
-        //     // Iterate through the children of each sibling
-        //     siblingElement.children().each(function() {
-        //         var childElement = $(this);
-        //         console.log("Child element: ", childElement);
+        //     // Get the first child of each sibling and add it to the jQuery object
+        //     var firstChild = siblingElement.children().first();
+        //     parentSiblingFirstChildElements = parentSiblingFirstChildElements.add(firstChild);
+        //     console.log("parentSiblingFirstChildElements: ", parentSiblingFirstChildElements)
+
+        //     var numChildren = authorsElement.children.length;
+        //     console.log("Number of children in authorsElement: ", numChildren);
         //     });
-        // });
+            
+        //     // Now you can use parentSiblingFirstChildElements as a selector
+        //     parentSiblingFirstChildElements.each(function() {
+        //         var authorsElement = $(this);
+        //         var numChildren = authorsElement.children.length;
+        //         console.log("Number of children in authorsElement: ", numChildren);
+        //     });
+            
+
+        // Get the parent of the div#metadata_author
+        var parentElement = $(authorSelector).parent();
+        
+        // Get the siblings of the parent element
+        parentElement.siblings().each(function() {
+            var siblingElement = $(this);
+            console.log("Parent's sibling element: ", siblingElement);
+
+            var numChildren = siblingElement.children.length;
+            console.log("Number of children in authorElement: ", numChildren);
+            
+            // Iterate through the children of each sibling
+            siblingElement.children().each(function() {
+                var childElement = $(this);
+                console.log("Child element: ", childElement);
+            });
+        });
         
         // // 2nd child contains the input field for author affiliation
         // let authorAffiliation = authorElement.children[1].querySelector('input');
