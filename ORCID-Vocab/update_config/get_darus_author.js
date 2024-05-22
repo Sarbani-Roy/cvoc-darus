@@ -14,34 +14,18 @@ function expandPeople() {
     $(authorSelector).each(function() {
         var authorElement = this;
 
-        // // Get the parent of div#metadata_author
-        // var parentElement = $(authorSelector).parent();
+        var parentElement = $(authorSelector).parent();
+        var parentSiblings = parentElement.siblings();
         
-        // // Get the siblings of the parent element
-        // var parentSiblings = parentElement.siblings();
-        
-        // // Create a jQuery object to hold the first children of the parent's siblings
-        // var parentSiblingFirstChildElements = $();
-        
-        // parentSiblings.each(function() {
-        //     var siblingElement = $(this);
-        //     console.log("Parent's sibling element: ", siblingElement);
-            
-        //     // Get the first child of each sibling and add it to the jQuery object
-        //     var firstChild = siblingElement.children().first();
-        //     parentSiblingFirstChildElements = parentSiblingFirstChildElements.add(firstChild);
-        //     console.log("parentSiblingFirstChildElements: ", parentSiblingFirstChildElements)
+        if (parentSiblings.length >= 2) {
+            var secondSibling = $(parentSiblings[1]);
+            var firstChildOfSecondSibling = secondSibling.children().first();
 
-        //     var numChildren = authorsElement.children.length;
-        //     console.log("Number of children in authorsElement: ", numChildren);
-        //     });
-            
-        //     // Now you can use parentSiblingFirstChildElements as a selector
-        //     parentSiblingFirstChildElements.each(function() {
-        //         var authorsElement = $(this);
-        //         var numChildren = authorsElement.children.length;
-        //         console.log("Number of children in authorsElement: ", numChildren);
-        //     });
+            console.log("Parent's second sibling's first child element: ", firstChildOfSecondSibling);
+            console.log("Parent's second sibling's first child element tag name: ", firstChildOfSecondSibling.prop("tagName"));
+        } else {
+            console.log("The parent does not have at least two siblings.");
+        }
             
 
         // Get the parent of the div#metadata_author
@@ -58,7 +42,7 @@ function expandPeople() {
             // Iterate through the children of each sibling
             siblingElement.children().each(function() {
                 var childElement = $(this);
-                console.log("Child element: ", childElement);
+                console.log("child element: ", childElement);
             });
         });
         
