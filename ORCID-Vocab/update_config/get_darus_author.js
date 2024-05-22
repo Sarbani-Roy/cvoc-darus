@@ -9,7 +9,7 @@ $(document).ready(function() {
 });
 
 function expandPeople() {
-    // console.log("expandPeople function called.");
+    console.log("expandPeople function called.");
     
     $(authorParentSelector).each(function() {
         var parentElement = $(authorParentSelector).parent();
@@ -29,8 +29,8 @@ function expandPeople() {
                 authorIdentifier = authorElement.children().eq(3).find('input');
 
                 // console.log("Author Affiliation Input: ", authorAffiliation);
-                // console.log("Author Identifier Scheme Text: ", authorIdentifierSchemeText);
-                // console.log("Author Identifier Scheme Select: ", authorIdentifierSchemeSelect);
+                console.log("Author Identifier Scheme Text: ", authorIdentifierSchemeText);
+                console.log("Author Identifier Scheme Select: ", authorIdentifierSchemeSelect);
                 // console.log("Author Identifier Input: ", authorIdentifier);
             } 
         }
@@ -98,7 +98,7 @@ function expandPeople() {
 }
 
 function updatePeopleInputs() {
-    // console.log("updatePeopleInputs function called.");
+    console.log("updatePeopleInputs function called.");
         
         $(authorElement).find(personInputSelector).each(function() {
             var personInput = this;
@@ -209,14 +209,9 @@ function updatePeopleInputs() {
                             // }
 
                             // Fill author identifier scheme and identifier
-                            authorIdentifier.value = id;
-                            // Setting the dropdown box is trickier:
-                            // First get the option from the select list whose text content matches the value you want to set
-                            let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
-                            // Then get the value from that option and set the select element's value with it
-                            authorIdentifierSchemeSelect.value = option.getAttribute('value');
-                            // But you should also set the label field or your selection will not display
-                            authorIdentifierSchemeText.textContent = 'ORCID';
+                            $(authorIdentifierSchemeSelect).value = "ORCID"; // Assuming ORCID is the scheme
+                            $(authorIdentifierSchemeText).innerHTML = "ORCID";
+                            $(authorIdentifier).value = id;
                         },
                         failure: function(jqXHR, textStatus, errorThrown) {
                             if (jqXHR.status != 404) {
