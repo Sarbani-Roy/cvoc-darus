@@ -23,15 +23,25 @@ function expandPeople() {
 
             console.log("Parent's second sibling's first child element: ", firstChildOfSecondSibling);
 
-            // 2nd child contains the input field for author affiliation
-            var authorAffiliation = firstChildOfSecondSibling.children[1].querySelector('input');
-            // 3rd child is the identifier scheme wrapper and contains multiple elements:
-            // - a label element that shows the current selected value
-            var authorIdentifierSchemeText = firstChildOfSecondSibling.children[2].querySelector('.ui-selectonemenu-label');
-            // - a select element that contains the drop-down
-            var authorIdentifierSchemeSelect = firstChildOfSecondSibling.children[2].querySelector('select');
-            // 4th child contains the input element for the identifier
-            var authorIdentifier = firstChildOfSecondSibling.children[3].querySelector('input');
+            // Ensure firstChildOfSecondSibling has children before accessing
+            if (firstChildOfSecondSibling.children().length > 3) {
+                // 2nd child contains the input field for author affiliation
+                var authorAffiliation = firstChildOfSecondSibling.children().eq(1).find('input');
+                // 3rd child is the identifier scheme wrapper and contains multiple elements:
+                // - a label element that shows the current selected value
+                var authorIdentifierSchemeText = firstChildOfSecondSibling.children().eq(2).find('.ui-selectonemenu-label');
+                // - a select element that contains the drop-down
+                var authorIdentifierSchemeSelect = firstChildOfSecondSibling.children().eq(2).find('select');
+                // 4th child contains the input element for the identifier
+                var authorIdentifier = firstChildOfSecondSibling.children().eq(3).find('input');
+
+                console.log("Author Affiliation Input: ", authorAffiliation);
+                console.log("Author Identifier Scheme Text: ", authorIdentifierSchemeText);
+                console.log("Author Identifier Scheme Select: ", authorIdentifierSchemeSelect);
+                console.log("Author Identifier Input: ", authorIdentifier);
+            } else {
+                console.log("The second sibling's first child does not have enough children.");
+            }
         } else {
             console.log("The parent does not have at least two siblings.");
         }
