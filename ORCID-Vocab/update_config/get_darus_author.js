@@ -12,8 +12,6 @@ function expandPeople() {
     console.log("expandPeople function called.");
     
     $(authorParentSelector).each(function() {
-        // var authorParentElement = this;
-
         var parentElement = $(authorParentSelector).parent();
         var parentSiblings = parentElement.siblings();
         
@@ -40,27 +38,6 @@ function expandPeople() {
         } else {
             console.log("The parent does not have at least two siblings.");
         }
-            
-
-        // // Get the parent of the div#metadata_author
-        // var parentElement = $(authorSelector).parent();
-        
-        // // Get the siblings of the parent element
-        // parentElement.siblings().each(function() {
-        //     var siblingElement = $(this);
-        //     console.log("Parent's sibling element: ", siblingElement);
-
-        //     var numChildren = siblingElement.children.length;
-        //     console.log("Number of children in authorElement: ", numChildren);
-            
-        //     // Iterate through the children of each sibling
-        //     siblingElement.children().each(function() {
-        //         var childElement = $(this);
-        //         console.log("child element: ", childElement);
-        //     });
-        // });
-        
-        
 
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
@@ -125,23 +102,6 @@ function expandPeople() {
 
 function updatePeopleInputs() {
     console.log("updatePeopleInputs function called.");
-
-    // $(authorSelector).each(function() {
-    //     var authorElement = this;
-        // // Get all div children of authorElement
-        // var divChildren = $(authorElement).find('div');
-        // console.log("Div children of Author Element:", divChildren);
-
-        // // 2nd child contains the input field for author affiliation
-        // let authorAffiliation = authorElement.children[1].querySelector('input');
-        // // 3rd child is the identifier scheme wrapper and contains multiple elements:
-        // // - a label element that shows the current selected value
-        // let authorIdentifierSchemeText = authorElement.children[2].querySelector('.ui-selectonemenu-label');
-        // // - a select element that contains the drop-down
-        // let authorIdentifierSchemeSelect = authorElement.children[2].querySelector('select');
-        // // 4th child contains the input element for the identifier
-        // let authorIdentifier = authorElement.children[3].querySelector('input');
-
         
         $(authorElement).find(personInputSelector).each(function() {
             var personInput = this;
