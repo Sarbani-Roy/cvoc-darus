@@ -20,7 +20,7 @@ function expandPeople() {
         if (parentSiblings.length >= 2) {
             var secondSibling = $(parentSiblings[1]);
             var firstChildOfSecondSibling = secondSibling.children().first();
-            var authorElement = firstChildOfSecondSibling
+            const authorElement = firstChildOfSecondSibling
 
             console.log("Parent's second sibling's first child element: ", authorElement);
 
@@ -132,8 +132,8 @@ function expandPeople() {
 function updatePeopleInputs() {
     console.log("updatePeopleInputs function called.");
 
-    $(authorSelector).each(function() {
-        var authorElement = this;
+    // $(authorSelector).each(function() {
+    //     var authorElement = this;
         // // Get all div children of authorElement
         // var divChildren = $(authorElement).find('div');
         // console.log("Div children of Author Element:", divChildren);
@@ -283,7 +283,7 @@ function updatePeopleInputs() {
                 });
             }
         });
-    });
+    // });
 }
 
 function markMatch(text, term) {
