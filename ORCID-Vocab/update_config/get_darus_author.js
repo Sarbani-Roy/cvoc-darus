@@ -1,4 +1,4 @@
-var authorSelector = "div#metadata_author";
+var authorSelector = "div#metadata_author".parent().siblings().children().first();
 var personSelector = "span[data-cvoc-protocol='orcid']";
 var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
@@ -13,26 +13,26 @@ function expandPeople() {
     
     $(authorSelector).each(function() {
         var authorElement = this;
-        // var numChildren = authorElement.children.length;
-        // console.log("Number of children in authorElement: ", numChildren);
+        var numChildren = authorElement.children.length;
+        console.log("Number of children in authorElement: ", numChildren);
 
-        // Get the parent of the div#metadata_author
-        var parentElement = $(authorSelector).parent();
+        // // Get the parent of the div#metadata_author
+        // var parentElement = $(authorSelector).parent();
         
-        // Get the siblings of the parent element
-        parentElement.siblings().each(function() {
-            var siblingElement = $(this);
-            console.log("Parent's sibling element: ", siblingElement);
+        // // Get the siblings of the parent element
+        // parentElement.siblings().each(function() {
+        //     var siblingElement = $(this);
+        //     console.log("Parent's sibling element: ", siblingElement);
 
-            var numChildren = siblingElement.children.length;
-            console.log("Number of children in authorElement: ", numChildren);
+        //     var numChildren = siblingElement.children.length;
+        //     console.log("Number of children in authorElement: ", numChildren);
             
-            // Iterate through the children of each sibling
-            siblingElement.children().each(function() {
-                var childElement = $(this);
-                console.log("Child element: ", childElement);
-            });
-        });
+        //     // Iterate through the children of each sibling
+        //     siblingElement.children().each(function() {
+        //         var childElement = $(this);
+        //         console.log("Child element: ", childElement);
+        //     });
+        // });
         
         // // 2nd child contains the input field for author affiliation
         // let authorAffiliation = authorElement.children[1].querySelector('input');
