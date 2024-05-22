@@ -34,7 +34,7 @@ function expandPeople() {
                 // - a select element that contains the drop-down
                 var authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
                 // 4th child contains the input element for the identifier
-                var authorIdentifier = fauthorElement.children().eq(3).find('input');
+                var authorIdentifier = authorElement.children().eq(3).find('input');
 
                 console.log("Author Affiliation Input: ", authorAffiliation);
                 console.log("Author Identifier Scheme Text: ", authorIdentifierSchemeText);
