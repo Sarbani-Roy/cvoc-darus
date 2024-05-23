@@ -162,6 +162,8 @@ function updatePeopleInputs() {
                     }
                 }
             });
+            console.log($(personInput).val())
+            console.log(data.id)
             var id = $(personInput).val();
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
@@ -195,6 +197,8 @@ function updatePeopleInputs() {
             }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
+                console.log(data.id)
+                console.log(data.text)
                 if (data.id != data.text) {
                     $("input[data-person='" + num + "']").val("https://orcid.org/" + data.id);
                 } else {
