@@ -105,7 +105,8 @@ function updatePeopleInputs() {
                         $(authorIdentifierSchemeSelect).val("ORCID").change();
                         $(authorIdentifierSchemeText).text("ORCID");
                         $(authorIdentifier).val(orcid);
-                        return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
+                        console.log(item.text)
+                        //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
                     return item.text;
                 },
@@ -170,7 +171,7 @@ function updatePeopleInputs() {
                     },
                     success: function(person, status) {
                         var name = person.name['given-names'].value + " " + person.name['family-name'].value;
-                        $(authorName).val(name);
+                        // $(authorName).val(name);
                         var text = name + ", " + id;
                         if (person.emails.email.length > 0) {
                             text = text + ", " + person.emails.email[0].email;
