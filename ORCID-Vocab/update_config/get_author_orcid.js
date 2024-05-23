@@ -162,7 +162,8 @@ function updatePeopleInputs() {
                     }
                 }
             });
-            var id = $(personInput).val();
+            var id = $(authorIdentifier).val()
+            //var id = $(personInput).val();
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
                 $.ajax({
@@ -197,11 +198,14 @@ function updatePeopleInputs() {
                 var data = e.params.data;
                 console.log(data.id)
                 console.log(data.text)
-                if (data.id != data.text) {
-                    $("input[data-person='" + num + "']").val("https://orcid.org/" + data.id);
-                } else {
-                    $("input[data-person='" + num + "']").val(data.id);
-                }
+                var authorName = item.text.split(',')[0];
+                item.text = authorName
+                $("input[data-person='" + num + "']").val("https://orcid.org/" + data.text);
+                // if (data.id != data.text) {
+                //     $("input[data-person='" + num + "']").val("https://orcid.org/" + data.id);
+                // } else {
+                //     $("input[data-person='" + num + "']").val(data.id);
+                // }
             });
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-person='" + num + "']").attr('value', '');
