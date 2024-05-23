@@ -19,7 +19,7 @@ function expandPeople() {
             var firstChildOfSecondSibling = secondSibling.children().first();
             authorElement = firstChildOfSecondSibling;
             if (authorElement.children().length > 3) {
-                authorName = authorElement.children().eq(0).find('input');
+                //authorName = authorElement.children().eq(0).find('input');
                 authorAffiliation = authorElement.children().eq(1).find('input');
                 authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
                 authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
