@@ -31,6 +31,7 @@ function expandPeople() {
             var personElement = this;
             if (!$(personElement).hasClass('expanded')) {
                 $(personElement).addClass('expanded');
+                console.log(id)
                 //var id = personElement.textContent;
                 var id = $(authorIdentifier).val()
                 if (id.startsWith("https://orcid.org/")) {
