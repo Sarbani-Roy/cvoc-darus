@@ -101,19 +101,19 @@ function updatePeopleInputs() {
                     return $result;
                 },
                 templateSelection: function(item) {
-                    //console.log(item)
+                    console.log(item)
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
                         $(authorIdentifierSchemeSelect).val("ORCID").change();
                         $(authorIdentifierSchemeText).text("ORCID");
                         $(authorIdentifier).val(orcid);
-                        console.log(item.text)
+                        console.log(item)
                         //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
                     var authorName = item.text.split(',')[0];
                     item.text = authorName
-                    console.log(item.text)
+                    console.log(item)
                     return item.text;
                 },
                 language: {
@@ -169,34 +169,35 @@ function updatePeopleInputs() {
             //var id = $(personInput).val();
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
-                $.ajax({
-                    type: "GET",
-                    url: "https://pub.orcid.org/v3.0/" + id + "/person",
-                    dataType: 'json',
-                    headers: {
-                        'Accept': 'application/json'
-                    },
-                    success: function(person, status) {
-                        var name = person.name['given-names'].value + " " + person.name['family-name'].value;
-                        // $(authorName).val(name);
-                        var text = name + ", " + id;
-                        if (person.emails.email.length > 0) {
-                            text = text + ", " + person.emails.email[0].email;
-                        }
-                        var newOption = new Option(text, id, true, true);
-                        newOption.title = 'Open in new tab to view ORCID page';
-                        $('#' + selectId).append(newOption).trigger('change');
-                    },
-                    failure: function(jqXHR, textStatus, errorThrown) {
-                        if (jqXHR.status != 404) {
-                            console.error("The following error occurred: " + textStatus, errorThrown);
-                        }
-                    }
-                });
-            } else {
-                var newOption = new Option(id, id, true, true);
-                $('#' + selectId).append(newOption).trigger('change');
             }
+            $.ajax({
+                type: "GET",
+                url: "https://pub.orcid.org/v3.0/" + id + "/person",
+                dataType: 'json',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                success: function(person, status) {
+                    var name = person.name['given-names'].value + " " + person.name['family-name'].value;
+                    // $(authorName).val(name);
+                    var text = name + ", " + id;
+                    if (person.emails.email.length > 0) {
+                        text = text + ", " + person.emails.email[0].email;
+                    }
+                    var newOption = new Option(text, id, true, true);
+                    newOption.title = 'Open in new tab to view ORCID page';
+                    $('#' + selectId).append(newOption).trigger('change');
+                },
+                failure: function(jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status != 404) {
+                        console.error("The following error occurred: " + textStatus, errorThrown);
+                    }
+                }
+            });
+            // } else {
+            //     var newOption = new Option(id, id, true, true);
+            //     $('#' + selectId).append(newOption).trigger('change');
+            // }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
                 console.log(data.id)
