@@ -36,6 +36,7 @@ function expandPeople() {
                 if (id.startsWith("https://orcid.org/")) {
                     id = id.substring(18);
                 }
+                console.log(id)
                 $.ajax({
                     type: "GET",
                     url: "https://pub.orcid.org/v3.0/" + id + "/person",
@@ -45,6 +46,7 @@ function expandPeople() {
                     },
                     success: function(person, status) {
                         var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
+                        console.log(name)
                         var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
                         personElement.innerHTML = html;
 
