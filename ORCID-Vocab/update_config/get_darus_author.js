@@ -19,7 +19,7 @@ function expandPeople() {
             var firstChildOfSecondSibling = secondSibling.children().first();
             authorElement = firstChildOfSecondSibling;
             if (authorElement.children().length > 3) {
-                authorName = authorElement.children().eq(0).find('input');
+                //authorName = authorElement.children().eq(0).find('input');
                 authorAffiliation = authorElement.children().eq(1).find('input');
                 authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
                 authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
@@ -108,6 +108,9 @@ function updatePeopleInputs() {
                         console.log(item.text)
                         //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
+                    var authorName = item.text.split(',')[0];
+                    item.text = authorName
+                    console.log(item.text)
                     return item.text;
                 },
                 language: {
