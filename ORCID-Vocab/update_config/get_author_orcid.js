@@ -98,7 +98,6 @@ function updatePeopleInputs() {
                         return item.text;
                     }
                     var $result = markMatch(item.text, term);
-                    console.log($result)
                     return $result;
                 },
                 templateSelection: function(item) {
@@ -202,9 +201,9 @@ function updatePeopleInputs() {
                 var data = e.params.data;
                 console.log(data.id)
                 console.log(data.text)
-                var authorName = item.text.split(',')[0];
-                item.text = authorName
-                $("input[data-person='" + num + "']").val("https://orcid.org/" + data.text);
+                var authorName = data.text.split(',')[0];
+                data.text = authorName
+                $("input[data-person='" + num + "']").val(data.text);
                 // if (data.id != data.text) {
                 //     $("input[data-person='" + num + "']").val("https://orcid.org/" + data.id);
                 // } else {
