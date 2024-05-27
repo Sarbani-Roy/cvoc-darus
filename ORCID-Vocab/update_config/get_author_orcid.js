@@ -25,17 +25,7 @@ function expandPeople() {
             authorIdentifier = authorElement.children().eq(3).find('input');
             }
         });
-        // var firstChildOfSecondSibling = secondSibling.children().first();
-        // authorElement = firstChildOfSecondSibling;
-        // if (authorElement.children().length > 3) {
-        //     //authorName = authorElement.children().eq(0).find('input');
-        //     authorAffiliation = authorElement.children().eq(1).find('input');
-        //     authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
-        //     authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
-        //     authorIdentifier = authorElement.children().eq(3).find('input');
-        // } 
         
-
         // $(authorElement).find(personSelector).each(function() {
         //     var personElement = this;
         //     if (!$(personElement).hasClass('expanded')) {
@@ -110,13 +100,15 @@ function updatePeopleInputs() {
                     return $result;
                 },
                 templateSelection: function(item) {
-                    // console.log(item)
+                    console.log(item)
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
                         $(authorIdentifierSchemeSelect).val("ORCID").change();
                         $(authorIdentifierSchemeText).text("ORCID");
                         $(authorIdentifier).val(orcid);
+
+                        console.log($(authorAffiliation).val())
                         // console.log(item)
                         //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
