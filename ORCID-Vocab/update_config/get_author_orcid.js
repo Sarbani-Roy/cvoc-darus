@@ -16,7 +16,7 @@ function expandPeople() {
         var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
             
         compoundFieldElement.each(function() {
-        var authorElement = $(this);
+        authorElement = $(this);
         if (authorElement.children().length > 3) {
             //authorName = authorElement.children().eq(0).find('input');
             authorAffiliation = authorElement.children().eq(1).find('input');
