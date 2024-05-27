@@ -21,7 +21,7 @@ function expandPeople() {
             //authorName = authorElement.children().eq(0).find('input');
             authorAffiliation = authorElement.children().eq(1).find('input');
             authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
-            authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
+            authorIdentifierSchemeSelect = authorElement.children().eq(2).find('input');
             authorIdentifier = authorElement.children().eq(3).find('input');
             }
         });
