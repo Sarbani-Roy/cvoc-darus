@@ -177,7 +177,7 @@ function updatePeopleInputs() {
             }
             $.ajax({
                 type: "GET",
-                url: "https://pub.orcid.org/v3.0/expanded-search" + id + "/person",
+                url: "https://pub.orcid.org/v3.0/" + id + "/person",
                 dataType: 'json',
                 headers: {
                     'Accept': 'application/json'
