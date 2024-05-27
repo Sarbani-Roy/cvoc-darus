@@ -21,9 +21,13 @@ function expandPeople() {
             //authorName = authorElement.children().eq(0).find('input');
             authorAffiliation = authorElement.children().eq(1).find('input');
             authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
-            authorIdentifierSchemeSelect = authorElement.children().eq(2).find('input');
+            authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
+            authorIdentifierSchemeInput = authorElement.children().eq(2).find('input');
             authorIdentifier = authorElement.children().eq(3).find('input');
             }
+            console.log(authorIdentifierSchemeSelect)
+            console.log(authorIdentifierSchemeText)
+            console.log(authorIdentifierSchemeInput)
         });
         
         // $(authorElement).find(personSelector).each(function() {
@@ -104,9 +108,8 @@ function updatePeopleInputs() {
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
-                        $(authorIdentifierSchemeSelect).val("ORCID")
-                        // .change();
-                        // $(authorIdentifierSchemeText).val("ORCID");
+                        $(authorIdentifierSchemeSelect).val("ORCID").change();
+                        $(authorIdentifierSchemeText).text("ORCID");
                         $(authorIdentifier).val(orcid);
 
                         if ($(authorAffiliation).val() === "") {
