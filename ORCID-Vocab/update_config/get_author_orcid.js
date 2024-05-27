@@ -110,6 +110,7 @@ function updatePeopleInputs() {
 
                         if ($(authorAffiliation).val() === "") {
                             console.log("Author affiliation is an empty string");
+                            $(authorAffiliation).val(item.affiliation)
                         } else {
                             console.log("Author affiliation: " + $(authorAffiliation).val());
                         }
@@ -163,7 +164,8 @@ function updatePeopleInputs() {
                                             ((x.email.length > 0) ? ", " + x.email[0] : "") +
                                             ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
                                         id: x['orcid-id'],
-                                        title: 'Open in new tab to view ORCID page'
+                                        title: 'Open in new tab to view ORCID page',
+                                        affiliation: x['institution-name'] ? x['institution-name'].join(", ") : ""
                                     };
                                 })
                         };
@@ -175,30 +177,32 @@ function updatePeopleInputs() {
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
             }
-            $.ajax({
-                type: "GET",
-                url: "https://pub.orcid.org/v3.0/" + id + "/person",
-                dataType: 'json',
-                headers: {
-                    'Accept': 'application/json'
-                },
-                success: function(person, status) {
-                    var name = person.name['given-names'].value + " " + person.name['family-name'].value;
-                    // $(authorName).val(name);
-                    var text = name + ", " + id;
-                    if (person.emails.email.length > 0) {
-                        text = text + ", " + person.emails.email[0].email;
+            if (id) {
+                $.ajax({
+                    type: "GET",
+                    url: "https://pub.orcid.org/v3.0/" + id + "/person",
+                    dataType: 'json',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function(person, status) {
+                        var name = person.name['given-names'].value + " " + person.name['family-name'].value;
+                        // $(authorName).val(name);
+                        var text = name + ", " + id;
+                        if (person.emails.email.length > 0) {
+                            text = text + ", " + person.emails.email[0].email;
+                        }
+                        var newOption = new Option(text, id, true, true);
+                        newOption.title = 'Open in new tab to view ORCID page';
+                        $('#' + selectId).append(newOption).trigger('change');
+                    },
+                    failure: function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status != 404) {
+                            console.error("The following error occurred: " + textStatus, errorThrown);
+                        }
                     }
-                    var newOption = new Option(text, id, true, true);
-                    newOption.title = 'Open in new tab to view ORCID page';
-                    $('#' + selectId).append(newOption).trigger('change');
-                },
-                failure: function(jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status != 404) {
-                        console.error("The following error occurred: " + textStatus, errorThrown);
-                    }
-                }
-            });
+                });
+            }
             // } else {
             //     var newOption = new Option(id, id, true, true);
             //     $('#' + selectId).append(newOption).trigger('change');
