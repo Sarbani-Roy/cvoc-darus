@@ -12,18 +12,28 @@ function expandPeople() {
     
     $(authorParentSelector).each(function() {
         var parentElement = $(authorParentSelector).parent();
-        // var parentSiblings = parentElement.siblings();
-        var secondSibling = parentElement.siblings('.dataset-field-values'); // Select the sibling with the class 'dataset-field-values'
-        //var secondSibling = $(parentSiblings[1]);
-        var firstChildOfSecondSibling = secondSibling.children().first();
-        authorElement = firstChildOfSecondSibling;
+        var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+        var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+            
+        compoundFieldElement.each(function() {
+        var authorElement = $(this);
         if (authorElement.children().length > 3) {
             //authorName = authorElement.children().eq(0).find('input');
             authorAffiliation = authorElement.children().eq(1).find('input');
             authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
             authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
             authorIdentifier = authorElement.children().eq(3).find('input');
-        } 
+            }
+        });
+        // var firstChildOfSecondSibling = secondSibling.children().first();
+        // authorElement = firstChildOfSecondSibling;
+        // if (authorElement.children().length > 3) {
+        //     //authorName = authorElement.children().eq(0).find('input');
+        //     authorAffiliation = authorElement.children().eq(1).find('input');
+        //     authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
+        //     authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
+        //     authorIdentifier = authorElement.children().eq(3).find('input');
+        // } 
         
 
         // $(authorElement).find(personSelector).each(function() {
