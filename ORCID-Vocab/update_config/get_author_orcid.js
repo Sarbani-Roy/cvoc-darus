@@ -38,7 +38,7 @@ function expandPeople() {
         //         console.log(id)
         //         $.ajax({
         //             type: "GET",
-        //             url: "https://pub.orcid.org/v3.0/" + id + "/person",
+        //             url: "https://pub.orcid.org/v3.0/expanded-search" + id + "/person",
         //             dataType: 'json',
         //             headers: {
         //                 'Accept': 'application/json'
@@ -108,7 +108,11 @@ function updatePeopleInputs() {
                         $(authorIdentifierSchemeText).text("ORCID");
                         $(authorIdentifier).val(orcid);
 
-                        console.log($(authorAffiliation).val())
+                        if ($(authorAffiliation).val() === "") {
+                            console.log("Author affiliation is an empty string");
+                        } else {
+                            console.log("Author affiliation: " + $(authorAffiliation).val());
+                        }
                         // console.log(item)
                         //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
@@ -173,7 +177,7 @@ function updatePeopleInputs() {
             }
             $.ajax({
                 type: "GET",
-                url: "https://pub.orcid.org/v3.0/" + id + "/person",
+                url: "https://pub.orcid.org/v3.0/expanded-search" + id + "/person",
                 dataType: 'json',
                 headers: {
                     'Accept': 'application/json'
