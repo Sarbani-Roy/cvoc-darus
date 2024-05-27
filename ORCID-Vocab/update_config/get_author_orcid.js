@@ -104,8 +104,8 @@ function updatePeopleInputs() {
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
-                        $(authorIdentifierSchemeSelect).val("ORCID").change();
-                        $(authorIdentifierSchemeText).text("ORCID");
+                        // $(authorIdentifierSchemeSelect).val("ORCID").change();
+                        $(authorIdentifierSchemeText).val("ORCID");
                         $(authorIdentifier).val(orcid);
 
                         if ($(authorAffiliation).val() === "") {
