@@ -104,7 +104,6 @@ function updatePeopleInputs() {
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log(item)
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
@@ -113,17 +112,12 @@ function updatePeopleInputs() {
                         $(authorIdentifier).val(orcid);
 
                         if ($(authorAffiliation).val() === "") {
-                            console.log("Author affiliation is an empty string");
                             $(authorAffiliation).val(item.affiliation)
-                        } else {
-                            console.log("Author affiliation: " + $(authorAffiliation).val());
                         }
-                        // console.log(item)
                         //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
                     var authorName = item.text.split(',')[0];
                     item.text = authorName
-                    // console.log(item)
                     return item.text;
                 },
                 language: {
@@ -213,8 +207,6 @@ function updatePeopleInputs() {
             // }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
-                // console.log(data.id)
-                // console.log(data.text)
                 var authorName = data.text.split(',')[0];
                 data.text = authorName
                 $("input[data-person='" + num + "']").val(data.text);
