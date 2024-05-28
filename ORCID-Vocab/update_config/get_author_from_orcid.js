@@ -110,7 +110,6 @@ function updatePeopleInputs() {
                         if ($(authorAffiliation).val() === "" && item.affiliation) {
                             $(authorAffiliation).val(item.affiliation)
                         }
-                        //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
                     var authorName = item.text.split(',')[0];
                     item.text = authorName
@@ -151,7 +150,7 @@ function updatePeopleInputs() {
                             results: data['expanded-result']
                                 .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
                                 .map(function(x) {
-                                    // Handle institution names correctly by using the last one
+                                    // Institution names by using the last one
                                     let institutionNames = x['institution-name'];
                                     let lastInstitution = Array.isArray(institutionNames) ? institutionNames[institutionNames.length - 1] : "";
                                     return {
@@ -170,7 +169,6 @@ function updatePeopleInputs() {
                 }
             });
             var id = $(authorIdentifier).val()
-            //var id = $(personInput).val();
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
             }
@@ -200,20 +198,11 @@ function updatePeopleInputs() {
                     }
                 });
             }
-            // } else {
-            //     var newOption = new Option(id, id, true, true);
-            //     $('#' + selectId).append(newOption).trigger('change');
-            // }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
                 var authorName = data.text.split(',')[0];
                 data.text = authorName
                 $("input[data-person='" + num + "']").val(data.text);
-                // if (data.id != data.text) {
-                //     $("input[data-person='" + num + "']").val("https://orcid.org/" + data.id);
-                // } else {
-                //     $("input[data-person='" + num + "']").val(data.id);
-                // }
             });
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-person='" + num + "']").attr('value', '');
