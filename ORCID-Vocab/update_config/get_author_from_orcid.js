@@ -108,7 +108,7 @@ function updatePeopleInputs() {
                             $(authorIdentifierSchemeSelect).val(option.value);
                             $(authorIdentifierSchemeText).text("ORCID");
                         }    
-                        if ($(authorAffiliation).val() === "") {
+                        if ($(authorAffiliation).val() === "" && item.affiliation) {
                             $(authorAffiliation).val(item.affiliation)
                         }
                         //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
@@ -152,16 +152,20 @@ function updatePeopleInputs() {
                             results: data['expanded-result']
                                 .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
                                 .map(function(x) {
-                                    console.log(x['institution-name'].pop())
+                                    // Handle institution names correctly by using the last one
+                                    let institutionNames = x['institution-name'];
+                                    console.log(institutionNames)
+                                    let lastInstitution = Array.isArray(institutionNames) ? institutionNames[institutionNames.length - 1] : "";
+                                    console.log(lastInstitution)
                                     return {
                                         text: x['given-names'] + " " + x['family-names'] +
                                             ", " +
                                             x['orcid-id'] +
                                             ((x.email.length > 0) ? ", " + x.email[0] : "") +
-                                            ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
+                                            (lastInstitution ? ", " + lastInstitution : ""),
                                         id: x['orcid-id'],
                                         title: 'Open in new tab to view ORCID page',
-                                        affiliation: (x['institution-name'].length > 0) ? x['institution-name'].pop() : ""
+                                        affiliation: lastInstitution
                                     };
                                 })
                         };
