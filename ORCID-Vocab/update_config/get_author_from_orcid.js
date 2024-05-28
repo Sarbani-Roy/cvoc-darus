@@ -8,8 +8,6 @@ $(document).ready(function() {
 });
 
 function expandPeople() {
-    console.log("expandPeople function called.");
-    
     $(authorParentSelector).each(function() {
         var parentElement = $(authorParentSelector).parent();
         var fieldValuesElement = parentElement.siblings('.dataset-field-values');
@@ -25,9 +23,6 @@ function expandPeople() {
             authorIdentifierSchemeInput = authorElement.children().eq(2).find('input');
             authorIdentifier = authorElement.children().eq(3).find('input');
             }
-            console.log(authorIdentifierSchemeSelect)
-            console.log(authorIdentifierSchemeText)
-            console.log(authorIdentifierSchemeInput)
         });
         
         // $(authorElement).find(personSelector).each(function() {
@@ -83,7 +78,6 @@ function expandPeople() {
 }
 
 function updatePeopleInputs() {
-    console.log("updatePeopleInputs function called.");       
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
         if (!personInput.hasAttribute('data-person')) {
@@ -108,11 +102,7 @@ function updatePeopleInputs() {
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
                         $(authorIdentifier).val(orcid);
-
-                        // // Find the 'ORCID' option in the select element
                         let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
-                        console.log(option)
-                        // // Set the select element's value to the found option's value
                         if (option) {
                             $(authorIdentifierSchemeSelect).val(option.value);
                             $(authorIdentifierSchemeText).text("ORCID");
@@ -132,7 +122,7 @@ function updatePeopleInputs() {
                         return 'Search by name, email, or ORCID…';
                     }
                 },
-                placeholder: personInput.hasAttribute("data-cvoc-placeholder") ? $(personInput).attr('data-cvoc-placeholder') : "Select a Person",
+                placeholder: personInput.hasAttribute("data-cvoc-placeholder") ? $(personInput).attr('data-cvoc-placeholder') : "Select an Author",
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
