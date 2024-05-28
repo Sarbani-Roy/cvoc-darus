@@ -8,76 +8,76 @@ $(document).ready(function() {
 });
 
 function expandPeople() {
-    console.log("expandPeople function called.");
-    
     $(authorParentSelector).each(function() {
         var parentElement = $(authorParentSelector).parent();
-        var parentSiblings = parentElement.siblings();
-        
-        if (parentSiblings.length >= 2) {
-            var secondSibling = $(parentSiblings[1]);
-            var firstChildOfSecondSibling = secondSibling.children().first();
-            authorElement = firstChildOfSecondSibling;
-            if (authorElement.children().length > 3) {
-                authorName = authorElement.children().eq(0).find('input');
-                authorAffiliation = authorElement.children().eq(1).find('input');
-                authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
-                authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select');
-                authorIdentifier = authorElement.children().eq(3).find('input');
-            } 
-        }
-
-        $(authorElement).find(personSelector).each(function() {
-            var personElement = this;
-            if (!$(personElement).hasClass('expanded')) {
-                $(personElement).addClass('expanded');
-                var id = personElement.textContent;
-                if (id.startsWith("https://orcid.org/")) {
-                    id = id.substring(18);
-                }
-                $.ajax({
-                    type: "GET",
-                    url: "https://pub.orcid.org/v3.0/" + id + "/person",
-                    dataType: 'json',
-                    headers: {
-                        'Accept': 'application/json'
-                    },
-                    success: function(person, status) {
-                        var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
-                        var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
-                        personElement.innerHTML = html;
-
-                        if (person.emails.email.length > 0) {
-                            $(personElement).popover({
-                                content: person.emails.email[0].email,
-                                placement: 'top',
-                                template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-                            });
-                            personElement.onmouseenter = function() {
-                                $(this).popover('show');
-                            };
-                            personElement.onmouseleave = function() {
-                                $(this).popover('hide');
-                            };
-                        }
-                        if (localStorage.length > 100) {
-                            localStorage.removeItem(localStorage.key(0));
-                        }
-                        localStorage.setItem(id, name);
-                    },
-                    failure: function(jqXHR, textStatus, errorThrown) {
-                        if (jqXHR.status != 404) {
-                            console.error("The following error occurred: " + textStatus, errorThrown);
-                        }
-                    }
-                });
+        var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+        var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+            
+        compoundFieldElement.each(function() {
+        authorElement = $(this);
+        if (authorElement.children().length > 3) {
+            //authorName = authorElement.children().eq(0).find('input');
+            authorAffiliation = authorElement.children().eq(1).find('input');
+            authorIdentifierSchemeText = authorElement.children().eq(2).find('.ui-selectonemenu-label');
+            authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select').get(0);
+            authorIdentifierSchemeInput = authorElement.children().eq(2).find('input');
+            authorIdentifier = authorElement.children().eq(3).find('input');
             }
         });
+        
+        // $(authorElement).find(personSelector).each(function() {
+        //     var personElement = this;
+        //     if (!$(personElement).hasClass('expanded')) {
+        //         $(personElement).addClass('expanded');
+        //         //var id = personElement.textContent;
+        //         var id = $(authorIdentifier).val()
+        //         if (id.startsWith("https://orcid.org/")) {
+        //             id = id.substring(18);
+        //         }
+        //         console.log(id)
+        //         $.ajax({
+        //             type: "GET",
+        //             url: "https://pub.orcid.org/v3.0/expanded-search" + id + "/person",
+        //             dataType: 'json',
+        //             headers: {
+        //                 'Accept': 'application/json'
+        //             },
+        //             success: function(person, status) {
+        //                 var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
+        //                 console.log(name)
+        //                 var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
+        //                 personElement.innerHTML = html;
+
+        //                 if (person.emails.email.length > 0) {
+        //                     $(personElement).popover({
+        //                         content: person.emails.email[0].email,
+        //                         placement: 'top',
+        //                         template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+        //                     });
+        //                     personElement.onmouseenter = function() {
+        //                         $(this).popover('show');
+        //                     };
+        //                     personElement.onmouseleave = function() {
+        //                         $(this).popover('hide');
+        //                     };
+        //                 }
+        //                 if (localStorage.length > 100) {
+        //                     localStorage.removeItem(localStorage.key(0));
+        //                 }
+        //                 localStorage.setItem(id, name);
+        //             },
+        //             failure: function(jqXHR, textStatus, errorThrown) {
+        //                 if (jqXHR.status != 404) {
+        //                     console.error("The following error occurred: " + textStatus, errorThrown);
+        //                 }
+        //             }
+        //         });
+        //     }
+        // });
     });
 }
 
 function updatePeopleInputs() {
-    console.log("updatePeopleInputs function called.");       
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
         if (!personInput.hasAttribute('data-person')) {
@@ -98,15 +98,21 @@ function updatePeopleInputs() {
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log(item)
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
-                        $(authorIdentifierSchemeSelect).val("ORCID").change();
-                        $(authorIdentifierSchemeText).text("ORCID");
                         $(authorIdentifier).val(orcid);
-                        return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
+                        let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
+                        if (option) {
+                            $(authorIdentifierSchemeSelect).val(option.value);
+                            $(authorIdentifierSchemeText).text("ORCID");
+                        }    
+                        if ($(authorAffiliation).val() === "" && item.affiliation) {
+                            $(authorAffiliation).val(item.affiliation)
+                        }
                     }
+                    var authorName = item.text.split(',')[0];
+                    item.text = authorName
                     return item.text;
                 },
                 language: {
@@ -114,7 +120,7 @@ function updatePeopleInputs() {
                         return 'Search by name, email, or ORCID…';
                     }
                 },
-                placeholder: personInput.hasAttribute("data-cvoc-placeholder") ? $(personInput).attr('data-cvoc-placeholder') : "Select a Person",
+                placeholder: personInput.hasAttribute("data-cvoc-placeholder") ? $(personInput).attr('data-cvoc-placeholder') : "Select an Author",
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
@@ -144,23 +150,29 @@ function updatePeopleInputs() {
                             results: data['expanded-result']
                                 .sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
                                 .map(function(x) {
+                                    // Institution names by using the last one
+                                    let institutionNames = x['institution-name'];
+                                    let lastInstitution = Array.isArray(institutionNames) ? institutionNames[institutionNames.length - 1] : "";
                                     return {
                                         text: x['given-names'] + " " + x['family-names'] +
                                             ", " +
                                             x['orcid-id'] +
                                             ((x.email.length > 0) ? ", " + x.email[0] : "") +
-                                            ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
+                                            (lastInstitution ? ", " + lastInstitution : ""),
                                         id: x['orcid-id'],
-                                        title: 'Open in new tab to view ORCID page'
+                                        title: 'Open in new tab to view ORCID page',
+                                        affiliation: lastInstitution
                                     };
                                 })
                         };
                     }
                 }
             });
-            var id = $(personInput).val();
+            var id = $(authorIdentifier).val()
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
+            }
+            if (id) {
                 $.ajax({
                     type: "GET",
                     url: "https://pub.orcid.org/v3.0/" + id + "/person",
@@ -185,17 +197,12 @@ function updatePeopleInputs() {
                         }
                     }
                 });
-            } else {
-                var newOption = new Option(id, id, true, true);
-                $('#' + selectId).append(newOption).trigger('change');
             }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
-                if (data.id != data.text) {
-                    $("input[data-person='" + num + "']").val("https://orcid.org/" + data.id);
-                } else {
-                    $("input[data-person='" + num + "']").val(data.id);
-                }
+                var authorName = data.text.split(',')[0];
+                data.text = authorName
+                $("input[data-person='" + num + "']").val(data.text);
             });
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-person='" + num + "']").attr('value', '');
