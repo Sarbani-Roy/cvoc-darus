@@ -111,8 +111,8 @@ function updatePeopleInputs() {
                         $(authorIdentifier).val(orcid);
 
                         // // Find the 'ORCID' option in the select element
-                        // let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
-                        
+                        let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
+                        console.log(option)
                         // // Set the select element's value to the found option's value
                         // if (option) {
                         //     $(authorIdentifierSchemeSelect).val(option.value);
