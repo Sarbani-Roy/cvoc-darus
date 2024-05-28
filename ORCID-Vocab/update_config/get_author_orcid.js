@@ -105,10 +105,17 @@ function updatePeopleInputs() {
                 },
                 templateSelection: function(item) {
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
+                    console.log(pos)
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
-                        $(authorIdentifierSchemeSelect).val("ORCID").change();
-                        $(authorIdentifierSchemeText).text("ORCID");
+                        // $(authorIdentifierSchemeSelect).val("ORCID").change();
+                        // $(authorIdentifierSchemeText).text("ORCID");
+
+                        let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
+                        // Then get the value from that option and set the select element's value with it
+                        authorIdentifierSchemeSelect.value = option.getAttribute('value');
+                        // But you should also set the label field or your selection will not display
+                        authorIdentifierSchemeText.textContent = 'ORCID';
                         $(authorIdentifier).val(orcid);
 
                         if ($(authorAffiliation).val() === "") {
@@ -116,6 +123,13 @@ function updatePeopleInputs() {
                         }
                         //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
+                    else {
+                        // clear the orcid input box and dropdown box
+                        authorIdentifier.value = '';
+                        // Default text is in the first option
+                        authorIdentifierSchemeText.textContent = authorIdentifierSchemeSelect.children[0].text;
+                        authorIdentifierSchemeSelect.value = '';
+                      }
                     var authorName = item.text.split(',')[0];
                     item.text = authorName
                     return item.text;
