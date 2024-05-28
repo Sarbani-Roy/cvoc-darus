@@ -105,7 +105,6 @@ function updatePeopleInputs() {
                 },
                 templateSelection: function(item) {
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
-                    console.log(pos)
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
                         $(authorIdentifier).val(orcid);
@@ -114,10 +113,10 @@ function updatePeopleInputs() {
                         let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
                         console.log(option)
                         // // Set the select element's value to the found option's value
-                        // if (option) {
-                        //     $(authorIdentifierSchemeSelect).val(option.value);
-                        //     $(authorIdentifierSchemeText).text("ORCID");
-                        // }    
+                        if (option) {
+                            $(authorIdentifierSchemeSelect).val(option.value);
+                            $(authorIdentifierSchemeText).text("ORCID");
+                        }    
 
                         if ($(authorAffiliation).val() === "") {
                             $(authorAffiliation).val(item.affiliation)
