@@ -98,7 +98,6 @@ function updatePeopleInputs() {
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log(item)
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
@@ -154,9 +153,7 @@ function updatePeopleInputs() {
                                 .map(function(x) {
                                     // Handle institution names correctly by using the last one
                                     let institutionNames = x['institution-name'];
-                                    console.log(institutionNames)
                                     let lastInstitution = Array.isArray(institutionNames) ? institutionNames[institutionNames.length - 1] : "";
-                                    console.log(lastInstitution)
                                     return {
                                         text: x['given-names'] + " " + x['family-names'] +
                                             ", " +
