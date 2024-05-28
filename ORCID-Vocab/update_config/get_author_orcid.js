@@ -105,21 +105,41 @@ function updatePeopleInputs() {
                 },
                 templateSelection: function(item) {
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
-                    console.log(pos)
+                    console.log(personalbar)
                     if (pos >= 0) {
+                        // var orcid = item.text.substr(pos, 19);
+                        // // $(authorIdentifierSchemeSelect).val("ORCID").change();
+                        // // $(authorIdentifierSchemeText).text("ORCID");
+
+                        // let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
+                        // // Then get the value from that option and set the select element's value with it
+                        // authorIdentifierSchemeSelect.value = option.getAttribute('value');
+                        // // But you should also set the label field or your selection will not display
+                        // authorIdentifierSchemeText.textContent = 'ORCID';
+                        // $(authorIdentifier).val(orcid);
+
+                        // if ($(authorAffiliation).val() === "") {
+                        //     $(authorAffiliation).val(item.affiliation)
+                        // }
+
                         var orcid = item.text.substr(pos, 19);
-                        // $(authorIdentifierSchemeSelect).val("ORCID").change();
-                        // $(authorIdentifierSchemeText).text("ORCID");
 
+                        // Find the 'ORCID' option in the select element
                         let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
-                        // Then get the value from that option and set the select element's value with it
-                        authorIdentifierSchemeSelect.value = option.getAttribute('value');
-                        // But you should also set the label field or your selection will not display
-                        authorIdentifierSchemeText.textContent = 'ORCID';
-                        $(authorIdentifier).val(orcid);
+                        
+                        // Set the select element's value to the found option's value
+                        if (option) {
+                            authorIdentifierSchemeSelect.value = option.value;
+                            // Set the text of the label field
+                            authorIdentifierSchemeText.textContent = 'ORCID';
+                        }
 
-                        if ($(authorAffiliation).val() === "") {
-                            $(authorAffiliation).val(item.affiliation)
+                        // Set the ORCID value in the input field
+                        authorIdentifier.value = orcid;
+
+                        // Set the author's affiliation if it's empty
+                        if (!authorAffiliation.value) {
+                            authorAffiliation.value = item.affiliation;
                         }
                         //return $('<span></span>').append(item.text.replace(orcid, "<a href='https://orcid.org/" + orcid + "'>" + orcid + "</a>"));
                     }
@@ -129,7 +149,7 @@ function updatePeopleInputs() {
                         // Default text is in the first option
                         authorIdentifierSchemeText.textContent = authorIdentifierSchemeSelect.children[0].text;
                         authorIdentifierSchemeSelect.value = '';
-                      }
+                    }
                     var authorName = item.text.split(',')[0];
                     item.text = authorName
                     return item.text;
