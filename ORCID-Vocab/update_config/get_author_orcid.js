@@ -109,7 +109,7 @@ function updatePeopleInputs() {
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
                         $(authorIdentifierSchemeSelect).val("ORCID").change();
-                        $(authorIdentifierSchemeText).val("ORCID");
+                        $(authorIdentifierSchemeText).text("ORCID");
                         $(authorIdentifier).val(orcid);
 
                         if ($(authorAffiliation).val() === "") {
