@@ -107,7 +107,6 @@ function updatePeopleInputs() {
                             $(authorIdentifierSchemeSelect).val(option.value);
                             $(authorIdentifierSchemeText).text("ORCID");
                         }    
-
                         if ($(authorAffiliation).val() === "") {
                             $(authorAffiliation).val(item.affiliation)
                         }
@@ -160,7 +159,7 @@ function updatePeopleInputs() {
                                             ((x['institution-name'].length > 0) ? ", " + x['institution-name'].pop() : ""),
                                         id: x['orcid-id'],
                                         title: 'Open in new tab to view ORCID page',
-                                        affiliation: x['institution-name'] ? x['institution-name'].join(", ") : ""
+                                        affiliation: x['institution-name'] ? x['institution-name'].pop() : ""
                                     };
                                 })
                         };
