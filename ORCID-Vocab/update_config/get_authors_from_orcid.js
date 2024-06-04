@@ -61,8 +61,10 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                             $(authorAffiliation).val(item.affiliation)
                         }
                     }
-                    var authorName = item.text.split(',')[0];
-                    item.text = authorName
+                    if (item.text.includes(',')){
+                        var authorName = item.text.split(',')[0];
+                        item.text = authorName
+                    }
                     return item.text;
                 },
                 language: {
@@ -151,8 +153,10 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
                 console.log(data.text)
-                var authorName = data.text.split(',')[0];
-                data.text = authorName
+                if (data.text.includes(',')){
+                    var authorName = data.text.split(',')[0];
+                    data.text = authorName
+                }
                 $("input[data-person='" + num + "']").val(data.text);
             });
             $('#' + selectId).on('select2:clear', function(e) {
