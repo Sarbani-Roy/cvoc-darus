@@ -4,13 +4,7 @@ var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
 $(document).ready(function() {
     expandPeople();
-    updatePeopleInputs();
-
-    // Attach mouseenter event listener to the parent
-    $(authorParentSelector).on('mouseenter', personSelector, function() {
-        var personElement = $(this);
-        handlePersonElement(personElement);
-    });
+    //updatePeopleInputs();
 });
 
 function expandPeople() {
@@ -28,6 +22,8 @@ function expandPeople() {
             authorIdentifierSchemeSelect = authorElement.children().eq(2).find('select').get(0);
             authorIdentifierSchemeInput = authorElement.children().eq(2).find('input');
             authorIdentifier = authorElement.children().eq(3).find('input');
+
+            updatePeopleInputs();
             }
         });
 
@@ -225,51 +221,6 @@ function updatePeopleInputs() {
         }
     });
 }
-
-function handlePersonElement(personElement) {
-    if (!$(personElement).hasClass('expanded')) {
-        $(personElement).addClass('expanded');
-        var authorIdentifier = personElement.siblings('input[data-cvoc-protocol="orcid"]').val();
-        var id = authorIdentifier.startsWith("https://orcid.org/") ? authorIdentifier.substring(18) : authorIdentifier;
-        $.ajax({
-            type: "GET",
-            url: "https://pub.orcid.org/v3.0/" + id + "/person",
-            dataType: 'json',
-            headers: {
-                'Accept': 'application/json'
-            },
-            success: function(person, status) {
-                var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
-                var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
-                personElement.html(html);
-
-                if (person.emails.email.length > 0) {
-                    $(personElement).popover({
-                        content: person.emails.email[0].email,
-                        placement: 'top',
-                        template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-                    });
-                    personElement.on('mouseenter', function() {
-                        $(this).popover('show');
-                    });
-                    personElement.on('mouseleave', function() {
-                        $(this).popover('hide');
-                    });
-                }
-                if (localStorage.length > 100) {
-                    localStorage.removeItem(localStorage.key(0));
-                }
-                localStorage.setItem(id, name);
-            },
-            failure: function(jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status != 404) {
-                    console.error("The following error occurred: " + textStatus, errorThrown);
-                }
-            }
-        });
-    }
-}
-
 
 function markMatch(text, term) {
     var match = text.toUpperCase().indexOf(term.toUpperCase());
