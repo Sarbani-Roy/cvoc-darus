@@ -86,7 +86,7 @@ function expandPeople() {
     });
 }
 
-function updatePeopleInputs() {
+function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSchemeSelect, authorIdentifierSchemeText, authorAffiliation) {
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
         if (!personInput.hasAttribute('data-person')) {
