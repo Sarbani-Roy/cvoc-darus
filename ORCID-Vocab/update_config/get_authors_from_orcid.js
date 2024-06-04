@@ -27,6 +27,7 @@ function expandPeople() {
         
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
+            console.log(personElement)
             if (!$(personElement).hasClass('expanded')) {
                 console.log("Does not have expanded class")
             }
