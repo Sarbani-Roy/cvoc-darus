@@ -157,6 +157,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     var authorName = data.text.split(',')[0];
                     data.text = authorName
                 }
+                console.log(data.text)
                 $("input[data-person='" + num + "']").val(data.text);
             });
             $('#' + selectId).on('select2:clear', function(e) {
