@@ -32,10 +32,10 @@ function expandPeople() {
             console.log(personElement)
             if (!$(personElement).hasClass('expanded')) {
                 console.log("Does not have expanded class")
-            }
-            if ($(personElement).attr('aria-expanded') === 'false') {
-                // Set aria-expanded to true
-                $(personElement).attr('aria-expanded', 'true');
+            // }
+            // if ($(personElement).attr('aria-expanded') === 'false') {
+            //     // Set aria-expanded to true
+            //     $(personElement).attr('aria-expanded', 'true');
                 $(personElement).addClass('expanded');
                 
                 // Retrieve the id
