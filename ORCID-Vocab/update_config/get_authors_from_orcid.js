@@ -27,14 +27,17 @@ function expandPeople() {
         
         $(authorElement).find(personSelector).each(function() {
             var personElement = this;
-            if (!$(personElement).hasClass('expanded')) {
+            if ($(personElement).attr('aria-expanded') === 'false') {
+                // Set aria-expanded to true
+                $(personElement).attr('aria-expanded', 'true');
                 $(personElement).addClass('expanded');
-                //var id = personElement.textContent;
-                var id = $(authorIdentifier).val()
+                
+                // Retrieve the id
+                var id = $(authorIdentifier).val();
                 if (id.startsWith("https://orcid.org/")) {
                     id = id.substring(18);
                 }
-                console.log(id)
+                console.log(id);
                 $.ajax({
                     type: "GET",
                     url: "https://pub.orcid.org/v3.0/expanded-search" + id + "/person",
