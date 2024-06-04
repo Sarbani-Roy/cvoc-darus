@@ -24,6 +24,12 @@ function expandPeople() {
             authorIdentifier = authorElement.children().eq(3).find('input');
 
             updatePeopleInputs();
+
+            // Clear previous values before setting new ones
+            $(authorIdentifier).val('');
+            $(authorIdentifierSchemeSelect).val('');
+            $(authorIdentifierSchemeText).text('');
+            $(authorAffiliation).val('');
             }
         });
 
