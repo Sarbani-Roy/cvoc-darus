@@ -24,65 +24,6 @@ function expandPeople() {
                 updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSchemeSelect, authorIdentifierSchemeText, authorAffiliation);
             }
         });
-
-        // console.log("Author element: ", authorElement)
-        
-        // $(authorElement).find(personInputSelector).each(function() {
-        //     var personElement = this;
-        //     console.log(personElement)
-        //     if (!$(personElement).hasClass('expanded')) {
-        //         console.log("Does not have expanded class")
-        //     // }
-        //     // if ($(personElement).attr('aria-expanded') === 'false') {
-        //     //     // Set aria-expanded to true
-        //     //     $(personElement).attr('aria-expanded', 'true');
-        //         $(personElement).addClass('expanded');
-                
-        //         // Retrieve the id
-        //         var id = $(authorIdentifier).val();
-        //         if (id.startsWith("https://orcid.org/")) {
-        //             id = id.substring(18);
-        //         }
-        //         console.log(id);
-        //         $.ajax({
-        //             type: "GET",
-        //             url: "https://pub.orcid.org/v3.0/expanded-search" + id + "/person",
-        //             dataType: 'json',
-        //             headers: {
-        //                 'Accept': 'application/json'
-        //             },
-        //             success: function(person, status) {
-        //                 var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
-        //                 console.log(name)
-        //                 var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
-        //                 personElement.innerHTML = html;
-
-        //                 if (person.emails.email.length > 0) {
-        //                     $(personElement).popover({
-        //                         content: person.emails.email[0].email,
-        //                         placement: 'top',
-        //                         template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-        //                     });
-        //                     personElement.onmouseenter = function() {
-        //                         $(this).popover('show');
-        //                     };
-        //                     personElement.onmouseleave = function() {
-        //                         $(this).popover('hide');
-        //                     };
-        //                 }
-        //                 if (localStorage.length > 100) {
-        //                     localStorage.removeItem(localStorage.key(0));
-        //                 }
-        //                 localStorage.setItem(id, name);
-        //             },
-        //             failure: function(jqXHR, textStatus, errorThrown) {
-        //                 if (jqXHR.status != 404) {
-        //                     console.error("The following error occurred: " + textStatus, errorThrown);
-        //                 }
-        //             }
-        //         });
-        //     }
-        // });
     });
 }
 
@@ -209,6 +150,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
+                console.log(data.text)
                 var authorName = data.text.split(',')[0];
                 data.text = authorName
                 $("input[data-person='" + num + "']").val(data.text);
@@ -233,3 +175,63 @@ function markMatch(text, term) {
     $result.append(text.substring(match + term.length));
     return $result;
 }
+
+// inside expand people
+// console.log("Author element: ", authorElement)
+        
+        // $(authorElement).find(personInputSelector).each(function() {
+        //     var personElement = this;
+        //     console.log(personElement)
+        //     if (!$(personElement).hasClass('expanded')) {
+        //         console.log("Does not have expanded class")
+        //     // }
+        //     // if ($(personElement).attr('aria-expanded') === 'false') {
+        //     //     // Set aria-expanded to true
+        //     //     $(personElement).attr('aria-expanded', 'true');
+        //         $(personElement).addClass('expanded');
+                
+        //         // Retrieve the id
+        //         var id = $(authorIdentifier).val();
+        //         if (id.startsWith("https://orcid.org/")) {
+        //             id = id.substring(18);
+        //         }
+        //         console.log(id);
+        //         $.ajax({
+        //             type: "GET",
+        //             url: "https://pub.orcid.org/v3.0/expanded-search" + id + "/person",
+        //             dataType: 'json',
+        //             headers: {
+        //                 'Accept': 'application/json'
+        //             },
+        //             success: function(person, status) {
+        //                 var name = person.name['family-name'].value + ", " + person.name['given-names'].value;
+        //                 console.log(name)
+        //                 var html = "<a href='https://orcid.org/" + id + "' target='_blank' rel='noopener' >" + name + "</a>";
+        //                 personElement.innerHTML = html;
+
+        //                 if (person.emails.email.length > 0) {
+        //                     $(personElement).popover({
+        //                         content: person.emails.email[0].email,
+        //                         placement: 'top',
+        //                         template: '<div class="popover" role="tooltip" style="max-width:600px;word-break:break-all"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+        //                     });
+        //                     personElement.onmouseenter = function() {
+        //                         $(this).popover('show');
+        //                     };
+        //                     personElement.onmouseleave = function() {
+        //                         $(this).popover('hide');
+        //                     };
+        //                 }
+        //                 if (localStorage.length > 100) {
+        //                     localStorage.removeItem(localStorage.key(0));
+        //                 }
+        //                 localStorage.setItem(id, name);
+        //             },
+        //             failure: function(jqXHR, textStatus, errorThrown) {
+        //                 if (jqXHR.status != 404) {
+        //                     console.error("The following error occurred: " + textStatus, errorThrown);
+        //                 }
+        //             }
+        //         });
+        //     }
+        // });
