@@ -24,8 +24,10 @@ function expandPeople() {
             authorIdentifier = authorElement.children().eq(3).find('input');
             }
         });
+
+        console.log("Author element: ", authorElement)
         
-        $(authorElement).find(personSelector).each(function() {
+        $(authorElement).find(personInputSelector).each(function() {
             var personElement = this;
             console.log(personElement)
             if (!$(personElement).hasClass('expanded')) {
