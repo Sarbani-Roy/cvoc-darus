@@ -30,6 +30,11 @@ function expandPeople() {
 function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSchemeSelect, authorIdentifierSchemeText, authorAffiliation) {
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
+        $.each(this.attributes, function() {
+            if(this.specified) {
+                console.log(this.name, this.value);
+            }
+        });
         if (!personInput.hasAttribute('data-person')) {
             let num = Math.floor(Math.random() * 100000000000);
             $(personInput).hide();
@@ -150,6 +155,12 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
+
+                console.log("TEXT:", data.text)
+                console.log("id:", data.id)
+                console.log("DATA", data)
+                console.log("data-person:", data-person)
+                
                 var authorName = data.text.split(',')[0];
                 data.text = authorName
                 $("input[data-person='" + num + "']").val(data.text);
