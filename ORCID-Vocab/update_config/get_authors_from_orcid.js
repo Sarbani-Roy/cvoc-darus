@@ -152,7 +152,10 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
-                console.log(data.text)
+                console.log("TEXT:", data.text)
+                console.log("id:", data.id)
+                console.log("DATA", data)
+                console.log("data-person:", data-person)
                 if (data.text.includes(',')){
                     var authorName = data.text.split(',')[0];
                     data.text = authorName
