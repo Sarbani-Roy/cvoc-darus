@@ -124,6 +124,8 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                 }
             });
+            var name = $(personInput).val();
+            console.log(name)
             var id = $(authorIdentifier).val()
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
