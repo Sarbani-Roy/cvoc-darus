@@ -30,11 +30,11 @@ function expandPeople() {
 function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSchemeSelect, authorIdentifierSchemeText, authorAffiliation) {
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
-        $.each(this.attributes, function() {
-            if(this.specified) {
-                console.log(this.name, this.value);
-            }
-        });
+        // $.each(this.attributes, function() {
+        //     if(this.specified) {
+        //         console.log(this.name, this.value);
+        //     }
+        // });
         if (!personInput.hasAttribute('data-person')) {
             let num = Math.floor(Math.random() * 100000000000);
             $(personInput).hide();
@@ -67,7 +67,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                         }
                     }
                     var authorName = item.text.split(',')[0];
-                    //$(personInput).val(authorName)
+                    $(personInput).val(authorName)
                     item.text = authorName
                     return item.text;
                 },
