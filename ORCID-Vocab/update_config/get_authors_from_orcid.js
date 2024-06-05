@@ -31,7 +31,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
         if (!personInput.hasAttribute('data-person')) {
-            cconsole.log("Does no have a dataperson attribute")
+            console.log("Does no have a dataperson attribute")
             let num = Math.floor(Math.random() * 100000000000);
             $(personInput).hide();
             $(personInput).attr('data-person', num);
