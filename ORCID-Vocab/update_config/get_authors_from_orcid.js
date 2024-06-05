@@ -156,12 +156,18 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 console.log("id:", data.id)
                 console.log("DATA", data)
                 console.log("data-person:", data-person)
-                if (data.text.includes(',')){
-                    var authorName = data.text.split(',')[0];
-                    data.text = authorName
+                if (data.id != data.text) {
+                    $("input[data-person='" + num + "']").val(data.text.split(',')[0]);;
+                } else {
+                    //Tags are allowed, so just enter the text as is
+                    $("input[data-person='" + num + "']").val(data.text);
                 }
-                console.log(data.text)
-                $("input[data-person='" + num + "']").val(data.text);
+                // if (data.text.includes(',')){
+                //     var authorName = data.text.split(',')[0];
+                //     data.text = authorName
+                // }
+                // console.log(data.text)
+                // $("input[data-person='" + num + "']").val(data.text);
             });
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-person='" + num + "']").attr('value', '');
