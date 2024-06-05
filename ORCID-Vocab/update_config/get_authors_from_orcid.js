@@ -36,7 +36,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             let num = Math.floor(Math.random() * 100000000000);
             $(personInput).hide();
             $(personInput).attr('data-person', num);
-            console.log("dataperson attribute added")
+            //console.log("dataperson attribute added")
             var selectId = "personAddSelect_" + num;
             console.log("Select Id" ,selectId)
             //console.log("personInput has data-cvoc-placeholder:", personInput.hasAttribute("data-cvoc-placeholder"));
@@ -125,14 +125,15 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                 }
             });
-            console.log(placeholder)
+            //console.log(placeholder)
             var id = $(authorIdentifier).val()
-            // if (id.startsWith("https://orcid.org")) {
-            //     id = id.substring(18);
-            // }
-            // if (id) {
-            var name = $(personInput).val()   
-            if (name) {
+            if (id.startsWith("https://orcid.org")) {
+                id = id.substring(18);
+            }
+            if (id) {
+            var name = $(personInput).val()
+            console.log(name)   
+            // if (name) {
                 $.ajax({
                     type: "GET",
                     url: "https://pub.orcid.org/v3.0/" + id + "/person",
