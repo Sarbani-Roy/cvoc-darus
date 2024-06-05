@@ -31,6 +31,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
         if (!personInput.hasAttribute('data-person')) {
+            cconsole.log("Does no have a dataperson attribute")
             let num = Math.floor(Math.random() * 100000000000);
             $(personInput).hide();
             $(personInput).attr('data-person', num);
@@ -162,12 +163,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     //Tags are allowed, so just enter the text as is
                     $("input[data-person='" + num + "']").val(data.text);
                 }
-                // if (data.text.includes(',')){
-                //     var authorName = data.text.split(',')[0];
-                //     data.text = authorName
-                // }
-                // console.log(data.text)
-                // $("input[data-person='" + num + "']").val(data.text);
             });
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-person='" + num + "']").attr('value', '');
