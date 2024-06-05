@@ -66,16 +66,16 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                             $(authorAffiliation).val(item.affiliation)
                         }
                     }
-                    else {
-                        // Handle case where no ORCID ID is provided
-                        $(authorIdentifier).val('');
-                        let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'Select..');
-                        if (option) {
-                            $(authorIdentifierSchemeSelect).val(option.value);
-                            $(authorIdentifierSchemeText).text("Select...");
-                        }  
-                        $(authorAffiliation).val('')
-                    }
+                    // else {
+                    //     // Handle case where no ORCID ID is provided
+                    //     $(authorIdentifier).val('');
+                    //     let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'Select..');
+                    //     if (option) {
+                    //         $(authorIdentifierSchemeSelect).val(option.value);
+                    //         $(authorIdentifierSchemeText).text("Select...");
+                    //     }  
+                    //     $(authorAffiliation).val('')
+                    // }
                     var authorName = item.text.split(',')[0];
                     $(personInput).val(authorName)
                     item.text = authorName
@@ -168,7 +168,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             }
             else {
                 //If the initial value is not an ORCID (legacy, or if tags are enabled), just display it as is 
-                var newOption = new Option(text, id, true, true);
+                var newOption = new Option(id, id, true, true);
                 $('#' + selectId).append(newOption).trigger('change');
             }
             $('#' + selectId).on('select2:select', function(e) {
