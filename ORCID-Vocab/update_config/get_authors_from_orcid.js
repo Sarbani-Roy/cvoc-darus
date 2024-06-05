@@ -4,7 +4,7 @@ var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
 $(document).ready(function() {
     expandPeople();
-    //updatePeopleInputs();
+    // updatePeopleInputs();
 });
 
 function expandPeople() {
@@ -30,16 +30,11 @@ function expandPeople() {
 function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSchemeSelect, authorIdentifierSchemeText, authorAffiliation) {
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
-        //console.log("personInput has data-cvoc-placeholder:", personInput.hasAttribute("data-cvoc-placeholder"));
         if (!personInput.hasAttribute('data-person')) {
-            //console.log("Does not have a dataperson attribute")
             let num = Math.floor(Math.random() * 100000000000);
             $(personInput).hide();
             $(personInput).attr('data-person', num);
-            //console.log("dataperson attribute added")
             var selectId = "personAddSelect_" + num;
-            console.log("Select Id" ,selectId)
-            //console.log("personInput has data-cvoc-placeholder:", personInput.hasAttribute("data-cvoc-placeholder"));
             $(personInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
             $("#" + selectId).select2({
                 theme: "classic",
@@ -66,10 +61,8 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                             $(authorAffiliation).val(item.affiliation)
                         }
                     }
-                    if (item.text.includes(',')){
-                        var authorName = item.text.split(',')[0];
-                        item.text = authorName
-                    }
+                    var authorName = item.text.split(',')[0];
+                    item.text = authorName
                     return item.text;
                 },
                 language: {
@@ -125,15 +118,11 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                 }
             });
-            //console.log(placeholder)
             var id = $(authorIdentifier).val()
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
             }
             if (id) {
-            var name = $(personInput).val()
-            console.log(name)   
-            // if (name) {
                 $.ajax({
                     type: "GET",
                     url: "https://pub.orcid.org/v3.0/" + id + "/person",
@@ -161,16 +150,9 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
-                console.log("TEXT:", data.text)
-                console.log("id:", data.id)
-                console.log("DATA", data)
-                console.log("data-person:", data-person)
-                if (data.id != data.text) {
-                    $("input[data-person='" + num + "']").val(data.text.split(',')[0]);;
-                } else {
-                    //Tags are allowed, so just enter the text as is
-                    $("input[data-person='" + num + "']").val(data.text);
-                }
+                var authorName = data.text.split(',')[0];
+                data.text = authorName
+                $("input[data-person='" + num + "']").val(data.text);
             });
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-person='" + num + "']").attr('value', '');
