@@ -30,12 +30,16 @@ function expandPeople() {
 function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSchemeSelect, authorIdentifierSchemeText, authorAffiliation) {
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
+        console.log("personInput has data-cvoc-placeholder:", personInput.hasAttribute("data-cvoc-placeholder"));
         if (!personInput.hasAttribute('data-person')) {
-            console.log("Does no have a dataperson attribute")
+            console.log("Does not have a dataperson attribute")
             let num = Math.floor(Math.random() * 100000000000);
             $(personInput).hide();
             $(personInput).attr('data-person', num);
+            console.log("dataperson attribute added")
             var selectId = "personAddSelect_" + num;
+            console.log("Select Id" ,selectId)
+            console.log("personInput has data-cvoc-placeholder:", personInput.hasAttribute("data-cvoc-placeholder"));
             $(personInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
             $("#" + selectId).select2({
                 theme: "classic",
