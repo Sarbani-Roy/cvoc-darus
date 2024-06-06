@@ -66,16 +66,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                             $(authorAffiliation).val(item.affiliation)
                         }
                     }
-                    // else {
-                    //     // Handle case where no ORCID ID is provided
-                    //     $(authorIdentifier).val('');
-                    //     let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'Select..');
-                    //     if (option) {
-                    //         $(authorIdentifierSchemeSelect).val(option.value);
-                    //         $(authorIdentifierSchemeText).text("Select...");
-                    //     }  
-                    //     $(authorAffiliation).val('')
-                    // }
                     var authorName = item.text.split(',')[0];
                     $(personInput).val(authorName)
                     item.text = authorName
@@ -141,7 +131,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 console.log("Needs to verify")
             }
             else {
-                console.log("Needs to verify")
+                console.log("No needs to verify")
             }
 
             var id = $(authorIdentifier).val()
@@ -182,13 +172,14 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
 
-                console.log("TEXT:", data.text)
-                console.log("id:", data.id)
-                console.log("DATA", data)
-                console.log("data-person:", data-person)
+                // console.log("TEXT:", data.text)
+                // console.log("id:", data.id)
+                // console.log("DATA", data)
+                // console.log("data-person:", data-person)
 
                 var authorName = data.text.split(',')[0];
                 data.text = authorName
+                console.log(authorName)
                 $("input[data-person='" + num + "']").val(data.text);
             });
             $('#' + selectId).on('select2:clear', function(e) {
