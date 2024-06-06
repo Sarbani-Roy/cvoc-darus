@@ -156,6 +156,8 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             });
 
 
+            var authorName = $(personInput).val()
+            console.log(authorName)
             var id = $(authorIdentifier).val()
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
