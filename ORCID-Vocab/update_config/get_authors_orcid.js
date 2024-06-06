@@ -169,6 +169,14 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
 
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-person='" + num + "']").attr('value', '');
+
+                $(authorIdentifier).val('');
+                let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'Select...');
+                if (option) {
+                    $(authorIdentifierSchemeSelect).val(option.value);
+                    $(authorIdentifierSchemeText).text(option.text);
+                }    
+                $(authorAffiliation).val('');
             });
         }
     });
