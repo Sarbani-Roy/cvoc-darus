@@ -134,8 +134,16 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                 }
             });
-            var name = $(personInput).val();
-            console.log(name)
+            var identifierScheme = $(authorIdentifierSchemeText).text();
+            console.log(identifierScheme)
+
+            if (identifierScheme == "ORCID") {
+                console.log("Needs to verify")
+            }
+            else {
+                console.log("Needs to verify")
+            }
+
             var id = $(authorIdentifier).val()
             if (id.startsWith("https://orcid.org")) {
                 id = id.substring(18);
