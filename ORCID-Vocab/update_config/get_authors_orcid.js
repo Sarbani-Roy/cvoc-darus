@@ -124,41 +124,37 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                 }
             });
-            
-            // var identifierScheme = $(authorIdentifierSchemeText).text();
-            // console.log(identifierScheme)
-            // var id = $(authorIdentifier).val()
-            // if (id.startsWith("https://orcid.org")) {
-            //     id = id.substring(18);
-            // }
 
-            // if (identifierScheme == "ORCID") {
-            //     console.log("Needs to verify")
-            //     $.ajax({
-            //         type: "GET",
-            //         url: "https://pub.orcid.org/v3.0/" + id + "/person",
-            //         dataType: 'json',
-            //         headers: {
-            //             'Accept': 'application/json'
-            //         },
-            //         success: function(person, status) {
-            //             var name = person.name['given-names'].value + " " + person.name['family-name'].value;
-            //             // $(authorName).val(name);
-            //             var text = name + ", " + id;
-            //             var newOption = new Option(text, id, true, true);
-            //             newOption.title = 'Open in new tab to view ORCID page';
-            //             $('#' + selectId).append(newOption).trigger('change');
-            //         },
-            //         failure: function(jqXHR, textStatus, errorThrown) {
-            //             if (jqXHR.status != 404) {
-            //                 console.error("The following error occurred: " + textStatus, errorThrown);
-            //             }
-            //         }
-            //     });
-            // }
-            // else {
-            //     console.log("No needs to verify")
-            // }
+            var selectedItem = null; // Variable to store the selected item
+
+            $('#' + selectId).on('select2:select', function(e) {
+                var data = e.params.data;
+                selectedItem = data; // Store the selected item
+
+                // console.log("TEXT:", data.text)
+                // console.log("id:", data.id)
+                // console.log("DATA", data)
+                // console.log("data-person:", data-person)
+                if (data.id != data.text) {
+                    var authorName = data.text.split(',')[0];
+                    data.text = authorName;
+                    console.log(authorName);
+                    $("input[data-person='" + num + "']").val(data.text);
+                } else {
+                    //Tags are allowed, so just enter the text as is
+                    $("input[data-person='" + num + "']").val(data.id);
+                }
+
+                // var authorName = data.text.split(',')[0];
+                // data.text = authorName
+                // console.log(authorName)
+                // $("input[data-person='" + num + "']").val(data.text);
+            });
+
+            $('#' + selectId).on('select2:clear', function(e) {
+                $("input[data-person='" + num + "']").attr('value', '');
+            });
+
 
             var id = $(authorIdentifier).val()
             if (id.startsWith("https://orcid.org")) {
@@ -194,35 +190,10 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 //If the initial value is not an ORCID (legacy, or if tags are enabled), just display it as is 
                 console.log("No needs to verify")
                 console.log("Id: " ,id)
-                console.log("Authorname: ", authorName)
-                var newOption = new Option(id, id, true, true);
+                console.log("SelectedItem: ", selectedItem)
+                var newOption = new Option(selectedItem.text, selectedItem.text, true, true);
                 $('#' + selectId).append(newOption).trigger('change');
             }
-            $('#' + selectId).on('select2:select', function(e) {
-                var data = e.params.data;
-
-                // console.log("TEXT:", data.text)
-                // console.log("id:", data.id)
-                // console.log("DATA", data)
-                // console.log("data-person:", data-person)
-                if (data.id != data.text) {
-                    var authorName = data.text.split(',')[0];
-                    data.text = authorName;
-                    console.log(authorName);
-                    $("input[data-person='" + num + "']").val(data.text);
-                } else {
-                    //Tags are allowed, so just enter the text as is
-                    $("input[data-person='" + num + "']").val(data.id);
-                }
-
-                // var authorName = data.text.split(',')[0];
-                // data.text = authorName
-                // console.log(authorName)
-                // $("input[data-person='" + num + "']").val(data.text);
-            });
-            $('#' + selectId).on('select2:clear', function(e) {
-                $("input[data-person='" + num + "']").attr('value', '');
-            });
         }
     });
 }
