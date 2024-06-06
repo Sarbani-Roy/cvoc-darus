@@ -191,7 +191,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 console.log("No needs to verify")
                 console.log("Id: " ,id)
                 console.log("SelectedItem: ", selectedItem)
-                var newOption = new Option(selectedItem.text, selectedItem.text, true, true);
+                var newOption = new Option(selectedItem ? selectedItem.text : id, selectedItem ? selectedItem.text : id, true, true);
                 $('#' + selectId).append(newOption).trigger('change');
             }
         }
