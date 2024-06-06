@@ -125,46 +125,15 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 }
             });
             
-            var identifierScheme = $(authorIdentifierSchemeText).text();
-            console.log(identifierScheme)
-            var id = $(authorIdentifier).val()
-            if (id.startsWith("https://orcid.org")) {
-                id = id.substring(18);
-            }
-
-            if (identifierScheme == "ORCID") {
-                console.log("Needs to verify")
-                $.ajax({
-                    type: "GET",
-                    url: "https://pub.orcid.org/v3.0/" + id + "/person",
-                    dataType: 'json',
-                    headers: {
-                        'Accept': 'application/json'
-                    },
-                    success: function(person, status) {
-                        var name = person.name['given-names'].value + " " + person.name['family-name'].value;
-                        // $(authorName).val(name);
-                        var text = name + ", " + id;
-                        var newOption = new Option(text, id, true, true);
-                        newOption.title = 'Open in new tab to view ORCID page';
-                        $('#' + selectId).append(newOption).trigger('change');
-                    },
-                    failure: function(jqXHR, textStatus, errorThrown) {
-                        if (jqXHR.status != 404) {
-                            console.error("The following error occurred: " + textStatus, errorThrown);
-                        }
-                    }
-                });
-            }
-            else {
-                console.log("No needs to verify")
-            }
-
+            // var identifierScheme = $(authorIdentifierSchemeText).text();
+            // console.log(identifierScheme)
             // var id = $(authorIdentifier).val()
             // if (id.startsWith("https://orcid.org")) {
             //     id = id.substring(18);
             // }
-            // if (id) {
+
+            // if (identifierScheme == "ORCID") {
+            //     console.log("Needs to verify")
             //     $.ajax({
             //         type: "GET",
             //         url: "https://pub.orcid.org/v3.0/" + id + "/person",
@@ -176,9 +145,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             //             var name = person.name['given-names'].value + " " + person.name['family-name'].value;
             //             // $(authorName).val(name);
             //             var text = name + ", " + id;
-            //             if (person.emails.email.length > 0) {
-            //                 text = text + ", " + person.emails.email[0].email;
-            //             }
             //             var newOption = new Option(text, id, true, true);
             //             newOption.title = 'Open in new tab to view ORCID page';
             //             $('#' + selectId).append(newOption).trigger('change');
@@ -191,10 +157,46 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             //     });
             // }
             // else {
-            //     //If the initial value is not an ORCID (legacy, or if tags are enabled), just display it as is 
-            //     var newOption = new Option(id, id, true, true);
-            //     $('#' + selectId).append(newOption).trigger('change');
+            //     console.log("No needs to verify")
             // }
+
+            var id = $(authorIdentifier).val()
+            if (id.startsWith("https://orcid.org")) {
+                id = id.substring(18);
+            }
+            if (id) {
+                $.ajax({
+                    type: "GET",
+                    url: "https://pub.orcid.org/v3.0/" + id + "/person",
+                    dataType: 'json',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function(person, status) {
+                        var name = person.name['given-names'].value + " " + person.name['family-name'].value;
+                        // $(authorName).val(name);
+                        var text = name + ", " + id;
+                        if (person.emails.email.length > 0) {
+                            text = text + ", " + person.emails.email[0].email;
+                        }
+                        var newOption = new Option(text, id, true, true);
+                        newOption.title = 'Open in new tab to view ORCID page';
+                        $('#' + selectId).append(newOption).trigger('change');
+                    },
+                    failure: function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status != 404) {
+                            console.error("The following error occurred: " + textStatus, errorThrown);
+                        }
+                    }
+                });
+            }
+            else {
+                //If the initial value is not an ORCID (legacy, or if tags are enabled), just display it as is 
+                console.log("No needs to verify")
+                console.log("Id:" ,id)
+                var newOption = new Option(id, id, true, true);
+                $('#' + selectId).append(newOption).trigger('change');
+            }
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
 
@@ -202,11 +204,20 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 // console.log("id:", data.id)
                 // console.log("DATA", data)
                 // console.log("data-person:", data-person)
+                if (data.id != data.text) {
+                    var authorName = data.text.split(',')[0];
+                    data.text = authorName;
+                    console.log(authorName);
+                    $("input[data-person='" + num + "']").val(data.text);
+                } else {
+                    //Tags are allowed, so just enter the text as is
+                    $("input[data-person='" + num + "']").val(data.id);
+                }
 
-                var authorName = data.text.split(',')[0];
-                data.text = authorName
-                console.log(authorName)
-                $("input[data-person='" + num + "']").val(data.text);
+                // var authorName = data.text.split(',')[0];
+                // data.text = authorName
+                // console.log(authorName)
+                // $("input[data-person='" + num + "']").val(data.text);
             });
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-person='" + num + "']").attr('value', '');
