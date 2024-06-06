@@ -4,7 +4,6 @@ var personInputSelector = "input[data-cvoc-protocol='orcid']";
 
 $(document).ready(function() {
     expandPeople();
-    // updatePeopleInputs();
 });
 
 function expandPeople() {
@@ -30,11 +29,6 @@ function expandPeople() {
 function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSchemeSelect, authorIdentifierSchemeText, authorAffiliation) {
     $(authorElement).find(personInputSelector).each(function() {
         var personInput = this;
-        // $.each(this.attributes, function() {
-        //     if(this.specified) {
-        //         console.log(this.name, this.value);
-        //     }
-        // });
         if (!personInput.hasAttribute('data-person')) {
             let num = Math.floor(Math.random() * 100000000000);
             $(personInput).hide();
@@ -67,7 +61,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                         }
                     }
                     var authorName = item.text.split(',')[0];
-                    //$(personInput).val(authorName)
                     item.text = authorName
                     return item.text;
                 },
@@ -113,7 +106,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                                         text: x['given-names'] + " " + x['family-names'] +
                                             ", " +
                                             x['orcid-id'] +
-                                            // ((x.email.length > 0) ? ", " + x.email[0] : "") +
                                             (lastInstitution ? ", " + lastInstitution : ""),
                                         id: x['orcid-id'],
                                         title: 'Open in new tab to view ORCID page',
@@ -126,11 +118,14 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             });
 
             var authorName = $(personInput).val()
+            var idScheme = $(authorIdentifierSchemeText).text()
+            console.log(idScheme)
             var id = $(authorIdentifier).val()
-            if (id.startsWith("https://orcid.org")) {
+            if (id && id.startsWith("https://orcid.org/")) {
                 id = id.substring(18);
             }
-            if (id) {
+
+            if (id && idScheme === 'ORCID'){
                 $.ajax({
                     type: "GET",
                     url: "https://pub.orcid.org/v3.0/" + id + "/person",
@@ -139,12 +134,8 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                         'Accept': 'application/json'
                     },
                     success: function(person, status) {
-                        var name = person.name['given-names'].value + " " + person.name['family-name'].value;
-                        // $(authorName).val(name);
+                        var name = person.name['given-names'].value + " " + person.name['family-name'].value;  
                         var text = name + ", " + id;
-                        // if (person.emails.email.length > 0) {
-                        //     text = text + ", " + person.emails.email[0].email;
-                        // }
                         var newOption = new Option(text, id, true, true);
                         newOption.title = 'Open in new tab to view ORCID page';
                         $('#' + selectId).append(newOption).trigger('change');
@@ -166,10 +157,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
 
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
-                // console.log("TEXT:", data.text)
-                // console.log("id:", data.id)
-                // console.log("DATA", data)
-                // console.log("data-person:", data-person)
                 if (data.id != data.text) {
                     var authorName = data.text.split(',')[0];
                     data.text = authorName;
@@ -178,11 +165,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     //Tags are allowed, so just enter the text as is
                     $("input[data-person='" + num + "']").val(data.id);
                 }
-
-                // var authorName = data.text.split(',')[0];
-                // data.text = authorName
-                // console.log(authorName)
-                // $("input[data-person='" + num + "']").val(data.text);
             });
 
             $('#' + selectId).on('select2:clear', function(e) {
