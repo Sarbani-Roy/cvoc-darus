@@ -1,8 +1,8 @@
 [    
     {
-        "field-name": "author",
-        "term-uri-field": "author",
-        "js-url": "__dataverse_previewers__/js/get_author_from_orcid.js",
+        "field-name": "authorName",
+        "term-uri-field": "authorName",
+        "js-url": "__dataverse_previewers__/js/get_authors_orcid.js",
         "protocol": "orcid",
         "retrieval-uri": "https://pub.orcid.org/v3.0/{0}/person",
         "allow-free-text": true,

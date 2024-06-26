@@ -1,8 +1,0 @@
-[    
-    {
-        "field-name": "projectName",
-        "term-uri-field": "projectName",
-        "js-url": "__dataverse_previewers__/js/get_grant_number_from_fis.js",
-        "protocol": "fis"
-    }
-]
