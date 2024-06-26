@@ -69,6 +69,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                             $(authorAffiliation).val(item.affiliation)
                         }
                     }
+                    console.log(item.name)
                     // var authorName = item.text.split(',')[0];
                     if ($(authorNameInput).val() === "" && item.name) {
                         var authorName = item.name
@@ -76,8 +77,9 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     else{
                         var authorName = (authorNameInput).val()
                     }
-                    item.text = authorName
-                    return item.text;
+                    item.name = authorName
+                    console.log(item.name)
+                    return item.name;
                 },
                 language: {
                     searching: function(params) {
@@ -141,7 +143,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             // If the Identifier and IdentifierScheme has values already, format it the same way as if it were a new selection
             var authorName = $(personInput).val()
             var idScheme = $(authorIdentifierSchemeText).text()
-            console.log(idScheme)
+            // console.log(idScheme)
             var id = $(authorIdentifier).val()
             if (id && id.startsWith("https://orcid.org/")) {
                 id = id.substring(18);
