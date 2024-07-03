@@ -10,8 +10,6 @@ $(document).ready(function() {
 function expandProject() {
     $(projectParentSelector).each(function() {
         var parentElement = $(projectParentSelector).parent();
-        
-        
         var fieldValuesElement = parentElement.siblings('.dataset-field-values');
         var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
             
@@ -33,6 +31,17 @@ function updateGrantInputs(projectElement, projectNameInput) {
     //console.log("Project Element:", projectElement);
     //console.log("Project Name:", projectNameInput);
     $(projectElement).find(projectInputSelector).each(function() {
+        // console.log(grantNumberParentSelector);
+        var parentElement = $(grantNumberParentSelector).parent();
+        
+        var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+        var compoundFieldElement = fieldValuesElement.find('.edit-compound-field');
+        // console.log(compoundFieldElement);
+        if (compoundFieldElement.children().length > 1) {
+            var grantAgency = compoundFieldElement.children().eq(0).find('input');
+            var grantId = compoundFieldElement.children().eq(1).find('input');
+        }
+
         var projectInput = this;
         // console.log(projectInput.getAttribute())
         if (!projectInput.hasAttribute('data-project')) {
@@ -61,29 +70,15 @@ function updateGrantInputs(projectElement, projectNameInput) {
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log(item);
-                    console.log($(projectNameInput).val());
-                    // Fill otherfields with marked item
-                    // var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
-                    // if (pos >= 0) {
-                    //     var orcid = item.text.substr(pos, 19);
-                        // $(authorIdentifier).val(orcid);
-                        // let option = Array.from(authorIdentifierSchemeSelect.querySelectorAll('option')).find(el => el.text === 'ORCID');
-                        // if (option) {
-                        //     $(authorIdentifierSchemeSelect).val(option.value);
-                        //     $(authorIdentifierSchemeText).text("ORCID");
-                        // }    
-                        // if ($(authorAffiliation).val() === "" && item.affiliation) {
-                        //     $(authorAffiliation).val(item.affiliation)
-                        // }
-                    // }
-                    // var authorName = item.text.split(',')[0];
                     if ($(projectNameInput).val() === "" && item.name) {
                         var projectName = item.name;
                     }
                     else{
                         var projectName = $(projectNameInput).val();
                     }
+                    // console.log(item);
+                    $(grantAgency).val(item.agency);
+                    $(grantId).val(item.id);
                     item.text = projectName;
                     //item.text = "hello"
                     return item.text;
@@ -109,7 +104,7 @@ function updateGrantInputs(projectElement, projectNameInput) {
                     },
                     data: function(params) {
                         term = `title=${params.term}`;
-                        console.log("Title:", term);
+                        // console.log("Title:", term);
                         if (!term) {
                             term = "";
                         }
@@ -120,26 +115,27 @@ function updateGrantInputs(projectElement, projectNameInput) {
                         return term;
                     },
                     headers: {
-                        'crossOrigin': true,
                         'Accept': 'application/json'
                     },
                     processResults: function(data, page) {
+                        // console.log(data);
                         return {
-                            results: data['expanded-result']
-                                //Sort to bring recently used ORCIDS to the top of the lis
-                                //.sort((a, b) => (localStorage.getItem(b['orcid-id'])) ? 1 : 0)
-                                .map(function(x) {
-                                    console.log(x);
-                                    // Institution names by using the last one
-                                    return; //{
-                                        // text: x['given-names'] + " " + x['family-names'] +
-                                        //     ", " +
-                                        //     x['orcid-id'],
-                                        // name: capitalizeFirstLetter(x['family-names']) + ", " + capitalizeFirstLetter(x['given-names']),
-                                        // id: x['orcid-id'],
-                                        // // Copied this line from dataverse example
-                                        // title: 'Open in new tab to view ORCID page',
-                                    //};
+                            results: data['data_elements']
+                                .map(function(element) {
+                                    // Access the project information within each data element
+                                    let projectInfo = element.project;
+                                    // console.log('Project ID:', projectInfo.id);
+                                    // console.log('Project Title (DE):', projectInfo.title_de);
+                                    // console.log('Project Title (EN):', projectInfo.title_en);
+                                    // console.log('Project Acronym:', projectInfo.acronym);
+                                    // console.log('Project Foerderkennzeichen:', projectInfo.foerderkennzeichen);
+
+                                    // Returning the desired structure
+                                    return {
+                                        text: projectInfo.title_de + " (" + projectInfo.acronym + ")",
+                                        agency: projectInfo.foerderkennzeichen,
+                                        id: projectInfo.id,
+                                    };
                                 })
                             }
                         }
@@ -170,46 +166,6 @@ function updateGrantInputs(projectElement, projectNameInput) {
     })
 }
                
-    
-    // // Get the corresponding project element
-    // var projectElement = $(projectSelector).closest(projectParentSelector).siblings('.dataset-field-values').find('.edit-compound-field');
-    // console.log(projectElement)
-    
-    // $(grantNumberParentSelector).each(function() {
-    //     var parentElement = $(grantNumberParentSelector).parent();
-    //     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-    //     var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); 
-    //     console.log(compoundFieldElement)
-
-    //     compoundFieldElement.each(function() {
-    //         var grantNumberElement = $(this);
-    //         console.log(grantNumberElement)
-            
-    //         // Iterate over the children and pair them
-    //         grantNumberElement.children().each(function(index) {
-    //             var grantChild = $(this).find('input');
-    //             var projectChild = projectElement.children().eq(index).find('input');
-
-    //             if (grantChild.length > 0 && projectChild.length > 0) {
-    //                 var grantAgency = grantNumberElement.children().eq(0).find('input');
-    //                 var grantIdentifier = grantNumberElement.children().eq(1).find('input');
-
-    //                 projectElement.find(projectInputSelector).each(function() {
-    //                     var projectNameInput = this;
-    //                 })
-
-    //                 // updategrantInputs(grantNumberElement, grantChild, projectChild);
-    //                 updategrantInputs(grantNumberElement, projectNameInput, grantAgency, grantIdentifier);
-    //             }
-    //         });
-    //     });
-    // });
-
-// function updategrantInputs(grantNumberElement, grantInput, projectInput) {
-// 
-    // console.log("Grant Input:", grantInput.val());
-    // console.log("Project Input:", projectInput.val());
-// }
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
