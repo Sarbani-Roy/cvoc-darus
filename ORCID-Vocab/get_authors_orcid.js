@@ -76,8 +76,10 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     else{
                         var authorName = (authorNameInput).val()
                     }
-                    item.text = authorName
-                    return item.text;
+                    // item.text = authorName
+                    // return item.text;
+                    item.name = authorName;
+                    return item.name;
                 },
                 language: {
                     searching: function(params) {
@@ -141,7 +143,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             // If the Identifier and IdentifierScheme has values already, format it the same way as if it were a new selection
             var authorName = $(personInput).val()
             var idScheme = $(authorIdentifierSchemeText).text()
-            console.log(idScheme)
             var id = $(authorIdentifier).val()
             if (id && id.startsWith("https://orcid.org/")) {
                 id = id.substring(18);
@@ -182,10 +183,11 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 var data = e.params.data;
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
-                    var authorName = data.text.split(',')[0];
-                    data.text = authorName;
-                    $("input[data-person='" + num + "']").val(data.text);
+                    var authorName = data.name;
+                    data.name = authorName;
+                    $("input[data-person='" + num + "']").val(data.name);
                 } else {
+                    console.log("Author Name for free text entry", data.id)
                     //Tags are allowed, so just enter the text as is
                     $("input[data-person='" + num + "']").val(data.id);
                 }
