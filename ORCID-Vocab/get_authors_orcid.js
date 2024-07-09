@@ -79,15 +79,15 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                     item.name = authorName
                     console.log(item.name)
-                    return item.name;
-                    // if (item.name) {
-                    //     // item.name = authorName;
-                    //     console.log(item.name)
-                    //     return item.name;
-                    // }
-                    // else{
-                    //     return item.id;
-                    // }
+                    // return item.name;
+                    if (item.name) {
+                        // item.name = authorName;
+                        console.log(item.name)
+                        return item.name;
+                    }
+                    else{
+                        return item.id;
+                    }
                 },
                 language: {
                     searching: function(params) {
