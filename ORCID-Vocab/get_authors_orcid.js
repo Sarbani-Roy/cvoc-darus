@@ -10,7 +10,7 @@ function expandPeople() {
     $(authorParentSelector).each(function() {
         var parentElement = $(authorParentSelector).parent();
         var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-        var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+        var compoundFieldElement = fieldValuesElement.find('.edit-compound-field');
             
         compoundFieldElement.each(function() {
             var authorElement = $(this);
@@ -55,7 +55,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     return $result;
                 },
                 templateSelection: function(item) {
-                    // Fill otherfields with marked item
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
                         var orcid = item.text.substr(pos, 19);
@@ -76,7 +75,12 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                         var authorName = (authorNameInput).val()
                     }
                     item.name = authorName
-                    return item.name;
+                    if (item.name) {
+                        return item.name;
+                    }
+                    else{
+                        return item.id;
+                    }
                 },
                 language: {
                     searching: function(params) {
