@@ -55,7 +55,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log("item:", item)
+                    console.log("Item at template selection:", item)
                     // Fill otherfields with marked item
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
@@ -79,15 +79,15 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                     item.name = authorName
                     console.log(item.name)
-                    // return item.text;
-                    if (item.name) {
-                        // item.name = authorName;
-                        console.log(item.name)
-                        return item.name;
-                    }
-                    else{
-                        return item.id;
-                    }
+                    return item.name;
+                    // if (item.name) {
+                    //     // item.name = authorName;
+                    //     console.log(item.name)
+                    //     return item.name;
+                    // }
+                    // else{
+                    //     return item.id;
+                    // }
                 },
                 language: {
                     searching: function(params) {
@@ -180,8 +180,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             }
             else {
                 //If the initial value (Identifier and IdentifierScheme) is not an ORCID (legacy, or if tags are enabled), just display it as is 
-                console.log("No ORCID id")
-                console.log(authorName)
                 var newOption = new Option(authorName, authorName, true, true);
                 $('#' + selectId).append(newOption).trigger('change');
             }
