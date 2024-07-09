@@ -55,6 +55,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     return $result;
                 },
                 templateSelection: function(item) {
+                    console.log("item:", item)
                     // Fill otherfields with marked item
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
@@ -78,9 +79,14 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                     // item.text = authorName
                     // return item.text;
-                    item.name = authorName;
-                    console.log(item.name)
-                    return item.name;
+                    if (item.name) {
+                        item.name = authorName;
+                        console.log(item.name)
+                        return item.name;
+                    }
+                    else{
+                        return item.id;
+                    }
                 },
                 language: {
                     searching: function(params) {
