@@ -181,11 +181,12 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
+                console.log("Author Name for free text entry", data)
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
-                    var authorName = data.name;
-                    data.name = authorName;
-                    $("input[data-person='" + num + "']").val(data.name);
+                    // var authorName = data.id;
+                    // data.id = authorName;
+                    $("input[data-person='" + num + "']").val(data.id);
                 } else {
                     console.log("Author Name for free text entry", data.id)
                     //Tags are allowed, so just enter the text as is
