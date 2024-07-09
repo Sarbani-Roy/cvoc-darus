@@ -78,8 +78,13 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                     // item.text = authorName
                     // return item.text;
-                    item.name = authorName;
-                    return item.name;
+                    if (item.name) {
+                        item.name = authorName;
+                        return item.name;
+                    }   
+                    else{
+                        return item.id
+                    } 
                 },
                 language: {
                     searching: function(params) {
@@ -186,7 +191,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 if (data.id != data.text) {
                     // var authorName = data.id;
                     // data.id = authorName;
-                    $("input[data-person='" + num + "']").val(data.id);
+                    $("input[data-person='" + num + "']").val(data.name);
                 } else {
                     console.log("Author Name for free text entry", data.id)
                     //Tags are allowed, so just enter the text as is
