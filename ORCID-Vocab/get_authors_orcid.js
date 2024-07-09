@@ -189,8 +189,8 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                 console.log("Author Name for free text entry", data)
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
-                    // var authorName = data.id;
-                    // data.id = authorName;
+                    var authorName = data.id;
+                    data.id = authorName;
                     $("input[data-person='" + num + "']").val(data.name);
                 } else {
                     console.log("Author Name for free text entry", data.id)
