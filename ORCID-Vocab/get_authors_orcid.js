@@ -74,7 +74,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     else{
                         var authorName = (authorNameInput).val()
                     }
-                    // item.name = authorName
+                    item.name = authorName
                     if (item.name) {
                         return item.name;
                     }
