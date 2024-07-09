@@ -77,10 +77,11 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     else{
                         var authorName = (authorNameInput).val()
                     }
-                    // item.text = authorName
+                    item.name = authorName
+                    console.log(item.name)
                     // return item.text;
                     if (item.name) {
-                        item.name = authorName;
+                        // item.name = authorName;
                         console.log(item.name)
                         return item.name;
                     }
@@ -188,6 +189,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
+                console.log("data at select", data)
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
                     var authorName = data.name;
