@@ -70,7 +70,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                             $(authorAffiliation).val(item.affiliation)
                         }
                     }
-                    // var authorName = item.text.split(',')[0];
                     if ($(authorNameInput).val() === "" && item.name) {
                         var authorName = item.name
                     }
@@ -78,11 +77,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                         var authorName = (authorNameInput).val()
                     }
                     item.name = authorName
-                    console.log(item.name)
-                    // return item.name;
                     if (item.name) {
-                        // item.name = authorName;
-                        console.log(item.name)
                         return item.name;
                     }
                     else{
@@ -167,7 +162,7 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     success: function(person, status) {
                         var name =  capitalizeFirstLetter(person.name['family-name'].value) + ", " + capitalizeFirstLetter(person.name['given-names'].value);  
                         var text = name + ", " + id;
-                        var newOption = new Option(text, id, true, true);
+                        var newOption = new Option(text, id, name, true, true);
                         newOption.title = 'Open in new tab to view ORCID page';
                         $('#' + selectId).append(newOption).trigger('change');
                     },
@@ -187,14 +182,12 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
-                console.log("data at select", data)
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
                     var authorName = data.name;
                     data.name = authorName;
                     $("input[data-person='" + num + "']").val(data.name);
                 } else {
-                    console.log("Author Name for free text entry", data.id)
                     //Tags are allowed, so just enter the text as is
                     $("input[data-person='" + num + "']").val(data.id);
                 }
