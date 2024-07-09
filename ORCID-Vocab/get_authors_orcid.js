@@ -78,13 +78,9 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     }
                     // item.text = authorName
                     // return item.text;
-                    if (item.name) {
-                        item.name = authorName;
-                        return item.name;
-                    }   
-                    else{
-                        return item.id
-                    } 
+                    item.name = authorName;
+                    console.log(item.name)
+                    return item.name;
                 },
                 language: {
                     searching: function(params) {
@@ -186,11 +182,10 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
-                console.log("Author Name for free text entry", data)
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
-                    var authorName = data.id;
-                    data.id = authorName;
+                    var authorName = data.name;
+                    data.name = authorName;
                     $("input[data-person='" + num + "']").val(data.name);
                 } else {
                     console.log("Author Name for free text entry", data.id)
