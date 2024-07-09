@@ -55,7 +55,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log("Item at template selection:", item)
                     // Fill otherfields with marked item
                     var pos = item.text.search(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/);
                     if (pos >= 0) {
@@ -77,16 +76,10 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                         var authorName = (authorNameInput).val()
                     }
                     item.name = authorName
-                    if (item.name) {
-                        return item.name;
-                    }
-                    else{
-                        return item.id;
-                    }
+                    return item.name;
                 },
                 language: {
                     searching: function(params) {
-                        // Copied this block from dataverse example
                         return 'Search by name, email, or ORCID…';
                     }
                 },
@@ -133,7 +126,6 @@ function updatePeopleInputs(authorElement, authorIdentifier, authorIdentifierSch
                                             (lastInstitution ? ", " + lastInstitution : ""),
                                         name: capitalizeFirstLetter(x['family-names']) + ", " + capitalizeFirstLetter(x['given-names']),
                                         id: x['orcid-id'],
-                                        // Copied this line from dataverse example
                                         title: 'Open in new tab to view ORCID page',
                                         affiliation: lastInstitution
                                     };
