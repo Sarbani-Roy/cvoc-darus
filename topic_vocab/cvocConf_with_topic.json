@@ -69,5 +69,18 @@
                 "pattern": "https://schema.org/Organization"
             }
         }
-    }
+    },
+
+    {
+        "field-name": "topicClassValue",
+        "term-uri-field": "topicClassValue",
+        "js-url": "__dataverse_previewers__/js/get_dfg_classification.js",
+        "protocol": "dfg",
+        "retrieval-uri": "",
+        "allow-free-text": true,
+        "languages": "",
+        "vocabs": {},
+        "managed-fields": {},
+        "retrieval-filtering": {}
+    },
 ]
