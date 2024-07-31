@@ -1,5 +1,19 @@
 [
     {
+        
+        "field-name": "topicClassValue",
+        "term-uri-field": "topicClassValue",
+        "js-url": "__dataverse_previewers__/js/get_dfg_classification.js",
+        "protocol": "dfgClassification",
+        "retrieval-uri": "",
+        "allow-free-text": true,
+        "languages": "",
+        "vocabs": {},
+        "managed-fields": {},
+        "retrieval-filtering": {}
+    },
+    
+    {
         "field-name": "authorName",
         "term-uri-field": "authorName",
         "js-url": "__dataverse_previewers__/js/get_authors_orcid.js",
@@ -70,18 +84,5 @@
                 "pattern": "https://schema.org/Organization"
             }
         }
-    },
-
-    {
-        "field-name": "authorAffiliation",
-        "term-uri-field": "authorAffiliation",
-        "js-url": "https://gdcc.github.io/dataverse-external-vocab-support/scripts/affiliation.js",
-        "protocol": "covoc-author",
-        "retrieval-uri": "",
-        "allow-free-text": true,
-        "languages": "",
-        "vocabs": {},
-        "managed-fields": {},
-        "retrieval-filtering": {}
-    }    
+    }
 ]
