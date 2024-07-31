@@ -36,6 +36,19 @@
     },
 
     {
+        "field-name": "topicClassValue",
+        "term-uri-field": "topicClassValue",
+        "js-url": "",
+        "protocol": "",
+        "retrieval-uri": "",
+        "allow-free-text": true,
+        "languages": "",
+        "vocabs": {},
+        "managed-fields": {},
+        "retrieval-filtering": {}
+    },
+
+    {
         "field-name": "projectName",
         "term-uri-field": "projectName",
         "js-url": "__dataverse_previewers__/js/get_grant_number_from_fis.js",
