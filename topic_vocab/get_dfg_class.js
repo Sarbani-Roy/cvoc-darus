@@ -19,7 +19,7 @@ function expandPeople() {
         //     if (topicElement.children().length > 2) {
         //         var topicClass = topicElement.children().eq(0).find('input');
         //         var topicClassVocab = topicElement.children().eq(1).find('input');
-        //         var topicClassVocabURI = topicElement.children().eq(3).find('input');
+        //         var topicClassVocabURI = topicElement.children().eq(2).find('input');
 
         //         updatePeopleInputs(topicElement, topicClass, topicClassVocab, topicClassVocabURI);
         //     }
