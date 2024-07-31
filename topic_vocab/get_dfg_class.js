@@ -3,13 +3,13 @@ var topicSelector = "span[data-cvoc-protocol='dfgTopicClass']";
 var topicInputSelector = "input[data-cvoc-protocol='dfgTopicClass']";
 
 $(document).ready(function() {
-    expandPeople();
+    expandDFGclass();
 });
 
-function expandPeople() {
+function expandDFGclass() {
     console.log("test")
-    // $(topicParentSelector).each(function() {
-    //     console.log(topicParentSelector)
+    $(topicParentSelector).each(function() {
+        console.log(topicParentSelector)
         // var parentElement = $(topicParentSelector).parent();
         // var fieldValuesElement = parentElement.siblings('.dataset-field-values');
         // var compoundFieldElement = fieldValuesElement.find('.edit-compound-field');
@@ -25,5 +25,5 @@ function expandPeople() {
         //         updatePeopleInputs(topicElement, topicClass, topicClassVocab, topicClassVocabURI);
         //     }
         // });
-    // });
+    });
 }
