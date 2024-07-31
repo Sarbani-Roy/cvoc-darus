@@ -1,0 +1,1688 @@
+[
+    {
+        "level":0,
+        "notation":"1",
+        "prefLabel@de":"Geistes- und Sozialwissenschaften",
+        "prefLabel@en":"Humanities and Social Sciences"
+    },
+    {
+        "level":1,
+        "notation":"11",
+        "prefLabel@de":"Geisteswissenschaften",
+        "prefLabel@en":"Humanities"
+    },
+    {
+        "level":2,
+        "notation":"111",
+        "prefLabel@de":"Alte Kulturen",
+        "prefLabel@en":"Ancient Cultures"
+    },
+    {
+        "level":3,
+        "notation":"111-01",
+        "prefLabel@de":"Ur- und Frühgeschichte (weltweit)",
+        "prefLabel@en":"Prehistory and World Archaeology"
+    },
+    {
+        "level":3,
+        "notation":"111-02",
+        "prefLabel@de":"Griechische und Lateinische Philologie",
+        "prefLabel@en":"Greek and Latin Philology"
+    },
+    {
+        "level":3,
+        "notation":"111-03",
+        "prefLabel@de":"Alte Geschichte",
+        "prefLabel@en":"Ancient History"
+    },
+    {
+        "level":3,
+        "notation":"111-04",
+        "prefLabel@de":"Klassische, Provinzialrömische, Christliche und Islamische Archäologie",
+        "prefLabel@en":"Classical, Roman, Christian and Islamic Archaeology"
+    },
+    {
+        "level":3,
+        "notation":"111-05",
+        "prefLabel@de":"Ägyptische und Vorderasiatische Altertumswissenschaften",
+        "prefLabel@en":"Egyptology and Ancient Near Eastern Studies"
+    },
+    {
+        "level":2,
+        "notation":"112",
+        "prefLabel@de":"Geschichtswissenschaften",
+        "prefLabel@en":"History"
+    },
+    {
+        "level":3,
+        "notation":"112-01",
+        "prefLabel@de":"Mittelalterliche Geschichte",
+        "prefLabel@en":"Medieval History"
+    },
+    {
+        "level":3,
+        "notation":"112-02",
+        "prefLabel@de":"Frühneuzeitliche Geschichte",
+        "prefLabel@en":"Early Modern History"
+    },
+    {
+        "level":3,
+        "notation":"112-03",
+        "prefLabel@de":"Neuere und Neueste Geschichte (einschl. Europäische Geschichte der Neuzeit und Außereuropäische Geschichte)",
+        "prefLabel@en":"Modern and Contemporary History"
+    },
+    {
+        "level":3,
+        "notation":"112-04",
+        "prefLabel@de":"Wissenschaftsgeschichte",
+        "prefLabel@en":"History of Science"
+    },
+    {
+        "level":2,
+        "notation":"113",
+        "prefLabel@de":"Kunst-, Musik-, Theater- und Medienwissenschaften",
+        "prefLabel@en":"Art History, Music, Theatre and Media Studies"
+    },
+    {
+        "level":3,
+        "notation":"113-01",
+        "prefLabel@de":"Kunstgeschichte",
+        "prefLabel@en":"Art History"
+    },
+    {
+        "level":3,
+        "notation":"113-02",
+        "prefLabel@de":"Musikwissenschaften",
+        "prefLabel@en":"Musicology"
+    },
+    {
+        "level":3,
+        "notation":"113-03",
+        "prefLabel@de":"Theater- und Medienwissenschaften",
+        "prefLabel@en":"Theatre and Media Studies"
+    },
+    {
+        "level":2,
+        "notation":"114",
+        "prefLabel@de":"Sprachwissenschaften",
+        "prefLabel@en":"Linguistics"
+    },
+    {
+        "level":3,
+        "notation":"114-01",
+        "prefLabel@de":"Allgemeine und Vergleichende Sprachwissenschaft, Experimentelle Linguistik, Typologie, Außereuropäische Sprachen",
+        "prefLabel@en":"General and Comparative Linguistics, Experimental Linguistics, Typology, Non-European Languages"
+    },
+    {
+        "level":3,
+        "notation":"114-02",
+        "prefLabel@de":"Einzelsprachenwissenschaften, Historische Linguistik",
+        "prefLabel@en":"Individual Linguistics, Historical Linguistics"
+    },
+    {
+        "level":3,
+        "notation":"114-03",
+        "prefLabel@de":"Angewandte Sprachwissenschaften, Computerlinguistik",
+        "prefLabel@en":"Applied Linguistics, Computational Linguistics"
+    },
+    {
+        "level":2,
+        "notation":"115",
+        "prefLabel@de":"Literaturwissenschaft",
+        "prefLabel@en":"Literary Studies"
+    },
+    {
+        "level":3,
+        "notation":"115-01",
+        "prefLabel@de":"Germanistische Mediävistik (Ältere deutsche Literatur)",
+        "prefLabel@en":"German Medieval Studies (Medieval German Literature)"
+    },
+    {
+        "level":3,
+        "notation":"115-02",
+        "prefLabel@de":"Germanistische Literatur-und Kulturwissenschaften (Neuere deutsche Literatur)",
+        "prefLabel@en":"German Literary and Cultural Studies (Modern German Literature)"
+    },
+    {
+        "level":3,
+        "notation":"115-03",
+        "prefLabel@de":"Europäische und Amerikanische Literatur- und Kulturwissenschaften",
+        "prefLabel@en":"European and American Literary and Cultural Studies"
+    },
+    {
+        "level":3,
+        "notation":"115-04",
+        "prefLabel@de":"Allgemeine und vergleichende Literaturwissenschaft; Kulturwissenschaft",
+        "prefLabel@en":"General and Comparative Literary Studies; Cultural Studies"
+    },
+    {
+        "level":2,
+        "notation":"116",
+        "prefLabel@de":"Sozial- und Kulturanthropologie, Außereuropäische Kulturen, Judaistik und Religionswissenschaft",
+        "prefLabel@en":"Social and Cultural Anthropology, Non-European Cultures, Jewish Studies and Religious Studies"
+    },
+    {
+        "level":3,
+        "notation":"116-01",
+        "prefLabel@de":"Ethnologie und Europäische Ethnologie",
+        "prefLabel@en":"Social and Cultural Anthropology and Ethnology"
+    },
+    {
+        "level":3,
+        "notation":"116-02",
+        "prefLabel@de":"Asienbezogene Wissenschaften",
+        "prefLabel@en":"Asian Studies"
+    },
+    {
+        "level":3,
+        "notation":"116-03",
+        "prefLabel@de":"Afrika-, Amerika- und Ozeanienbezogene Wissenschaften",
+        "prefLabel@en":"African, American and Oceania Studies"
+    },
+    {
+        "level":3,
+        "notation":"116-04",
+        "prefLabel@de":"Islamwissenschaft, Arabistik, Semitistik",
+        "prefLabel@en":"Islamic Studies, Arabian Studies, Semitic Studies"
+    },
+    {
+        "level":3,
+        "notation":"116-05",
+        "prefLabel@de":"Religionswissenschaft und Judaistik",
+        "prefLabel@en":"Religious Studies and Jewish Studies"
+    },
+    {
+        "level":2,
+        "notation":"117",
+        "prefLabel@de":"Theologie",
+        "prefLabel@en":"Theology"
+    },
+    {
+        "level":3,
+        "notation":"117-01",
+        "prefLabel@de":"Evangelische Theologie",
+        "prefLabel@en":"Protestant Theology"
+    },
+    {
+        "level":3,
+        "notation":"117-02",
+        "prefLabel@de":"Katholische Theologie",
+        "prefLabel@en":"Roman Catholic Theology"
+    },
+    {
+        "level":2,
+        "notation":"118",
+        "prefLabel@de":"Philosophie",
+        "prefLabel@en":"Philosophy"
+    },
+    {
+        "level":3,
+        "notation":"118-01",
+        "prefLabel@de":"Geschichte der Philosophie",
+        "prefLabel@en":"History of Philosophy"
+    },
+    {
+        "level":3,
+        "notation":"118-02",
+        "prefLabel@de":"Theoretische Philosophie",
+        "prefLabel@en":"Theoretical Philosophy"
+    },
+    {
+        "level":3,
+        "notation":"118-03",
+        "prefLabel@de":"Praktische Philosophie",
+        "prefLabel@en":"Practical Philosophy"
+    },
+    {
+        "level":1,
+        "notation":"12",
+        "prefLabel@de":"Sozial- und Verhaltenswissenschaften",
+        "prefLabel@en":"Social and Behavioural Sciences"
+    },
+    {
+        "level":2,
+        "notation":"121",
+        "prefLabel@de":"Erziehungswissenschaft und Bildungsforschung",
+        "prefLabel@en":"Educational Research"
+    },
+    {
+        "level":3,
+        "notation":"121-01",
+        "prefLabel@de":"Allgemeine und Historische Erziehungswissenschaft",
+        "prefLabel@en":"General Education and History of Education"
+    },
+    {
+        "level":3,
+        "notation":"121-02",
+        "prefLabel@de":"Allgemeines und fachbezogenes Lehren und Lernen",
+        "prefLabel@en":"General and Domain-Specific Teaching and Learning"
+    },
+    {
+        "level":3,
+        "notation":"121-03",
+        "prefLabel@de":"Bildungssysteme und Bildungsinstitutionen",
+        "prefLabel@en":"Education Systems and Educational Institutions"
+    },
+    {
+        "level":3,
+        "notation":"121-04",
+        "prefLabel@de":"Erziehungswissenschaftliche Sozialisations- und Professionalitätsforschung",
+        "prefLabel@en":"Educational Research on Socialisation, Welfare and Professionalism"
+    },
+    {
+        "level":2,
+        "notation":"122",
+        "prefLabel@de":"Psychologie",
+        "prefLabel@en":"Psychology"
+    },
+    {
+        "level":3,
+        "notation":"122-01",
+        "prefLabel@de":"Allgemeine, Kognitive und Mathematische Psychologie",
+        "prefLabel@en":"General, Cognitive and Mathematical Psychology"
+    },
+    {
+        "level":3,
+        "notation":"122-02",
+        "prefLabel@de":"Biologische Psychologie und Kognitive Neurowissenschaften",
+        "prefLabel@en":"Biological Psychology and Cognitive Neuroscience"
+    },
+    {
+        "level":3,
+        "notation":"122-03",
+        "prefLabel@de":"Entwicklungspsychologie und Pädagogische Psychologie",
+        "prefLabel@en":"Developmental and Educational Psychology"
+    },
+    {
+        "level":3,
+        "notation":"122-04",
+        "prefLabel@de":"Sozialpsychologie und Arbeits- und Organisationspsychologie",
+        "prefLabel@en":"Social Psychology, Industrial and Organisational Psychology"
+    },
+    {
+        "level":3,
+        "notation":"122-05",
+        "prefLabel@de":"Persönlichkeitspsychologie, Klinische und Medizinische Psychologie, Methoden",
+        "prefLabel@en":"Personality Psychology, Clinical and Medical Psychology, Methodology"
+    },
+    {
+        "level":3,
+        "notation":"123",
+        "prefLabel@de":"Sozialwissenschaften",
+        "prefLabel@en":"Social Sciences"
+    },
+    {
+        "level":3,
+        "notation":"123-01",
+        "prefLabel@de":"Soziologische Theorie",
+        "prefLabel@en":"Sociological Theory"
+    },
+    {
+        "level":3,
+        "notation":"123-02",
+        "prefLabel@de":"Empirische Sozialforschung",
+        "prefLabel@en":"Empirical Social Research"
+    },
+    {
+        "level":3,
+        "notation":"123-03",
+        "prefLabel@de":"Publizistik und Kommunikationswissenschaft",
+        "prefLabel@en":"Communication Sciences"
+    },
+    {
+        "level":3,
+        "notation":"123-04",
+        "prefLabel@de":"Politikwissenschaft",
+        "prefLabel@en":"Political Science"
+    },
+    {
+        "level":2,
+        "notation":"124",
+        "prefLabel@de":"Wirtschaftswissenschaften",
+        "prefLabel@en":"Economics"
+    },
+    {
+        "level":3,
+        "notation":"124-01",
+        "prefLabel@de":"Wirtschaftstheorie",
+        "prefLabel@en":"Economic Theory"
+    },
+    {
+        "level":3,
+        "notation":"124-02",
+        "prefLabel@de":"Wirtschaftspolitik, Angewandte Volkswirtschaftslehre",
+        "prefLabel@en":"Economic Policy, Applied Economics"
+    },
+    {
+        "level":3,
+        "notation":"124-03",
+        "prefLabel@de":"Accounting und Finance",
+        "prefLabel@en":"Accounting und Finance"
+    },
+    {
+        "level":3,
+        "notation":"124-04",
+        "prefLabel@de":"Management und Marketing",
+        "prefLabel@en":"Management and Marketing"
+    },
+    {
+        "level":3,
+        "notation":"124-05",
+        "prefLabel@de":"Operations Management und BWL-spezifische Wirtschaftsinformatik",
+        "prefLabel@en":"Operations Management and Computer Science for Business Administration"
+    },
+    {
+        "level":3,
+        "notation":"124-06",
+        "prefLabel@de":"Statistik und Ökonometrie",
+        "prefLabel@en":"Statistics and Econometrics"
+    },
+    {
+        "level":3,
+        "notation":"124-07",
+        "prefLabel@de":"Wirtschafts- und Sozialgeschichte",
+        "prefLabel@en":"Economic and Social History"
+    },
+    {
+        "level":2,
+        "notation":"125",
+        "prefLabel@de":"Rechtswissenschaften",
+        "prefLabel@en":"Jurisprudence"
+    },
+    {
+        "level":3,
+        "notation":"125-01",
+        "prefLabel@de":"Grundlagen des Rechts und der Rechtswissenschaft",
+        "prefLabel@en":"Principles of Law and Jurisprudence"
+    },
+    {
+        "level":3,
+        "notation":"125-02",
+        "prefLabel@de":"Privatrecht",
+        "prefLabel@en":"Private Law"
+    },
+    {
+        "level":3,
+        "notation":"125-03",
+        "prefLabel@de":"Öffentliches Recht",
+        "prefLabel@en":"Public Law"
+    },
+    {
+        "level":3,
+        "notation":"125-04",
+        "prefLabel@de":"Strafrecht",
+        "prefLabel@en":"Criminal Law"
+    },
+    {
+        "level":3,
+        "notation":"125-05",
+        "prefLabel@de":"Kriminologie",
+        "prefLabel@en":"Criminology"
+    },
+    {
+        "level":0,
+        "notation":"2",
+        "prefLabel@de":"Lebenswissenschaften",
+        "prefLabel@en":"Basic Research in Biology and Medicine"
+    },
+    {
+        "level":1,
+        "notation":"21",
+        "prefLabel@de":"Biologie",
+        "prefLabel@en":"Biology"
+    },
+    {
+        "level":2,
+        "notation":"211",
+        "prefLabel@de":"Grundlagen der Biologie und Medizin",
+        "prefLabel@en":"Basic Research in Biology and Medicine"
+    },
+    {
+        "level":3,
+        "notation":"211-01",
+        "prefLabel@de":"Biochemie",
+        "prefLabel@en":"Biochemistry"
+    },
+    {
+        "level":3,
+        "notation":"211-02",
+        "prefLabel@de":"Biophysik",
+        "prefLabel@en":"Biophysics"
+    },
+    {
+        "level":3,
+        "notation":"211-03",
+        "prefLabel@de":"Zellbiologie",
+        "prefLabel@en":"Cell Biology"
+    },
+    {
+        "level":3,
+        "notation":"211-04",
+        "prefLabel@de":"Strukturbiologie",
+        "prefLabel@en":"Structural Biology"
+    },
+    {
+        "level":3,
+        "notation":"211-05",
+        "prefLabel@de":"Allgemeine Genetik und funktionelle Genomforschung",
+        "prefLabel@en":"General Genetics and Functional Genome Biology"
+    },
+    {
+        "level":3,
+        "notation":"211-06",
+        "prefLabel@de":"Entwicklungsbiologie",
+        "prefLabel@en":"Developmental Biology"
+    },
+    {
+        "level":3,
+        "notation":"211-07",
+        "prefLabel@de":"Bioinformatik und Theoretische Biologie",
+        "prefLabel@en":"Bioinformatics and Theoretical Biology"
+    },
+    {
+        "level":2,
+        "notation":"212",
+        "prefLabel@de":"Pflanzenwissenschaften",
+        "prefLabel@en":"Plant Sciences"
+    },
+    {
+        "level":3,
+        "notation":"212-01",
+        "prefLabel@de":"Evolution und Systematik der Pflanzen und Pilze",
+        "prefLabel@en":"Evolution and Systematics of Plants and Fungi"
+    },
+    {
+        "level":3,
+        "notation":"212-02",
+        "prefLabel@de":"Ökologie und Biodiversität der Pflanzen und Ökosysteme",
+        "prefLabel@en":"Ecology and Biodiversity of Plants and Ecosystems"
+    },
+    {
+        "level":3,
+        "notation":"212-03",
+        "prefLabel@de":"Organismische Interaktionen, chemische Ökologie und Mikrobiome pflanzlicher Systeme",
+        "prefLabel@en":"Organismic Interactions, Chemical Ecology and Microbiomes of Plant Systems"
+    },
+    {
+        "level":3,
+        "notation":"212-04",
+        "prefLabel@de":"Pflanzenphysiologie",
+        "prefLabel@en":"Plant Physiology"
+    },
+    {
+        "level":3,
+        "notation":"212-05",
+        "prefLabel@de":"Biochemie und Biophysik der Pflanzen",
+        "prefLabel@en":"Plant Biochemistry and Biophysics"
+    },
+    {
+        "level":3,
+        "notation":"212-06",
+        "prefLabel@de":"Zell- und Entwicklungsbiologie der Pflanzen",
+        "prefLabel@en":"Plant Cell and Developmental Biology"
+    },
+    {
+        "level":3,
+        "notation":"212-07",
+        "prefLabel@de":"Genetik und Genomik der Pflanzen",
+        "prefLabel@en":"Plant Genetics and Genomics"
+    },
+    {
+        "level":2,
+        "notation":"213",
+        "prefLabel@de":"Zoology",
+        "prefLabel@en":"Zoology"
+    },
+    {
+        "level":3,
+        "notation":"213-01",
+        "prefLabel@de":"Systematik und Morphologie der Tiere",
+        "prefLabel@en":"Systematics and Morphology (Zoology)"
+    },
+    {
+        "level":3,
+        "notation":"213-02",
+        "prefLabel@de":"Evolution, Anthropologie",
+        "prefLabel@en":"Evolution, Anthropology"
+    },
+    {
+        "level":3,
+        "notation":"213-03",
+        "prefLabel@de":"Ökologie und Biodiversität der Tiere und Ökosysteme, Organismische Interaktionen",
+        "prefLabel@en":"Ecology and Biodiversity of Animals and Ecosystems, Organismic Interactions"
+    },
+    {
+        "level":3,
+        "notation":"213-04",
+        "prefLabel@de":"Biologie des Verhaltens und der Sinne",
+        "prefLabel@en":"Sensory and Behavioural Biology"
+    },
+    {
+        "level":3,
+        "notation":"213-05",
+        "prefLabel@de":"Biochemie und Physiologie der Tiere",
+        "prefLabel@en":"Animal Physiology and Biochemistry"
+    },
+    {
+        "level":3,
+        "notation":"213-06",
+        "prefLabel@de":"Evolutionäre Zell- und Entwicklungsbiologie der Tiere",
+        "prefLabel@en":"Evolutionary Cell and Developmental Biology (Zoology)"
+    },
+    {
+        "level":1,
+        "notation":"22",
+        "prefLabel@de":"Medizin",
+        "prefLabel@en":"Medicine"
+    },
+    {
+        "level":2,
+        "notation":"221",
+        "prefLabel@de":"Mikrobiologie, Virologie und Immunologie",
+        "prefLabel@en":"Microbiology, Virology and Immunology"
+    },
+    {
+        "level":3,
+        "notation":"221-01",
+        "prefLabel@de":"Stoffwechselphysiologie, Biochemie und Genetik der Mikroorganismen",
+        "prefLabel@en":"Metabolism, Biochemistry and Genetics of Microorganisms"
+    },
+    {
+        "level":3,
+        "notation":"221-02",
+        "prefLabel@de":"Mikrobielle Ökologie und Angewandte Mikrobiologie",
+        "prefLabel@en":"Microbial Ecology and Applied Microbiology"
+    },
+    {
+        "level":3,
+        "notation":"221-03",
+        "prefLabel@de":"Medizinische Mikrobiologie und Mykologie, Hygiene, Molekulare Infektionsbiologie",
+        "prefLabel@en":"Medical Microbiology and Mycology, Hygiene, Molecular Infection Biology"
+    },
+    {
+        "level":3,
+        "notation":"221-04",
+        "prefLabel@de":"Virologie",
+        "prefLabel@en":"Virology"
+    },
+    {
+        "level":3,
+        "notation":"221-05",
+        "prefLabel@de":"Immunologie",
+        "prefLabel@en":"Immunology"
+    },
+    {
+        "level":3,
+        "notation":"221-06",
+        "prefLabel@de":"Parasitologie und Biologie der Erreger tropischer Infektionskrankheiten",
+        "prefLabel@en":"Parasitology and Biology of Tropical Infectious Disease Pathogens"
+    },
+    {
+        "level":2,
+        "notation":"222",
+        "prefLabel@de":"Medizin",
+        "prefLabel@en":"Medicine"
+    },
+    {
+        "level":3,
+        "notation":"222-01",
+        "prefLabel@de":"Epidemiologie und Medizinische Biometrie\/Statistik",
+        "prefLabel@en":"Epidemiology and Medical Biometry\/Statistics"
+    },
+    {
+        "level":3,
+        "notation":"222-02",
+        "prefLabel@de":"Public Health, Gesundheitsbezogene Versorgungsforschung, Sozial- und Arbeitsmedizin",
+        "prefLabel@en":"Public Heatlh, Healthcare Research, Social and Occupational Medicine"
+    },
+    {
+        "level":3,
+        "notation":"222-03",
+        "prefLabel@de":"Humangenetik",
+        "prefLabel@en":"Human Genetics"
+    },
+    {
+        "level":3,
+        "notation":"222-04",
+        "prefLabel@de":"Anatomie und Physiologie",
+        "prefLabel@en":"Anatomy and Physiology"
+    },
+    {
+        "level":3,
+        "notation":"222-05",
+        "prefLabel@de":"Ernährungswissenschaften",
+        "prefLabel@en":"Nutritional Sciences"
+    },
+    {
+        "level":3,
+        "notation":"222-06",
+        "prefLabel@de":"Pathologie",
+        "prefLabel@en":"Pathology"
+    },
+    {
+        "level":3,
+        "notation":"222-07",
+        "prefLabel@de":"Medizininformatik und medizinische Bioinformatik",
+        "prefLabel@en":"Medical Informatics and Medical Bioinformatics"
+    },
+    {
+        "level":3,
+        "notation":"222-08",
+        "prefLabel@de":"Pharmazie",
+        "prefLabel@en":"Pharmacy"
+    },
+    {
+        "level":3,
+        "notation":"222-09",
+        "prefLabel@de":"Pharmakologie",
+        "prefLabel@en":"Pharmacology"
+    },
+    {
+        "level":3,
+        "notation":"222-10",
+        "prefLabel@de":"Toxikologie, Laboratoriumsmedizin",
+        "prefLabel@en":"Toxicology, Laboratory Medicine"
+    },
+    {
+        "level":3,
+        "notation":"222-11",
+        "prefLabel@de":"Anästhesiologie",
+        "prefLabel@en":"Anaesthesiology"
+    },
+    {
+        "level":3,
+        "notation":"222-12",
+        "prefLabel@de":"Kardiologie, Angiologie",
+        "prefLabel@en":"Cardiology, Angiology"
+    },
+    {
+        "level":3,
+        "notation":"222-13",
+        "prefLabel@de":"Pneumologie, Thoraxchirurgie",
+        "prefLabel@en":"Pneumology, Thoracic Surgery"
+    },
+    {
+        "level":3,
+        "notation":"222-14",
+        "prefLabel@de":"Hämatologie, Onkologie",
+        "prefLabel@en":"Hematology, Oncology"
+    },
+    {
+        "level":3,
+        "notation":"222-15",
+        "prefLabel@de":"Gastroenterologie",
+        "prefLabel@en":"Gastroenterology"
+    },
+    {
+        "level":3,
+        "notation":"222-16",
+        "prefLabel@de":"Nephrologie",
+        "prefLabel@en":"Nephrology"
+    },
+    {
+        "level":3,
+        "notation":"222-17",
+        "prefLabel@de":"Endokrinologie, Diabetologie, Metabolismus",
+        "prefLabel@en":"Endocrinology, Diabetology, Metabolism"
+    },
+    {
+        "level":3,
+        "notation":"222-18",
+        "prefLabel@de":"Rheumatologie",
+        "prefLabel@en":"Rheumatology"
+    },
+    {
+        "level":3,
+        "notation":"222-19",
+        "prefLabel@de":"Dermatologie",
+        "prefLabel@en":"Dermatology"
+    },
+    {
+        "level":3,
+        "notation":"222-20",
+        "prefLabel@de":"Kinder- und Jugendmedizin",
+        "prefLabel@en":"Pediatric and Adolescent Medicine"
+    },
+    {
+        "level":3,
+        "notation":"222-21",
+        "prefLabel@de":"Gynäkologie und Geburtshilfe",
+        "prefLabel@en":"Gynaecology and Obstetrics"
+    },
+    {
+        "level":3,
+        "notation":"222-22",
+        "prefLabel@de":"Klinische Immunologie und Allergologie",
+        "prefLabel@en":"Clinical Immunology and Allergology"
+    },
+    {
+        "level":3,
+        "notation":"222-23",
+        "prefLabel@de":"Reproduktionsmedizin, Urologie",
+        "prefLabel@en":"Reproductive Medicine, Urology"
+    },
+    {
+        "level":3,
+        "notation":"222-24",
+        "prefLabel@de":"Gerontobiologie und Geriatrie",
+        "prefLabel@en":"Biogerontology and Geriatric Medicine"
+    },
+    {
+        "level":3,
+        "notation":"222-25",
+        "prefLabel@de":"Allgemein- und Viszeralchirurgie",
+        "prefLabel@en":"General and Visceral Surgery"
+    },
+    {
+        "level":3,
+        "notation":"222-26",
+        "prefLabel@de":"Herz- und Gefäßchirurgie",
+        "prefLabel@en":"Cardiac and Vascular Surgery"
+    },
+    {
+        "level":3,
+        "notation":"222-27",
+        "prefLabel@de":"Orthopädie, Unfallchirurgie, rekonstruktive Chirurgie",
+        "prefLabel@en":"Orthopaedics, Traumatology, Reconstructive Surgery"
+    },
+    {
+        "level":3,
+        "notation":"222-28",
+        "prefLabel@de":"Zahnheilkunde; Mund-, Kiefer- und Gesichtschirurgie",
+        "prefLabel@en":"Dentistry, Oral Surgery"
+    },
+    {
+        "level":3,
+        "notation":"222-29",
+        "prefLabel@de":"Hals-Nasen-Ohrenheilkunde, Phoniatrie und Audiologie",
+        "prefLabel@en":"Otolaryngology, Phoniatrics and Audiology"
+    },
+    {
+        "level":3,
+        "notation":"222-30",
+        "prefLabel@de":"Radiologie",
+        "prefLabel@en":"Radiology"
+    },
+    {
+        "level":3,
+        "notation":"222-31",
+        "prefLabel@de":"Klinische Infektiologie und Tropenmedizin",
+        "prefLabel@en":"Clinical Infectiology and Tropical Medicine"
+    },
+    {
+        "level":3,
+        "notation":"222-32",
+        "prefLabel@de":"Medizinische Physik, Biomedizinische Technik",
+        "prefLabel@en":"Medical Physics, Biomedical Technology"
+    },
+    {
+        "level":3,
+        "notation":"222-33",
+        "prefLabel@de":"Nuklearmedizin, Strahlentherapie, Strahlenbiologie",
+        "prefLabel@en":"Nuclear Medicine, Radiotherapy, Radiobiology"
+    },
+    {
+        "level":2,
+        "notation":"223",
+        "prefLabel@de":"Neurowissenschaften",
+        "prefLabel@en":"Neurosciences"
+    },
+    {
+        "level":3,
+        "notation":"223-01",
+        "prefLabel@de":"Entwicklungsneurobiologie",
+        "prefLabel@en":"Developmental Neurobiology"
+    },
+    {
+        "level":3,
+        "notation":"223-02",
+        "prefLabel@de":"Molekulare Biologie und Physiologie von Nerven- und Gliazellen",
+        "prefLabel@en":"Molecular Biology and Physiology of Neurons and Glial Cells"
+    },
+    {
+        "level":3,
+        "notation":"223-03",
+        "prefLabel@de":"Experimentelle und theoretische Netzwerk-Neurowissenschaften",
+        "prefLabel@en":"Experimental and Theoretical Network Neuroscience"
+    },
+    {
+        "level":3,
+        "notation":"223-04",
+        "prefLabel@de":"Kognitive, systemische und Verhaltensneurobiologie",
+        "prefLabel@en":"Cognitive, Systems and Behavioural Neurobiology"
+    },
+    {
+        "level":3,
+        "notation":"223-05",
+        "prefLabel@de":"Experimentelle Modelle zum Verständnis von Erkrankungen des Nervensystems",
+        "prefLabel@en":"Experimental Models for the Understanding of Nervous System Diseases"
+    },
+    {
+        "level":3,
+        "notation":"223-06",
+        "prefLabel@de":"Molekulare und zelluläre Neurologie und Neuropathologie",
+        "prefLabel@en":"Molecular and Cellular Neurology and Neuropathology"
+    },
+    {
+        "level":3,
+        "notation":"223-07",
+        "prefLabel@de":"Klinische Neurologie; Neurochirurgie und Neuroradiologie",
+        "prefLabel@en":"Clinical Neurology; Neurosurgery and Neuroradiology"
+    },
+    {
+        "level":3,
+        "notation":"223-08",
+        "prefLabel@de":"Kognitive und systemische Humanneurowissenschaften",
+        "prefLabel@en":"Human Cognitive and Systems Neuroscience"
+    },
+    {
+        "level":3,
+        "notation":"223-09",
+        "prefLabel@de":"Biologische Psychiatrie",
+        "prefLabel@en":"Biological Psychiatry"
+    },
+    {
+        "level":3,
+        "notation":"223-10",
+        "prefLabel@de":"Klinische Psychiatrie, Psychotherapie und Kinder- und Jugendpsychiatrie",
+        "prefLabel@en":"Clinical Psychiatry, Psychotherapy, Child and Adolescent Psychiatry"
+    },
+    {
+        "level":3,
+        "notation":"223-11",
+        "prefLabel@de":"Augenheilkunde",
+        "prefLabel@en":"Ophthalmology"
+    },
+    {
+        "level":1,
+        "notation":"23",
+        "prefLabel@de":"Agrar-, Forstwissenschaften und Tiermedizin",
+        "prefLabel@en":"Agriculture, Forestry and Veterinary Medicine"
+    },
+    {
+        "level":2,
+        "notation":"231",
+        "prefLabel@de":"Agrar-, Forstwissenschaften und Tiermedizin",
+        "prefLabel@en":"Agriculture, Forestry and Veterinary Medicine"
+    },
+    {
+        "level":3,
+        "notation":"231-01",
+        "prefLabel@de":"Bodenwissenschaften",
+        "prefLabel@en":"Soil Sciences"
+    },
+    {
+        "level":3,
+        "notation":"231-02",
+        "prefLabel@de":"Pflanzenzüchtung, Pflanzenpathologie",
+        "prefLabel@en":"Plant Breeding and Plant Pathology"
+    },
+    {
+        "level":3,
+        "notation":"231-03",
+        "prefLabel@de":"Pflanzenbau, Pflanzenernährung, Agrartechnik",
+        "prefLabel@en":"Plant Cultivation, Plant Nutrition, Agricultural Technology"
+    },
+    {
+        "level":3,
+        "notation":"231-04",
+        "prefLabel@de":"Ökologie der Landnutzung",
+        "prefLabel@en":"Ecology of Land Use"
+    },
+    {
+        "level":3,
+        "notation":"231-05",
+        "prefLabel@de":"Agrarökonomie, Agrarpolitik, Agrarsoziologie",
+        "prefLabel@en":"Agricultural Economics, Agricultural Policy, Agricultural Sociology"
+    },
+    {
+        "level":3,
+        "notation":"231-06",
+        "prefLabel@de":"Forstwissenschaften",
+        "prefLabel@en":"Forestry"
+    },
+    {
+        "level":3,
+        "notation":"231-07",
+        "prefLabel@de":"Tierzucht, Tierernährung, Tierhaltung",
+        "prefLabel@en":"Animal Breeding, Animal Nutrition, Animal Husbandry"
+    },
+    {
+        "level":3,
+        "notation":"231-08",
+        "prefLabel@de":"Tiermedizin",
+        "prefLabel@en":"Veterinary Medical Science"
+    },
+    {
+        "level":0,
+        "notation":"3",
+        "prefLabel@de":"Naturwissenschaften",
+        "prefLabel@en":"Natural Sciences"
+    },
+    {
+        "level":1,
+        "notation":"31",
+        "prefLabel@de":"Chemie",
+        "prefLabel@en":"Chemistry"
+    },
+    {
+        "level":2,
+        "notation":"311",
+        "prefLabel@de":"Molekülchemie",
+        "prefLabel@en":"Molecular Chemistry"
+    },
+    {
+        "level":3,
+        "notation":"311-01",
+        "prefLabel@de":"Anorganische Molekülchemie - Synthese, Charakterisierung",
+        "prefLabel@en":"Inorganic Molecular Chemistry - Synthesis and Characterisation"
+    },
+    {
+        "level":3,
+        "notation":"311-02",
+        "prefLabel@de":"Organische Molekülchemie - Synthese, Charakterisierung",
+        "prefLabel@en":"Organic Molecular Chemistry - Synthesis and Characterisation"
+    },
+    {
+        "level":2,
+        "notation":"312",
+        "prefLabel@de":"Chemische Festkörper- und Oberflächenforschung",
+        "prefLabel@en":"Chemical Solid State and Surface Research"
+    },
+    {
+        "level":3,
+        "notation":"312-01",
+        "prefLabel@de":"Festkörper- und Oberflächenchemie, Materialsynthese",
+        "prefLabel@en":"Solid State and Surface Chemistry, Material Synthesis"
+    },
+    {
+        "level":3,
+        "notation":"312-02",
+        "prefLabel@de":"Physikalische Chemie von Festkörpern und Oberflächen, Materialcharakterisierung",
+        "prefLabel@en":"Physical Chemistry of Solids and Surfaces, Material Characterisation"
+    },
+    {
+        "level":2,
+        "notation":"313",
+        "prefLabel@de":"Physikalische Chemie",
+        "prefLabel@en":"Physical Chemistry"
+    },
+    {
+        "level":3,
+        "notation":"313-01",
+        "prefLabel@de":"Physikalische Chemie von Molekülen, Flüssigkeiten und Grenzflächen, Biophysikalische Chemie",
+        "prefLabel@en":"Physical Chemistry of Molecules, Liquids and Interfaces, Biophysical Chemistry"
+    },
+    {
+        "level":2,
+        "notation":"314",
+        "prefLabel@de":"Analytische Chemie",
+        "prefLabel@en":"Analytical Chemie"
+    },
+    {
+        "level":3,
+        "notation":"314-01",
+        "prefLabel@de":"Analytische Chemie",
+        "prefLabel@en":"Analytical Chemistry"
+    },
+    {
+        "level":2,
+        "notation":"315",
+        "prefLabel@de":"Biologische Chemie und Lebensmittelchemie",
+        "prefLabel@en":"Biological Chemistry and Food Chemistry"
+    },
+    {
+        "level":3,
+        "notation":"315-01",
+        "prefLabel@de":"Biologische und Biomimetische Chemie",
+        "prefLabel@en":"Biological and Biomimetic Chemistry"
+    },
+    {
+        "level":3,
+        "notation":"315-02",
+        "prefLabel@de":"Lebensmittelchemie",
+        "prefLabel@en":"Food Chemistry"
+    },
+    {
+        "level":2,
+        "notation":"316",
+        "prefLabel@de":"Polymerforschung",
+        "prefLabel@en":"Polymer Research"
+    },
+    {
+        "level":3,
+        "notation":"316-01",
+        "prefLabel@de":"Präparative und Physikalische Chemie von Polymeren",
+        "prefLabel@en":"Preparatory and Physical Chemistry of Polymers"
+    },
+    {
+        "level":3,
+        "notation":"316-02",
+        "prefLabel@de":"Experimentelle und Theoretische Polymerphysik",
+        "prefLabel@en":"Experimental and Theoretical Physics of Polymers"
+    },
+    {
+        "level":3,
+        "notation":"316-03",
+        "prefLabel@de":"Polymermaterialien",
+        "prefLabel@en":"Polymer Materials"
+    },
+    {
+        "level":2,
+        "notation":"317",
+        "prefLabel@de":"Theoretische Chemie",
+        "prefLabel@en":"Theoretical Chemistry"
+    },
+    {
+        "level":3,
+        "notation":"317-01",
+        "prefLabel@de":"Theoretische Chemie: Elektronenstruktur, Dynamik, Simulation",
+        "prefLabel@en":"Theoretical Chemistry: Electron Structure, Dynamics, Simulation"
+    },
+    {
+        "level":3,
+        "notation":"317-02",
+        "prefLabel@de":"Theoretische Chemie: Moleküle, Materialien, Oberflächen",
+        "prefLabel@en":"Theoretical Chemistry: Molecules, Materials, Surfaces"
+    },
+    {
+        "level":1,
+        "notation":"32",
+        "prefLabel@de":"Physik",
+        "prefLabel@en":"Physics"
+    },
+    {
+        "level":2,
+        "notation":"321",
+        "prefLabel@de":"Physik der kondensierten Materie",
+        "prefLabel@en":"Condensed Matter Physics"
+    },
+    {
+        "level":3,
+        "notation":"321-01",
+        "prefLabel@de":"Experimentelle Physik der kondensierten Materie",
+        "prefLabel@en":"Experimental Condensed Matter Physics"
+    },
+    {
+        "level":3,
+        "notation":"321-02",
+        "prefLabel@de":"Theoretische Physik der kondensierten Materie",
+        "prefLabel@en":"Theoretical Condensed Matter Physics"
+    },
+    {
+        "level":2,
+        "notation":"322",
+        "prefLabel@de":"Statistische Physik, Nichtlineare Dynamik, Komplexe Systeme,  Weiche und fluide Materie, Biologische Physik",
+        "prefLabel@en":"Statistical Physics, Nonlinear Dynamics, Complex Systems, Soft and Fluid Matter,  Biological Physics"
+    },
+    {
+        "level":3,
+        "notation":"322-01",
+        "prefLabel@de":"Statistische Physik, Nichtlineare Dynamik, Komplexe Systeme, Weiche und fluide Materie, Biologische Physik",
+        "prefLabel@en":"Statistical Physics, Nonlinear Dynamics, Complex Systems, Soft and Fluid Matter,  Biological Physics"
+    },
+    {
+        "level":2,
+        "notation":"323",
+        "prefLabel@de":"Optik, Quantenoptik und Physik der Atome, Moleküle und Plasmen",
+        "prefLabel@en":"Optics, Quantum Optics and Physics of Atoms, Molecules and Plasmas"
+    },
+    {
+        "level":3,
+        "notation":"323-01",
+        "prefLabel@de":"Optik, Quantenoptik und Physik der Atome, Moleküle und Plasmen",
+        "prefLabel@en":"Optics, Quantum Optics and Physics of Atoms, Molecules and Plasmas"
+    },
+    {
+        "level":2,
+        "notation":"324",
+        "prefLabel@de":"Teilchen, Kerne und Felder",
+        "prefLabel@en":"Particles, Nuclei and Fields"
+    },
+    {
+        "level":3,
+        "notation":"324-01",
+        "prefLabel@de":"Kern- und Elementarteilchenphysik, Quantenmechanik, Relativitätstheorie, Felder",
+        "prefLabel@en":"Nuclear and Elementary Particle Physics, Quantum Mechanics, Relativity, Fields"
+    },
+    {
+        "level":2,
+        "notation":"325",
+        "prefLabel@de":"Astrophysik und Astronomie",
+        "prefLabel@en":"Astrophysics and Astronomy"
+    },
+    {
+        "level":3,
+        "notation":"325-01",
+        "prefLabel@de":"Astrophysik und Astronomie",
+        "prefLabel@en":"Astrophysics and Astronomy"
+    },
+    {
+        "level":1,
+        "notation":"33",
+        "prefLabel@de":"Mathematik",
+        "prefLabel@en":"Mathematics"
+    },
+    {
+        "level":2,
+        "notation":"331",
+        "prefLabel@de":"Mathematik",
+        "prefLabel@en":"Mathematics"
+    },
+    {
+        "level":3,
+        "notation":"331-01",
+        "prefLabel@de":"Mathematik",
+        "prefLabel@en":"Mathematics"
+    },
+    {
+        "level":1,
+        "notation":"34",
+        "prefLabel@de":"Geowissenschaften",
+        "prefLabel@en":"Geosciences"
+    },
+    {
+        "level":2,
+        "notation":"341",
+        "prefLabel@de":"Atmosphären-, Meeres- und Klimaforschung",
+        "prefLabel@en":"Atmospheric Science, Oceanography and Climate Research"
+    },
+    {
+        "level":3,
+        "notation":"341-01",
+        "prefLabel@de":"Physik und Chemie der Atmosphäre",
+        "prefLabel@en":"Atmospheric Science"
+    },
+    {
+        "level":3,
+        "notation":"341-02",
+        "prefLabel@de":"Physik, Chemie und Biologie des Meeres",
+        "prefLabel@en":"Oceanography"
+    },
+    {
+        "level":2,
+        "notation":"342",
+        "prefLabel@de":"Geologie und Paläontologie",
+        "prefLabel@en":"Geology and Palaeontology"
+    },
+    {
+        "level":3,
+        "notation":"342-01",
+        "prefLabel@de":"Geologie",
+        "prefLabel@en":"Geology"
+    },
+    {
+        "level":3,
+        "notation":"342-02",
+        "prefLabel@de":"Paläontologie",
+        "prefLabel@en":"Palaeontology"
+    },
+    {
+        "level":2,
+        "notation":"343",
+        "prefLabel@de":"Geophysik und Geodäsie",
+        "prefLabel@en":"Geophysics and Geodesy"
+    },
+    {
+        "level":3,
+        "notation":"343-01",
+        "prefLabel@de":"Physik des Erdkörpers",
+        "prefLabel@en":"Geophysics"
+    },
+    {
+        "level":3,
+        "notation":"343-02",
+        "prefLabel@de":"Geodäsie, Photogrammetrie, Fernerkundung, Geoinformatik, Kartographie",
+        "prefLabel@en":"Geodesy, Photogrammetry, Remote Sensing, Geoinformatics, Cartography"
+    },
+    {
+        "level":2,
+        "notation":"344",
+        "prefLabel@de":"Mineralogie, Petrologie und Geochemie",
+        "prefLabel@en":"Mineralogy, Petrology and Geochemistry"
+    },
+    {
+        "level":3,
+        "notation":"344-01",
+        "prefLabel@de":"Mineralogie, Petrologie und Geochemie",
+        "prefLabel@en":"Mineralogy, Petrology and Geochemistry"
+    },
+    {
+        "level":2,
+        "notation":"345",
+        "prefLabel@de":"Geographie",
+        "prefLabel@en":"Geography"
+    },
+    {
+        "level":3,
+        "notation":"345-01",
+        "prefLabel@de":"Physische Geographie",
+        "prefLabel@en":"Physical Geography"
+    },
+    {
+        "level":3,
+        "notation":"345-02",
+        "prefLabel@de":"Humangeographie",
+        "prefLabel@en":"Human Geography"
+    },
+    {
+        "level":2,
+        "notation":"346",
+        "prefLabel@de":"Wasserforschung",
+        "prefLabel@en":"Water Research"
+    },
+    {
+        "level":3,
+        "notation":"346-01",
+        "prefLabel@de":"Hydrogeologie, Hydrologie, Limnologie, Siedlungswasserwirtschaft, Wasserchemie, Integrierte Wasserressourcen-Bewirtschaftung",
+        "prefLabel@en":"Hydrogeology, Hydrology, Limnology, Urban Water Management, Water Chemistry, Integrated Water Resources Management"
+    },
+    {
+        "level":0,
+        "notation":"4",
+        "prefLabel@de":"Ingenieurwissenschaften",
+        "prefLabel@en":"Engineering Sciences"
+    },
+    {
+        "level":1,
+        "notation":"41",
+        "prefLabel@de":"Maschinenbau und Produktionstechnik",
+        "prefLabel@en":"Mechanical and Industrial Engineering"
+    },
+    {
+        "level":2,
+        "notation":"411",
+        "prefLabel@de":"Produktionstechnik",
+        "prefLabel@en":"Production Technology"
+    },
+    {
+        "level":3,
+        "notation":"411-01",
+        "prefLabel@de":"Spanende und abtragende Fertigungstechnik",
+        "prefLabel@en":"Metal-Cutting and Abrasive Manufacturing Engineering"
+    },
+    {
+        "level":3,
+        "notation":"411-02",
+        "prefLabel@de":"Ur- und Umformtechnik, Additive Fertigungsverfahren",
+        "prefLabel@en":"Primary Shaping and Reshaping Technology, Additive Manufacturing"
+    },
+    {
+        "level":3,
+        "notation":"411-03",
+        "prefLabel@de":"Fügetechnik und Trenntechnik",
+        "prefLabel@en":"Joining and Separation Technology"
+    },
+    {
+        "level":3,
+        "notation":"411-04",
+        "prefLabel@de":"Kunststofftechnik",
+        "prefLabel@en":"Plastics Engineering"
+    },
+    {
+        "level":3,
+        "notation":"411-05",
+        "prefLabel@de":"Produktionssystematik, Betriebswissenschaften, Qualitätsmanagement und Fabrikplanung",
+        "prefLabel@en":"Production Systems, Operations Management, Quality Management and Factory Planning"
+    },
+    {
+        "level":3,
+        "notation":"411-06",
+        "prefLabel@de":"Produktionsautomatisierung und Montagetechnik",
+        "prefLabel@en":"Production Automation and Assembly Technology"
+    },
+    {
+        "level":2,
+        "notation":"412",
+        "prefLabel@de":"Mechanik und Konstruktiver Maschinenbau",
+        "prefLabel@en":"Mechanics and Constructive Mechanical Engineering"
+    },
+    {
+        "level":3,
+        "notation":"412-01",
+        "prefLabel@de":"Konstruktion, Maschinenelemente, Produktentwicklung",
+        "prefLabel@en":"Engineering Design, Machine Elements, Product Development"
+    },
+    {
+        "level":3,
+        "notation":"412-02",
+        "prefLabel@de":"Mechanik",
+        "prefLabel@en":"Mechanics"
+    },
+    {
+        "level":3,
+        "notation":"412-03",
+        "prefLabel@de":"Leichtbau, Textiltechnik",
+        "prefLabel@en":"Lightweight Construction, Textile Technology"
+    },
+    {
+        "level":3,
+        "notation":"412-04",
+        "prefLabel@de":"Akustik",
+        "prefLabel@en":"Acoustics"
+    },
+    {
+        "level":1,
+        "notation":"42",
+        "prefLabel@de":"Wärmetechnik\/ Verfahrenstechnik",
+        "prefLabel@en":"Thermal Engineering\/ Process Engineering"
+    },
+    {
+        "level":2,
+        "notation":"421",
+        "prefLabel@de":"Verfahrenstechnik, Technische Chemie",
+        "prefLabel@en":"Process Engineering, Technical Chemistry"
+    },
+    {
+        "level":3,
+        "notation":"421-01",
+        "prefLabel@de":"Chemische und Thermische Verfahrenstechnik",
+        "prefLabel@en":"Chemical and Thermal Process Engineering"
+    },
+    {
+        "level":3,
+        "notation":"421-02",
+        "prefLabel@de":"Technische Chemie",
+        "prefLabel@en":"Technical Chemistry"
+    },
+    {
+        "level":3,
+        "notation":"421-03",
+        "prefLabel@de":"Mechanische Verfahrenstechnik",
+        "prefLabel@en":"Mechanical Process Engineering"
+    },
+    {
+        "level":3,
+        "notation":"421-04",
+        "prefLabel@de":"Bioverfahrenstechnik",
+        "prefLabel@en":"Biological Process Engineering"
+    },
+    {
+        "level":3,
+        "notation":"421-05",
+        "prefLabel@de":"Systemverfahrenstechnik",
+        "prefLabel@en":"Systems Process Engineering"
+    },
+    {
+        "level":2,
+        "notation":"422",
+        "prefLabel@de":"Strömungsmechanik, Technische Thermodynamik und Thermische Energietechnik",
+        "prefLabel@en":"Fluid Mechanics, Technical Thermodynamics and Thermal Energy Engineering"
+    },
+    {
+        "level":3,
+        "notation":"422-01",
+        "prefLabel@de":"Energieverfahrenstechnik",
+        "prefLabel@en":"Energy Process Engineering"
+    },
+    {
+        "level":3,
+        "notation":"422-02",
+        "prefLabel@de":"Technische Thermodynamik",
+        "prefLabel@en":"Technical Thermodynamics"
+    },
+    {
+        "level":3,
+        "notation":"422-03",
+        "prefLabel@de":"Strömungsmechanik",
+        "prefLabel@en":"Fluid Mechanics"
+    },
+    {
+        "level":3,
+        "notation":"422-04",
+        "prefLabel@de":"Strömungs- und Kolbenmaschinen",
+        "prefLabel@en":"Hydraulic and Turbo Engines and Piston Engines"
+    },
+    {
+        "level":1,
+        "notation":"43",
+        "prefLabel@de":"Materialwissenschaft und Werkstofftechnik",
+        "prefLabel@en":"Materials Science and Engineering"
+    },
+    {
+        "level":2,
+        "notation":"431",
+        "prefLabel@de":"Werkstofftechnik",
+        "prefLabel@en":"Materials Engineering"
+    },
+    {
+        "level":3,
+        "notation":"431-01",
+        "prefLabel@de":"Metallurgische, thermische und thermomechanische Behandlung von Werkstoffen",
+        "prefLabel@en":"Metallurgical, Thermal and Thermomechanical Treatment of Materials"
+    },
+    {
+        "level":3,
+        "notation":"431-02",
+        "prefLabel@de":"Materialien und Werkstoffe der Sinterprozesse und der generativen Fertigungsverfahren",
+        "prefLabel@en":"Materials in Sintering Processes and Generative Manufacturing Processes"
+    },
+    {
+        "level":3,
+        "notation":"431-03",
+        "prefLabel@de":"Beschichtungs- und Oberflächentechnik",
+        "prefLabel@en":"Coating and Surface Technology"
+    },
+    {
+        "level":3,
+        "notation":"431-04",
+        "prefLabel@de":"Mechanische Eigenschaften von metallischen Werkstoffen und ihre mikrostrukturellen Ursachen",
+        "prefLabel@en":"Mechanical Properties of Metallic Materials and their Microstructural Origins"
+    },
+    {
+        "level":3,
+        "notation":"431-05",
+        "prefLabel@de":"Glas und Keramik und darauf basierende Verbundwerkstoffe",
+        "prefLabel@en":"Glass, Ceramics and Derived Composites"
+    },
+    {
+        "level":3,
+        "notation":"431-06",
+        "prefLabel@de":"Polymere und biogene Werkstoffe und darauf basierende Verbundwerkstoffe",
+        "prefLabel@en":"Polymeric and Biogenic Materials and Derived Composites"
+    },
+    {
+        "level":2,
+        "notation":"432",
+        "prefLabel@de":"Materialwissenschaft",
+        "prefLabel@en":"Materials Science"
+    },
+    {
+        "level":3,
+        "notation":"432-01",
+        "prefLabel@de":"Herstellung und Eigenschaften von Funktionsmaterialien",
+        "prefLabel@en":"Synthesis and Properties of Functional  Materials"
+    },
+    {
+        "level":3,
+        "notation":"432-02",
+        "prefLabel@de":"Biomaterialien",
+        "prefLabel@en":"Biomaterials"
+    },
+    {
+        "level":3,
+        "notation":"432-03",
+        "prefLabel@de":"Thermodynamik und Kinetik sowie Eigenschaften der Phasen und Gefüge von Werkstoffen",
+        "prefLabel@en":"Thermodynamics and Kinetics as well as Properties of Phases and Microstructure of Materials"
+    },
+    {
+        "level":3,
+        "notation":"432-04",
+        "prefLabel@de":"Computergestütztes Werkstoffdesign und Simulation von Werkstoffverhalten von atomistischer bis mikroskopischer Skala",
+        "prefLabel@en":"Computer-Aided Design of Materials and Simulation of Materials Behaviour from Atomic to Microscopic Scale"
+    },
+    {
+        "level":1,
+        "notation":"44",
+        "prefLabel@de":"Informatik, System- und Elektrotechnik",
+        "prefLabel@en":"Computer Science, Systems and  Electrical Engineering"
+    },
+    {
+        "level":2,
+        "notation":"441",
+        "prefLabel@de":"Systemtechnik",
+        "prefLabel@en":"Systems Engineering"
+    },
+    {
+        "level":3,
+        "notation":"441-01",
+        "prefLabel@de":"Automatisierungstechnik, Mechatronik, Regelungssysteme, Intelligente Technische Systeme, Robotik",
+        "prefLabel@en":"Automation, Mechatronics, Control Systems, Intelligent Technical Systems, Robotics"
+    },
+    {
+        "level":3,
+        "notation":"441-02",
+        "prefLabel@de":"Messsysteme",
+        "prefLabel@en":"Measurement Systems"
+    },
+    {
+        "level":3,
+        "notation":"441-03",
+        "prefLabel@de":"Mikrosysteme",
+        "prefLabel@en":"Microsystems"
+    },
+    {
+        "level":3,
+        "notation":"441-04",
+        "prefLabel@de":"Verkehrs- und Transportsysteme, Intelligenter und automatisierter Verkehr",
+        "prefLabel@en":"Traffic and Transport Systems, Intelligent and Automated Traffic"
+    },
+    {
+        "level":3,
+        "notation":"441-05",
+        "prefLabel@de":"Arbeitswissenschaft, Ergonomie, Mensch-Maschine-Systeme",
+        "prefLabel@en":"Human Factors, Ergonomics, Human-Machine Systems"
+    },
+    {
+        "level":3,
+        "notation":"441-06",
+        "prefLabel@de":"Biomedizinische Systemtechnik",
+        "prefLabel@en":"Biomedical Systems Technology"
+    },
+    {
+        "level":2,
+        "notation":"442",
+        "prefLabel@de":"Elektrotechnik und Informationstechnik",
+        "prefLabel@en":"Electrical Engineering and Information Technology"
+    },
+    {
+        "level":3,
+        "notation":"442-01",
+        "prefLabel@de":"Elektronische Halbleiter, Bauelemente und Schaltungen, Integrierte Systeme, Sensorik, Theoretische Elektrotechnik",
+        "prefLabel@en":"Electronic Semiconductors, Components and Circuits, Integrated Systems, Sensor Technology, Theoretical Electrical Engineering"
+    },
+    {
+        "level":3,
+        "notation":"442-02",
+        "prefLabel@de":"Kommunikationstechnik und- netze, Hochfrequenztechnik und photonische Systeme, Signalverarbeitung und maschinelles Lernen für Informationstechnik",
+        "prefLabel@en":"Communication Technology and Networks, High-Frequency Technology and Photonic Systems, Signal Processing and Machine Learning for Information Technology"
+    },
+    {
+        "level":3,
+        "notation":"442-03",
+        "prefLabel@de":"Elektrische Energiesysteme, Power Management, Leistungselektronik, elektrische Maschinen und Antriebe",
+        "prefLabel@en":"Electrical Energy Systems, Power Management, Power Electronics, Electrical Machines and Drives"
+    },
+    {
+        "level":3,
+        "notation":"442-04",
+        "prefLabel@de":"Hardwaresysteme und -architekturen für die Informationstechnik und die Künstliche Intelligenz, Quantentechnische Systeme",
+        "prefLabel@en":"Hardware Systems and Architectures for Information Technology and Artificial Intelligence, Quantum Engineering Systems"
+    },
+    {
+        "level":2,
+        "notation":"443",
+        "prefLabel@de":"Informatik",
+        "prefLabel@en":"Computer Science"
+    },
+    {
+        "level":3,
+        "notation":"443-01",
+        "prefLabel@de":"Theoretische Informatik",
+        "prefLabel@en":"Theoretical Computer Science"
+    },
+    {
+        "level":3,
+        "notation":"443-02",
+        "prefLabel@de":"Softwaretechnik und Programmiersprachen",
+        "prefLabel@en":"Software Engineering and Programming Languages"
+    },
+    {
+        "level":3,
+        "notation":"443-03",
+        "prefLabel@de":"Sicherheit und Verlässlichkeit, Betriebs-, Kommunikations- und verteilte Systeme",
+        "prefLabel@en":"Security and Dependability, Operating, Communication and Distributed Systems"
+    },
+    {
+        "level":3,
+        "notation":"443-04",
+        "prefLabel@de":"Künstliche Intelligenz und Maschinelle Lernverfahren",
+        "prefLabel@en":"Artificial Intelligence and Machine Learning Methods"
+    },
+    {
+        "level":3,
+        "notation":"443-05",
+        "prefLabel@de":"Bild- und Sprachverarbeitung, Computergraphik und Visualisierung, Human Computer Interaction, Ubiquitous und Wearable Computing",
+        "prefLabel@en":"Image and Language Processing,  Computer Graphics and Visualisation, Human Computer Interaction, Ubiquitous and Wearable Computing"
+    },
+    {
+        "level":3,
+        "notation":"443-06",
+        "prefLabel@de":"Datenmanagement, datenintensive Systeme, Informatik-Methoden in der Wirtschaftsinformatik",
+        "prefLabel@en":"Data Management, Data-Intensive Systems, Computer Science Methods in Business Informatics"
+    },
+    {
+        "level":3,
+        "notation":"443-07",
+        "prefLabel@de":"Rechnerarchitektur, eingebettete und massiv parallele Systeme",
+        "prefLabel@en":"Computer Architecture, Embedded and Massively Parallel Systems"
+    },
+    {
+        "level":1,
+        "notation":"45",
+        "prefLabel@de":"Bauwesen und Architektur",
+        "prefLabel@en":"Construction Engineering and Architecture"
+    },
+    {
+        "level":2,
+        "notation":"451",
+        "prefLabel@de":"Bauwesen und Architektur",
+        "prefLabel@en":"Construction Engineering and Architecture"
+    },
+    {
+        "level":3,
+        "notation":"451-01",
+        "prefLabel@de":"Architektur, Bau- und Konstruktionsgeschichte, Bauforschung, Ressourcenökonomie im Bauwesen",
+        "prefLabel@en":"Architecture, Building and Construction History, Construction Research, Sustainable Building Technology"
+    },
+    {
+        "level":3,
+        "notation":"451-02",
+        "prefLabel@de":"Städtebau\/Stadtentwicklung, Raumplanung, Verkehrs- und Infrastrukturplanung, Landschaftsplanung",
+        "prefLabel@en":"Urbanism, Spatial Planning, Transportation and Infrastructure Planning, Landscape Planning"
+    },
+    {
+        "level":3,
+        "notation":"451-03",
+        "prefLabel@de":"Baustoffwissenschaften, Bauchemie, Bauphysik",
+        "prefLabel@en":"Construction Material Sciences, Chemistry, Building Physics"
+    },
+    {
+        "level":3,
+        "notation":"451-04",
+        "prefLabel@de":"Konstruktiver Ingenieurbau, Bauinformatik und Baubetrieb",
+        "prefLabel@en":"Structural Engineering, Building Informatics and Construction Operation"
+    },
+    {
+        "level":3,
+        "notation":"451-05",
+        "prefLabel@de":"Angewandte Mechanik, Statik und Dynamik",
+        "prefLabel@en":"Applied Mechanics, Statics and Dynamics"
+    },
+    {
+        "level":3,
+        "notation":"451-06",
+        "prefLabel@de":"Geotechnik, Wasserbau",
+        "prefLabel@en":"Geotechnics, Hydraulic Engineering"
+    }
+]
