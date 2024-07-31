@@ -38,7 +38,7 @@
     {
         "field-name": "topicClassValue",
         "term-uri-field": "topicClassValue",
-        "js-url": "__dataverse_previewers__/js/get_dfg_classification.js",
+        "js-url": "__dataverse_previewers__/js/get_dfg_class.js",
         "protocol": "dfgTopicClass",
         "retrieval-uri": "",
         "allow-free-text": true,
