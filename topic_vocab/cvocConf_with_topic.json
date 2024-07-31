@@ -75,6 +75,31 @@
         "field-name": "topicClassValue",
         "term-uri-field": "topicClassValue",
         "js-url": "__dataverse_previewers__/js/get_dfg_classification.js",
-        "protocol": "dfgClassification"
+        "protocol": "dfgClassification",
+        "retrieval-uri": "https://www.dfg.de/resource/blob/331950/85717c3edb9ea8bd453d5110849865d3/fachsystematik-2024-2028-en-data.pdf",
+        "term-parent-uri": "",
+        "allow-free-text": true,
+        "prefix": "https://www.dfg.de/resource/blob/331950/85717c3edb9ea8bd453d5110849865d3/fachsystematik-2024-2028-en-data.pdf",
+        "managed-fields": {},
+        "languages":"",
+        "vocabs": {
+            "dfg_classification": {
+                "uriSpace": "https://www.dfg.de/resource/blob/331950/85717c3edb9ea8bd453d5110849865d3/fachsystematik-2024-2028-en-data.pdf"
+            }
+        },
+        "retrieval-filtering": {
+            "@context": {
+                "termName": "https://schema.org/name",
+                "lang": "@language",
+                "content": "@value"
+            },
+            "termName": {
+                "pattern": "{0}",
+                "params": ["/altLabel/Label=*/literalForm"]
+            },
+            "@type": {
+                "pattern": "https://schema.org/subjectOf"
+            }
+        }   
     }
 ]
