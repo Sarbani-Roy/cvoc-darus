@@ -56,7 +56,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
-                    var topicClass = $(topicClassValue).val() === "" && item.name ? item.name : $(topicClassValue).val();
+                    var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     $(topicClassVocab).val("");
                     $(topicClassVocabURI).val("");
 
