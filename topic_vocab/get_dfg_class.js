@@ -52,10 +52,11 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     }
 
                     // markMatch bolds the search term if/where it appears in the result
-                    var $result = markMatch(item.text, item.term);
+                    var $result = markMatch(item.text, term);
                     return $result;
                 },
                 templateSelection: function(item) {
+                    console.log(item)
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     $(topicClassVocab).val("");
                     $(topicClassVocabURI).val("");
@@ -65,7 +66,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 },
                 language: {
                     searching: function(params) {
-                        return 'Search by name, email, or ORCID…';
+                        return 'Search by a topic name';
                     }
                 },
                 placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select an Author",
