@@ -39,7 +39,7 @@
         "field-name": "topicClassValue",
         "term-uri-field": "topicClassValue",
         "js-url": "",
-        "protocol": "",
+        "protocol": "dfgTopicClass",
         "retrieval-uri": "",
         "allow-free-text": true,
         "languages": "",

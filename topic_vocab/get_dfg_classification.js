@@ -1,6 +1,6 @@
 var topicParentSelector = "div#metadata_topicClassification";
-var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
-var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
+var topicSelector = "span[data-cvoc-protocol='dfgTopicClass']";
+var topicInputSelector = "input[data-cvoc-protocol='dfgTopicClass']";
 
 $(document).ready(function() {
     expandPeople();
