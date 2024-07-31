@@ -7,8 +7,9 @@ $(document).ready(function() {
 });
 
 function expandPeople() {
-    $(topicParentSelector).each(function() {
-        console.log(topicParentSelector)
+    console.log("test")
+    // $(topicParentSelector).each(function() {
+    //     console.log(topicParentSelector)
         // var parentElement = $(topicParentSelector).parent();
         // var fieldValuesElement = parentElement.siblings('.dataset-field-values');
         // var compoundFieldElement = fieldValuesElement.find('.edit-compound-field');
@@ -24,5 +25,5 @@ function expandPeople() {
         //         updatePeopleInputs(topicElement, topicClass, topicClassVocab, topicClassVocabURI);
         //     }
         // });
-    });
+    // });
 }
