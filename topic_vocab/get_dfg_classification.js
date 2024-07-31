@@ -28,6 +28,7 @@ function expandPeople() {
 function updatePeopleInputs(topicElement, topicClassValue, topicClassVocab, topicClassVocabURI) {
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
+        console.log(topicInput)
         if (!topicInput.hasAttribute('data-topic')) {
             // Random identifier added
             let num = Math.floor(Math.random() * 100000000000);
@@ -38,7 +39,7 @@ function updatePeopleInputs(topicElement, topicClassValue, topicClassVocab, topi
             var selectId = "personAddSelect_" + num;
             $(topicInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
             
-            $.getJSON('path/to/data.json', function(data) {
+            $.getJSON('__dataverse_previewers__/js/dfg-2024_in_json.json', function(data) {
                 var processedResults = data.map(function(item) {
                     return {
                         text: item['prefLabel@en'] + " (" + item['notation'] + ")",
@@ -55,6 +56,7 @@ function updatePeopleInputs(topicElement, topicClassValue, topicClassVocab, topi
                     delay: 500,
                     templateResult: function(item) {
                         
+                        console.log(item)
                         // No templating right now
                         if (item.loading) {
                             return item.text;
