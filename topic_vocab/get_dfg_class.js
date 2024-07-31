@@ -20,13 +20,13 @@ function expandDFGclass() {
                 var topicClassVocab = topicElement.children().eq(1).find('input');
                 var topicClassVocabURI = topicElement.children().eq(2).find('input');
 
-                updatePeopleInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI);
+                updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI);
             }
         });
     });
 }
 
-function updatePeopleInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
+function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
         console.log(topicInput)
