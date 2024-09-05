@@ -130,21 +130,19 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     }
             });
 
-            var projectName = $(projectNameInput).val()
-            var projectAcronym = $(projectAcronymInput).val();
-            var agency = $(fundingAgency).val();
-            var id = $(fundingIdentifier).val();
+            // var projectName = $(projectNameInput).val()
+            // var projectAcronym = $(projectAcronymInput).val();
+            // var agency = $(fundingAgency).val();
+            // var id = $(fundingIdentifier).val();
 
-            if(projectName || projectAcronym || agency || id){
-                //If the initial value (Identifier and IdentifierScheme) is not an ORCID (legacy, or if tags are enabled), just display it as is 
-                var newOption = new Option(projectName, projectAcronym, agency, id, true, true);
-                $('#' + selectId).append(newOption).trigger('change');
-            }
-            else {
-                //If the initial value (Identifier and IdentifierScheme) is not an ORCID (legacy, or if tags are enabled), just display it as is 
-                var newOption = new Option(projectName, projectName, true, true);
-                $('#' + selectId).append(newOption).trigger('change');
-            }
+            // if(projectName || projectAcronym || agency || id){
+            //     var newOption = new Option(projectName, projectAcronym, agency, id, true, true);
+            //     $('#' + selectId).append(newOption).trigger('change');
+            // }
+            // else {
+            //     var newOption = new Option(projectName, projectName, true, true);
+            //     $('#' + selectId).append(newOption).trigger('change');
+            // }
 
 
 
@@ -153,7 +151,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var data = e.params.data;
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
-                    var projectName = data.text.split(',')[0];
+                    var projectName = data.text;
                     data.text = projectName;
                     $("input[data-project='" + num + "']").val(data.text);
                 } else {
@@ -194,9 +192,4 @@ function markMatch(text, term) {
     // Put in whatever is after the match
     $result.append(text.substring(match + term.length));
     return $result;
-}
-
-function capitalizeFirstLetter(str) {
-    if (!str) return '';
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
