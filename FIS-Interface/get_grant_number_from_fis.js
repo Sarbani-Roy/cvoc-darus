@@ -41,7 +41,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $(projectInput).hide();
             $(projectInput).attr('data-project', num);
             
-        //     // Add a select2 element to allow search and provide a list of choices
+        // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
             // console.log(selectId)
             $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
@@ -139,26 +139,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }
                     }
             });
+           
 
-            
-
+            // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val()
-            // var projectAcronym = $(projectAcronymInput).val();
-            // var agency = $(fundingAgency).val();
-            // var id = $(fundingIdentifier).val();
-
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
-
-            // if(projectName){
-            //     var newOption = new Option(projectName, projectAcronym, agency, id, true, true);
-            //     $('#' + selectId).append(newOption).trigger('change');
-            // }
-            // else {
-            //     var newOption = new Option(projectName, projectName, true, true);
-            //     $('#' + selectId).append(newOption).trigger('change');
-            // }
-
 
 
             // When a selection is made, set the value of the hidden input field
