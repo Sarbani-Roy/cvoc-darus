@@ -62,16 +62,21 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 templateSelection: function(item) {
                     console.log(item);
-                    $(projectAcronymInput).val(item.acronym);
-                    $(fundingAgency).val(item.agency);
-                    $(fundingIdentifier).val(item.id);
+                    if ($(projectAcronymInput).val() === "" && item.acronym){
+                        $(projectAcronymInput).val(item.acronym);
+                    }
+                    if ($(fundingAgency).val() === "" && item.agency){
+                        $(fundingAgency).val(item.agency);
+                    }
+                    if ($(fundingIdentifier).val() === "" && item.id){
+                        $(fundingIdentifier).val(item.id);
+                    }                                        
                     if ($(projectNameInput).val() === "" && item.name) {
                         var projectName = item.name;
                     }
                     else{
                         var projectName = $(projectNameInput).val();
-                    }
-                    
+                    }                    
                     item.text = projectName;
                     console.log(item.text)
                     return item.text;
