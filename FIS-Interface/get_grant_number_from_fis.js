@@ -149,11 +149,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
+                console.log(data)
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
                     var projectName = data.text;
                     data.text = projectName;
                     $("input[data-project='" + num + "']").val(data.text);
+                    $(projectNameInput).val(data.text)
                     $(projectAcronymInput).val(data.acronym);
                     $(fundingAgency).val(data.agency);
                     $(fundingIdentifier).val(data.id);
