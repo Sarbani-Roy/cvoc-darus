@@ -74,7 +74,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     
                     item.text = projectName;
                     console.log(item.text)
-                    //item.text = "hello"
                     return item.text;
                 },
                 language: {
@@ -136,7 +135,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             var agency = $(fundingAgency).val();
             var id = $(fundingIdentifier).val();
 
-            if(length(projectName) || length(projectAcronym) || length(agency) || length(id)){
+            if(projectName || projectAcronym || agency || id){
                 //If the initial value (Identifier and IdentifierScheme) is not an ORCID (legacy, or if tags are enabled), just display it as is 
                 var newOption = new Option(projectName, projectAcronym, agency, id, true, true);
                 $('#' + selectId).append(newOption).trigger('change');
