@@ -131,17 +131,17 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     }
             });
 
-            // var projectName = $(projectNameInput).val()
-            // var projectAcronym = $(projectAcronymInput).val();
-            // var agency = $(fundingAgency).val();
-            // var id = $(fundingIdentifier).val();
+            var projectName = $(projectNameInput).val()
+            var projectAcronym = $(projectAcronymInput).val();
+            var agency = $(fundingAgency).val();
+            var id = $(fundingIdentifier).val();
 
-            // if(length(projectName) || length(projectAcronym) || length(agency) || length(id))
-            //     {
-            //         //If the initial value (Identifier and IdentifierScheme) is not an ORCID (legacy, or if tags are enabled), just display it as is 
-            //         var newOption = new Option(projectName, projectAcronym, agency, id, true, true);
-            //         $('#' + selectId).append(newOption).trigger('change');
-            //     }
+            if(length(projectName) || length(projectAcronym) || length(agency) || length(id))
+                {
+                    //If the initial value (Identifier and IdentifierScheme) is not an ORCID (legacy, or if tags are enabled), just display it as is 
+                    var newOption = new Option(projectName, projectAcronym, agency, id, true, true);
+                    $('#' + selectId).append(newOption).trigger('change');
+                }
 
 
 
