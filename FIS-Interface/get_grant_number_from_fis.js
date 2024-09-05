@@ -73,7 +73,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     }
                     
                     item.text = projectName;
-                    console(item.text)
+                    console.log(item.text)
                     //item.text = "hello"
                     return item.text;
                 },
