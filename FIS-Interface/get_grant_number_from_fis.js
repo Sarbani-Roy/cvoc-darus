@@ -1,5 +1,4 @@
 var grantNumberParentSelector = "div#metadata_grantNumber";
-var projectParentSelector = "div#metadata_project";
 var projectSelector = "span[data-cvoc-protocol='fis']";
 var projectInputSelector = "input[data-cvoc-protocol='fis']";
 
@@ -8,40 +7,32 @@ $(document).ready(function() {
 });
 
 function expandProject() {
-    $(projectParentSelector).each(function() {
-        var parentElement = $(projectParentSelector).parent();
+    $(grantNumberParentSelector).each(function() {
+        var parentElement = $(grantNumberParentSelector).parent();
         var fieldValuesElement = parentElement.siblings('.dataset-field-values');
         var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
             
         compoundFieldElement.each(function() {
-            var projectElement = $(this);
-            // console.log("Project Element:", projectElement);
-            if (projectElement.children().length > 1) {
-                var projectNameInput = projectElement.children().eq(0).find('input');
-                // console.log("Project Name:", projectNameInput);
+            var fundingElement = $(this);
+            //console.log("Project Element:", projectElement);
+            if (fundingElement.children().length > 4) {
+                var projectNameInput = fundingElement.children().eq(0).find('input');
+                var projectAcronymInput = fundingElement.children().eq(1).find('input');
+                var fundingAgency = fundingElement.children().eq(2).find('input');
+                var fundingIdentifier = fundingElement.children().eq(3).find('input');
+                //console.log("Project Name:", projectNameInput);
                 
-                updateGrantInputs(projectElement, projectNameInput);
+                updateGrantInputs(fundingElement, projectNameInput, projectAcronymInput, fundingAgency, fundingIdentifier);
             }
         });
     });
 }
 
-function updateGrantInputs(projectElement, projectNameInput) {
+function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fundingAgency, fundingIdentifier) {
 
-    //console.log("Project Element:", projectElement);
-    //console.log("Project Name:", projectNameInput);
+    // console.log("Project Element:", projectElement);
+    // console.log("Project Name:", projectNameInput);
     $(projectElement).find(projectInputSelector).each(function() {
-        // console.log(grantNumberParentSelector);
-        var parentElement = $(grantNumberParentSelector).parent();
-        
-        var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-        var compoundFieldElement = fieldValuesElement.find('.edit-compound-field');
-        // console.log(compoundFieldElement);
-        if (compoundFieldElement.children().length > 1) {
-            var grantAgency = compoundFieldElement.children().eq(0).find('input');
-            var grantId = compoundFieldElement.children().eq(1).find('input');
-        }
-
         var projectInput = this;
         // console.log(projectInput.getAttribute())
         if (!projectInput.hasAttribute('data-project')) {
@@ -70,16 +61,19 @@ function updateGrantInputs(projectElement, projectNameInput) {
                     return $result;
                 },
                 templateSelection: function(item) {
+                    // console.log(item);
+                    $(projectAcronymInput).val(item.acronym);
+                    $(fundingAgency).val(item.agency);
+                    $(fundingIdentifier).val(item.id);
                     if ($(projectNameInput).val() === "" && item.name) {
                         var projectName = item.name;
                     }
                     else{
                         var projectName = $(projectNameInput).val();
                     }
-                    // console.log(item);
-                    $(grantAgency).val(item.agency);
-                    $(grantId).val(item.id);
+                    
                     item.text = projectName;
+                    console(item.text)
                     //item.text = "hello"
                     return item.text;
                 },
@@ -124,15 +118,10 @@ function updateGrantInputs(projectElement, projectNameInput) {
                                 .map(function(element) {
                                     // Access the project information within each data element
                                     let projectInfo = element.project;
-                                    // console.log('Project ID:', projectInfo.id);
-                                    // console.log('Project Title (DE):', projectInfo.title_de);
-                                    // console.log('Project Title (EN):', projectInfo.title_en);
-                                    // console.log('Project Acronym:', projectInfo.acronym);
-                                    // console.log('Project Foerderkennzeichen:', projectInfo.foerderkennzeichen);
-
                                     // Returning the desired structure
                                     return {
-                                        text: projectInfo.title_de + " (" + projectInfo.acronym + ")",
+                                        text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
+                                        acronym: projectInfo.acronym,
                                         agency: projectInfo.foerderkennzeichen,
                                         id: projectInfo.id,
                                     };
@@ -141,6 +130,20 @@ function updateGrantInputs(projectElement, projectNameInput) {
                         }
                     }
             });
+
+            // var projectName = $(projectNameInput).val()
+            // var projectAcronym = $(projectAcronymInput).val();
+            // var agency = $(fundingAgency).val();
+            // var id = $(fundingIdentifier).val();
+
+            // if(length(projectName) || length(projectAcronym) || length(agency) || length(id))
+            //     {
+            //         //If the initial value (Identifier and IdentifierScheme) is not an ORCID (legacy, or if tags are enabled), just display it as is 
+            //         var newOption = new Option(projectName, projectAcronym, agency, id, true, true);
+            //         $('#' + selectId).append(newOption).trigger('change');
+            //     }
+
+
 
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {

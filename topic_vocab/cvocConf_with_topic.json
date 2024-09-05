@@ -74,7 +74,7 @@
     {
         "field-name": "topicClassValue",
         "term-uri-field": "topicClassValue",
-        "js-url": "__dataverse_previewers__/js/get_dfg_class.js",
+        "js-url": "__dataverse_previewers__/js/get_dfg_classification.js",
         "protocol": "dfgClassification",
         "retrieval-uri": "https://www.dfg.de/resource/blob/331950/85717c3edb9ea8bd453d5110849865d3/fachsystematik-2024-2028-en-data.pdf",
         "term-parent-uri": "",
@@ -101,5 +101,5 @@
                 "pattern": "https://schema.org/subjectOf"
             }
         }
-    }     
+    }   
 ]
