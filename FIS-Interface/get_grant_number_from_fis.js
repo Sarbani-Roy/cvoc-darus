@@ -68,7 +68,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if ($(fundingAgency).val() === "" && item.agency){
                         $(fundingAgency).val(item.agency);
                     }
-                    if ($(fundingIdentifier).val() === "" && item.id && item.name != item.id) {
+                    if ($(fundingIdentifier).val() === "" && item.id && item.text != item.id) {
                         $(fundingIdentifier).val(item.id);
                     }                                                           
                     if ($(projectNameInput).val() === "" && item.name) {
