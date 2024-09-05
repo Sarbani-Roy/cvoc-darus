@@ -61,7 +61,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     return $result;
                 },
                 templateSelection: function(item) {
-                    // console.log(item);
+                    console.log(item);
                     $(projectAcronymInput).val(item.acronym);
                     $(fundingAgency).val(item.agency);
                     $(fundingIdentifier).val(item.id);
@@ -155,10 +155,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var projectName = data.text;
                     data.text = projectName;
                     $("input[data-project='" + num + "']").val(data.text);
-                    $(projectNameInput).val(data.text)
-                    $(projectAcronymInput).val(data.acronym);
-                    $(fundingAgency).val(data.agency);
-                    $(fundingIdentifier).val(data.id);
+                    // $(projectNameInput).val(data.text)
+                    // $(projectAcronymInput).val(data.acronym);
+                    // $(fundingAgency).val(data.agency);
+                    // $(fundingIdentifier).val(data.id);
                 } else {
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
