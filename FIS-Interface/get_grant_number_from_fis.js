@@ -135,12 +135,17 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     }
             });
 
-            // var projectName = $(projectNameInput).val()
+            
+
+            var projectName = $(projectNameInput).val()
             // var projectAcronym = $(projectAcronymInput).val();
             // var agency = $(fundingAgency).val();
             // var id = $(fundingIdentifier).val();
 
-            // if(projectName || projectAcronym || agency || id){
+            var newOption = new Option(projectName, projectName, true, true);
+            $('#' + selectId).append(newOption).trigger('change');
+
+            // if(projectName){
             //     var newOption = new Option(projectName, projectAcronym, agency, id, true, true);
             //     $('#' + selectId).append(newOption).trigger('change');
             // }
@@ -160,10 +165,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var projectName = data.text;
                     data.text = projectName;
                     $("input[data-project='" + num + "']").val(data.text);
-                    // $(projectNameInput).val(data.text)
-                    // $(projectAcronymInput).val(data.acronym);
-                    // $(fundingAgency).val(data.agency);
-                    // $(fundingIdentifier).val(data.id);
                 } else {
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
