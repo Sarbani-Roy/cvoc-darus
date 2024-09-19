@@ -95,6 +95,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if ($(fundingAgency).val() === ""){
                             $(fundingAgency).val(item.funding_orgs[0].cfacro);
                             $(projectGrantAcronymInput).val(item.acronym);
+
+                            let siblings = fundingElement.siblings();
+
+                            siblings.each(function(index, sibling) {
+                                console.log($(sibling));
+                            });
+
                             // console.log(fundingElement)
                             for (let i = 1; i < item.funding_orgs.length; i++) {
                                 // console.log(fundingElement)
