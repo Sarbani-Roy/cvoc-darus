@@ -15,7 +15,7 @@ function expandProject() {
             
         projectCompoundFieldElement.each(function() {
             var projectElement = $(this);
-            // console.log("Project Element:", projectElement);
+            
             if (projectElement.children().length > 3) {
                 var projectNameInput = projectElement.children().eq(0).find('input');
                 var projectAcronymInput = projectElement.children().eq(1).find('input');
@@ -30,16 +30,11 @@ function expandProject() {
                         
                     compoundFieldElement.each(function() {
                         var fundingElement = $(this);
-                        //console.log("Project Element:", projectElement);
+                        
                         if (fundingElement.children().length > 2) {
                             var fundingAgency = fundingElement.children().eq(0).find('input');
                             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
                             // var fundingIdentifier = fundingElement.children().eq(3).find('input');
-                            // console.log("Project Name:", projectNameInput);
-                            // console.log("Project Acronym:", projectAcronymInput);
-                            // console.log("FIS Identifier:", fisIdentifierInput);
-                            // console.log("Project Grant Acronym:", projectGrantAcronymInput);
-                            // console.log("Funding Agency:", fundingAgency);
 
                             updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency);                        
                         }
@@ -56,7 +51,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
-        // console.log(projectInput.getAttribute())
+        
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
             let num = Math.floor(Math.random() * 100000000000);
@@ -66,7 +61,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             
         // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
-            // console.log(selectId)
+            
             $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
             $("#" + selectId).select2({
                 theme: "classic",
@@ -84,12 +79,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     return $result;
                 },
                 templateSelection: function(item) {
-                    // console.log(item);
                     
-
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         console.log(item.funding_orgs.length)
-
                         // console.log($(fundingAgency).val())
                         
                         if ($(fundingAgency).val() === ""){
@@ -101,6 +93,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                                 // let siblings = fundingElement.siblings();
                                 let siblings = fundingElement.parent().childern();
+                                console.log(siblings)
 
                                 siblings.each(function(index, sibling) {
                                     console.log($(sibling));
@@ -163,7 +156,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     } 
                     
                     else if (item.funding_orgs) {
-                        console.log(item.funding_orgs.length)
+                        // console.log(item.funding_orgs.length)
                         $(fundingAgency).val(item.funding_orgs[0].cfacro);
                         $(projectGrantAcronymInput).val(item.acronym);
                     }
@@ -192,7 +185,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + fisid + "'>" + projectName + "</a>"));
                     }
 
-                    console.log(item.text)
                     if (item.text) {
                         return item.text;
                     }
@@ -222,7 +214,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     },
                     data: function(params) {
                         term = `title=${params.term}`;
-                        // console.log("Title:", term);
                         if (!term) {
                             term = "";
                         }
@@ -236,7 +227,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         'Accept': 'application/json'
                     },
                     processResults: function(data, page) {
-                        // console.log(data);
                         return {
                             results: data['data_elements']
                                 .map(function(element) {
@@ -265,7 +255,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
-                console.log(data)
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
