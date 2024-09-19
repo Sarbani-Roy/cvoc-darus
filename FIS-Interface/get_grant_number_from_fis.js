@@ -89,12 +89,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             $(projectGrantAcronymInput).val(item.acronym);
 
                             for (let i = 1; i < item.funding_orgs.length; i++) {
-                                // fundingElement.siblings('.field-add-delete').children().eq(0).click();
+                                fundingElement.siblings('.field-add-delete').children().eq(0).click();
 
-                                fundingElement.siblings('.field-add-delete').children().eq(0).click().done(function() {
+                                // Use a small delay to wait for the DOM to update
+                                setTimeout(function() {
+                                    // Now get the updated list of siblings
                                     let siblings = fundingElement.parent().children();
                                     console.log(siblings);
-                                 });
+                                }, 100); // 100 milliseconds delay
 
                                 // let siblings = fundingElement.siblings();
                                 let siblings = fundingElement.parent().children();
