@@ -96,16 +96,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             $(fundingAgency).val(item.funding_orgs[0].cfacro);
                             $(projectGrantAcronymInput).val(item.acronym);
 
-                            let siblings = fundingElement.siblings();
-
-                            siblings.each(function(index, sibling) {
-                                console.log($(sibling));
-                            });
-
-                            // console.log(fundingElement)
                             for (let i = 1; i < item.funding_orgs.length; i++) {
-                                // console.log(fundingElement)
                                 fundingElement.siblings('.field-add-delete').children().eq(0).click();
+                                let siblings = fundingElement.siblings();
+
+                                siblings.each(function(index, sibling) {
+                                    console.log($(sibling));
+                                });
+                                
                                 var newFundingElement = fundingElement.siblings().eq(2*i+1);
                                 console.log(fundingElement)
                                 console.log(newFundingElement)
