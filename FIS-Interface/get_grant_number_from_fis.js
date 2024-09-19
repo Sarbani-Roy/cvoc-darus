@@ -89,7 +89,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             $(projectGrantAcronymInput).val(item.acronym);
 
                             for (let i = 1; i < item.funding_orgs.length; i++) {
-                                fundingElement.siblings('.field-add-delete').children().eq(0).click();
+                                // fundingElement.siblings('.field-add-delete').children().eq(0).click();
+
+                                fundingElement.siblings('.field-add-delete').children().eq(0).click().done(function() {
+                                    let siblings = fundingElement.parent().children();
+                                    console.log(siblings);
+                                 });
 
                                 // let siblings = fundingElement.siblings();
                                 let siblings = fundingElement.parent().children();
@@ -99,25 +104,25 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 //     console.log($(sibling));
                                 // });
 
-                                var newGrantNumberParentSelector = "div#metadata_grantNumber";
+                                // var newGrantNumberParentSelector = "div#metadata_grantNumber";
 
-                                $(newGrantNumberParentSelector).each(function() {
-                                    var parentElement = $(grantNumberParentSelector).parent();
-                                    var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                                    var testElements = fieldValuesElement.children()
-                                    console.log(testElements)
-                                    // var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+                                // $(newGrantNumberParentSelector).each(function() {
+                                //     var parentElement = $(grantNumberParentSelector).parent();
+                                //     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+                                //     var testElements = fieldValuesElement.children()
+                                //     console.log(testElements)
+                                //     // var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
                                         
-                                    // compoundFieldElement.each(function() {
-                                    //     var bigFundingElement = $(this);
-                                    //     console.log(bigFundingElement)
-                                    //     // let bigSiblings = bigFundingElement.siblings();
+                                //     // compoundFieldElement.each(function() {
+                                //     //     var bigFundingElement = $(this);
+                                //     //     console.log(bigFundingElement)
+                                //     //     // let bigSiblings = bigFundingElement.siblings();
 
-                                    //     // bigSiblings.each(function(index, bigSibling) {
-                                    //     //     console.log($(bigSibling));
-                                    //     // });
-                                    // });
-                                });
+                                //     //     // bigSiblings.each(function(index, bigSibling) {
+                                //     //     //     console.log($(bigSibling));
+                                //     //     // });
+                                //     // });
+                                // });
 
                                 // var newFundingElement = fundingElement.siblings().eq(2*i+1);
                                 // console.log(fundingElement)
