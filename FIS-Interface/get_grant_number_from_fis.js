@@ -92,7 +92,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         // console.log($(fundingAgency).val())
                         
-                        // if ($(fundingAgency).val() === ""){
+                        if ($(fundingAgency).val() === ""){
                             $(fundingAgency).val(item.funding_orgs[0].cfacro);
                             $(projectGrantAcronymInput).val(item.acronym);
                             for (let i = 1; i < item.funding_orgs.length; i++) {
@@ -100,7 +100,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 var newElement = fundingElement.siblings('.field-add-delete');
                                 newElement.children().eq(0).click();
                                 // var newFundingElement = newElement.siblings('.edit-compound-field').eq(2*i+1);
-                                var newFundingElement = newElement.siblings().eq(2*i+1);;
+                                var newFundingElement = fundingElement.siblings('.field-add-delete').siblings().eq(2*i+1);
                                 console.log(newFundingElement)
                                 // let newNum = (num * 100000000000)+i;
                                 // $(projectInput).attr('data-project', num);
@@ -110,7 +110,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 // $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                                 // $(newProjectGrantAcronymInput).val(item.acronym);
                             }
-                        // }
+                        }
                         // else{
                         //     for(let i = 0; i < item.funding_orgs.length; i++){
                         //         let newFundingElement = $(fundingElement).clone();
