@@ -95,7 +95,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     // let siblings = fundingElement.parent().parent().children();
                                     let siblings = fundingElement.parent().children();
                                     console.log(siblings);
-                                }, 100000); // 100000 milliseconds delay
+                                }, 100); // 100 milliseconds delay
                             
                                 // var newGrantNumberParentSelector = "div#metadata_grantNumber";
 
