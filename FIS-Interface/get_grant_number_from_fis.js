@@ -87,58 +87,18 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             $(projectGrantAcronymInput).val(item.acronym);
 
                             for (let i = 1; i < item.funding_orgs.length; i++) {
-                                // fundingElement.siblings('.field-add-delete').children().eq(0).click();
-
-                                // // Use a small delay to wait for the DOM to update
-                                // setTimeout(function() {
-                                //     // Now get the updated list of siblings
-                                //     let siblings = fundingElement.parent().children();
-                                //     console.log(siblings);
-                                // }, 100); // 100 milliseconds delay
-
-                                // Log a message to ensure loop iteration is running
-                                console.log('Adding sibling for funding org index:', i);
-                                // Log the parent node and its current children
-                                console.log('Parent element being observed:', fundingElement.parent()[0]);
-                                console.log('Children of parent before sibling is added:', fundingElement.parent().children());
-
-
-                                // Start observing the parent element for child nodes being added
-                                const observer = new MutationObserver(function(mutationsList) {
-                                    mutationsList.forEach(function(mutation) {
-                                        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                                            console.log('New sibling(s) added:', mutation.addedNodes);
-
-                                            // Get the updated list of siblings
-                                            let siblings = fundingElement.parent().children();
-                                            console.log('Updated siblings:', siblings);
-                                        }
-                                    });
-                                });
-
-                                // Log the parent node that is being observed
-                                console.log('Parent element being observed:', fundingElement.parent()[0]);
-
-                                // Begin observing the parent element for changes in the child list
-                                observer.observe(fundingElement.parent()[0], { childList: true });
-
-                                // Simulate the click event to add a sibling
-                                console.log('Triggering click to add sibling');
                                 fundingElement.siblings('.field-add-delete').children().eq(0).click();
 
-                                // Optional: Add a setTimeout fallback to check if mutation observer isn't detecting changes
+                                // Use a small delay to wait for the DOM to update
                                 setTimeout(function() {
-                                    let siblings = fundingElement.parent().children();
-                                    console.log('Fallback sibling check after delay:', siblings);
-                                }, 300); // Delay of 300ms to ensure DOM updates
-                                // Simulate a click event to add a sibling
-                                // fundingElement.siblings('.field-add-delete').children().eq(0).click();
+                                    // Now get the updated list of siblings
+                                    let siblings = fundingElement.parent().parent().children();
+                                    console.log(siblings);
+                                }, 100); // 100 milliseconds delay
 
+                                
 
-                                // // let siblings = fundingElement.siblings();
-                                // let siblings = fundingElement.parent().children();
-                                // console.log(siblings);
-
+                            
 
                                 // var newGrantNumberParentSelector = "div#metadata_grantNumber";
 
