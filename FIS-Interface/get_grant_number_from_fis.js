@@ -95,27 +95,29 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     // let siblings = fundingElement.parent().parent().children();
                                     let siblings = fundingElement.parent().children();
                                     console.log(siblings);
+
+                                    var newGrantNumberParentSelector = "div#metadata_grantNumber";
+
+                                    $(newGrantNumberParentSelector).each(function() {
+                                        var parentElement = $(grantNumberParentSelector).parent();
+                                        var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+                                        var testElements = fieldValuesElement.children()
+                                        console.log(testElements)
+                                        // var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+                                            
+                                        // compoundFieldElement.each(function() {
+                                        //     var bigFundingElement = $(this);
+                                        //     console.log(bigFundingElement)
+                                        //     // let bigSiblings = bigFundingElement.siblings();
+
+                                        //     // bigSiblings.each(function(index, bigSibling) {
+                                        //     //     console.log($(bigSibling));
+                                        //     // });
+                                        // });
+                                    });
                                 }, 100); // 100 milliseconds delay
                             
-                                // var newGrantNumberParentSelector = "div#metadata_grantNumber";
-
-                                // $(newGrantNumberParentSelector).each(function() {
-                                //     var parentElement = $(grantNumberParentSelector).parent();
-                                //     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                                //     var testElements = fieldValuesElement.children()
-                                //     console.log(testElements)
-                                //     // var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
-                                        
-                                //     // compoundFieldElement.each(function() {
-                                //     //     var bigFundingElement = $(this);
-                                //     //     console.log(bigFundingElement)
-                                //     //     // let bigSiblings = bigFundingElement.siblings();
-
-                                //     //     // bigSiblings.each(function(index, bigSibling) {
-                                //     //     //     console.log($(bigSibling));
-                                //     //     // });
-                                //     // });
-                                // });
+                                
 
                                 // var newFundingElement = fundingElement.siblings().eq(2*i+1);
                                 // console.log(fundingElement)
