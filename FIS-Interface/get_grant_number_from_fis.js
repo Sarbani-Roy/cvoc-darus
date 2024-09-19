@@ -81,7 +81,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 templateSelection: function(item) {
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
-                        console.log(item.funding_orgs.length)
+                        // console.log(item.funding_orgs.length)
                         // console.log($(fundingAgency).val())
                         
                         if ($(fundingAgency).val() === ""){
@@ -92,8 +92,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 fundingElement.siblings('.field-add-delete').children().eq(0).click();
 
                                 // let siblings = fundingElement.siblings();
-                                let siblings = fundingElement.parent().childern();
-                                console.log(siblings)
+                                let siblings = fundingElement.parent().children();
+                                console.log(siblings);
 
                                 siblings.each(function(index, sibling) {
                                     console.log($(sibling));
