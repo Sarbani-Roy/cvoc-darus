@@ -95,10 +95,24 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if ($(fundingAgency).val() === ""){
                             $(fundingAgency).val(item.funding_orgs[0].cfacro);
                             $(projectGrantAcronymInput).val(item.acronym);
+                            console.log(fundingElement)
                             for (let i = 1; i < item.funding_orgs.length; i++) {
+                                console.log(fundingElement)
                                 fundingElement.siblings('.field-add-delete').children().eq(0).click();
-                                var newFundingElement = fundingElement.siblings('.field-add-delete').siblings().eq(2*i+1);
-                                console.log(newFundingElement)
+                                var newFundingElement = fundingElement.siblings().eq(2*i+1);
+                                console.log(fundingElement)
+
+                                $(grantNumberParentSelector).each(function() {
+                                    var parentElement = $(grantNumberParentSelector).parent();
+                                    var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+                                    var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+                                        
+                                    compoundFieldElement.each(function() {
+                                        var oldFundingElement = $(this);
+                                        console.log(oldFundingElement)
+
+                                    });
+                                });
                                 // let newNum = (num * 100000000000)+i;
                                 // $(projectInput).attr('data-project', num);
                                 // var newFundingAgency = newFundingElement.children().eq(0).find('input');
