@@ -92,14 +92,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 // Use a small delay to wait for the DOM to update
                                 setTimeout(function() {
                                     // Now get the updated list of siblings
-                                    let siblings = fundingElement.parent().parent().children();
+                                    // let siblings = fundingElement.parent().parent().children();
+                                    let siblings = fundingElement.parent().children();
                                     console.log(siblings);
-                                }, 100); // 100 milliseconds delay
-
-                                
-
+                                }, 100000); // 100000 milliseconds delay
                             
-
                                 // var newGrantNumberParentSelector = "div#metadata_grantNumber";
 
                                 // $(newGrantNumberParentSelector).each(function() {
