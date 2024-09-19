@@ -89,14 +89,32 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             $(projectGrantAcronymInput).val(item.acronym);
 
                             for (let i = 1; i < item.funding_orgs.length; i++) {
+                                // fundingElement.siblings('.field-add-delete').children().eq(0).click();
+
+                                // // Use a small delay to wait for the DOM to update
+                                // setTimeout(function() {
+                                //     // Now get the updated list of siblings
+                                //     let siblings = fundingElement.parent().children();
+                                //     console.log(siblings);
+                                // }, 100); // 100 milliseconds delay
+
+                                // Create a MutationObserver to watch for added nodes
+                                const observer = new MutationObserver(function(mutationsList) {
+                                    mutationsList.forEach(function(mutation) {
+                                        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                                            console.log('New sibling(s) added:', mutation.addedNodes);
+                                            let siblings = fundingElement.parent().children();
+                                            console.log('Updated siblings:', siblings);
+                                        }
+                                    });
+                                });
+
+                                // Start observing the parent element for child nodes being added
+                                observer.observe(fundingElement.parent()[0], { childList: true });
+
+                                // Simulate a click event to add a sibling
                                 fundingElement.siblings('.field-add-delete').children().eq(0).click();
 
-                                // Use a small delay to wait for the DOM to update
-                                setTimeout(function() {
-                                    // Now get the updated list of siblings
-                                    let siblings = fundingElement.parent().children();
-                                    console.log(siblings);
-                                }, 100); // 100 milliseconds delay
 
                                 // let siblings = fundingElement.siblings();
                                 let siblings = fundingElement.parent().children();
