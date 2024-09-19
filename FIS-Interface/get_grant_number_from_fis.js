@@ -117,10 +117,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 });
 
                                 // Log the parent node that is being observed
-                                console.log('Parent element being observed:', fundingElement.parent());
+                                console.log('Parent element being observed:', fundingElement.parent()[0]);
 
                                 // Begin observing the parent element for changes in the child list
-                                observer.observe(fundingElement.parent(), { childList: true });
+                                observer.observe(fundingElement.parent()[0], { childList: true });
 
                                 // Simulate the click event to add a sibling
                                 console.log('Triggering click to add sibling');
