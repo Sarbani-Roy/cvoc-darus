@@ -99,7 +99,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             for (let i = 1; i < item.funding_orgs.length; i++) {
                                 fundingElement.siblings('.field-add-delete').children().eq(0).click();
 
-                                let siblings = fundingElement.siblings();
+                                // let siblings = fundingElement.siblings();
+                                let siblings = fundingElement.parent().childern();
 
                                 siblings.each(function(index, sibling) {
                                     console.log($(sibling));
