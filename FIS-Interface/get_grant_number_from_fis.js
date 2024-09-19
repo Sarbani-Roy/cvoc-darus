@@ -99,6 +99,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             for (let i = 1; i < item.funding_orgs.length; i++) {
                                 fundingElement.siblings('.field-add-delete').children().eq(0).click();
 
+                                let siblings = fundingElement.siblings();
+
+                                siblings.each(function(index, sibling) {
+                                    console.log($(sibling));
+                                });
+
                                 var newGrantNumberParentSelector = "div#metadata_grantNumber";
 
                                 $(newGrantNumberParentSelector).each(function() {
@@ -108,10 +114,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         
                                     compoundFieldElement.each(function() {
                                         var bigFundingElement = $(this);
-                                        let siblings = bigFundingElement.siblings();
+                                        console.log(bigFundingElement)
+                                        let bigSiblings = bigFundingElement.siblings();
 
-                                        siblings.each(function(index, sibling) {
-                                            console.log($(sibling));
+                                        bigSiblings.each(function(index, bigSibling) {
+                                            console.log($(bigSibling));
                                         });
                                     });
                                 });
