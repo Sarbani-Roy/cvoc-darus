@@ -88,7 +88,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     
 
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
-                        // console.log(item.funding_orgs.length)
+                        console.log(item.funding_orgs.length)
 
                         // console.log($(fundingAgency).val())
                         
@@ -100,15 +100,15 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 var newElement = fundingElement.siblings('.field-add-delete');
                                 newElement.children().eq(0).click();
                                 // var newFundingElement = newElement.siblings('.edit-compound-field').eq(2*i+1);
-                                var newFundingElement = newElement.siblings('.edit-compound-field').eq(2*i+1);;
-                                console.log(newElement)
+                                var newFundingElement = newElement.siblings().eq(2*i+1);;
+                                console.log(newFundingElement)
                                 // let newNum = (num * 100000000000)+i;
                                 // $(projectInput).attr('data-project', num);
-                                var newFundingAgency = newFundingElement.children().eq(0).find('input');
-                                var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
-                                // console.log(newFundingElement)
-                                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-                                $(newProjectGrantAcronymInput).val(item.acronym);
+                                // var newFundingAgency = newFundingElement.children().eq(0).find('input');
+                                // var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
+                                // // console.log(newFundingElement)
+                                // $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                                // $(newProjectGrantAcronymInput).val(item.acronym);
                             }
                         // }
                         // else{
