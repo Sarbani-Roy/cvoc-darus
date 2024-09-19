@@ -98,6 +98,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                                 // Log a message to ensure loop iteration is running
                                 console.log('Adding sibling for funding org index:', i);
+                                // Log the parent node and its current children
+                                console.log('Parent element being observed:', fundingElement.parent()[0]);
+                                console.log('Children of parent before sibling is added:', fundingElement.parent().children());
+
 
                                 // Start observing the parent element for child nodes being added
                                 const observer = new MutationObserver(function(mutationsList) {
@@ -113,10 +117,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 });
 
                                 // Log the parent node that is being observed
-                                console.log('Parent element being observed:', fundingElement.parent()[0]);
+                                console.log('Parent element being observed:', fundingElement.parent());
 
                                 // Begin observing the parent element for changes in the child list
-                                observer.observe(fundingElement.parent()[0], { childList: true });
+                                observer.observe(fundingElement.parent(), { childList: true });
 
                                 // Simulate the click event to add a sibling
                                 console.log('Triggering click to add sibling');
