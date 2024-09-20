@@ -93,29 +93,34 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 setTimeout(function() {
                                     // Now get the updated list of siblings
                                     // let siblings = fundingElement.parent().parent().children();
-                                    let siblings = fundingElement.parent().children();
-                                    console.log(siblings);
+                                    // let siblings = fundingElement.parent().children();
+                                    // console.log(siblings);
 
-                                    var newGrantNumberParentSelector = "div#metadata_grantNumber";
+                                    // var newGrantNumberParentSelector = "div#metadata_grantNumber";
 
                                     $(newGrantNumberParentSelector).each(function() {
-                                        var testParentElement = $(grantNumberParentSelector).parent();
-                                        var testFieldValuesElement = testParentElement.siblings('.dataset-field-values');
-                                        var testElements = testFieldValuesElement.children()
-                                        console.log(testElements)
-                                        // var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+                                        var newParentElement = $(grantNumberParentSelector).parent();
+                                        var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                                        // var newGrantElements = newFieldValuesElement.children()
+                                        // console.log(newGrantElements)
+                                        var newCompoundFieldElement = newFieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
                                             
-                                        // compoundFieldElement.each(function() {
-                                        //     var bigFundingElement = $(this);
-                                        //     console.log(bigFundingElement)
-                                        //     // let bigSiblings = bigFundingElement.siblings();
+                                        newCompoundFieldElement.each(function() {
+                                            var newFundingElement = $(this);
+                                            console.log(newFundingElement)
+                                            var newFundingAgency = newFundingElement.children().eq(0).find('input');
+                                            var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
+                                            // console.log(newFundingElement)
+                                            $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                                            $(newProjectGrantAcronymInput).val(item.acronym);
+                                            // let bigSiblings = bigFundingElement.siblings();
 
-                                        //     // bigSiblings.each(function(index, bigSibling) {
-                                        //     //     console.log($(bigSibling));
-                                        //     // });
-                                        // });
+                                            // bigSiblings.each(function(index, bigSibling) {
+                                            //     console.log($(bigSibling));
+                                            // });
+                                        });
                                     });
-                                }, 1000); // 100 milliseconds delay        
+                                }, 1000); // 1000 milliseconds delay        
 
                                 // var newFundingElement = fundingElement.siblings().eq(2*i+1);
                                 // console.log(fundingElement)
