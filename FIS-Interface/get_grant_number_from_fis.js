@@ -93,7 +93,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 setTimeout(function() {
                                     // Now get the updated list of siblings
                                     // let siblings = fundingElement.parent().parent().children();
-                                    let siblings = fundingElement.parent();
+                                    let siblings = fundingElement;
                                     console.log(siblings);
 
                                     var newGrantNumberParentSelector = "div#metadata_grantNumber";
@@ -115,7 +115,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         //     // });
                                         // });
                                     });
-                                }, 100); // 100 milliseconds delay        
+                                }, 1000); // 100 milliseconds delay        
 
                                 // var newFundingElement = fundingElement.siblings().eq(2*i+1);
                                 // console.log(fundingElement)
