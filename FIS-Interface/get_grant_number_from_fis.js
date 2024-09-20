@@ -101,8 +101,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     $(grantNumberParentSelector).each(function() {
                                         var newParentElement = $(grantNumberParentSelector).parent();
                                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
-                                        var newGrantElements = newFieldValuesElement.children().eq(2*i+1);
-                                        console.log(newGrantElements)
+                                        var newFundingElement = newFieldValuesElement.children().eq(2*i);
+                                        console.log(newFundingElement)
+
+                                        var newFundingAgency = newFundingElement.children().eq(0).find('input');
+                                        var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
+                                        $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                                        $(newProjectGrantAcronymInput).val(item.acronym);
                                         // var testFundingElement = newGrantElements.children().eq(2*i+1);
                                         // console.log(testFundingElement)
                                         // var newCompoundFieldElement = newFieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
