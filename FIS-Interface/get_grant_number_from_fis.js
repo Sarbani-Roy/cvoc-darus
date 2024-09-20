@@ -93,7 +93,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 setTimeout(function() {
                                     // Now get the updated list of siblings
                                     // let siblings = fundingElement.parent().parent().children();
-                                    let siblings = fundingElement;
+                                    let siblings = fundingElement.parent().children();
                                     console.log(siblings);
 
                                     var newGrantNumberParentSelector = "div#metadata_grantNumber";
