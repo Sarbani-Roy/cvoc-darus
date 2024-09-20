@@ -98,7 +98,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                                     // var newGrantNumberParentSelector = "div#metadata_grantNumber";
 
-                                    $(newGrantNumberParentSelector).each(function() {
+                                    $(grantNumberParentSelector).each(function() {
                                         var newParentElement = $(grantNumberParentSelector).parent();
                                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                                         // var newGrantElements = newFieldValuesElement.children()
