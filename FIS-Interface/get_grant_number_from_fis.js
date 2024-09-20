@@ -93,15 +93,15 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 setTimeout(function() {
                                     // Now get the updated list of siblings
                                     // let siblings = fundingElement.parent().parent().children();
-                                    let siblings = fundingElement.parent().children();
+                                    let siblings = fundingElement.parent();
                                     console.log(siblings);
 
                                     var newGrantNumberParentSelector = "div#metadata_grantNumber";
 
                                     $(newGrantNumberParentSelector).each(function() {
-                                        var parentElement = $(grantNumberParentSelector).parent();
-                                        var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                                        var testElements = fieldValuesElement.children()
+                                        var testParentElement = $(grantNumberParentSelector).parent();
+                                        var testFieldValuesElement = testParentElement.siblings('.dataset-field-values');
+                                        var testElements = testFieldValuesElement.children()
                                         console.log(testElements)
                                         // var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
                                             
@@ -115,9 +115,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         //     // });
                                         // });
                                     });
-                                }, 100); // 100 milliseconds delay
-                            
-                                
+                                }, 100); // 100 milliseconds delay        
 
                                 // var newFundingElement = fundingElement.siblings().eq(2*i+1);
                                 // console.log(fundingElement)
