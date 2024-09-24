@@ -58,7 +58,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $(projectInput).hide();
             $(projectInput).attr('data-project', num);
             $(fisIdentifier).hide()
-            console.log(projectGrantAcronymInput.val())
             
             // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
@@ -236,6 +235,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-project='" + num + "']").attr('value', '');
+                console.log(projectGrantAcronymInput.val())
                 $(projectAcronymInput).val('')
                 $(projectGrantAcronymInput).val('')
                 $(grantNumberParentSelector).each(function() {
