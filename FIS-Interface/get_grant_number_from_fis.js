@@ -15,6 +15,7 @@ function expandProject() {
             
         projectCompoundFieldElement.each(function() {
             var projectElement = $(this);
+            console.log(projectElement)
             
             if (projectElement.children().length > 3) {
                 var projectNameInput = projectElement.children().eq(0).find('input');
