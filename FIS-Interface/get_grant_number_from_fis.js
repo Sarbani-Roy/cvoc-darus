@@ -250,11 +250,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
                             console.log($(projectGrantAcronymInput).val())
                             console.log($(clearProjectGrantAcronymInput).val())
-                            if($(clearProjectGrantAcronymInput).val() == $(projectGrantAcronymInput).val())
-                            {
+                            // if($(clearProjectGrantAcronymInput).val() == $(projectGrantAcronymInput).val())
+                            // {
                                 $(clearFundingAgency).val('');
                                 $(clearProjectGrantAcronymInput).val('');
-                            }
+                            // }
                         }
                     });
                 });
