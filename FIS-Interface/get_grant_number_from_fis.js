@@ -238,7 +238,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 console.log(oldProjectGrantAcronymInput);
                 $(projectAcronymInput).val('');
-                $(projectGrantAcronymInput).val('');
                 $(grantNumberParentSelector).each(function() {
                     var clearParentElement = $(grantNumberParentSelector).parent();
                     var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
