@@ -244,17 +244,17 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
                     var clearFundingElement = clearFieldValuesElement.find('.edit-compound-field');
                     clearFundingElement.each(function() {
-                        var clearFundingElement = $(this);                        
-                        if (clearFundingElement.children().length > 2) {
-                            var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
-                            var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
+                        var clearFundingElement = $(this);
+                        var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
+                        var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
+                        console.log($(clearFundingAgency).val());
+                        console.log($(clearProjectGrantAcronymInput).val())
+                        console.log(oldProjectGrantAcronymInput)
+                        if($(clearProjectGrantAcronymInput).val() == oldProjectGrantAcronymInput)
+                        {
                             console.log($(clearFundingAgency).val());
-                            if($(clearProjectGrantAcronymInput).val() == oldProjectGrantAcronymInput)
-                            {
-                                console.log($(clearFundingAgency).val());
-                                $(clearFundingAgency).val('');
-                                $(clearProjectGrantAcronymInput).val('');
-                            }
+                            $(clearFundingAgency).val('');
+                            $(clearProjectGrantAcronymInput).val('');
                         }
                     });
                 });
