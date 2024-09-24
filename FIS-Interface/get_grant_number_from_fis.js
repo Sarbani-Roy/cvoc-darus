@@ -15,7 +15,6 @@ function expandProject() {
             
         projectCompoundFieldElement.each(function() {
             var projectElement = $(this);
-            console.log(projectElement)
             
             if (projectElement.children().length > 3) {
                 var projectNameInput = projectElement.children().eq(0).find('input');
@@ -36,6 +35,7 @@ function expandProject() {
                             var fundingAgency = fundingElement.children().eq(0).find('input');
                             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
                             // var fundingIdentifier = fundingElement.children().eq(3).find('input');
+                            console.log(projectElement)
 
                             updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency);                        
                         }
@@ -52,6 +52,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
+        console.log(projectInput)
         
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
@@ -63,6 +64,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
         // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
             
+            console.log(projectInput)
             $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
             $("#" + selectId).select2({
                 theme: "classic",
@@ -80,6 +82,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     return $result;
                 },
                 templateSelection: function(item) {
+                    console.log(item.funding_orgs)
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         
