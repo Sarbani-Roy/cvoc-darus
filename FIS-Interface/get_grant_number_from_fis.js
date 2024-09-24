@@ -235,7 +235,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-project='" + num + "']").attr('value', '');
-                console.log(projectGrantAcronymInput.val())
+                var oldProjectGrantAcronymInput = projectGrantAcronymInput.val()
                 $(projectAcronymInput).val('')
                 $(projectGrantAcronymInput).val('')
                 $(grantNumberParentSelector).each(function() {
@@ -248,13 +248,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (clearFundingElement.children().length > 2) {
                             var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
                             var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-                            console.log($(projectGrantAcronymInput).val())
-                            console.log($(clearProjectGrantAcronymInput).val())
-                            // if($(clearProjectGrantAcronymInput).val() == $(projectGrantAcronymInput).val())
-                            // {
+                            if($(oldProjectGrantAcronymInput).val() == $(projectGrantAcronymInput).val())
+                            {
                                 $(clearFundingAgency).val('');
                                 $(clearProjectGrantAcronymInput).val('');
-                            // }
+                            }
                         }
                     });
                 });
