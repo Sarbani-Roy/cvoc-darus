@@ -242,13 +242,17 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 $(grantNumberParentSelector).each(function() {
                     var newParentElement = $(grantNumberParentSelector).parent();
                     var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
-                    var newFundingElement = newFieldValuesElement.children().eq(2*i);
-                    console.log(newFundingElement)
-
-                    var newFundingAgency = newFundingElement.children().eq(0).find('input');
-                    var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
-                    $(newFundingAgency).val('');
-                    $(newProjectGrantAcronymInput).val('');
+                    var newFundingElement = newFieldValuesElement.find('.edit-compound-field');
+                    compoundFieldElement.each(function() {
+                        var fundingElement = $(this);
+                        
+                        if (fundingElement.children().length > 2) {
+                            var newFundingAgency = newFundingElement.children().eq(0).find('input');
+                            var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
+                            $(newFundingAgency).val('');
+                            $(newProjectGrantAcronymInput).val('');
+                        }
+                    });
                 });
                 // $(fundingAgency).val('')
                 // $(fisIdentifierInput).val('')
