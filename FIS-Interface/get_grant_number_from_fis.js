@@ -83,7 +83,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         
                         if ($(fundingAgency).val() === ""){
-                            
+                                                        
                             $(fundingAgency).val(item.funding_orgs[0].cfacro);
                             $(projectGrantAcronymInput).val(item.acronym);
 
@@ -100,9 +100,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                                         var newFundingAgency = newFundingElement.children().eq(0).find('input');
                                         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
-
-                                        console.log(newProjectGrantAcronymInput)
-
                                         $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                                         $(newProjectGrantAcronymInput).val(item.acronym);
                                     });
