@@ -96,7 +96,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         var newParentElement = $(grantNumberParentSelector).parent();
                                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                                         var newFundingElement = newFieldValuesElement.children().eq(2*i);
-                                        // console.log(newFundingElement)
+                                        console.log(newFundingElement)
 
                                         var newFundingAgency = newFundingElement.children().eq(0).find('input');
                                         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
