@@ -58,8 +58,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $(projectInput).hide();
             $(projectInput).attr('data-project', num);
             $(fisIdentifier).hide()
+            console.log(projectGrantAcronymInput.val())
             
-        // Add a select2 element to allow search and provide a list of choices
+            // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
             
             $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
@@ -83,7 +84,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         
                         if ($(fundingAgency).val() === ""){
-                            console.log(projectGrantAcronymInput.val())
                             $(fundingAgency).val(item.funding_orgs[0].cfacro);
                             $(projectGrantAcronymInput).val(item.acronym);
 
