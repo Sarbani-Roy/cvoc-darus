@@ -235,8 +235,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-project='" + num + "']").attr('value', '');
-                var oldProjectGrantAcronymInput = projectAcronymInput.val()
-                console.log($(oldProjectGrantAcronymInput).val())
+                var oldProjectGrantAcronymInput = $(projectAcronymInput).val()
+                console.log(oldProjectGrantAcronymInput)
                 $(projectAcronymInput).val('')
                 $(projectGrantAcronymInput).val('')
                 $(grantNumberParentSelector).each(function() {
@@ -250,7 +250,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
                             console.log($(oldProjectGrantAcronymInput).val())
                             console.log($(clearProjectGrantAcronymInput).val())
-                            if($(oldProjectGrantAcronymInput).val() == $(clearProjectGrantAcronymInput).val())
+                            if(oldProjectGrantAcronymInput == $(clearProjectGrantAcronymInput).val())
                             {
                                 $(clearFundingAgency).val('');
                                 $(clearProjectGrantAcronymInput).val('');
