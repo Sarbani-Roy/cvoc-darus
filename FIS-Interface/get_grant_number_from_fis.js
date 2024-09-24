@@ -35,7 +35,6 @@ function expandProject() {
                             var fundingAgency = fundingElement.children().eq(0).find('input');
                             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
                             // var fundingIdentifier = fundingElement.children().eq(3).find('input');
-                            console.log(projectElement)
 
                             updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency);                        
                         }
@@ -52,7 +51,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
-        console.log(projectInput)
         
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
@@ -64,7 +62,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
         // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
             
-            console.log(projectInput)
             $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
             $("#" + selectId).select2({
                 theme: "classic",
@@ -82,7 +79,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log(item.funding_orgs)
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         
@@ -241,9 +237,21 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-project='" + num + "']").attr('value', '');
                 $(projectAcronymInput).val('')
+                console.log($(projectGrantAcronymInput).val())
                 $(projectGrantAcronymInput).val('')
-                $(fundingAgency).val('')
-                $(fisIdentifierInput).val('')
+                $(grantNumberParentSelector).each(function() {
+                    var newParentElement = $(grantNumberParentSelector).parent();
+                    var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                    var newFundingElement = newFieldValuesElement.children().eq(2*i);
+                    console.log(newFundingElement)
+
+                    var newFundingAgency = newFundingElement.children().eq(0).find('input');
+                    var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
+                    $(newFundingAgency).val('');
+                    $(newProjectGrantAcronymInput).val('');
+                });
+                // $(fundingAgency).val('')
+                // $(fisIdentifierInput).val('')
 
             });
         }
