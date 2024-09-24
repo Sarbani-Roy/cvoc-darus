@@ -95,7 +95,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         var newParentElement = $(grantNumberParentSelector).parent();
                                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                                         var newFundingElement = newFieldValuesElement.children().eq(2*i);
-                                        console.log(newFundingElement)
 
                                         var newFundingAgency = newFundingElement.children().eq(0).find('input');
                                         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
@@ -120,7 +119,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     } 
                     
                     else if (item.funding_orgs) {
-                        // console.log(item.funding_orgs.length)
                         $(fundingAgency).val(item.funding_orgs[0].cfacro);
                         $(projectGrantAcronymInput).val(item.acronym);
                     }
@@ -236,7 +234,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-project='" + num + "']").attr('value', '');
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
-                console.log(oldProjectGrantAcronymInput);
+                
                 $(projectAcronymInput).val('');
                 $(grantNumberParentSelector).each(function() {
                     var clearParentElement = $(grantNumberParentSelector).parent();
@@ -246,12 +244,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var clearFundingElement = $(this);
                         var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
                         var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-                        console.log($(clearFundingAgency).val());
-                        console.log($(clearProjectGrantAcronymInput).val())
-                        console.log(oldProjectGrantAcronymInput)
                         if($(clearProjectGrantAcronymInput).val() == oldProjectGrantAcronymInput)
                         {
-                            console.log($(clearFundingAgency).val());
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
                         }
