@@ -249,14 +249,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (clearFundingElement.children().length > 2) {
                             var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
                             var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-                            $(clearFundingAgency).val('');
-                            $(clearProjectGrantAcronymInput).val('');
+                            if($(clearProjectGrantAcronymInput).val('') == $(projectGrantAcronymInput).val())
+                            {
+                                $(clearFundingAgency).val('');
+                                $(clearProjectGrantAcronymInput).val('');
+                            }
                         }
                     });
                 });
-                // $(fundingAgency).val('')
-                // $(fisIdentifierInput).val('')
-
             });
         }
     })
