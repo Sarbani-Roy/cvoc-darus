@@ -237,7 +237,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-project='" + num + "']").attr('value', '');
                 $(projectAcronymInput).val('')
-                console.log($(projectGrantAcronymInput).val())
                 $(projectGrantAcronymInput).val('')
                 $(grantNumberParentSelector).each(function() {
                     var clearParentElement = $(grantNumberParentSelector).parent();
@@ -249,7 +248,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (clearFundingElement.children().length > 2) {
                             var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
                             var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-                            if($(clearProjectGrantAcronymInput).val('') == $(projectGrantAcronymInput).val())
+                            console.log($(projectGrantAcronymInput).val())
+                            console.log($(clearProjectGrantAcronymInput).val())
+                            if($(clearProjectGrantAcronymInput).val() == $(projectGrantAcronymInput).val())
                             {
                                 $(clearFundingAgency).val('');
                                 $(clearProjectGrantAcronymInput).val('');
