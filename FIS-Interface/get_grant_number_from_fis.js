@@ -158,7 +158,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             if ($(newFundingAgency).val() === '' && $(newProjectGrantAcronymInput).val() === '') {
                                 emptyFundingElementFound = true;
 
-                                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                                $(newFundingAgency).val(item.funding_orgs[0].cfacro);
                                 $(newProjectGrantAcronymInput).val(item.acronym);
                             }
                         });
