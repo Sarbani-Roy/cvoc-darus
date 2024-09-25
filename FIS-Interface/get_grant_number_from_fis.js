@@ -187,7 +187,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         console.log("Number of '.edit-compound-field' elements:", newCompoundFundingElement.length);
 
-                        newCompoundFundingElement.each(function() {
+                        newCompoundFundingElement.each(function(index) {
                             var newFundingElement = $(this);
                             var newFundingAgency = newFundingElement.children().eq(0).find('input');
                             var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
