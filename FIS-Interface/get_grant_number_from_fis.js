@@ -146,6 +146,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     } 
                     
                     else if (item.funding_orgs) {
+                        var newParentElement = $(grantNumberParentSelector).parent();
+                        var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                        var newCompoundFundingElement = newFieldValuesElement.find('.edit-compound-field');
+
                         newCompoundFundingElement.each(function() {
                             var newFundingElement = $(this);
                             var newFundingAgency = newFundingElement.children().eq(0).find('input');
