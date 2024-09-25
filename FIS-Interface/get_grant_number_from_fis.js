@@ -162,7 +162,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                                     $(newProjectGrantAcronymInput).val(item.acronym);
                                     
-                                    // Click '+' for the next funding org, if not the last one
                                     if (i < item.funding_orgs.length - 1) {
                                         newFundingElement.next('.field-add-delete').children().eq(0).click();
                     
@@ -177,8 +176,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             // Start recursion from the first item
                             updateFundingOrgs(0);
                         }
-                    }
-                    
+                    }    
                     
                     else if (item.funding_orgs) {
                         emptyFundingElementFound = false;
@@ -204,33 +202,26 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         console.log(emptyFundingElementFound)
 
-                        // If no empty funding element was found, add a new one by clicking '+'
-                        if (!emptyFundingElementFound) {
-                            console.log(newCompoundFundingElement.last().next('.field-add-delete'))
-                            newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
+                        // // If no empty funding element was found, add a new one by clicking '+'
+                        // if (!emptyFundingElementFound) {
+                        //     newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
 
-                            setTimeout(function() {
-                                var addedFieldValuesElement = newParentElement.siblings('.dataset-field-values').last();
+                        //     setTimeout(function() {
+                        //         var addedFieldValuesElement = newParentElement.siblings('.dataset-field-values').last();
 
-                                var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
-                                var addedProjectGrantAcronymInput = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(1).find('input');
+                        //         var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
+                        //         var addedProjectGrantAcronymInput = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(1).find('input');
 
-                                $(addedFundingAgency).val(item.funding_orgs[0].cfacro);
-                                $(addedProjectGrantAcronymInput).val(item.acronym);
-                            }, 500);
-                        }
-
-                        // $(fundingAgency).val(item.funding_orgs[0].cfacro);
-                        // $(projectGrantAcronymInput).val(item.acronym);
+                        //         $(addedFundingAgency).val(item.funding_orgs[0].cfacro);
+                        //         $(addedProjectGrantAcronymInput).val(item.acronym);
+                        //     }, 500);
+                        // }
                     }
 
                     if (item.acronym){
                         $(projectAcronymInput).val(item.acronym);
-                        // $(projectGrantAcronymInput).val(item.acronym);
                     }
-                    // if (item.agency){
-                    //     $(fundingAgency).val(item.agency);
-                    // }      
+                         
                     if (item.id && item.text != item.id) {
                         $(fisIdentifierInput).val(item.id);
                     }                                                      
