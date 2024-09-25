@@ -185,13 +185,22 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                         var newCompoundFundingElement = newFieldValuesElement.find('.edit-compound-field');
 
+                        console.log("Number of '.edit-compound-field' elements:", newCompoundFundingElement.length);
+
                         newCompoundFundingElement.each(function() {
                             var newFundingElement = $(this);
                             var newFundingAgency = newFundingElement.children().eq(0).find('input');
                             var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
+                            console.log("Processing element index:", index);
+                            console.log("Funding agency value:", $(newFundingAgency).val());
+                            console.log("Project grant acronym value:", $(newProjectGrantAcronymInput).val());
+
+
                             if ($(newFundingAgency).val() === '' && $(newProjectGrantAcronymInput).val() === '') {
                                 emptyFundingElementFound = true;
+
+                                console.log("Empty funding element found and populated at index:", index);
 
                                 $(newFundingAgency).val(item.funding_orgs[0].cfacro);
                                 $(newProjectGrantAcronymInput).val(item.acronym);
