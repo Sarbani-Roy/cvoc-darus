@@ -185,46 +185,37 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                         var newCompoundFundingElement = newFieldValuesElement.find('.edit-compound-field');
 
-                        console.log("Number of '.edit-compound-field' elements:", newCompoundFundingElement.length);
-
                         newCompoundFundingElement.each(function(index) {
                             var newFundingElement = $(this);
                             var newFundingAgency = newFundingElement.children().eq(0).find('input');
                             var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
-                            console.log("Processing element index:", index);
-                            console.log("Funding agency value:", $(newFundingAgency).val());
-                            console.log("Project grant acronym value:", $(newProjectGrantAcronymInput).val());
-
-
                             if ($(newFundingAgency).val() === '' && $(newProjectGrantAcronymInput).val() === '') {
                                 emptyFundingElementFound = true;
 
-                                console.log("Empty funding element found and populated at index:", index);
-
-                                $(newFundingAgency).val(item.funding_orgs[0].cfacro);
-                                $(newProjectGrantAcronymInput).val(item.acronym);
-
-                                return false;
+                                if (item.funding_orgs[0] && item.acronym){
+                                    $(newFundingAgency).val(item.funding_orgs[0].cfacro);
+                                    $(newProjectGrantAcronymInput).val(item.acronym);
+                                }
                             }
                         });
 
                         console.log(emptyFundingElementFound)
 
-                        // // If no empty funding element was found, add a new one by clicking '+'
-                        // if (!emptyFundingElementFound) {
-                        //     newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
+                        // If no empty funding element was found, add a new one by clicking '+'
+                        if (!emptyFundingElementFound) {
+                            newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
 
-                        //     setTimeout(function() {
-                        //         var addedFieldValuesElement = newParentElement.siblings('.dataset-field-values').last();
+                            setTimeout(function() {
+                                var addedFieldValuesElement = newParentElement.siblings('.dataset-field-values').last();
 
-                        //         var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
-                        //         var addedProjectGrantAcronymInput = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(1).find('input');
+                                var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
+                                var addedProjectGrantAcronymInput = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(1).find('input');
 
-                        //         $(addedFundingAgency).val(item.funding_orgs[0].cfacro);
-                        //         $(addedProjectGrantAcronymInput).val(item.acronym);
-                        //     }, 500);
-                        // }
+                                $(addedFundingAgency).val(item.funding_orgs[0].cfacro);
+                                $(addedProjectGrantAcronymInput).val(item.acronym);
+                            }, 500);
+                        }
                     }
 
                     if (item.acronym){
