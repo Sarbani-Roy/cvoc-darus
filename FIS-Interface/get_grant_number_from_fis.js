@@ -152,23 +152,21 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             // $(projectGrantAcronymInput).val(item.acronym);
 
                             for (let i = 0; i < item.funding_orgs.length; i++) {
-                                // fundingElement.siblings('.field-add-delete').children().eq(0).click();
-
+                                if (i < item.funding_orgs.length - 1) {
+                                    newFundingElement.next('.field-add-delete').children().eq(0).click();
+                                }
                                 // Use a small delay to wait for the DOM to update
                                 setTimeout(function() {
                                     $(grantNumberParentSelector).each(function() {
                                         var newParentElement = $(grantNumberParentSelector).parent();
                                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                                        console.log(newFieldValuesElement.children())
                                         var newFundingElement = newFieldValuesElement.children().eq(2*i);
 
                                         var newFundingAgency = newFundingElement.children().eq(0).find('input');
                                         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
                                         $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                                         $(newProjectGrantAcronymInput).val(item.acronym);
-
-                                        if (i < item.funding_orgs.length - 1) {
-                                            newFundingElement.next('.field-add-delete').children().eq(0).click();
-                                        }
                                     });
                                 }, 1000); // 1000 milliseconds delay        
                             }
