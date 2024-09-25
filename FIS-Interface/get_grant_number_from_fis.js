@@ -152,9 +152,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             // $(projectGrantAcronymInput).val(item.acronym);
 
                             for (let i = 0; i < item.funding_orgs.length; i++) {
-                                if (i < item.funding_orgs.length - 1) {
-                                    newFundingElement.next('.field-add-delete').children().eq(0).click();
-                                }
+                                // fundingElement.siblings('.field-add-delete').children().eq(0).click();
+
                                 // Use a small delay to wait for the DOM to update
                                 setTimeout(function() {
                                     $(grantNumberParentSelector).each(function() {
@@ -167,6 +166,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
                                         $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                                         $(newProjectGrantAcronymInput).val(item.acronym);
+
+                                        if (i < item.funding_orgs.length - 1) {
+                                            newFundingElement.next('.field-add-delete').children().eq(0).click();
+                                        }
                                     });
                                 }, 1000); // 1000 milliseconds delay        
                             }
