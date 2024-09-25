@@ -11,7 +11,7 @@ function expandProject() {
     $(projectInfParentSelector).each(function() {
         var projectParentElement = $(projectInfParentSelector).parent();
         var projectFieldValuesElement = projectParentElement.siblings('.dataset-field-values');
-        var projectCompoundFieldElement = projectFieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+        var projectCompoundFieldElement = projectFieldValuesElement.find('.edit-compound-field');
             
         projectCompoundFieldElement.each(function() {
             var projectElement = $(this);
@@ -26,7 +26,7 @@ function expandProject() {
                 $(grantNumberParentSelector).each(function() {
                     var parentElement = $(grantNumberParentSelector).parent();
                     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                    var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+                    var compoundFieldElement = fieldValuesElement.find('.edit-compound-field');
                         
                     compoundFieldElement.each(function() {
                         var fundingElement = $(this);
@@ -81,41 +81,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 templateSelection: function(item) {
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
-                        
-                        // if ($(fundingAgency).val() === ""){
-                        //     $(fundingAgency).val(item.funding_orgs[0].cfacro);
-                        //     $(projectGrantAcronymInput).val(item.acronym);
-
-                        //     for (let i = 1; i < item.funding_orgs.length; i++) {
-                        //         fundingElement.siblings('.field-add-delete').children().eq(0).click();
-
-                        //         // Use a small delay to wait for the DOM to update
-                        //         setTimeout(function() {
-                        //             $(grantNumberParentSelector).each(function() {
-                        //                 var newParentElement = $(grantNumberParentSelector).parent();
-                        //                 var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
-                        //                 var newFundingElement = newFieldValuesElement.children().eq(2*i);
-
-                        //                 var newFundingAgency = newFundingElement.children().eq(0).find('input');
-                        //                 var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
-                        //                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-                        //                 $(newProjectGrantAcronymInput).val(item.acronym);
-                        //             });
-                        //         }, 1000); // 1000 milliseconds delay        
-                        //     }
-                        // }
-                        // else{
-                        //     for(let i = 0; i < item.funding_orgs.length; i++){
-                        //         let newFundingElement = $(fundingElement).clone();
-                        //         // let newNum = (num * 100000000000)+i;
-                        //         // $(projectInput).attr('data-project', num);
-                        //         var newFundingAgency = newFundingElement.children().eq(0).find('input');
-                        //         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
-                        //         $(newFundingAgency).val(fundingOrg[i].cfacro);
-                        //         $(newProjectGrantAcronymInput).val(item.acronym);
-                        //     }
-                        // }
-
 
                         for (let i = 0; i < item.funding_orgs.length; i++) {
                             (function(i) {
@@ -125,7 +90,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                                         var newFundingElement = newFieldValuesElement.children().eq(2 * i);
 
-                                        console.log(newFieldValuesElement.children())
+                                        console.log(newFieldValuesElement)
                         
                                         var newFundingAgency = newFundingElement.children().eq(0).find('input');
                                         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
@@ -180,7 +145,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 language: {
                     searching: function(params) {
-                        // Copied this block from dataverse example
+                        // Message while searching
                         return 'Search by project name';
                     }
                 },
@@ -188,14 +153,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
-                    // Use an ajax call to ORCID to retrieve matching results
+                    // Use an ajax call to retrieve matching results
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
                             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                     
                         }
-                        // Use expanded-search to get the names, affiliations directly in the results
                         return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
                     },
                     data: function(params) {
@@ -216,9 +180,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         return {
                             results: data['data_elements']
                                 .map(function(element) {
-                                    // Access the project information within each data element
                                     let projectInfo = element.project;
-                                    // Returning the desired structure
                                     return {
                                         text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
                                         acronym: projectInfo.acronym,
@@ -259,9 +221,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 $("input[data-project='" + num + "']").attr('value', '');
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 
+                $(projectNameInput).val(''); 
                 $(projectAcronymInput).val('');
+                
                 $(grantNumberParentSelector).each(function() {
                     var clearParentElement = $(grantNumberParentSelector).parent();
+                    console.log(clearParentElement)
                     var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
                     var clearFundingElement = clearFieldValuesElement.find('.edit-compound-field');
                     clearFundingElement.each(function() {
@@ -273,7 +238,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             $(clearProjectGrantAcronymInput).val('');
 
                             setTimeout(function() {
-                                if (clearFundingElement.siblings('.field-add-delete').children().length > 1) {
+                                if (clearFundingElement.siblings('.field-add-delete').children().eq(1)) {
                                     clearFundingElement.siblings('.field-add-delete').children().eq(1).click();
                                 }
                             }, 1000);
