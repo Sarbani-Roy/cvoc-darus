@@ -250,13 +250,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                             console.log($(clearFundingAgency).val());
                             console.log($(clearProjectGrantAcronymInput).val());
-                            console.log(clearFundingElement.siblings('.field-add-delete').children().length);
+                            console.log(clearFundingElement.siblings('.field-add-delete'));
                             console.log(clearFundingElement.siblings('.field-add-delete').children().eq(1));
 
                             if (clearFundingElement.siblings('.field-add-delete').children().length > 1) {
                                 clearFundingElement.siblings('.field-add-delete').children().eq(1).click();
                             }
-                            
+
                             console.log($(clearFundingAgency).val());
                             console.log($(clearProjectGrantAcronymInput).val());
                         }
