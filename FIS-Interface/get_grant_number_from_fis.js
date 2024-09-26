@@ -170,9 +170,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                     fisid = $(fisIdentifierInput).val()
 
-                    if(fisid){
-                        return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + fisid + "'>" + projectName + "</a>"));
-                    }
+                    // if(fisid){
+                    //     return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + fisid + "'>" + projectName + "</a>"));
+                    // }
 
                     if (item.text) {
                         return item.text;
