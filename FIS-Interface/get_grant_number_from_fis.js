@@ -82,11 +82,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                     console.log(item.text)
                     
-                    // // Prevent multiple executions
-                    // if (item.processed) {
-                    //     return item.text;
-                    // }
-                    // item.processed = true;
+                    // Prevent multiple executions
+                    if (item.processed) {
+                        console.log(item.text)
+                        return item.text;
+                    }
+                    item.processed = true;
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         if ($(fundingAgency).val() === "") {
