@@ -117,6 +117,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         emptyFundingElementFound = false;
 
+                        console.log(emptyFundingElementFound)
+
                         var newParentElement = $(grantNumberParentSelector).parent();
                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                         var newCompoundFundingElement = newFieldValuesElement.find('.edit-compound-field');
@@ -128,6 +130,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                             if ($(newFundingAgency).val() === '' && $(newProjectGrantAcronymInput).val() === '') {
                                 emptyFundingElementFound = true;
+
+                                console.log(emptyFundingElementFound)
 
                                 if (item.funding_orgs[0] && item.acronym){
                                     $(newFundingAgency).val(item.funding_orgs[0].cfacro);
