@@ -80,11 +80,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 templateSelection: function(item) {
 
-                    // Prevent multiple executions
-                    if (item.processed) {
-                        return item.text || item.id;
-                    }
-                    item.processed = true;
+                    // // Prevent multiple executions
+                    // if (item.processed) {
+                    //     return item.text;
+                    // }
+                    // item.processed = true;
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         if ($(fundingAgency).val() === "") {
@@ -172,7 +172,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (item.id && item.text != item.id) {
                         $(fisIdentifierInput).val(item.id);
                     }                                                      
-                    if ($(projectNameInput).val() === "" && item.name) {
+                    if ($(projectNameInput).val() === "" && item.text) {
                         var projectName = item.text;
                     }
                     else{
