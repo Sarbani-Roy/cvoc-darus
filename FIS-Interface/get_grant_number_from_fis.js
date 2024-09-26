@@ -114,7 +114,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     } 
                     
                     else if (item.funding_orgs) {
-                        emptyFundingElementFound = false;
+
+                        console.log(item.funding_orgs);
+
+                        var emptyFundingElementFound = false;
 
                         var newParentElement = $(grantNumberParentSelector).parent();
                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
