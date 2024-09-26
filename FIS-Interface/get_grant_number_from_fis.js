@@ -147,7 +147,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
                             
                             setTimeout(function() {
-                                var addedFieldValuesElement = newParentElement.siblings('.dataset-field-values').last();
+                                var addedParentElement = $(grantNumberParentSelector).parent();
+                                var addedFieldValuesElement = addedParentElement.siblings('.dataset-field-values');
+                                var addedFieldValuesElement = addedParentElement.siblings('.dataset-field-values').last();
                                 console.log(addedFieldValuesElement)
 
                                 var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
