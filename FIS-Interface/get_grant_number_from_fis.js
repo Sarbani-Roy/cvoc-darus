@@ -82,7 +82,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                     // Prevent multiple executions
                     if (item.processed) {
-                        return item.text;
+                        return item.text || item.id;
                     }
                     item.processed = true;
                     
