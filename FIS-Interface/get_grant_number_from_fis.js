@@ -79,12 +79,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     return $result;
                 },
                 templateSelection: function(item) {
-
-                    console.log(item.text)
                     
                     // Prevent multiple executions
                     if (item.processed) {
-                        console.log(item.text)
                         return item.text;
                     }
                     item.processed = true;
@@ -125,8 +122,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         emptyFundingElementFound = false;
 
-                        console.log(emptyFundingElementFound)
-
                         var newParentElement = $(grantNumberParentSelector).parent();
                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                         var newCompoundFundingElement = newFieldValuesElement.find('.edit-compound-field');
@@ -153,6 +148,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             
                             setTimeout(function() {
                                 var addedFieldValuesElement = newParentElement.siblings('.dataset-field-values').last();
+                                console.log(addedFieldValuesElement)
 
                                 var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
                                 var addedProjectGrantAcronymInput = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(1).find('input');
