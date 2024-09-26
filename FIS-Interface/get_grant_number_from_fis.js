@@ -138,7 +138,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         });
 
                         // If no empty funding element was found, add a new one by clicking '+'
-                        if (!emptyFundingElementFound) {
+                        if (emptyFundingElementFound == false) {
                             emptyFundingElementFound = true;
                             newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
                             console.log(emptyFundingElementFound)
