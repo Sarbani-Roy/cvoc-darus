@@ -128,7 +128,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                             if ($(newFundingAgency).val() === '' && $(newProjectGrantAcronymInput).val() === '') {
                                 emptyFundingElementFound = true;
-                                console.log(index);
 
                                 if (item.funding_orgs[0] && item.acronym){
                                     $(newFundingAgency).val(item.funding_orgs[0].cfacro);
@@ -136,6 +135,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 }
                             }
                         });
+
+                        console.log(emptyFundingElementFound)
 
                         // If no empty funding element was found, add a new one by clicking '+'
                         if (emptyFundingElementFound == false) {
