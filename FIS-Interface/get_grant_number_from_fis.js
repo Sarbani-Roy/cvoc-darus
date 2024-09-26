@@ -115,7 +115,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     
                     else if (item.funding_orgs) {
 
-                        emptyFundingElementFound = false;
+                        var emptyFundingElementFound = false;
 
                         var newParentElement = $(grantNumberParentSelector).parent();
                         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
@@ -127,7 +127,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
                             if ($(newFundingAgency).val() === '' && $(newProjectGrantAcronymInput).val() === '') {
-                                emptyFundingElementFound = true;
+                                var emptyFundingElementFound = true;
 
                                 if (item.funding_orgs[0] && item.acronym){
                                     $(newFundingAgency).val(item.funding_orgs[0].cfacro);
@@ -138,7 +138,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         // If no empty funding element was found, add a new one by clicking '+'
                         if (!emptyFundingElementFound) {
-                            emptyFundingElementFound = true;
+                            var emptyFundingElementFound = true;
                             newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
                             console.log(emptyFundingElementFound)
 
