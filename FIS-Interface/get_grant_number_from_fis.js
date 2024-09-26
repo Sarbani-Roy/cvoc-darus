@@ -80,6 +80,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 templateSelection: function(item) {
 
+                    console.log(item.text)
+                    
                     // // Prevent multiple executions
                     // if (item.processed) {
                     //     return item.text;
@@ -137,8 +139,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             if ($(newFundingAgency).val() === '' && $(newProjectGrantAcronymInput).val() === '') {
                                 emptyFundingElementFound = true;
 
-                                console.log(emptyFundingElementFound)
-
                                 if (item.funding_orgs[0] && item.acronym){
                                     $(newFundingAgency).val(item.funding_orgs[0].cfacro);
                                     $(newProjectGrantAcronymInput).val(item.acronym);
@@ -146,14 +146,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             }
                         });
 
-                        console.log(emptyFundingElementFound)
-
                         // If no empty funding element was found, add a new one by clicking '+'
                         if (emptyFundingElementFound == false) {
                             emptyFundingElementFound = true;
                             newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
-                            console.log(emptyFundingElementFound)
-
+                            
                             // setTimeout(function() {
                             //     var addedFieldValuesElement = newParentElement.siblings('.dataset-field-values').last();
 
