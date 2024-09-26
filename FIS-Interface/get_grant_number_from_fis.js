@@ -79,6 +79,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     return $result;
                 },
                 templateSelection: function(item) {
+
+                    // Prevent multiple executions
+                    if (item.processed) {
+                        return item.text;
+                    }
+                    item.processed = true;
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         if ($(fundingAgency).val() === "") {
