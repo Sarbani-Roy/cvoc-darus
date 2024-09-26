@@ -109,10 +109,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     if (i < item.funding_orgs.length - 1) {
                                         newFundingElement.next('.field-add-delete').children().eq(0).click();
                     
-                                        // Wait for DOM update, then call the function recursively for the next iteration
                                         setTimeout(function() {
-                                            updateFundingOrgs(i + 1);  // Call the function recursively for the next item
-                                        }, 500);  // Adjust delay if necessary
+                                            updateFundingOrgs(i + 1);
+                                        }, 500);
                                     }
                                 });
                             }
