@@ -144,7 +144,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         // If no empty funding element was found, add a new one by clicking '+'
                         if (emptyFundingElementFound == false) {
                             emptyFundingElementFound = true;
-                            newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
+
+                            // Prevent multiple executions
+                            if (item.processed) {
+                                newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
+                            }
+                            item.processed = true;
                             
                             setTimeout(function() {
                                 var addedParentElement = $(grantNumberParentSelector).parent();
