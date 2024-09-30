@@ -81,10 +81,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 templateSelection: function(item) {
                     
                     // Prevent multiple executions
-                    if (item.processed) {
-                        return item.text;
-                    }
-                    item.processed = true;
+                    // if (item.processed) {
+                    //     return item.text;
+                    // }
+                    // item.processed = true;
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         if ($(fundingAgency).val() === "") {
@@ -150,7 +150,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 var addedParentElement = $(grantNumberParentSelector).parent();
                                 var addedFieldValuesElement = addedParentElement.siblings('.dataset-field-values');
                                 var addedFieldValuesElement = addedParentElement.siblings('.dataset-field-values').last();
-                                console.log(addedFieldValuesElement)
 
                                 var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
                                 var addedProjectGrantAcronymInput = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(1).find('input');
