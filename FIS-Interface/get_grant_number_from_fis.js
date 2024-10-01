@@ -138,6 +138,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                                 // Prevent multiple executions
                                 if (item.processed) {
+                                    var newParentElement = $(grantNumberParentSelector).parent();
+                                    var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                                    var newCompoundFundingElement = newFieldValuesElement.find('.edit-compound-field');
+
                                     newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
                                 }
                                 item.processed = true;
