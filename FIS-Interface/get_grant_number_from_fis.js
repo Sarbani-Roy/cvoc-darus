@@ -262,28 +262,32 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     function clearFundingOrgs(i) {
                         if (i >= clearFundingDetails.length) return;
 
-                        console.log(i);
-                        console.log(clearFundingElement);
-                        var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
-                        var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-                        var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+                        var clearParentElement = $(grantNumberParentSelector).parent();
+                        var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
+                        var clearFundingElement = clearFieldValuesElement.children().eq(2 * i);
+        
+                        var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
+                        var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
+                                        
+                        // var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
+                        // var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+                        // var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
 
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
-
                             
-                            clearFundingElement.click();
-
-                            setTimeout(function() {
-                                // clearFundingElement.click();
-                                clearFundingOrgs(i + 1);      
-                            }, 500);
-
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
+                            // clearFundingElement.click();
+
+                            if (i < clearFundingDetails.length - 1) {
+                                clearFundingElement.next('.field-add-delete').children().eq(1).click();
+            
+                                setTimeout(function() {
+                                    clearFundingOrgs(i + 1);
+                                }, 500);
+                            }    
                         }
                     }
-
-                    // Start recursion from the first entry
                     clearFundingOrgs(0);
                 }
             });
