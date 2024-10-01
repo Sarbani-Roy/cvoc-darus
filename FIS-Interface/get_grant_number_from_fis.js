@@ -264,8 +264,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         
                         var clearFundingElement = clearFundingDetails[0].deleteFundingElement;
-                        var clearFundingAgency = clearFundingDetails[0].fundingAgency;
-                        var clearProjectGrantAcronymInput = clearFundingDetails[0].projectGrantAcronym;
+                        var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+                        var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
 
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
 
