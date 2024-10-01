@@ -285,11 +285,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             $(clearProjectGrantAcronymInput).val('');
 
                             // Optionally remove the funding element after a delay
-                            // setTimeout(function() {
-                            //     if (clearFundingElement.next('.field-add-delete').children().eq(1)) {
-                            //         clearFundingElement.next('.field-add-delete').children().eq(1).click();
-                            //     }
-                            // }, 1000);
+                            setTimeout(function() {
+                                if (clearFundingElement.next('.field-add-delete').children().eq(1)) {
+                                    clearFundingElement.next('.field-add-delete').children().eq(1).click();
+                                }
+                            }, 1000);
                         }
                     }
                 }
