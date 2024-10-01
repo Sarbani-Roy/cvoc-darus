@@ -19,7 +19,6 @@ function expandProject() {
             if (projectElement.children().length > 3) {
                 var projectNameInput = projectElement.children().eq(0).find('input');
                 var projectAcronymInput = projectElement.children().eq(1).find('input');
-                // var projectAcronym = fundingElement.children().eq(1)
                 var fisIdentifier = projectElement.children().eq(3);
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
@@ -318,7 +317,7 @@ function getFundingDetails(grantNumberParentSelector) {
             if (fundingElement.children().length > 2) {
                 var fundingAgency = fundingElement.children().eq(0).find('input');
                 var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
-                var deleteFundingElement = FundingElement.next('.field-add-delete').children().eq(1);
+                var deleteFundingElement = fundingElement.next('.field-add-delete').children().eq(1);
 
                 // Store the funding agency and project acronym in the array
                 fundingDetails.push({
