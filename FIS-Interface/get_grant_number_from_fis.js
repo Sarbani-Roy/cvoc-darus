@@ -229,7 +229,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
 
-
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
@@ -244,7 +243,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     $("input[data-project='" + num + "']").val(data.id);
                 }
             });
-
             
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
@@ -257,11 +255,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
                 
                 if (clearFundingDetails.length > 0) {
-                    console.log(clearFundingDetails.length)
-        
+                    
                     function clearFundingOrgs(i) {
                         if (i >= clearFundingDetails.length) return;
                         
+                        // This should be always 0 as after deleting the 0th element is the 1st element will be 0th element
                         var clearFundingElement = clearFundingDetails[0].deleteFundingElement;
                         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
