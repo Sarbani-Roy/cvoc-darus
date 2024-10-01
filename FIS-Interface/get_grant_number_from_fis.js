@@ -250,7 +250,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-project='" + num + "']").attr('value', '');
+                console.log($(projectAcronymInput).val());
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
+
+                var projectAcronym = getProjectAcronym(num);
+                console.log("Project Acronym:", projectAcronym);
                 
                 // $(projectNameInput).val(''); 
                 $(projectAcronymInput).val('');
@@ -311,7 +315,25 @@ function getFundingDetails(grantNumberParentSelector) {
 
     return fundingDetails;
 }
-               
+
+function getProjectAcronym(num) {
+    // Find the project input corresponding to the generated `data-project` identifier
+    var projectInput = $("input[data-project='" + num + "']");
+    
+    // Check if the project input exists
+    if (projectInput.length > 0) {
+        // Traverse the DOM to locate the corresponding `projectAcronymInput`
+        var projectElement = projectInput.closest('.edit-compound-field');
+        var projectAcronymInput = projectElement.find('input').eq(1); // Assuming 2nd input is project acronym
+
+        // Return the value of the `projectAcronymInput`
+        return projectAcronymInput.val();
+    }
+
+    // Return null if no project input was found
+    return null;
+}
+
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
