@@ -248,18 +248,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
+                
                 $("input[data-project='" + num + "']").attr('value', '');
-                
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
-                console.log($(oldProjectGrantAcronymInput));
-
-                // var projectAcronym = getProjectAcronym(num);
-                // console.log("Project Acronym:", projectAcronym);
-                
-                // $(projectNameInput).val(''); 
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('')
-                
                             
                 var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
                 
@@ -282,59 +275,16 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
 
-                            if (clearFundingElement){
-                                clearFundingElement.click();  // Trigger the delete click
-                            }
-
                             setTimeout(function() {
-                                clearFundingOrgs(i + 1);
+                                clearFundingElement.click();
+                                clearFundingOrgs(i + 1);      
                             }, 500);
-
-                            // Optionally remove the funding element after a delay
-                        //     setTimeout(function() {
-                        //         if (clearFundingElement){
-                        //             clearFundingElement.click();  // Trigger the delete click
-                        //         }
-                        //         clearFundingOrgs(i + 1);      // Recursive call to process the next element
-                        //     }, 500);
-                        // } else {
-                        //     // If the current entry does not match, proceed to the next one
-                        //     clearFundingOrgs(i + 1);
                         }
                     }
 
                     // Start recursion from the first entry
                     clearFundingOrgs(0);
                 }
-                // var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-                // if (clearFundingDetails.length > 0) {
-                    
-                    
-                //     // Iterate over each entry in clearFundingDetails
-                //     for (var i = 0; i < clearFundingDetails.length; i++) {
-                        
-                //         var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
-                //         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-                //         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-
-                //         // Check if the project grant acronym matches the old value
-                //         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
-
-                //             console.log("Clear Funding Agency:", clearFundingAgency.val());
-                //             console.log("Clear Project Grant Acronym:", clearProjectGrantAcronymInput.val());
-                //             console.log("Clear Funding Agency:", clearFundingElement);
-                            
-                //             // Clear the funding agency and project grant acronym inputs
-                //             $(clearFundingAgency).val('');
-                //             $(clearProjectGrantAcronymInput).val('');
-
-                //             // Optionally remove the funding element after a delay
-                //             setTimeout(function() {
-                //                 clearFundingElement.click();
-                //             }, 500);
-                //         }
-                //     }
-                // }
             });
         }
     })
