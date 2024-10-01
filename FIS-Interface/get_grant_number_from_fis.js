@@ -270,14 +270,16 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
 
-                            $(clearFundingAgency).val('');
-                            $(clearProjectGrantAcronymInput).val('');
+                            
                             clearFundingElement.click();
 
                             setTimeout(function() {
                                 // clearFundingElement.click();
                                 clearFundingOrgs(i + 1);      
                             }, 500);
+
+                            $(clearFundingAgency).val('');
+                            $(clearProjectGrantAcronymInput).val('');
                         }
                     }
 
