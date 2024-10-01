@@ -264,8 +264,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         
                         var clearFundingElement = clearFundingDetails[0].deleteFundingElement;
-                        var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-                        var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+                        var clearFundingAgency = clearFundingDetails[0].fundingAgency;
+                        var clearProjectGrantAcronymInput = clearFundingDetails[0].projectGrantAcronym;
 
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
 
@@ -278,7 +278,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     clearFundingElement.click();
                                 }
                                 clearFundingOrgs(i + 1);      
-                            }, 3000);
+                            }, 500);
                         }
                     }
                     clearFundingOrgs(0);
