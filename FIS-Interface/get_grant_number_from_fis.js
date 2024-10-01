@@ -253,8 +253,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 console.log($(projectAcronymInput).val());
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
 
-                var projectAcronym = getProjectAcronym(num);
-                console.log("Project Acronym:", projectAcronym);
+                // var projectAcronym = getProjectAcronym(num);
+                // console.log("Project Acronym:", projectAcronym);
                 
                 // $(projectNameInput).val(''); 
                 $(projectAcronymInput).val('');
@@ -262,23 +262,30 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
                 if (clearFundingDetails.length > 0) {
-                    var clearFundingElement = clearFundingDetails[0].fundingElement;
-                    var clearFundingAgency = clearFundingDetails[0].fundingAgency;
-                    var clearProjectGrantAcronymInput = clearFundingDetails[0].projectGrantAcronym;
+                    console.log(clearFundingDetails);
+                    
+                    // Iterate over each entry in clearFundingDetails
+                    for (var i = 0; i < clearFundingDetails.length; i++) {
+                        var clearFundingElement = clearFundingDetails[i].fundingElement;
+                        var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+                        var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
 
-                    console.log("Clear Funding Agency:", clearFundingAgency);
-                    console.log("Clear Project Grant Acronym:", clearProjectGrantAcronymInput);
-                                        
-                    if($(clearProjectGrantAcronymInput).val() == oldProjectGrantAcronymInput) {
-                        $(clearFundingAgency).val('');
-                        $(clearProjectGrantAcronymInput).val('');
+                        console.log("Clear Funding Agency:", clearFundingAgency.val());
+                        console.log("Clear Project Grant Acronym:", clearProjectGrantAcronymInput.val());
 
-                        setTimeout(function() {
+                        // Check if the project grant acronym matches the old value
+                        if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
+                            // Clear the funding agency and project grant acronym inputs
+                            $(clearFundingAgency).val('');
+                            $(clearProjectGrantAcronymInput).val('');
 
-                            if (clearFundingElement.siblings('.field-add-delete').children().eq(1)) {
-                                clearFundingElement.siblings('.field-add-delete').children().eq(1).click();
-                            }
-                        }, 500);
+                            // Optionally remove the funding element after a delay
+                            setTimeout(function() {
+                                if (clearFundingElement.siblings('.field-add-delete').children().eq(1)) {
+                                    clearFundingElement.siblings('.field-add-delete').children().eq(1).click();
+                                }
+                            }, 500);
+                        }
                     }
                 }
             });
@@ -316,23 +323,23 @@ function getFundingDetails(grantNumberParentSelector) {
     return fundingDetails;
 }
 
-function getProjectAcronym(num) {
-    // Find the project input corresponding to the generated `data-project` identifier
-    var projectInput = $("input[data-project='" + num + "']");
+// function getProjectAcronym(num) {
+//     // Find the project input corresponding to the generated `data-project` identifier
+//     var projectInput = $("input[data-project='" + num + "']");
     
-    // Check if the project input exists
-    if (projectInput.length > 0) {
-        // Traverse the DOM to locate the corresponding `projectAcronymInput`
-        var projectElement = projectInput.closest('.edit-compound-field');
-        var projectAcronymInput = projectElement.find('input').eq(1); // Assuming 2nd input is project acronym
+//     // Check if the project input exists
+//     if (projectInput.length > 0) {
+//         // Traverse the DOM to locate the corresponding `projectAcronymInput`
+//         var projectElement = projectInput.closest('.edit-compound-field');
+//         var projectAcronymInput = projectElement.find('input').eq(1); // Assuming 2nd input is project acronym
 
-        // Return the value of the `projectAcronymInput`
-        return projectAcronymInput.val();
-    }
+//         // Return the value of the `projectAcronymInput`
+//         return projectAcronymInput.val();
+//     }
 
-    // Return null if no project input was found
-    return null;
-}
+//     // Return null if no project input was found
+//     return null;
+// }
 
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
