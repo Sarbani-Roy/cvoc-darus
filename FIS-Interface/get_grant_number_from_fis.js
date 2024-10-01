@@ -118,8 +118,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 var newFundingAgency = newFundingDetails[0].fundingAgency;
                                 var newProjectGrantAcronymInput = newFundingDetails[0].projectGrantAcronym;
 
-                                console.log("New Funding Agency:", newFundingAgency);
-                                console.log("New Project Grant Acronym:", newProjectGrantAcronymInput);
+                                console.log("New Funding Agency:", $(newFundingAgency).val());
+                                console.log("New Project Grant Acronym:", $(newProjectGrantAcronymInput).val());
                                     
                                 if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
                                     emptyFundingElementFound = true;
