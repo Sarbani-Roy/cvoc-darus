@@ -117,10 +117,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             if (newFundingDetails.length > 0) {
                                 var newFundingAgency = newFundingDetails[0].fundingAgency;
                                 var newProjectGrantAcronymInput = newFundingDetails[0].projectGrantAcronym;
-
-                                console.log("New Funding Agency:", $(newFundingAgency).val());
-                                console.log("New Project Grant Acronym:", $(newProjectGrantAcronymInput).val());
-                                    
+  
                                 if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
                                     emptyFundingElementFound = true;
 
@@ -269,26 +266,36 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('')
                 
-                $(grantNumberParentSelector).each(function() {
-                    var clearParentElement = $(grantNumberParentSelector).parent();
-                    var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
-                    var clearCompoundFundingElement = clearFieldValuesElement.find('.edit-compound-field');
-                    clearCompoundFundingElement.each(function() {
-                        var clearFundingElement = $(this);
-                        var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
-                        var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-                        if($(clearProjectGrantAcronymInput).val() == oldProjectGrantAcronymInput) {
-                            $(clearFundingAgency).val('');
-                            $(clearProjectGrantAcronymInput).val('');
+                // $(grantNumberParentSelector).each(function() {
+                //     var clearParentElement = $(grantNumberParentSelector).parent();
+                //     var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
+                //     var clearCompoundFundingElement = clearFieldValuesElement.find('.edit-compound-field');
+                //     clearCompoundFundingElement.each(function() {
+                //         var clearFundingElement = $(this);
+                //         var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
+                //         var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
+                //         var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+                var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+                if (clearFundingDetails.length > 0) {
+                    var clearFundingAgency = clearFundingDetails[0].fundingAgency;
+                    var clearProjectGrantAcronymInput = clearFundingDetails[0].projectGrantAcronym;
 
-                            setTimeout(function() {
-                                if (clearFundingElement.siblings('.field-add-delete').children().eq(1)) {
-                                    clearFundingElement.siblings('.field-add-delete').children().eq(1).click();
-                                }
-                            }, 500);
-                        }
-                    });
-                });
+                    console.log("Clear Funding Agency:", clearFundingAgency);
+                    console.log("Clear Project Grant Acronym:", clearProjectGrantAcronymInput);
+                                        
+                    if($(clearProjectGrantAcronymInput).val() == oldProjectGrantAcronymInput) {
+                        $(clearFundingAgency).val('');
+                        $(clearProjectGrantAcronymInput).val('');
+
+                        setTimeout(function() {
+                            if (clearFundingElement.siblings('.field-add-delete').children().eq(1)) {
+                                clearFundingElement.siblings('.field-add-delete').children().eq(1).click();
+                            }
+                        }, 500);
+                    }
+                }
+                //     });
+                // });
             });
         }
     })
