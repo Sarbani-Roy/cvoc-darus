@@ -264,36 +264,42 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
                 
                 if (clearFundingDetails.length > 0) {
-                    // Recursive function to handle async DOM update after each click
+                    console.log(clearFundingDetails.length)
+        
                     function clearFundingOrgs(i) {
-                        if (i >= clearFundingDetails.length) return;  // Exit condition when all details are processed
+                        if (i >= clearFundingDetails.length) return;
 
-                        // Access funding details for the current index 'i'
                         var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
                         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
 
-                        // Check if the project grant acronym matches the old value
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
 
                             console.log("Clear Funding Agency:", clearFundingAgency.val());
                             console.log("Clear Project Grant Acronym:", clearProjectGrantAcronymInput.val());
                             console.log("Clear Funding Agency Element:", clearFundingElement);
 
-                            // Clear the funding agency and project grant acronym inputs
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
 
-                            // Optionally remove the funding element after a delay
+                            if (clearFundingElement){
+                                clearFundingElement.click();  // Trigger the delete click
+                            }
+
                             setTimeout(function() {
-                                if (clearFundingElement){
-                                    clearFundingElement.click();  // Trigger the delete click
-                                }
-                                clearFundingOrgs(i + 1);      // Recursive call to process the next element
+                                clearFundingOrgs(i + 1);
                             }, 500);
-                        } else {
-                            // If the current entry does not match, proceed to the next one
-                            clearFundingOrgs(i + 1);
+
+                            // Optionally remove the funding element after a delay
+                        //     setTimeout(function() {
+                        //         if (clearFundingElement){
+                        //             clearFundingElement.click();  // Trigger the delete click
+                        //         }
+                        //         clearFundingOrgs(i + 1);      // Recursive call to process the next element
+                        //     }, 500);
+                        // } else {
+                        //     // If the current entry does not match, proceed to the next one
+                        //     clearFundingOrgs(i + 1);
                         }
                     }
 
