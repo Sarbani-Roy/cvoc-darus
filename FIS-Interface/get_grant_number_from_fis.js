@@ -308,8 +308,8 @@ function getFundingDetails(grantNumberParentSelector) {
 
             // Ensure the fundingElement has enough children
             if (fundingElement.children().length > 2) {
-                var fundingAgency = fundingElement.children().eq(0).find('input').val();
-                var projectGrantAcronymInput = fundingElement.children().eq(1).find('input').val();
+                var fundingAgency = fundingElement.children().eq(0).find('input');
+                var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
 
                 // Store the funding agency and project acronym in the array
                 fundingDetails.push({
