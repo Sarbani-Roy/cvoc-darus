@@ -263,6 +263,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (i >= clearFundingDetails.length) return;
 
                         console.log(i);
+                        console.log(clearFundingElement);
                         var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
                         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
@@ -271,6 +272,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
+                            clearFundingElement.click();
 
                             setTimeout(function() {
                                 // clearFundingElement.click();
