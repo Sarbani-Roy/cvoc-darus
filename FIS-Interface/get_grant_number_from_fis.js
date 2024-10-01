@@ -289,6 +289,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 if (clearFundingElement.next('.field-add-delete').children().eq(1)) {
                                     clearFundingElement.next('.field-add-delete').children().eq(1).click();
                                 }
+                                else {
+                                    console.log("Clear Funding Agency:", clearFundingElement.next('.field-add-delete').children().eq(1));
+                                }
                             }, 1000);
                         }
                     }
