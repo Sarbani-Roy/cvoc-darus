@@ -272,11 +272,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             console.log($(clearFundingAgency).val());
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
+                            console.log($(clearFundingAgency).val());
 
                             setTimeout(function() {
-                                if (i < clearFundingDetails.length-1){
-                                    clearFundingElement.click();
-                                }
+                                // if (i < clearFundingDetails.length-1){
+                                clearFundingElement.click();
+                                // }
                                 clearFundingOrgs(i + 1);      
                             }, 500);
                         }
