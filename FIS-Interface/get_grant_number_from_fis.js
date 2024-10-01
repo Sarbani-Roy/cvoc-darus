@@ -250,8 +250,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-project='" + num + "']").attr('value', '');
-                console.log($(projectAcronymInput).val());
+                
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
+                console.log($(oldProjectGrantAcronymInput));
 
                 // var projectAcronym = getProjectAcronym(num);
                 // console.log("Project Acronym:", projectAcronym);
@@ -262,27 +263,28 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
                 if (clearFundingDetails.length > 0) {
-                    console.log(clearFundingDetails);
                     
                     // Iterate over each entry in clearFundingDetails
                     for (var i = 0; i < clearFundingDetails.length; i++) {
                         var clearFundingElement = clearFundingDetails[i].fundingElement;
                         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-
-                        console.log("Clear Funding Agency:", clearFundingAgency.val());
-                        console.log("Clear Project Grant Acronym:", clearProjectGrantAcronymInput.val());
-
+   
                         // Check if the project grant acronym matches the old value
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
+
+                            console.log("Clear Funding Agency:", clearFundingAgency.val());
+                            console.log("Clear Project Grant Acronym:", clearProjectGrantAcronymInput.val());
+                            console.log("Clear Funding Agency:", clearFundingElement);
+                            
                             // Clear the funding agency and project grant acronym inputs
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
 
                             // Optionally remove the funding element after a delay
                             setTimeout(function() {
-                                if (clearFundingElement.siblings('.field-add-delete').children().eq(1)) {
-                                    clearFundingElement.siblings('.field-add-delete').children().eq(1).click();
+                                if (clearFundingElement.next('.field-add-delete').children().eq(1)) {
+                                    clearFundingElement.next('.field-add-delete').children().eq(1).click();
                                 }
                             }, 500);
                         }
