@@ -262,21 +262,18 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     function clearFundingOrgs(i) {
                         if (i >= clearFundingDetails.length) return;
 
+                        console.log(i);
                         var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
                         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
 
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
 
-                            console.log("Clear Funding Agency:", clearFundingAgency.val());
-                            console.log("Clear Project Grant Acronym:", clearProjectGrantAcronymInput.val());
-                            console.log("Clear Funding Agency Element:", clearFundingElement);
-
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
 
                             setTimeout(function() {
-                                clearFundingElement.click();
+                                // clearFundingElement.click();
                                 clearFundingOrgs(i + 1);      
                             }, 500);
                         }
