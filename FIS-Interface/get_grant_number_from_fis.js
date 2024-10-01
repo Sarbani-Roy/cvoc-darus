@@ -262,30 +262,22 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     function clearFundingOrgs(i) {
                         if (i >= clearFundingDetails.length) return;
 
-                        var clearParentElement = $(grantNumberParentSelector).parent();
-                        var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
-                        var clearFundingElement = clearFieldValuesElement.children().eq(2 * i);
-        
-                        var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
-                        var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-                                        
-                        // var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
-                        // var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-                        // var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+                        console.log(i);
+                        console.log(clearFundingElement);
+                        var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
+                        var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+                        var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
 
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
+
                             
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
-                            // clearFundingElement.click();
 
-                            if (i < clearFundingDetails.length - 1) {
-                                clearFundingElement.next('.field-add-delete').children().eq(1).click();
-            
-                                setTimeout(function() {
-                                    clearFundingOrgs(i + 1);
-                                }, 500);
-                            }    
+                            setTimeout(function() {
+                                clearFundingElement.click();
+                                clearFundingOrgs(i + 1);      
+                            }, 3000);
                         }
                     }
                     clearFundingOrgs(0);
@@ -325,24 +317,6 @@ function getFundingDetails(grantNumberParentSelector) {
 
     return fundingDetails;
 }
-
-// function getProjectAcronym(num) {
-//     // Find the project input corresponding to the generated `data-project` identifier
-//     var projectInput = $("input[data-project='" + num + "']");
-    
-//     // Check if the project input exists
-//     if (projectInput.length > 0) {
-//         // Traverse the DOM to locate the corresponding `projectAcronymInput`
-//         var projectElement = projectInput.closest('.edit-compound-field');
-//         var projectAcronymInput = projectElement.find('input').eq(1); // Assuming 2nd input is project acronym
-
-//         // Return the value of the `projectAcronymInput`
-//         return projectAcronymInput.val();
-//     }
-
-//     // Return null if no project input was found
-//     return null;
-// }
 
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
