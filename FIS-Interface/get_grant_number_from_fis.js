@@ -302,7 +302,7 @@ function updateFundingOrgs(i, item) {
                 clickedButton.click();
 
                 setTimeout(function() {
-                    var addedFundingElement = clickedButton.next('.edit-compound-field');
+                    var addedFundingElement = newFundingElement.nextAll('.edit-compound-field').last();
                     var addedFundingAgency = addedFundingElement.children().eq(0).find('input');
                     var addedProjectGrantAcronymInput = addedFundingElement.children().eq(1).find('input');
 
