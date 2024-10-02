@@ -296,38 +296,32 @@ function updateFundingOrgs(i, item) {
         console.log(i, "th Funding Agency before filling: ", $(newFundingAgency).val());
         console.log(i, "th Project Acronym before filling: ", $(newProjectGrantAcronymInput).val());
     
-        $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-        $(newProjectGrantAcronymInput).val(item.acronym);
+        if (newItem.processed && i == 0) {
+            if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
+                setTimeout(function() {
+                    var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0);
+                    clickedButton.click();
+                }, 500);
 
+                var addedFundingElement = clickedButton.next('.edit-compound-field');
+                var addedFundingAgency = addedFundingElement.children().eq(0).find('input');
+                var addedProjectGrantAcronymInput = addedFundingElement.children().eq(1).find('input');
+
+                $(addedFundingAgency).val(item.funding_orgs[i].cfacro);
+                $(addedProjectGrantAcronymInput).val(item.acronym);
+            } else {
+                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                $(newProjectGrantAcronymInput).val(item.acronym);
+            }
+        } else {
+            $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+            $(newProjectGrantAcronymInput).val(item.acronym);
+        }
+
+        newItem.processed = true;
+                
         console.log(i, "th Funding Agency after filling: ", $(newFundingAgency).val());
         console.log(i, "th Project Acronym after filling: ", $(newProjectGrantAcronymInput).val());
-    
-    
-        if (i == 0) {
-            if ($(newFundingAgency).val() !== "" && $(newProjectGrantAcronymInput).val() !== "") {
-                var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0);
-                console.log(clickedButton);
-            }
-        }
-                
-        //         // Ensure the click action has completed before accessing the next element
-        //         setTimeout(function() {
-        //             var addedFundingElement = newFieldValuesElement.find('.edit-compound-field').last();  // Access the new last field after click
-        //             var newFundingAgency = addedFundingElement.children().eq(0).find('input');
-        //             var newProjectGrantAcronymInput = addedFundingElement.children().eq(1).find('input');
-    
-        //             // Set the new values after the new element has been added
-        //             $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-        //             $(newProjectGrantAcronymInput).val(item.acronym);
-        //         }, 500);
-        //     } else {
-        //         $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-        //         $(newProjectGrantAcronymInput).val(item.acronym);
-        //     }
-        // } else {
-        //     $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-        //     $(newProjectGrantAcronymInput).val(item.acronym);
-        // }
     
         if (item.processed && i < item.funding_orgs.length - 1) {
             newFundingElement.next('.field-add-delete').children().eq(0).click();
