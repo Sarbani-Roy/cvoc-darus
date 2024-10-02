@@ -261,6 +261,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         index = 0;
                         
+                        console.log(i-index);
                         // This should be always 0 as after deleting the 0th element is the 1st element will be 0th element
                         var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
@@ -269,14 +270,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
 
                             console.log(oldProjectGrantAcronymInput);
-                            console.log(clearFundingElement);
-                            
+
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
 
                             setTimeout(function() {
+                                console.log(i-index);
                                 clearFundingElement.click();
-                            }, 500);
+                            }, 5000);
 
                             index = index+1;
                         }
