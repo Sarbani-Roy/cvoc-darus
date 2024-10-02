@@ -70,7 +70,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             if ($(fundingAgency).val() === ""  && $(projectGrantAcronym).val() === "") {
                                 updateFundingOrgs(0, item);
                             } else {
-                                
+                                console.log(item.funding_orgs.length)
                             }
                         } else if (item.funding_orgs) {
                             emptyFundingElementFound = false;
