@@ -63,16 +63,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
          
                     var fundingDetails = getFundingDetails(grantNumberParentSelector);
                     if (fundingDetails.length > 0) {
-                        var fundingAgency = fundingDetails[0].fundingAgency;
-                        var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
+                        // var fundingAgency = fundingDetails[0].fundingAgency;
+                        // var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
                         
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
-                            if ($(fundingAgency).val() === "" && $(projectGrantAcronymInput).val() === "") {
-                                updateFundingOrgs(0, item);
-                            } else {
-                                console.log(item);
-                                updateFundingOrgs(0, item);
-                            }
+                            console.log(item);
+                            updateFundingOrgs(0, item);
                         } else if (item.funding_orgs) {
                             emptyFundingElementFound = false;
                             var newFundingDetails = getFundingDetails(grantNumberParentSelector);
@@ -297,24 +293,8 @@ function updateFundingOrgs(i, item) {
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
-        if (i == 0) {
-            if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "")
-            {
-                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-                $(newProjectGrantAcronymInput).val(item.acronym);
-            } else {
-                var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0).click();
-                var addedFundingElement = clickedButton.next('.edit-compound-field');
-                var addedFundingAgency = addedFundingElement.children().eq(0).find('input');
-                var addedProjectGrantAcronymInput = addedFundingElement.children().eq(1).find('input');
-
-                $(addedFundingAgency).val(item.funding_orgs[i].cfacro);
-                $(addedProjectGrantAcronymInput).val(item.acronym);
-            }
-        } else {
-            $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-            $(newProjectGrantAcronymInput).val(item.acronym);
-        }
+        $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+        $(newProjectGrantAcronymInput).val(item.acronym);
             
         if (item.processed) {
             if (i < item.funding_orgs.length - 1) {
