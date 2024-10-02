@@ -298,17 +298,17 @@ function updateFundingOrgs(i, item) {
     
         if (item.processed && i == 0) {
             if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
+                var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0);
+                clickedButton.click();
+
                 setTimeout(function() {
-                    var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0);
-                    clickedButton.click();
+                    var addedFundingElement = clickedButton.next('.edit-compound-field');
+                    var addedFundingAgency = addedFundingElement.children().eq(0).find('input');
+                    var addedProjectGrantAcronymInput = addedFundingElement.children().eq(1).find('input');
+
+                    $(addedFundingAgency).val(item.funding_orgs[i].cfacro);
+                    $(addedProjectGrantAcronymInput).val(item.acronym);
                 }, 500);
-
-                var addedFundingElement = clickedButton.next('.edit-compound-field');
-                var addedFundingAgency = addedFundingElement.children().eq(0).find('input');
-                var addedProjectGrantAcronymInput = addedFundingElement.children().eq(1).find('input');
-
-                $(addedFundingAgency).val(item.funding_orgs[i].cfacro);
-                $(addedProjectGrantAcronymInput).val(item.acronym);
             } else {
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                 $(newProjectGrantAcronymInput).val(item.acronym);
