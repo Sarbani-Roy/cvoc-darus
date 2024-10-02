@@ -293,11 +293,14 @@ function updateFundingOrgs(i, item) {
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
-        console.log(i, "th Funding Agency before filling: ", $(newFundingAgency).val());
-        console.log(i, "th Project Acronym before filling: ", $(newProjectGrantAcronymInput).val());
-    
-        if (item.processed && i == 0) {
-            if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
+        console.log(item.processed, i)
+
+        if (item.processed && i === 0) {
+            if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
+                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                $(newProjectGrantAcronymInput).val(item.acronym);
+                
+            } else {
                 var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0);
                 clickedButton.click();
 
@@ -309,18 +312,12 @@ function updateFundingOrgs(i, item) {
                     $(addedFundingAgency).val(item.funding_orgs[i].cfacro);
                     $(addedProjectGrantAcronymInput).val(item.acronym);
                 }, 500);
-            } else {
-                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-                $(newProjectGrantAcronymInput).val(item.acronym);
             }
         } else {
             $(newFundingAgency).val(item.funding_orgs[i].cfacro);
             $(newProjectGrantAcronymInput).val(item.acronym);
         }
        
-        console.log(i, "th Funding Agency after filling: ", $(newFundingAgency).val());
-        console.log(i, "th Project Acronym after filling: ", $(newProjectGrantAcronymInput).val());
-    
         if (item.processed && i < item.funding_orgs.length - 1) {
             newFundingElement.next('.field-add-delete').children().eq(0).click();
     
