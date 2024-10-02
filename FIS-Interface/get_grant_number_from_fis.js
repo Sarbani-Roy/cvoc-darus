@@ -273,8 +273,8 @@ function addOrUpdateFundingDetails(item, grantNumberParentSelector, length) {
         var newFundingDetails = getFundingDetails(grantNumberParentSelector);
 
         if (newFundingDetails.length > 0) {
-            var newFundingAgency = newFundingDetails[i].fundingAgency;
-            var newProjectGrantAcronymInput = newFundingDetails[i].projectGrantAcronym;
+            var newFundingAgency = newFundingDetails[0].fundingAgency;
+            var newProjectGrantAcronymInput = newFundingDetails[0].projectGrantAcronym;
 
             if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
                 emptyFundingElementFound = true;
