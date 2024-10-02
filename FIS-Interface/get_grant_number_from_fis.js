@@ -303,6 +303,7 @@ function updateFundingOrgs(i, item) {
             } else {
                 var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0);
                 clickedButton.click();
+                console.log("add clicked")
 
                 setTimeout(function() {
                     var addedFundingElement = newFundingElement.nextAll('.edit-compound-field').last();
@@ -318,15 +319,16 @@ function updateFundingOrgs(i, item) {
             $(newProjectGrantAcronymInput).val(item.acronym);
         }
        
-        if (item.processed && i < item.funding_orgs.length - 1) {
+        if (item.processed && i > 0 && i < item.funding_orgs.length - 1) {
             newFundingElement.next('.field-add-delete').children().eq(0).click();
+            console.log("add clicked")
     
             setTimeout(function() {
                 updateFundingOrgs(i + 1, item);
             }, 500);
         }
     
-        item.processed = true;  // Mark item as processed after first execution
+        item.processed = true;
     });
     
 }
