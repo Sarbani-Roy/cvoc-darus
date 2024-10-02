@@ -315,9 +315,8 @@ function updateFundingOrgs(i, item) {
         // }
         
     
-        if (item.processed && i < item.funding_orgs.length - 1) {
+        if (item.processed == false && i < item.funding_orgs.length - 1) {
             newFundingElement.next('.field-add-delete').children().eq(0).click();
-            console.log("clicked from small if loop")
     
             setTimeout(function() {
                 updateFundingOrgs(i + 1, item);
