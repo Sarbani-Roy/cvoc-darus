@@ -67,7 +67,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         // var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
                         
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
-                            console.log(item);
                             updateFundingOrgs(0, item);
                         } else if (item.funding_orgs) {
                             emptyFundingElementFound = false;
@@ -285,6 +284,10 @@ function getFundingDetails(grantNumberParentSelector) {
 function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;
 
+    if (!item.processed) {
+        item.processed = false;  // Initialize if undefined
+    }
+
     // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
     $(grantNumberParentSelector).each(function() {
         var newParentElement = $(this).parent(); 
@@ -293,7 +296,9 @@ function updateFundingOrgs(i, item) {
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
+        
         if (item.processed) {
+            console.log
             if (i === 0) {
                 if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
                     $(newFundingAgency).val(item.funding_orgs[i].cfacro);
