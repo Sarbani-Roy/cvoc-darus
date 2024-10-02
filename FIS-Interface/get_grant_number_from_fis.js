@@ -285,9 +285,9 @@ function getFundingDetails(grantNumberParentSelector) {
 function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;
 
-    if (!newItem.processed) {
-        newItem.processed = false;  
-    }
+    // if (!item.processed) {
+    //     item.processed = false;  
+    // }
     // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
     $(grantNumberParentSelector).each(function() {
         var newParentElement = $(this).parent(); 
@@ -299,7 +299,7 @@ function updateFundingOrgs(i, item) {
         console.log(i, "th Funding Agency before filling: ", $(newFundingAgency).val());
         console.log(i, "th Project Acronym before filling: ", $(newProjectGrantAcronymInput).val());
     
-        if (newItem.processed && i == 0) {
+        if (i == 0) {
             if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
                 setTimeout(function() {
                     var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0);
