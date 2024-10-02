@@ -284,9 +284,8 @@ function getFundingDetails(grantNumberParentSelector) {
 function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;  // Exit condition
 
-    // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
     $(grantNumberParentSelector).each(function() {
-        var newParentElement = $(this).parent();  // Use $(this) to refer to the current element
+        var newParentElement = $(this).parent();  
         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
@@ -298,7 +297,7 @@ function updateFundingOrgs(i, item) {
             console.log("clicked from big if loop")
 
             setTimeout(function() {
-                var addedFundingElement = newFundingElement.nextAll('.edit-compound-field').last();
+                var addedFundingElement = newFundingElement.find('.edit-compound-field').last();
                 var addedFundingAgency = addedFundingElement.children().eq(0).find('input');
                 var addedProjectGrantAcronymInput = addedFundingElement.children().eq(1).find('input');
 
