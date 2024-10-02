@@ -293,23 +293,22 @@ function updateFundingOrgs(i, item) {
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
-        console.log("'i' th Funding Agency before filling: ", $(newFundingAgency).val());
-        console.log("'i' th Project Acronym before filling: ", $(newProjectGrantAcronymInput).val());
+        console.log(i, "th Funding Agency before filling: ", $(newFundingAgency).val());
+        console.log(i, "th Project Acronym before filling: ", $(newProjectGrantAcronymInput).val());
     
         $(newFundingAgency).val(item.funding_orgs[i].cfacro);
         $(newProjectGrantAcronymInput).val(item.acronym);
 
-        console.log("'i' th Funding Agency after filling: ", $(newFundingAgency).val());
-        console.log("'i' th Project Acronym after filling: ", $(newProjectGrantAcronymInput).val());
+        console.log(i, "th Funding Agency after filling: ", $(newFundingAgency).val());
+        console.log(i, "th Project Acronym after filling: ", $(newProjectGrantAcronymInput).val());
     
     
-        // if (i == 0) {
-        //     console.log($(newFundingAgency).val());
-        //     console.log($(newProjectGrantAcronymInput).val());
-    
-        //     // Use proper non-empty check
-        //     if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
-        //         var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0).click();
+        if (i == 0) {
+            if ($(newFundingAgency).val() !== "" && $(newProjectGrantAcronymInput).val() !== "") {
+                var clickedButton = newFundingElement.next('.field-add-delete').children().eq(0);
+                console.log(clickedButton);
+            }
+        }
                 
         //         // Ensure the click action has completed before accessing the next element
         //         setTimeout(function() {
