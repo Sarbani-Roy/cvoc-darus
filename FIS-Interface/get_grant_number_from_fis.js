@@ -256,36 +256,30 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 if (clearFundingDetails.length > 0) {
                     
-                    function clearFundingOrgs(i) {
-                        if (i >= clearFundingDetails.length) return;
+                    clearFundingOrgs(0, clearFundingDetails, $(projectAcronymInput).val());
+                
+                    // function clearFundingOrgs(i) {
+                    //     if (i >= clearFundingDetails.length) return;
 
-                        index = 0;
+                    //     index = 0;
                         
-                        console.log(i-index);
-                        // This should be always 0 as after deleting the 0th element is the 1st element will be 0th element
-                        // var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                        var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-                        var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+                    //     console.log(i-index);
+                    //     var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+                    //     var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
                         
-                        if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
+                    //     if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
+                    //         $(clearFundingAgency).val('');
+                    //         $(clearProjectGrantAcronymInput).val('');
 
-                            console.log(oldProjectGrantAcronymInput);
-
-                            $(clearFundingAgency).val('');
-                            $(clearProjectGrantAcronymInput).val('');
-
-                            setTimeout(function() {
-                                console.log(i-index);
-                                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement
-                                clearFundingElement.click();
-                                index = index+1;
-                            }, 5000);
-
-                            // index = index+1;
-                        }
-                        clearFundingOrgs(i + 1);
-                    }
-                    clearFundingOrgs(0);
+                    //         setTimeout(function() {
+                    //             var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement
+                    //             clearFundingElement.click();
+                    //             index = index+1;
+                    //         }, 5000);
+                    //     }
+                    //     clearFundingOrgs(i + 1);
+                    // }
+                    // clearFundingOrgs(0);
                 }
             });
         }
@@ -321,6 +315,29 @@ function getFundingDetails(grantNumberParentSelector) {
     });
 
     return fundingDetails;
+}
+
+
+function clearFundingOrgs(i, clearFundingDetails, oldProjectGrantAcronymInput) {
+    if (i >= clearFundingDetails.length) return;
+
+    index = 0;
+    
+    console.log(i-index);
+    var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+    var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+    
+    if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
+        $(clearFundingAgency).val('');
+        $(clearProjectGrantAcronymInput).val('');
+
+        setTimeout(function() {
+            var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement
+            clearFundingElement.click();
+            index = index+1;
+        }, 5000);
+    }
+    clearFundingOrgs(i + 1, clearFundingDetails, oldProjectGrantAcronymInput);
 }
 
 
