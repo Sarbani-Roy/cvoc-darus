@@ -283,11 +283,14 @@ function getFundingDetails(grantNumberParentSelector) {
 
 // Recursive function to handle async DOM update after each click
 function updateFundingOrgs(i, item) {
-    if (i >= item.funding_orgs.length) return;  // Exit condition
+    if (i >= item.funding_orgs.length) return;
 
+    if (!newItem.processed) {
+        newItem.processed = false;  
+    }
     // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
     $(grantNumberParentSelector).each(function() {
-        var newParentElement = $(this).parent();  // Use $(this) to refer to the current element
+        var newParentElement = $(this).parent(); 
         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
