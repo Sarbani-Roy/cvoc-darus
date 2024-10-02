@@ -316,7 +316,7 @@ function getFundingDetails(grantNumberParentSelector) {
 }
 
 // Recursive function to handle async DOM update after each click
-function updateFundingOrgs(i) {
+function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;  // Exit condition
 
     // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
@@ -334,7 +334,7 @@ function updateFundingOrgs(i) {
             newFundingElement.next('.field-add-delete').children().eq(0).click();
 
             setTimeout(function() {
-                updateFundingOrgs(i + 1);
+                updateFundingOrgs(i + 1, item);
             }, 500);
         }
     });
