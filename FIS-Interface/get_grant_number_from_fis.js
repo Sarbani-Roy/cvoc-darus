@@ -64,18 +64,19 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var fundingDetails = getFundingDetails(grantNumberParentSelector);
                     if (fundingDetails.length > 0) {
                         var fundingAgency = fundingDetails[0].fundingAgency;
-                        var projectGrantAcronym = fundingDetails[0].projectGrantAcronym;
+                        // var projectGrantAcronym = fundingDetails[0].projectGrantAcronym;
                         
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
-                            if ($(fundingAgency).val() === ""  && $(projectGrantAcronym).val() === "") {
+                            if ($(fundingAgency).val() === "") {
                                 updateFundingOrgs(0, item);
                             } else {
                                 console.log(item.funding_orgs.length)
                             }
                         } else if (item.funding_orgs) {
-                            emptyFundingElementFound = false;
-                            var newFundingDetails = getFundingDetails(grantNumberParentSelector);
 
+                            emptyFundingElementFound = false;
+
+                            var newFundingDetails = getFundingDetails(grantNumberParentSelector);
                             if (newFundingDetails.length > 0) {
                                 var newFundingAgency = newFundingDetails[0].fundingAgency;
                                 var newProjectGrantAcronymInput = newFundingDetails[0].projectGrantAcronym;
@@ -94,9 +95,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             if (emptyFundingElementFound == false) {
                                 emptyFundingElementFound = true;
 
-                                item.processed = false;
                                 // Prevent multiple executions
-                                if (item.processed == false) {
+                                if (item.processed) {
                                     var newParentElement = $(grantNumberParentSelector).parent();
                                     var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
                                     var newCompoundFundingElement = newFieldValuesElement.find('.edit-compound-field');
@@ -231,7 +231,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     
                     function clearFundingOrgs(i) {
                         if (i >= clearFundingDetails.length) return;
+
                         index = 0;
+                        
+                        console.log(i-index);
                         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
                         
