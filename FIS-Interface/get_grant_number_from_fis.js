@@ -317,9 +317,7 @@ function updateFundingOrgs(i, item) {
             $(newFundingAgency).val(item.funding_orgs[i].cfacro);
             $(newProjectGrantAcronymInput).val(item.acronym);
         }
-
-        newItem.processed = true;
-                
+       
         console.log(i, "th Funding Agency after filling: ", $(newFundingAgency).val());
         console.log(i, "th Project Acronym after filling: ", $(newProjectGrantAcronymInput).val());
     
