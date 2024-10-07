@@ -73,6 +73,18 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             else {
                                 console.log($(newFundingAgency).val())
                                 console.log($(newProjectGrantAcronymInput).val())
+
+                                // $(grantNumberParentSelector).each(function() {
+                                //     var parentElement = $(this).parent();  // Use $(this) to refer to the current element
+                                //     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+                                //     var lastFundingElement = fieldValuesElement.find('.edit-compound-field').last();
+                                //     lastFundingElement.next('.field-add-delete').children().eq(0).click();
+
+                                //     setTimeout(function() {
+                                //         updateFundingOrgs(0, item);
+                                //     }, 500);
+                                // });
+
                                 updateFundingOrgs(0, item);
                             }
                         } else if (item.funding_orgs) {
