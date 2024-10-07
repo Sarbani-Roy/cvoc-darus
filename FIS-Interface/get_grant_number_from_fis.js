@@ -71,19 +71,22 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 updateFundingOrgs(0, item);
                             }
                             else {
-                                console.log($(fundingAgency).val())
-                                console.log($(projectGrantAcronymInput).val())
+                                $(grantNumberParentSelector).each(function() {
+                                    var parentElement = $(this).parent();  // Use $(this) to refer to the current element
+                                    var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+                                    var lastFundingElement = fieldValuesElement.find('.edit-compound-field').last();
+                                    
+                                    var fundingAgency = lastFundingElement.children().eq(0).find('input');
+                                    var projectGrantAcronymInput = lastFundingElement.children().eq(1).find('input');
+                                    console.log($(fundingAgency).val())
+                                    console.log($(projectGrantAcronymInput).val())
 
-                                // $(grantNumberParentSelector).each(function() {
-                                //     var parentElement = $(this).parent();  // Use $(this) to refer to the current element
-                                //     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                                //     var lastFundingElement = fieldValuesElement.find('.edit-compound-field').last();
-                                //     lastFundingElement.next('.field-add-delete').children().eq(0).click();
+                                    // lastFundingElement.next('.field-add-delete').children().eq(0).click();
 
-                                //     setTimeout(function() {
-                                //         updateFundingOrgs(0, item);
-                                //     }, 500);
-                                // });
+                                    // setTimeout(function() {
+                                    //     updateFundingOrgs(0, item);
+                                    // }, 500);
+                                });
 
                                 updateFundingOrgs(0, item);
                             }
