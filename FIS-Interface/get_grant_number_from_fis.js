@@ -63,16 +63,16 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
          
                     var fundingDetails = getFundingDetails(grantNumberParentSelector);
                     if (fundingDetails.length > 0) {
-                        // var fundingAgency = fundingDetails[0].fundingAgency;
-                        // var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
+                        var fundingAgency = fundingDetails[0].fundingAgency;
+                        var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
                         
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
-                            if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
+                            if ($(fundingAgency).val() === "" && $(projectGrantAcronymInput).val() === "") {
                                 updateFundingOrgs(0, item);
                             }
                             else {
-                                console.log($(newFundingAgency).val())
-                                console.log($(newProjectGrantAcronymInput).val())
+                                console.log($(fundingAgency).val())
+                                console.log($(projectGrantAcronymInput).val())
 
                                 // $(grantNumberParentSelector).each(function() {
                                 //     var parentElement = $(this).parent();  // Use $(this) to refer to the current element
