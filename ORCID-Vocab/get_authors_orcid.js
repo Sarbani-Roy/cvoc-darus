@@ -229,7 +229,10 @@ function markMatch(text, term) {
     return $result;
 }
 
-function capitalizeFirstLetter(str) {
-    if (!str) return '';
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+// Check if the string is all lowercase or all uppercase then capitalize the first letter and make the rest lowercase otherwise return as it is
+function capitalizeFirstLetter(name) {
+    if (name === name.toLowerCase() || name === name.toUpperCase()) {    
+        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    }
+    return name;
 }
