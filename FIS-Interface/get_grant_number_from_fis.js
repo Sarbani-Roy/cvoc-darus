@@ -88,7 +88,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     }, 500);
                                 });
 
-                                updateFundingOrgs(0, item);
+                                // updateFundingOrgs(0, item);
                             }
                         } else if (item.funding_orgs) {
                             emptyFundingElementFound = false;
