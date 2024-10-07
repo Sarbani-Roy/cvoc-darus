@@ -170,13 +170,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
-                    // Use an ajax call to FIS to retrieve matching results
+                    // Use an ajax call to ORCID to retrieve matching results
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
                             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                     
                         }
+                        // Search both title and acronym
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
                         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
 
@@ -185,7 +186,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
                     },
                     data: function(params) {
-                        term = `title=${params.term}`;
+                        term = params.term
+                        // term = `title=${params.term}`;
                         if (!term) {
                             term = "";
                         }
