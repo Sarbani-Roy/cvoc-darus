@@ -68,22 +68,74 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
                             if ($(fundingAgency).val() === "" && $(projectGrantAcronymInput).val() === "") {
+                                // updateFundingOrgs(0, item);
+                                // Recursive function to handle async DOM update after each click
+                                function updateFundingOrgs(i, item) {
+                                    if (i >= item.funding_orgs.length) return;  // Exit condition
+
+                                    // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
+                                    $(grantNumberParentSelector).each(function() {
+                                        var newParentElement = $(this).parent();  // Use $(this) to refer to the current element
+                                        var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                                        var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
+                                        var newFundingAgency = newFundingElement.children().eq(0).find('input');
+                                        var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
+
+                                        $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                                        $(newProjectGrantAcronymInput).val(item.acronym);
+                                    
+                                        if (item.processed && i < item.funding_orgs.length - 1) {
+                                            newFundingElement.next('.field-add-delete').children().eq(0).click();
+                                    
+                                            setTimeout(function() {
+                                                updateFundingOrgs(i + 1, item);
+                                            }, 500);
+                                        }    
+                                        item.processed = true;  // Mark item as processed after first execution
+                                    });    
+                                }
                                 updateFundingOrgs(0, item);
                             }
                             else {
                                 $(grantNumberParentSelector).each(function() {
-                                    var parentElement = $(this).parent(); 
-                                    var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                                    var lastFundingElement = fieldValuesElement.find('.edit-compound-field').last();
+                                    // var parentElement = $(this).parent(); 
+                                    // var fieldValuesElement = parentElement.siblings('.dataset-field-values');
+                                    // var lastFundingElement = fieldValuesElement.find('.edit-compound-field').last();
                                     
                                     // var fundingAgency = lastFundingElement.children().eq(0).find('input');
                                     // var projectGrantAcronymInput = lastFundingElement.children().eq(1).find('input');
                                     // console.log($(fundingAgency).val())
                                     // console.log($(projectGrantAcronymInput).val())
 
-                                    lastFundingElement.next('.field-add-delete').children().eq(0).click();
+                                    // lastFundingElement.next('.field-add-delete').children().eq(0).click();
 
                                     setTimeout(function() {
+                                        // updateFundingOrgs(0, item);
+                                        // Recursive function to handle async DOM update after each click
+                                        function updateFundingOrgs(i, item) {
+                                            if (i >= item.funding_orgs.length) return;  // Exit condition
+
+                                            // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
+                                            $(grantNumberParentSelector).each(function() {
+                                                var newParentElement = $(this).parent();  // Use $(this) to refer to the current element
+                                                var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                                                var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
+                                                var newFundingAgency = newFundingElement.children().eq(0).find('input');
+                                                var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
+
+                                                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                                                $(newProjectGrantAcronymInput).val(item.acronym);
+                                            
+                                                if (item.processed && i < item.funding_orgs.length - 1) {
+                                                    newFundingElement.next('.field-add-delete').children().eq(0).click();
+                                            
+                                                    setTimeout(function() {
+                                                        updateFundingOrgs(i + 1, item);
+                                                    }, 500);
+                                                }    
+                                                item.processed = true;  // Mark item as processed after first execution
+                                            });    
+                                        }
                                         updateFundingOrgs(0, item);
                                     }, 500);
                                 });
