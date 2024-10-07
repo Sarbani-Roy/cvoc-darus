@@ -67,7 +67,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         // var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
                         
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
-                            updateFundingOrgs(0, item);
+                            if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
+                                updateFundingOrgs(0, item);
+                            }
+                            else {
+                                console.log($(newFundingAgency).val())
+                                console.log($(newProjectGrantAcronymInput).val())
+                                updateFundingOrgs(0, item);
+                            }
                         } else if (item.funding_orgs) {
                             emptyFundingElementFound = false;
                             var newFundingDetails = getFundingDetails(grantNumberParentSelector);
