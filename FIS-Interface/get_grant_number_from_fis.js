@@ -63,33 +63,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
          
                     var fundingDetails = getFundingDetails(grantNumberParentSelector);
                     if (fundingDetails.length > 0) {
-                        var fundingAgency = fundingDetails[0].fundingAgency;
-                        var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
+                        // var fundingAgency = fundingDetails[0].fundingAgency;
+                        // var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
                         
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
-                            if ($(fundingAgency).val() === "" && $(projectGrantAcronymInput).val() === "") {
-                                updateFundingOrgs(0, item);
-                            }
-                            else {
-                                // $(grantNumberParentSelector).each(function() {
-                                //     var parentElement = $(this).parent(); 
-                                //     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                                //     var lastFundingElement = fieldValuesElement.find('.edit-compound-field').last();
-                                    
-                                //     var fundingAgency = lastFundingElement.children().eq(0).find('input');
-                                //     var projectGrantAcronymInput = lastFundingElement.children().eq(1).find('input');
-                                //     console.log($(fundingAgency).val())
-                                //     console.log($(projectGrantAcronymInput).val())
-
-                                //     lastFundingElement.next('.field-add-delete').children().eq(0).click();
-
-                                //     setTimeout(function() {
-                                //         updateFundingOrgs(0, item);
-                                //     }, 500);
-                                // });
-
-                                updateFundingOrgs(0, item);
-                            }
+                            updateFundingOrgs(0, item);
                         } else if (item.funding_orgs) {
                             emptyFundingElementFound = false;
                             var newFundingDetails = getFundingDetails(grantNumberParentSelector);
@@ -170,19 +148,20 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
-                    // Use an ajax call to ORCID to retrieve matching results
+                    // Use an ajax call to FIS to retrieve matching results
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
                             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                     
                         }
+                        // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
+                        
                         // Search both title and acronym
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
                         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-
+                    
                         // we prioritize titles first, then fallback on acronyms
-
                         return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
                     },
                     data: function(params) {
@@ -318,10 +297,6 @@ function updateFundingOrgs(i, item) {
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
-
-        // if () {
-
-        // }
 
         $(newFundingAgency).val(item.funding_orgs[i].cfacro);
         $(newProjectGrantAcronymInput).val(item.acronym);
