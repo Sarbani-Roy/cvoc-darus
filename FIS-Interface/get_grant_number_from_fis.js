@@ -255,6 +255,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             headers: {
                                 'Accept': 'application/json'
                             }
+                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                            console.error("Error fetching title:", textStatus, errorThrown);
                         });
                 
                         var acronymRequest = $.ajax({
@@ -262,12 +264,19 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             headers: {
                                 'Accept': 'application/json'
                             }
+                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                            console.error("Error fetching acronym:", textStatus, errorThrown);
                         });
                 
                         // Execute both requests and combine the results
                         Promise.all([titleRequest, acronymRequest])
-                            .then(success)
-                            .catch(failure);
+                            .then(function(responses) {
+                                success(responses); // Pass the array of responses to success
+                            })
+                            .catch(function(e) {
+                                console.error("Error in Promise.all:", e);
+                                failure(e); // Handle failure case properly
+                            });
                     }
                 }
                 
