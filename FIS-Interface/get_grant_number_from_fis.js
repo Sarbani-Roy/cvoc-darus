@@ -188,9 +188,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var titleRequest = $.ajax({ url: urls[0], headers: params.headers });
                         var acronymRequest = $.ajax({ url: urls[1], headers: params.headers });
 
-                        console.log(titleRequest);
-                        console.log(acronymRequest);
-
                         // Wait for both AJAX requests to finish
                         $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
                             // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
