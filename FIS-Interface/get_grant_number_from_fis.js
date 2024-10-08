@@ -147,127 +147,130 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 placeholder: projectInput.hasAttribute("data-cvoc-placeholder") ? $(projectInput).attr('data-cvoc-placeholder') : "Select a project",
                 minimumInputLength: 3,
                 allowClear: true,
+                // ajax: {
+                //     // Use an ajax call to FIS to retrieve matching results
+                //     url: function(params) {
+                //         var term = params.term;
+                //         if (!term) {
+                //             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
+                    
+                //         }
+                //         // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
+                        
+                //         // Search both title and acronym
+                //         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
+                //         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
+                    
+                //         // we prioritize titles first, then fallback on acronyms
+                //         return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
+                //     },
+                //     data: function(params) {
+                //         term = params.term
+                //         // term = `title=${params.term}`;
+                //         if (!term) {
+                //             term = "";
+                //         }
+                //         var query = {
+                //             q: term,
+                //             rows: 10
+                //         };
+                //         return term;
+                //     },
+                //     headers: {
+                //         'Accept': 'application/json'
+                //     },
+                //     processResults: function(data, page) {
+                //         return {
+                //             results: data['data_elements']
+                //             .map(function(element) {
+                //                 // Access the project information within each data element
+                //                 let projectInfo = element.project;
+                //                 // Returning the desired structure
+                //                 return {
+                //                     text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
+                //                     acronym: projectInfo.acronym,
+                //                     agency: projectInfo.foerderkennzeichen,
+                //                     id: projectInfo.id,
+                //                     funding_orgs: element.funding_org
+                //                 };
+                //             })
+                //         }
+                //     }
+                // }
+
                 ajax: {
                     // Use an ajax call to FIS to retrieve matching results
-                    // url: function(params) {
-                    //     var term = params.term;
-                    //     if (!term) {
-                    //         term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
-                    
-                    //     }
-                    //     // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
-                        
-                    //     // Search both title and acronym
-                    //     var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
-                    //     var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-                    
-                    //     // // we prioritize titles first, then fallback on acronyms
-                    //     // return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
-
-                    //     // Make parallel requests to both URLs using Promise.all
-                    //     return Promise.all([
-                    //         $.ajax({ url: urlTitle, headers: { 'Accept': 'application/json' } }),
-                    //         $.ajax({ url: urlAcronym, headers: { 'Accept': 'application/json' } })
-                    //     ]);
-                    // },
-                    data: function(params) {
+                    url: function(params) {
                         var term = params.term;
                         if (!term) {
                             term = "";
+                            return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                         }
-                        return term;
+                        
+                        // Define both URLs
+                        var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
+                        var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
+                
+                        // Return both URLs
+                        return { urlTitle, urlAcronym };
+                    },
+                    data: function(params) {
+                        var term = params.term || "";
+                        return {
+                            term: term,
+                            rows: 10
+                        };
                     },
                     headers: {
                         'Accept': 'application/json'
                     },
-                    transport: function(params, success, failure) {
-                        var term = params.data;  // Use params.data to get the term
+                    processResults: function(data, page) {
+                        const combinedResults = [];
                 
-                        // Construct URLs for both title and acronym search
-                        var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
-                        var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-                
-                        // Use Promise.allSettled to handle both requests
-                        Promise.allSettled([
-                            $.ajax({ url: urlTitle, headers: { 'Accept': 'application/json' } }),
-                            $.ajax({ url: urlAcronym, headers: { 'Accept': 'application/json' } })
-                        ]).then(function(results) {
-                            // Collect successful responses only
-                            var successfulResponses = results
-                                .filter(result => result.status === 'fulfilled')  // Keep only successful requests
-                                .map(result => result.value);  // Extract the response values
-                
-                            if (successfulResponses.length > 0) {
-                                // If at least one request succeeded, proceed with success
-                                success({
-                                    results: successfulResponses
-                                });
-                            } else {
-                                // If all requests failed, call the failure callback
-                                failure(new Error('Both title and acronym searches failed.'));
-                            }
-                        }).catch(function(error) {
-                            // Enhanced error handling for unexpected issues
-                            let errorMessage = 'An unknown error occurred.';
-                    
-                            // Check if the error is an object and has a status property
-                            if (typeof error === 'object' && error !== null) {
-                                if (error.status) {
-                                    errorMessage = `Error: ${error.status} - ${error.statusText}`;
-                                } else if (error.responseJSON && error.responseJSON.message) {
-                                    errorMessage = `Error: ${error.responseJSON.message}`;
-                                }
-                            } else if (typeof error === 'string') {
-                                errorMessage = error;
-                            }
-                    
-                            // Call the failure callback with the constructed error message
-                            failure(new Error(errorMessage));
-                        });
-                    },
-                    processResults: function(responses) {
-                        // We will be getting the successful responses array here
-                        var combinedData = [];
-                        
-                        // Combine data from all successful responses
-                        responses.forEach(function(response) {
-                            if (response && response.data_elements) {
-                                combinedData = combinedData.concat(response.data_elements);
-                            }
-                        });
-                
-                        // Map the combined data to the desired format
-                        return {
-                            results: combinedData.map(function(element) {
+                        // Add results from the first URL
+                        data.forEach(result => {
+                            result.forEach(element => {
                                 let projectInfo = element.project;
-                                return {
-                                    text: projectInfo.title_de, // You can include acronym here if desired
+                                combinedResults.push({
+                                    text: projectInfo.title_de,
                                     acronym: projectInfo.acronym,
                                     agency: projectInfo.foerderkennzeichen,
                                     id: projectInfo.id,
                                     funding_orgs: element.funding_org
-                                };
-                            })
+                                });
+                            });
+                        });
+                
+                        return {
+                            results: combinedResults
                         };
+                    },
+                    // Make parallel AJAX calls to both endpoints
+                    transport: function(params, success, failure) {
+                        var term = params.data.term;
+                
+                        // Create the two AJAX promises
+                        var titleRequest = $.ajax({
+                            url: 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term),
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+                
+                        var acronymRequest = $.ajax({
+                            url: 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term),
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+                
+                        // Execute both requests and combine the results
+                        Promise.all([titleRequest, acronymRequest])
+                            .then(success)
+                            .catch(failure);
                     }
-                    // processResults: function(data, page) {
-                    //     return {
-                    //         results: data['data_elements']
-                    //             .map(function(element) {
-                    //                 // Access the project information within each data element
-                    //                 let projectInfo = element.project;
-                    //                 // Returning the desired structure
-                    //                 return {
-                    //                     text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
-                    //                     acronym: projectInfo.acronym,
-                    //                     agency: projectInfo.foerderkennzeichen,
-                    //                     id: projectInfo.id,
-                    //                     funding_orgs: element.funding_org
-                    //                 };
-                    //             })
-                    //         }
-                    //     }
                 }
+                
             });
 
             // format it the same way as if it were a new selection
