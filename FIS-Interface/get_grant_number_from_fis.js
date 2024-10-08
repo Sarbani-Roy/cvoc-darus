@@ -191,25 +191,27 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         console.log(titleRequest);
                         console.log(acronymRequest);
 
-                        // // Wait for both AJAX requests to finish
-                        // $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
-                        //     // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
-                        //     var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
-                        //     // Pass combined data to the success callback
-                        //     success({
-                        //         results: combinedData.map(function(element) {
-                        //             let projectInfo = element.project;
-                        //             return {
-                        //                 text: projectInfo.title_de, 
-                        //                 acronym: projectInfo.acronym,
-                        //                 agency: projectInfo.foerderkennzeichen,
-                        //                 id: projectInfo.id,
-                        //                 funding_orgs: element.funding_org
-                        //             };
-                        //         })
-                        //     });
-                        // }).fail(function() {
-                        //     failure(); // In case one or both requests fail
+                        // Wait for both AJAX requests to finish
+                        $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
+                            // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
+                            var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
+                            // Pass combined data to the success callback
+                            success({
+                                results: combinedData.map(function(element) {
+                                    let projectInfo = element.project;
+                                    return {
+                                        text: projectInfo.title_de, 
+                                        acronym: projectInfo.acronym,
+                                        agency: projectInfo.foerderkennzeichen,
+                                        id: projectInfo.id,
+                                        funding_orgs: element.funding_org
+                                    };
+                                })
+                            });
+                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                            console.error("AJAX request failed:", textStatus, errorThrown);
+                            failure(); // Call the failure callback
+                        });// In case one or both requests fail
                         // });
                     },
             
