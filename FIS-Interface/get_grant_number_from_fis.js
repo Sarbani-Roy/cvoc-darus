@@ -207,8 +207,22 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 failure(new Error('Both title and acronym searches failed.'));
                             }
                         }).catch(function(error) {
-                            // General error handling in case of unexpected issues
-                            failure(new Error('An unexpected error occurred.'));
+                            // Enhanced error handling for unexpected issues
+                            let errorMessage = 'An unknown error occurred.';
+                    
+                            // Check if the error is an object and has a status property
+                            if (typeof error === 'object' && error !== null) {
+                                if (error.status) {
+                                    errorMessage = `Error: ${error.status} - ${error.statusText}`;
+                                } else if (error.responseJSON && error.responseJSON.message) {
+                                    errorMessage = `Error: ${error.responseJSON.message}`;
+                                }
+                            } else if (typeof error === 'string') {
+                                errorMessage = error;
+                            }
+                    
+                            // Call the failure callback with the constructed error message
+                            failure(new Error(errorMessage));
                         });
                     },
                     processResults: function(responses) {
