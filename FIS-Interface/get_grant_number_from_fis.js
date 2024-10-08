@@ -147,71 +147,35 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 placeholder: projectInput.hasAttribute("data-cvoc-placeholder") ? $(projectInput).attr('data-cvoc-placeholder') : "Select a project",
                 minimumInputLength: 3,
                 allowClear: true,
-                // ajax: {
-                //     // Use an ajax call to FIS to retrieve matching results
-                //     url: function(params) {
-                //         var term = params.term;
-                //         if (!term) {
-                //             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
-                    
-                //         }
-                //         // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
-                        
-                //         // Search both title and acronym
-                //         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
-                //         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-                    
-                //         // we prioritize titles first, then fallback on acronyms
-                //         return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
-                //     },
-                //     data: function(params) {
-                //         term = params.term
-                //         // term = `title=${params.term}`;
-                //         if (!term) {
-                //             term = "";
-                //         }
-                //         return term;
-                //     },
-                //     headers: {
-                //         'Accept': 'application/json'
-                //     },
-                //     processResults: function(data, page) {
-                //         return {
-                //             results: data['data_elements']
-                //             .map(function(element) {
-                //                 // Access the project information within each data element
-                //                 let projectInfo = element.project;
-                //                 // Returning the desired structure
-                //                 return {
-                //                     text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
-                //                     acronym: projectInfo.acronym,
-                //                     agency: projectInfo.foerderkennzeichen,
-                //                     id: projectInfo.id,
-                //                     funding_orgs: element.funding_org
-                //                 };
-                //             })
-                //         }
-                //     }
-                // }
-
                 ajax: {
+                    // Use an ajax call to FIS to retrieve matching results
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
                             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                     
                         }
-                
-                        // Both URLs for title and acronym searches
+                        // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
+                        
+                        // Search both title and acronym
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
                         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-                
-                        // Return URLs array to indicate multiple calls
+                    
+                        // we prioritize titles first, then fallback on acronyms
+                        // return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
                         return [urlTitle, urlAcronym];
                     },
                     data: function(params) {
-                        var term = params.term;
-                        return term ? term : "";
+                        term = params.term
+                        // term = `title=${params.term}`;
+                        if (!term) {
+                            term = "";
+                        }
+                        var query = {
+                            q: term,
+                            rows: 10
+                        };
+                        return term;
                     },
                     headers: {
                         'Accept': 'application/json'
@@ -223,36 +187,50 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         // Make two parallel AJAX requests for title and acronym search
                         var titleRequest = $.ajax({ url: urls[0], headers: params.headers });
                         var acronymRequest = $.ajax({ url: urls[1], headers: params.headers });
-                
-                        // Wait for both AJAX requests to finish
-                        $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
-                            // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
-                            var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
-                            
-                            // Pass combined data to the success callback
-                            success({
-                                results: combinedData.map(function(element) {
-                                    let projectInfo = element.project;
-                                    return {
-                                        text: projectInfo.title_de, 
-                                        acronym: projectInfo.acronym,
-                                        agency: projectInfo.foerderkennzeichen,
-                                        id: projectInfo.id,
-                                        funding_orgs: element.funding_org
-                                    };
-                                })
-                            });
-                        }).fail(function() {
-                            failure(); // In case one or both requests fail
-                        });
+
+                        console.log(titleRequest);
+                        console.log(acronymRequest);
+
+                        // // Wait for both AJAX requests to finish
+                        // $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
+                        //     // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
+                        //     var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
+                        //     // Pass combined data to the success callback
+                        //     success({
+                        //         results: combinedData.map(function(element) {
+                        //             let projectInfo = element.project;
+                        //             return {
+                        //                 text: projectInfo.title_de, 
+                        //                 acronym: projectInfo.acronym,
+                        //                 agency: projectInfo.foerderkennzeichen,
+                        //                 id: projectInfo.id,
+                        //                 funding_orgs: element.funding_org
+                        //             };
+                        //         })
+                        //     });
+                        // }).fail(function() {
+                        //     failure(); // In case one or both requests fail
+                        // });
                     },
-                    processResults: function(data, page) {
-                        return {
-                            results: data // Data is already processed in the transport method
-                        };
+            
+                    // processResults: function(data, page) {
+                    //     return {
+                    //         results: data['data_elements']
+                    //             .map(function(element) {
+                    //                 // Access the project information within each data element
+                    //                 let projectInfo = element.project;
+                    //                 // Returning the desired structure
+                    //                 return {
+                    //                     text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
+                    //                     acronym: projectInfo.acronym,
+                    //                     agency: projectInfo.foerderkennzeichen,
+                    //                     id: projectInfo.id,
+                    //                     funding_orgs: element.funding_org
+                    //                 };
+                    //             })
+                    //         }
+                    //     }
                     }
-                }
-                
             });
 
             // format it the same way as if it were a new selection
