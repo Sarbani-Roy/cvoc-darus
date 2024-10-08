@@ -180,12 +180,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         //     q: term,
                         //     rows: 10
                         // };
-                        // return term;
-
-                        return {
-                            q: term,
-                            rows: 10
-                        };
+                        return term;
                     },
                     headers: {
                         'Accept': 'application/json'
