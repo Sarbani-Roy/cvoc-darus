@@ -201,7 +201,22 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 results: responses
                             });
                         }).catch(function(error) {
-                            failure(error);
+                            // Enhanced error handling
+                            let errorMessage = 'An unknown error occurred.';
+                            
+                            // Check if the error is an object and has a status property
+                            if (typeof error === 'object' && error !== null) {
+                                if (error.status) {
+                                    errorMessage = `Error: ${error.status} - ${error.statusText}`;
+                                } else if (error.responseJSON && error.responseJSON.message) {
+                                    errorMessage = `Error: ${error.responseJSON.message}`;
+                                }
+                            } else if (typeof error === 'string') {
+                                errorMessage = error;
+                            }
+                    
+                            // Call the failure callback with a better error message
+                            failure(new Error(errorMessage));
                         });
                     },
                     processResults: function(responses) {
