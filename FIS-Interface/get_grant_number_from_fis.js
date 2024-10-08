@@ -171,66 +171,63 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     //     ]);
                     // },
                     data: function(params) {
-                        term = params.term
-                        // term = `title=${params.term}`;
+                        var term = params.term;
                         if (!term) {
                             term = "";
                         }
-                        // var query = {
-                        //     q: term,
-                        //     rows: 10
-                        // };
                         return term;
                     },
                     headers: {
                         'Accept': 'application/json'
                     },
                     transport: function(params, success, failure) {
-                        var term = params.term;
-                    
+                        var term = params.data;  // Use params.data to get the term
+                
                         // Construct URLs for both title and acronym search
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
                         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-                    
-                        // Make parallel requests to both URLs using Promise.all
-                        Promise.all([
+                
+                        // Use Promise.allSettled to handle both requests
+                        Promise.allSettled([
                             $.ajax({ url: urlTitle, headers: { 'Accept': 'application/json' } }),
                             $.ajax({ url: urlAcronym, headers: { 'Accept': 'application/json' } })
-                        ]).then(function(responses) {
-                            success({
-                                results: responses
-                            });
-                        }).catch(function(error) {
-                            // Enhanced error handling
-                            let errorMessage = 'An unknown error occurred.';
-                            
-                            // Check if the error is an object and has a status property
-                            if (typeof error === 'object' && error !== null) {
-                                if (error.status) {
-                                    errorMessage = `Error: ${error.status} - ${error.statusText}`;
-                                } else if (error.responseJSON && error.responseJSON.message) {
-                                    errorMessage = `Error: ${error.responseJSON.message}`;
-                                }
-                            } else if (typeof error === 'string') {
-                                errorMessage = error;
+                        ]).then(function(results) {
+                            // Collect successful responses only
+                            var successfulResponses = results
+                                .filter(result => result.status === 'fulfilled')  // Keep only successful requests
+                                .map(result => result.value);  // Extract the response values
+                
+                            if (successfulResponses.length > 0) {
+                                // If at least one request succeeded, proceed with success
+                                success({
+                                    results: successfulResponses
+                                });
+                            } else {
+                                // If all requests failed, call the failure callback
+                                failure(new Error('Both title and acronym searches failed.'));
                             }
-                    
-                            // Call the failure callback with a better error message
-                            failure(new Error(errorMessage));
+                        }).catch(function(error) {
+                            // General error handling in case of unexpected issues
+                            failure(new Error('An unexpected error occurred.'));
                         });
                     },
                     processResults: function(responses) {
-                        var titleResponse = responses[0]; // response from title search
-                        var acronymResponse = responses[1]; // response from acronym search
+                        // We will be getting the successful responses array here
+                        var combinedData = [];
                         
-                        // Combine results from both title and acronym searches
-                        var combinedData = [].concat(titleResponse['data_elements'], acronymResponse['data_elements']);
-                        
+                        // Combine data from all successful responses
+                        responses.forEach(function(response) {
+                            if (response && response.data_elements) {
+                                combinedData = combinedData.concat(response.data_elements);
+                            }
+                        });
+                
+                        // Map the combined data to the desired format
                         return {
                             results: combinedData.map(function(element) {
                                 let projectInfo = element.project;
                                 return {
-                                    text: projectInfo.title_de, // + " (" + projectInfo.acronym + ")",
+                                    text: projectInfo.title_de, // You can include acronym here if desired
                                     acronym: projectInfo.acronym,
                                     agency: projectInfo.foerderkennzeichen,
                                     id: projectInfo.id,
