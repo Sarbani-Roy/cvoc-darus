@@ -170,10 +170,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 //         if (!term) {
                 //             term = "";
                 //         }
-                //         var query = {
-                //             q: term,
-                //             rows: 10
-                //         };
                 //         return term;
                 //     },
                 //     headers: {
@@ -199,96 +195,61 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 // }
 
                 ajax: {
-                    // Use an ajax call to FIS to retrieve matching results
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
-                            term = "";
-                            return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
+                            term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
+                    
                         }
-                        
-                        // Define both URLs
+                
+                        // Both URLs for title and acronym searches
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
                         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
                 
-                        // Return both URLs
-                        return { urlTitle, urlAcronym };
+                        // Return URLs array to indicate multiple calls
+                        return [urlTitle, urlAcronym];
                     },
                     data: function(params) {
-                        var term = params.term || "";
-                        return {
-                            term: term,
-                            rows: 10
-                        };
+                        var term = params.term;
+                        return term ? term : "";
                     },
                     headers: {
                         'Accept': 'application/json'
                     },
-                    processResults: function(responses, page) {
-                        const combinedResults = [];
+                    // Perform AJAX call for both title and acronym
+                    transport: function(params, success, failure) {
+                        var urls = params.url;
+                        
+                        // Make two parallel AJAX requests for title and acronym search
+                        var titleRequest = $.ajax({ url: urls[0], headers: params.headers });
+                        var acronymRequest = $.ajax({ url: urls[1], headers: params.headers });
                 
-                        // Log responses to inspect structure
-                        console.log('Response from title API:', responses[0]);
-                        console.log('Response from acronym API:', responses[1]);
-                
-                        // Extract data_elements from both responses
-                        responses.forEach(response => {
-                            if (response && response.data_elements && Array.isArray(response.data_elements)) {
-                                response.data_elements.forEach(element => {
+                        // Wait for both AJAX requests to finish
+                        $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
+                            // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
+                            var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
+                            
+                            // Pass combined data to the success callback
+                            success({
+                                results: combinedData.map(function(element) {
                                     let projectInfo = element.project;
-                                    combinedResults.push({
-                                        text: projectInfo.title_de,
+                                    return {
+                                        text: projectInfo.title_de, 
                                         acronym: projectInfo.acronym,
                                         agency: projectInfo.foerderkennzeichen,
                                         id: projectInfo.id,
                                         funding_orgs: element.funding_org
-                                    });
-                                });
-                            } else {
-                                console.error('Unexpected response format or missing data_elements:', response);
-                            }
-                        });
-                
-                        return {
-                            results: combinedResults
-                        };
-                    },
-                    // Make parallel AJAX calls to both endpoints
-                    transport: function(params, success, failure) {
-                        var term = params.data.term;
-                
-                        // Create the two AJAX promises
-                        var titleRequest = $.ajax({
-                            url: 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term),
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        }).fail(function(jqXHR, textStatus, errorThrown) {
-                            console.error("Error fetching title:", textStatus, errorThrown);
-                        });
-                
-                        var acronymRequest = $.ajax({
-                            url: 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term),
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        }).fail(function(jqXHR, textStatus, errorThrown) {
-                            console.error("Error fetching acronym:", textStatus, errorThrown);
-                        });
-                
-                        // Execute both requests and combine the results
-                        Promise.all([titleRequest, acronymRequest])
-                            .then(function(responses) {
-                                // Log responses to inspect what is returned
-                                console.log("Responses from both APIs:", responses);
-                
-                                // Pass the responses to the processResults
-                                success(responses); // Pass the array of responses to success
-                            })
-                            .catch(function(e) {
-                                console.error("Error in Promise.all:", e);
-                                failure(e); // Handle failure case properly
+                                    };
+                                })
                             });
+                        }).fail(function() {
+                            failure(); // In case one or both requests fail
+                        });
+                    },
+                    processResults: function(data, page) {
+                        return {
+                            results: data // Data is already processed in the transport method
+                        };
                     }
                 }
                 
