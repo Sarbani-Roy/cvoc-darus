@@ -231,11 +231,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         console.log('Response from title API:', responses[0]);
                         console.log('Response from acronym API:', responses[1]);
                 
-                        // Ensure both responses are arrays or handle non-array responses
+                        // Extract data_elements from both responses
                         responses.forEach(response => {
-                            if (Array.isArray(response)) {
-                                // If response is an array, process it
-                                response.forEach(element => {
+                            if (response && response.data_elements && Array.isArray(response.data_elements)) {
+                                response.data_elements.forEach(element => {
                                     let projectInfo = element.project;
                                     combinedResults.push({
                                         text: projectInfo.title_de,
@@ -246,7 +245,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     });
                                 });
                             } else {
-                                console.error('Unexpected response format:', response);
+                                console.error('Unexpected response format or missing data_elements:', response);
                             }
                         });
                 
