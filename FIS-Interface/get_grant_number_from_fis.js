@@ -224,21 +224,30 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     headers: {
                         'Accept': 'application/json'
                     },
-                    processResults: function(data, page) {
+                    processResults: function(responses, page) {
                         const combinedResults = [];
                 
-                        // Add results from the first URL
-                        data.forEach(result => {
-                            result.forEach(element => {
-                                let projectInfo = element.project;
-                                combinedResults.push({
-                                    text: projectInfo.title_de,
-                                    acronym: projectInfo.acronym,
-                                    agency: projectInfo.foerderkennzeichen,
-                                    id: projectInfo.id,
-                                    funding_orgs: element.funding_org
+                        // Log responses to inspect structure
+                        console.log('Response from title API:', responses[0]);
+                        console.log('Response from acronym API:', responses[1]);
+                
+                        // Ensure both responses are arrays or handle non-array responses
+                        responses.forEach(response => {
+                            if (Array.isArray(response)) {
+                                // If response is an array, process it
+                                response.forEach(element => {
+                                    let projectInfo = element.project;
+                                    combinedResults.push({
+                                        text: projectInfo.title_de,
+                                        acronym: projectInfo.acronym,
+                                        agency: projectInfo.foerderkennzeichen,
+                                        id: projectInfo.id,
+                                        funding_orgs: element.funding_org
+                                    });
                                 });
-                            });
+                            } else {
+                                console.error('Unexpected response format:', response);
+                            }
                         });
                 
                         return {
@@ -271,6 +280,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         // Execute both requests and combine the results
                         Promise.all([titleRequest, acronymRequest])
                             .then(function(responses) {
+                                // Log responses to inspect what is returned
+                                console.log("Responses from both APIs:", responses);
+                
+                                // Pass the responses to the processResults
                                 success(responses); // Pass the array of responses to success
                             })
                             .catch(function(e) {
