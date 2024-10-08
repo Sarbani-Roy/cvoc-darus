@@ -140,7 +140,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 language: {
                     searching: function(params) {
-                        // Copied this block from dataverse example
                         return 'Search by project name';
                     }
                 },
@@ -160,9 +159,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         // Search both title and acronym
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
                         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-                    
-                        // we prioritize titles first, then fallback on acronyms
-                        // return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
                         return [urlTitle, urlAcronym];
                     },
                     data: function(params) {
@@ -207,29 +203,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             });
                         }).fail(function(jqXHR, textStatus, errorThrown) {
                             console.error("AJAX request failed:", textStatus, errorThrown);
-                            failure(); // Call the failure callback
-                        });// In case one or both requests fail
-                        // });
+                            failure(); // In case one or both requests fail, call the failure callback
+                        }); 
                     },
-            
-                    // processResults: function(data, page) {
-                    //     return {
-                    //         results: data['data_elements']
-                    //             .map(function(element) {
-                    //                 // Access the project information within each data element
-                    //                 let projectInfo = element.project;
-                    //                 // Returning the desired structure
-                    //                 return {
-                    //                     text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
-                    //                     acronym: projectInfo.acronym,
-                    //                     agency: projectInfo.foerderkennzeichen,
-                    //                     id: projectInfo.id,
-                    //                     funding_orgs: element.funding_org
-                    //                 };
-                    //             })
-                    //         }
-                    //     }
-                    }
+                }
             });
 
             // format it the same way as if it were a new selection
