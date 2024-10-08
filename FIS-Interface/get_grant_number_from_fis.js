@@ -161,8 +161,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
                         var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
                     
-                        // we prioritize titles first, then fallback on acronyms
-                        return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
+                        // // we prioritize titles first, then fallback on acronyms
+                        // return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
+
+                        // Make parallel requests to both URLs using Promise.all
+                        return Promise.all([
+                            $.ajax({ url: urlTitle, headers: { 'Accept': 'application/json' } }),
+                            $.ajax({ url: urlAcronym, headers: { 'Accept': 'application/json' } })
+                        ]);
                     },
                     data: function(params) {
                         term = params.term
@@ -170,33 +176,58 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (!term) {
                             term = "";
                         }
-                        var query = {
+                        // var query = {
+                        //     q: term,
+                        //     rows: 10
+                        // };
+                        // return term;
+
+                        return {
                             q: term,
                             rows: 10
                         };
-                        return term;
                     },
                     headers: {
                         'Accept': 'application/json'
                     },
-                    processResults: function(data, page) {
+                    processResults: function(responses, page) {
+                        var titleResponse = responses[0]; // response from title search
+                        var acronymResponse = responses[1]; // response from acronym search
+                        
+                        // Combine results from both title and acronym searches
+                        var combinedData = [].concat(titleResponse['data_elements'], acronymResponse['data_elements']);
+                        
                         return {
-                            results: data['data_elements']
-                                .map(function(element) {
-                                    // Access the project information within each data element
-                                    let projectInfo = element.project;
-                                    // Returning the desired structure
-                                    return {
-                                        text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
-                                        acronym: projectInfo.acronym,
-                                        agency: projectInfo.foerderkennzeichen,
-                                        id: projectInfo.id,
-                                        funding_orgs: element.funding_org
-                                    };
-                                })
-                            }
-                        }
+                            results: combinedData.map(function(element) {
+                                let projectInfo = element.project;
+                                return {
+                                    text: projectInfo.title_de, // + " (" + projectInfo.acronym + ")",
+                                    acronym: projectInfo.acronym,
+                                    agency: projectInfo.foerderkennzeichen,
+                                    id: projectInfo.id,
+                                    funding_orgs: element.funding_org
+                                };
+                            })
+                        };
                     }
+                    // processResults: function(data, page) {
+                    //     return {
+                    //         results: data['data_elements']
+                    //             .map(function(element) {
+                    //                 // Access the project information within each data element
+                    //                 let projectInfo = element.project;
+                    //                 // Returning the desired structure
+                    //                 return {
+                    //                     text: projectInfo.title_de, //+ " (" + projectInfo.acronym + ")",
+                    //                     acronym: projectInfo.acronym,
+                    //                     agency: projectInfo.foerderkennzeichen,
+                    //                     id: projectInfo.id,
+                    //                     funding_orgs: element.funding_org
+                    //                 };
+                    //             })
+                    //         }
+                    //     }
+                }
             });
 
             // format it the same way as if it were a new selection
