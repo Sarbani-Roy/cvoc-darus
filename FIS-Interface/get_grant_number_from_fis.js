@@ -149,27 +149,27 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 allowClear: true,
                 ajax: {
                     // Use an ajax call to FIS to retrieve matching results
-                    url: function(params) {
-                        var term = params.term;
-                        if (!term) {
-                            term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
+                    // url: function(params) {
+                    //     var term = params.term;
+                    //     if (!term) {
+                    //         term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                     
-                        }
-                        // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
+                    //     }
+                    //     // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
                         
-                        // Search both title and acronym
-                        var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
-                        var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
+                    //     // Search both title and acronym
+                    //     var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
+                    //     var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
                     
-                        // // we prioritize titles first, then fallback on acronyms
-                        // return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
+                    //     // // we prioritize titles first, then fallback on acronyms
+                    //     // return term.match(/^[a-zA-Z]/) ? urlTitle : urlAcronym;
 
-                        // Make parallel requests to both URLs using Promise.all
-                        return Promise.all([
-                            $.ajax({ url: urlTitle, headers: { 'Accept': 'application/json' } }),
-                            $.ajax({ url: urlAcronym, headers: { 'Accept': 'application/json' } })
-                        ]);
-                    },
+                    //     // Make parallel requests to both URLs using Promise.all
+                    //     return Promise.all([
+                    //         $.ajax({ url: urlTitle, headers: { 'Accept': 'application/json' } }),
+                    //         $.ajax({ url: urlAcronym, headers: { 'Accept': 'application/json' } })
+                    //     ]);
+                    // },
                     data: function(params) {
                         term = params.term
                         // term = `title=${params.term}`;
@@ -185,7 +185,26 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     headers: {
                         'Accept': 'application/json'
                     },
-                    processResults: function(responses, page) {
+                    transport: function(params, success, failure) {
+                        var term = params.term;
+                    
+                        // Construct URLs for both title and acronym search
+                        var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
+                        var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
+                    
+                        // Make parallel requests to both URLs using Promise.all
+                        Promise.all([
+                            $.ajax({ url: urlTitle, headers: { 'Accept': 'application/json' } }),
+                            $.ajax({ url: urlAcronym, headers: { 'Accept': 'application/json' } })
+                        ]).then(function(responses) {
+                            success({
+                                results: responses
+                            });
+                        }).catch(function(error) {
+                            failure(error);
+                        });
+                    },
+                    processResults: function(responses) {
                         var titleResponse = responses[0]; // response from title search
                         var acronymResponse = responses[1]; // response from acronym search
                         
