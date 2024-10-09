@@ -348,13 +348,15 @@ function updateFundingOrgs(i, item) {
             }, 750);
         }
 
-        if (item.processed && i < item.funding_orgs.length - 1) {
-            newFundingElement.next('.field-add-delete').children().eq(0).click();
+        setTimeout(function() {
+            if (item.processed && i < item.funding_orgs.length - 1) {
+                newFundingElement.next('.field-add-delete').children().eq(0).click();
 
-            setTimeout(function() {
-                updateFundingOrgs(i + 1, item);
-            }, 1000);
-        }        
+                setTimeout(function() {
+                    updateFundingOrgs(i + 1, item);
+                }, 1000);
+            } 
+        }, 1250);       
     });
     item.processed = true;
 }
