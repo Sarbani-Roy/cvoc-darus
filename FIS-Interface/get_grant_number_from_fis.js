@@ -332,7 +332,7 @@ function updateFundingOrgs(i, item) {
                         $(updatedProjectGrantAcronymInput).val(item.acronym);
                     
                     });        
-                }, 1000);
+                }, 400);
             } else {
                 // If both fields are empty, fill them in first
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
