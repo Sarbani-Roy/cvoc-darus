@@ -318,8 +318,15 @@ function updateFundingOrgs(i, item) {
                     newFundingElement.next('.field-add-delete').children().eq(0).click();
     
                     setTimeout(function() {
-                        $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-                        $(newProjectGrantAcronymInput).val(item.acronym);
+                        var updatedFundingDetails = getFundingDetails(grantNumberParentSelector);
+
+                        if (updatedFundingDetails.length > 0) {
+                            var updatedFundingAgency = updatedFundingDetails[0].fundingAgency;
+                            var updatedProjectGrantAcronymInput = updatedFundingDetails[0].projectGrantAcronym;
+
+                            $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
+                            $(updatedProjectGrantAcronymInput).val(item.acronym);
+                        }
                     }, 500);
                 } else {
                     // If both fields are empty, fill them in first
