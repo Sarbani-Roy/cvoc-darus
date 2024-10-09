@@ -323,6 +323,8 @@ function updateFundingOrgs(i, item) {
                             var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
                             var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
 
+                            console.log(updatedParentElement);
+                            console.log(updatedFieldValuesElement);
                             console.log(updatedFundingElement);
                             console.log("Funding Agency", updatedFundingAgency);
                             console.log("Project Acronym", updatedProjectGrantAcronymInput);
@@ -334,7 +336,7 @@ function updateFundingOrgs(i, item) {
                             $(updatedProjectGrantAcronymInput).val(item.acronym);
                         
                         });        
-                    }, 500);
+                    }, 5000);
                 } else {
                     // If both fields are empty, fill them in first
                     $(newFundingAgency).val(item.funding_orgs[i].cfacro);
