@@ -152,7 +152,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var term = params.term;
                         if (!term) {
                             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
-                    
                         }
                         // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
                         
@@ -302,14 +301,23 @@ function updateFundingOrgs(i, item) {
 
     // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
     $(grantNumberParentSelector).each(function() {
-        var newParentElement = $(this).parent();  // Use $(this) to refer to the current element
+        var newParentElement = $(this).parent();
         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
-        $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-        $(newProjectGrantAcronymInput).val(item.acronym);
+        if (i===0 && ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "")){
+            newFundingElement.next('.field-add-delete').children().eq(0).click();
+
+            setTimeout(function() {
+                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                $(newProjectGrantAcronymInput).val(item.acronym);
+            }, 500);
+        } else {
+            $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+            $(newProjectGrantAcronymInput).val(item.acronym);
+        }
     
         if (item.processed && i < item.funding_orgs.length - 1) {
             newFundingElement.next('.field-add-delete').children().eq(0).click();
