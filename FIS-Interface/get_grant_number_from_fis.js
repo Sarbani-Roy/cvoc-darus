@@ -310,8 +310,8 @@ function updateFundingOrgs(i, item) {
         console.log("i:", i);
         console.log("Item processed", item.processed);
         
-        if(!item.processed){
-            if (i === 0) {
+        
+            if (!item.processed && i === 0) {
                 if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
                     newFundingElement.next('.field-add-delete').children().eq(0).click();
 
@@ -338,19 +338,19 @@ function updateFundingOrgs(i, item) {
                     $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                     $(newProjectGrantAcronymInput).val(item.acronym);
                 }
-            } else {
+            } else if(item.processed){
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                 $(newProjectGrantAcronymInput).val(item.acronym);
             }
 
-            if (i < item.funding_orgs.length - 1) {
+            if (item.processed && i < item.funding_orgs.length - 1) {
                 newFundingElement.next('.field-add-delete').children().eq(0).click();
 
                 setTimeout(function() {
                     updateFundingOrgs(i + 1, item);
                 }, 500);
             }
-        }
+        
     });
     item.processed = true;
 }
