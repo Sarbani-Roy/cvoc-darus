@@ -316,7 +316,6 @@ function updateFundingOrgs(i, item) {
                     newFundingElement.next('.field-add-delete').children().eq(0).click();
     
                     setTimeout(function() {
-                        console.log("Add button clicked");
                         $(grantNumberParentSelector).each(function() {
                             var updatedParentElement = $(this).parent();
                             var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
@@ -324,11 +323,12 @@ function updateFundingOrgs(i, item) {
                             var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
                             var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
 
+                            console.log(updatedFundingElement);
                             console.log("Funding Agency", updatedFundingAgency);
                             console.log("Project Acronym", updatedProjectGrantAcronymInput);
 
-                            console.log("Funding Agency", $(updatedFundingAgency).val());
-                            console.log("Project Acronym", $(updatedProjectGrantAcronymInput).val());
+                            // console.log("Funding Agency", $(updatedFundingAgency).val());
+                            // console.log("Project Acronym", $(updatedProjectGrantAcronymInput).val());
 
                             $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
                             $(updatedProjectGrantAcronymInput).val(item.acronym);
