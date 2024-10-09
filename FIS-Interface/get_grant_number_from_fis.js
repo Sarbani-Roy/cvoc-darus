@@ -306,16 +306,13 @@ function updateFundingOrgs(i, item) {
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
-
-        console.log("i:", i);
-        console.log("Item processed", item.processed);
-        
         
         if (!item.processed && i === 0) {
+            
             if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
                 newFundingElement.next('.field-add-delete').children().eq(0).click();
 
-                console.log("Clicked add")
+                console.log("i:", i, ", Item processed", item.processed);
 
                 setTimeout(function() {
                     $(grantNumberParentSelector).each(function() {
@@ -337,26 +334,30 @@ function updateFundingOrgs(i, item) {
                     });        
                 }, 500);
             } else {
+                console.log("i:", i, ", Item processed", item.processed);
+
                 // If both fields are empty, fill them in first
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                 $(newProjectGrantAcronymInput).val(item.acronym);
             }
         } else if(item.processed){
+            console.log("i:", i, ", Item processed", item.processed);
+
             setTimeout(function() {
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                 $(newProjectGrantAcronymInput).val(item.acronym);
             }, 750);
         }
 
-        setTimeout(function() {
-            if (item.processed && i < item.funding_orgs.length - 1) {
-                newFundingElement.next('.field-add-delete').children().eq(0).click();
+        if (item.processed && i < item.funding_orgs.length - 1) {
+            console.log("i:", i, ", Item processed", item.processed);
+            
+            newFundingElement.next('.field-add-delete').children().eq(0).click();
 
-                setTimeout(function() {
-                    updateFundingOrgs(i + 1, item);
-                }, 1000);
-            } 
-        }, 1250);       
+            setTimeout(function() {
+                updateFundingOrgs(i + 1, item);
+            }, 1000);
+        }        
     });
     item.processed = true;
 }
