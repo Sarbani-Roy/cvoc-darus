@@ -340,8 +340,10 @@ function updateFundingOrgs(i, item) {
                 $(newProjectGrantAcronymInput).val(item.acronym);
             }
         } else if(item.processed){
-            $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-            $(newProjectGrantAcronymInput).val(item.acronym);
+            setTimeout(function() {
+                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                $(newProjectGrantAcronymInput).val(item.acronym);
+            }, 750);
         }
 
         if (item.processed && i < item.funding_orgs.length - 1) {
