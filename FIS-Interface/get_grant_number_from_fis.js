@@ -315,6 +315,8 @@ function updateFundingOrgs(i, item) {
             if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
                 newFundingElement.next('.field-add-delete').children().eq(0).click();
 
+                console.log("Clicked add")
+
                 setTimeout(function() {
                     $(grantNumberParentSelector).each(function() {
                         var updatedParentElement = $(this).parent();
