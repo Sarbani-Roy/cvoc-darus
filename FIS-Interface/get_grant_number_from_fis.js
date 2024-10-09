@@ -308,6 +308,7 @@ function updateFundingOrgs(i, item) {
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
         console.log("i:", i);
+        console.log("Item processed", item.processed);
         console.log("Funding Agency", $(newFundingAgency).val());
         console.log("Project Acronym", $(newProjectGrantAcronymInput).val());
 
@@ -321,32 +322,24 @@ function updateFundingOrgs(i, item) {
                         $(newProjectGrantAcronymInput).val(item.acronym);
                     }, 500);
                 } else {
-                    // If both fields are empty, fill them in first and then add a new field
+                    // If both fields are empty, fill them in first
                     $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                     $(newProjectGrantAcronymInput).val(item.acronym);
-    
-                    setTimeout(function() {
-                        newFundingElement.next('.field-add-delete').children().eq(0).click();
-                    }, 500);
                 }
             } else {
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                 $(newProjectGrantAcronymInput).val(item.acronym);
-    
-                // Add a new empty field only if not the last funding org (i.e., i < length - 1)
-                if (i < item.funding_orgs.length - 1) {
-                    newFundingElement.next('.field-add-delete').children().eq(0).click();
-    
-                    // Recursively update the next funding org with a delay to allow DOM changes
-                    setTimeout(function() {
-                        updateFundingOrgs(i + 1, item);
-                    }, 500);
-                }
+            }
+
+            if (i < item.funding_orgs.length - 1) {
+                newFundingElement.next('.field-add-delete').children().eq(0).click();
+
+                setTimeout(function() {
+                    updateFundingOrgs(i + 1, item);
+                }, 500);
             }
         }
     });
-
-    // Set item.processed to true at the end, after all updates are done
     item.processed = true;
 }
 
