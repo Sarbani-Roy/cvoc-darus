@@ -310,11 +310,8 @@ function updateFundingOrgs(i, item) {
         console.log("i:", i);
         console.log("Item processed", item.processed);
         
-        if(item.processed){
+        if(!item.processed){
             if (i === 0) {
-                console.log("Funding Agency", $(newFundingAgency).val());
-                console.log("Project Acronym", $(newProjectGrantAcronymInput).val());
-
                 if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
                     newFundingElement.next('.field-add-delete').children().eq(0).click();
 
