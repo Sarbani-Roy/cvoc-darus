@@ -295,7 +295,6 @@ function getFundingDetails(grantNumberParentSelector) {
     return fundingDetails;
 }
 
-// Recursive function to handle async DOM update after each click
 function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;  // Exit condition
 
@@ -308,56 +307,69 @@ function updateFundingOrgs(i, item) {
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
         console.log("i:", i);
-        console.log("Item processed:", item.processed);
+        console.log("Item processed", item.processed);
         
-        function handleNextIteration() {
-            // Proceed to the next iteration after the current one is processed
-            if (i < item.funding_orgs.length - 1) {
-                setTimeout(function() {
-                    updateFundingOrgs(i + 1, item);
-                }, 500); // Add a delay to handle the async DOM manipulation
-            }
-        }
+        function updateDOMFields() {
+            // Logic for DOM updates based on current index `i`
+            if (!item.processed && i === 0) {
+                if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
+                    // Delete existing entry if fields are non-empty
+                    newFundingElement.next('.field-add-delete').children().eq(0).click();
 
-        if (!item.processed && i === 0) {
-            if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
-                // If fields are filled, add a new field first
-                newFundingElement.next('.field-add-delete').children().eq(0).click();
+                    // Wait for the deletion to complete and then update fields
+                    setTimeout(function() {
+                        $(grantNumberParentSelector).each(function() {
+                            var updatedParentElement = $(this).parent();
+                            var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
+                            var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
+                            var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
+                            var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
 
-                setTimeout(function() {
-                    // Wait for the new field to be added before updating values
-                    $(grantNumberParentSelector).each(function() {
-                        var updatedParentElement = $(this).parent();
-                        var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
-                        var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
-                        var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
-                        var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
+                            console.log(updatedParentElement);
+                            console.log(updatedFieldValuesElement);
+                            console.log(updatedFundingElement);
+                            console.log("Funding Agency", updatedFundingAgency);
+                            console.log("Project Acronym", updatedProjectGrantAcronymInput);
 
-                        // Set the updated values
-                        $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
-                        $(updatedProjectGrantAcronymInput).val(item.acronym);
-                    });
+                            // Update fields with new values
+                            $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
+                            $(updatedProjectGrantAcronymInput).val(item.acronym);
+                        });
+                        
+                        // Mark item as processed and move to the next one
+                        item.processed = true;
+                        // Recursively call for the next index after the timeout
+                        updateFundingOrgs(i + 1, item);
 
-                    // After setting the values, proceed to the next iteration
-                    handleNextIteration();
-                }, 5000); // Wait to ensure the DOM is updated
-            } else {
-                // If fields are empty, fill them in directly and proceed
+                    }, 5000); // 5-second delay to wait for deletion
+                } else {
+                    // If both fields are empty, directly fill them in
+                    $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                    $(newProjectGrantAcronymInput).val(item.acronym);
+                    // Mark item as processed and move to the next one
+                    item.processed = true;
+                    updateFundingOrgs(i + 1, item); // Proceed to the next index after updating
+                }
+            } else if (item.processed) {
+                // If already processed, just update fields
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                 $(newProjectGrantAcronymInput).val(item.acronym);
-                handleNextIteration(); // Proceed after updating the values
+                // Proceed to the next index after updating
+                updateFundingOrgs(i + 1, item);
             }
-        } else if (item.processed) {
-            // If already processed, update values directly
-            $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-            $(newProjectGrantAcronymInput).val(item.acronym);
-            handleNextIteration(); // Proceed after updating the values
         }
 
-    });
+        updateDOMFields();  // Call the function to update DOM elements
 
-    // After processing the current item, mark it as processed
-    item.processed = true;
+        // Handle the click and update for next index if processed and not at the last element
+        if (item.processed && i < item.funding_orgs.length - 1) {
+            newFundingElement.next('.field-add-delete').children().eq(0).click();
+
+            setTimeout(function() {
+                updateFundingOrgs(i + 1, item);
+            }, 500);  // Small delay to ensure sequential updates
+        } 
+    });
 }
 
 
