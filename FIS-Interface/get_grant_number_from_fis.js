@@ -309,13 +309,16 @@ function updateFundingOrgs(i, item) {
 
         console.log("i:", i);
         console.log("Item processed", item.processed);
-        console.log("Funding Agency", $(newFundingAgency).val());
-        console.log("Project Acronym", $(newProjectGrantAcronymInput).val());
-
+        
         if(item.processed){
             if (i === 0) {
+                console.log("Funding Agency", $(newFundingAgency).val());
+                console.log("Project Acronym", $(newProjectGrantAcronymInput).val());
+
                 if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
                     newFundingElement.next('.field-add-delete').children().eq(0).click();
+
+                    console.log("Add button clicked");
     
                     setTimeout(function() {
                         var updatedFundingDetails = getFundingDetails(grantNumberParentSelector);
@@ -323,6 +326,9 @@ function updateFundingOrgs(i, item) {
                         if (updatedFundingDetails.length > 0) {
                             var updatedFundingAgency = updatedFundingDetails[0].fundingAgency;
                             var updatedProjectGrantAcronymInput = updatedFundingDetails[0].projectGrantAcronym;
+
+                            console.log("Funding Agency", $(newFundingAgency).val());
+                            console.log("Project Acronym", $(newProjectGrantAcronymInput).val());
 
                             $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
                             $(updatedProjectGrantAcronymInput).val(item.acronym);
