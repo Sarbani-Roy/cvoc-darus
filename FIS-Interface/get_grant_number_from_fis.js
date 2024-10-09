@@ -295,11 +295,6 @@ function getFundingDetails(grantNumberParentSelector) {
     return fundingDetails;
 }
 
-// Helper function to mimic setTimeout using Promise
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, 500));
-}
-
 // Recursive function to handle async DOM update after each click
 function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;  // Exit condition
@@ -359,6 +354,7 @@ function updateFundingOrgs(i, item) {
     });
     item.processed = true;
 }
+
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
