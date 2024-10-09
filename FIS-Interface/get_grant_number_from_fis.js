@@ -306,13 +306,13 @@ function updateFundingOrgs(i, item) {
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
+
         
         if (!item.processed && i === 0) {
-            
             if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
                 newFundingElement.next('.field-add-delete').children().eq(0).click();
 
-                console.log("i:", i, ", Item processed", item.processed);
+                console.log("i:", i, "Item processed", item.processed);
 
                 setTimeout(function() {
                     $(grantNumberParentSelector).each(function() {
@@ -332,36 +332,31 @@ function updateFundingOrgs(i, item) {
                         $(updatedProjectGrantAcronymInput).val(item.acronym);
                     
                     });        
-                }, 500);
+                }, 1000);
             } else {
-                console.log("i:", i, ", Item processed", item.processed);
-
                 // If both fields are empty, fill them in first
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
                 $(newProjectGrantAcronymInput).val(item.acronym);
             }
         } else if(item.processed){
-            console.log("i:", i, ", Item processed", item.processed);
-
-            setTimeout(function() {
-                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-                $(newProjectGrantAcronymInput).val(item.acronym);
-            }, 750);
+            console.log("i:", i, "Item processed", item.processed);
+        
+            $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+            $(newProjectGrantAcronymInput).val(item.acronym);
         }
 
         if (item.processed && i < item.funding_orgs.length - 1) {
-            console.log("i:", i, ", Item processed", item.processed);
-            
+            console.log("i:", i, "Item processed", item.processed);
+
             newFundingElement.next('.field-add-delete').children().eq(0).click();
 
             setTimeout(function() {
                 updateFundingOrgs(i + 1, item);
-            }, 1000);
+            }, 500);
         }        
     });
     item.processed = true;
 }
-
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
