@@ -295,12 +295,17 @@ function getFundingDetails(grantNumberParentSelector) {
     return fundingDetails;
 }
 
+// Helper function to mimic setTimeout using Promise
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // Recursive function to handle async DOM update after each click
-function updateFundingOrgs(i, item) {
+async function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;  // Exit condition
 
     // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
-    $(grantNumberParentSelector).each(function() {
+    $(grantNumberParentSelector).each(async function() {
         var newParentElement = $(this).parent();
         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
@@ -310,30 +315,29 @@ function updateFundingOrgs(i, item) {
         console.log("i:", i);
         console.log("Item processed", item.processed);
         
-        
         if (!item.processed && i === 0) {
             if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
                 newFundingElement.next('.field-add-delete').children().eq(0).click();
 
-                setTimeout(function() {
-                    $(grantNumberParentSelector).each(function() {
-                        var updatedParentElement = $(this).parent();
-                        var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
-                        var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
-                        var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
-                        var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
+                // Use await delay instead of setTimeout
+                await delay(1000);
 
-                        console.log(updatedParentElement);
-                        console.log(updatedFieldValuesElement);
-                        console.log(updatedFundingElement);
-                        console.log("Funding Agency", updatedFundingAgency);
-                        console.log("Project Acronym", updatedProjectGrantAcronymInput);
+                $(grantNumberParentSelector).each(function() {
+                    var updatedParentElement = $(this).parent();
+                    var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
+                    var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
+                    var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
+                    var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
 
-                        $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
-                        $(updatedProjectGrantAcronymInput).val(item.acronym);
-                    
-                    });        
-                }, 1000);
+                    console.log(updatedParentElement);
+                    console.log(updatedFieldValuesElement);
+                    console.log(updatedFundingElement);
+                    console.log("Funding Agency", updatedFundingAgency);
+                    console.log("Project Acronym", updatedProjectGrantAcronymInput);
+
+                    $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
+                    $(updatedProjectGrantAcronymInput).val(item.acronym);
+                });
             } else {
                 // If both fields are empty, fill them in first
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
@@ -347,13 +351,16 @@ function updateFundingOrgs(i, item) {
         if (item.processed && i < item.funding_orgs.length - 1) {
             newFundingElement.next('.field-add-delete').children().eq(0).click();
 
-            setTimeout(function() {
-                updateFundingOrgs(i + 1, item);
-            }, 500);
-        }        
+            // Await the delay before calling the next update
+            await delay(500);
+
+            // Recursively call updateFundingOrgs with the next index
+            await updateFundingOrgs(i + 1, item);
+        }
     });
     item.processed = true;
 }
+
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
