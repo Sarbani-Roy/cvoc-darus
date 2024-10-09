@@ -324,8 +324,11 @@ function updateFundingOrgs(i, item) {
                             var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
                             var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
 
+                            console.log("Funding Agency", updatedFundingAgency);
+                            console.log("Project Acronym", updatedProjectGrantAcronymInput);
+
                             console.log("Funding Agency", $(updatedFundingAgency).val());
-                            console.log("Project Acronym", $(newProjectGrantAcronymInput).val());
+                            console.log("Project Acronym", $(updatedProjectGrantAcronymInput).val());
 
                             $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
                             $(updatedProjectGrantAcronymInput).val(item.acronym);
