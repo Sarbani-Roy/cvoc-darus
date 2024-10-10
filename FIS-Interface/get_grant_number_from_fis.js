@@ -322,7 +322,6 @@ function updateFundingOrgs(i, item) {
                         var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
                         var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
 
-                        console.log(grantNumberParentSelector);
                         console.log(updatedParentElement);
                         console.log(updatedFieldValuesElement);
                         console.log(updatedFundingElement);
@@ -333,7 +332,7 @@ function updateFundingOrgs(i, item) {
                         $(updatedProjectGrantAcronymInput).val(item.acronym);
                     
                     });        
-                }, 500);
+                }, 1000);
             } else {
                 // If both fields are empty, fill them in first
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
@@ -353,7 +352,7 @@ function updateFundingOrgs(i, item) {
 
             setTimeout(function() {
                 updateFundingOrgs(i + 1, item);
-            }, 700);
+            }, 500);
         }        
     });
     item.processed = true;
