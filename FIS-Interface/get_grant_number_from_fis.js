@@ -322,6 +322,7 @@ function updateFundingOrgs(i, item) {
                         var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
                         var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
 
+                        console.log(grantNumberParentSelector);
                         console.log(updatedParentElement);
                         console.log(updatedFieldValuesElement);
                         console.log(updatedFundingElement);
