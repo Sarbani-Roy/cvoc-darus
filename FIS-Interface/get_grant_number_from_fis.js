@@ -15,14 +15,18 @@ function expandProject() {
             
         projectCompoundFieldElement.each(function() {
             var projectElement = $(this);
-            
-            if (projectElement.children().length > 3) {
-                var projectNameInput = projectElement.children().eq(0).find('input');
-                var projectAcronymInput = projectElement.children().eq(1).find('input');
-                var fisIdentifier = projectElement.children().eq(3);
-                var fisIdentifierInput = projectElement.children().eq(3).find('input');
-                
-                updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput);                                        
+
+            if (!$(projecElement).hasClass('expanded')) {
+                //Mark it as processed
+                $(projecElement).addClass('expanded');
+                if (projectElement.children().length > 3) {
+                    var projectNameInput = projectElement.children().eq(0).find('input');
+                    var projectAcronymInput = projectElement.children().eq(1).find('input');
+                    var fisIdentifier = projectElement.children().eq(3);
+                    var fisIdentifierInput = projectElement.children().eq(3).find('input');
+                    
+                    updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput);                                        
+                }
             }
         });
     });
@@ -31,7 +35,7 @@ function expandProject() {
 function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput) {
 
     // Flag to track if project is already selected
-    let projectSelected = false;
+    // let projectSelected = false;
     
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
@@ -47,14 +51,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             var selectId = "projectAddSelect_" + num;
             
             // Check if select2 has already been initialized
-            if (!$(projectInput).next("select").hasClass("select2-hidden-accessible")) {
+            // if (projectSelected === false) {
                 $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
                 $("#" + selectId).select2({
                     theme: "classic",
                     tags: $(projectInput).attr('data-cvoc-allowfreetext'),
                     delay: 500,
                     templateResult: function(item) {
-                        
                         // No templating right now
                         if (item.loading) {
                             return item.text;
@@ -130,7 +133,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         // fisid = $(fisIdentifierInput).val()
 
                         // Mark project as selected to prevent re-triggering autofill
-                        projectSelected = true;
+                        // projectSelected = true;
 
                         if (item.text) {
                             return item.text;
@@ -208,7 +211,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         },
                     }
                 });
-            }
+            // }
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val()
