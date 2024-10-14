@@ -342,7 +342,7 @@ function updateFundingOrgs(i, item) {
                         $(updatedProjectGrantAcronymInput).val(item.acronym);
                     
                     });        
-                }, 1000);
+                }, 500);
             }
         }
 
@@ -354,9 +354,10 @@ function updateFundingOrgs(i, item) {
             setTimeout(function() {
                 updateFundingOrgs(i + 1, item);
             }, 500);
-        }        
+        }  
+        item.processed = true;      
     });
-    item.processed = true;
+    
 }
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
