@@ -16,9 +16,9 @@ function expandProject() {
         projectCompoundFieldElement.each(function() {
             var projectElement = $(this);
 
-            if (!$(projecElement).hasClass('expanded')) {
+            if (!$(projectElement).hasClass('expanded')) {
                 //Mark it as processed
-                $(projecElement).addClass('expanded');
+                $(projectElement).addClass('expanded');
                 if (projectElement.children().length > 3) {
                     var projectNameInput = projectElement.children().eq(0).find('input');
                     var projectAcronymInput = projectElement.children().eq(1).find('input');
