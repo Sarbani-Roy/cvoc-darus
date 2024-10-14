@@ -80,6 +80,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 templateSelection: function(item) {
                     
+                    // Prevent multiple executions
+                    if (item.processed) {
+                        return item.text;
+                    }
+                    item.processed = true;
+                    
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         if ($(fundingAgency).val() === "") {
                             
@@ -100,10 +106,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     if (i < item.funding_orgs.length - 1) {
                                         newFundingElement.next('.field-add-delete').children().eq(0).click();
                     
-                                        // Wait for DOM update, then call the function recursively for the next iteration
                                         setTimeout(function() {
-                                            updateFundingOrgs(i + 1);  // Call the function recursively for the next item
-                                        }, 500);  // Adjust delay if necessary
+                                            updateFundingOrgs(i + 1);
+                                        }, 500);
                                     }
                                 });
                             }
@@ -114,6 +119,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     } 
                     
                     else if (item.funding_orgs) {
+
                         emptyFundingElementFound = false;
 
                         var newParentElement = $(grantNumberParentSelector).parent();
@@ -136,19 +142,21 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         });
 
                         // If no empty funding element was found, add a new one by clicking '+'
-                        if (!emptyFundingElementFound) {
-                            console.log(emptyFundingElementFound)
-                            // newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
+                        if (emptyFundingElementFound == false) {
+                            emptyFundingElementFound = true;
+                            newCompoundFundingElement.last().next('.field-add-delete').children().eq(0).click();
+                            
+                            setTimeout(function() {
+                                var addedParentElement = $(grantNumberParentSelector).parent();
+                                var addedFieldValuesElement = addedParentElement.siblings('.dataset-field-values');
+                                var addedFieldValuesElement = addedParentElement.siblings('.dataset-field-values').last();
 
-                            // setTimeout(function() {
-                            //     var addedFieldValuesElement = newParentElement.siblings('.dataset-field-values').last();
+                                var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
+                                var addedProjectGrantAcronymInput = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(1).find('input');
 
-                            //     var addedFundingAgency = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(0).find('input');
-                            //     var addedProjectGrantAcronymInput = addedFieldValuesElement.find('.edit-compound-field').last().children().eq(1).find('input');
-
-                            //     $(addedFundingAgency).val(item.funding_orgs[0].cfacro);
-                            //     $(addedProjectGrantAcronymInput).val(item.acronym);
-                            // }, 500);
+                                $(addedFundingAgency).val(item.funding_orgs[0].cfacro);
+                                $(addedProjectGrantAcronymInput).val(item.acronym);
+                            }, 500);
                         }
                     }
 
@@ -158,7 +166,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (item.id && item.text != item.id) {
                         $(fisIdentifierInput).val(item.id);
                     }                                                      
-                    if ($(projectNameInput).val() === "" && item.name) {
+                    if ($(projectNameInput).val() === "" && item.text) {
                         var projectName = item.text;
                     }
                     else{
@@ -168,9 +176,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                     fisid = $(fisIdentifierInput).val()
 
-                    if(fisid){
-                        return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + fisid + "'>" + projectName + "</a>"));
-                    }
+                    // if(fisid){
+                    //     return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + fisid + "'>" + projectName + "</a>"));
+                    // }
 
                     if (item.text) {
                         return item.text;
