@@ -30,6 +30,9 @@ function expandProject() {
 
 function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput) {
 
+    // Flag to track if project is already selected
+    let projectSelected = false;
+    
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
         
@@ -40,30 +43,28 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $(projectInput).attr('data-project', num);
             $(fisIdentifier).hide()
             
-        // Add a select2 element to allow search and provide a list of choices
+            // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
             
-            $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
-            $("#" + selectId).select2({
-                theme: "classic",
-                tags: $(projectInput).attr('data-cvoc-allowfreetext'),
-                delay: 500,
-                templateResult: function(item) {
-                    
-                    // No templating right now
-                    if (item.loading) {
-                        return item.text;
-                    }
-                    
-                    // markMatch bolds the search term if/where it appears in the result
-                    var $result = markMatch(item.text, term);
-                    return $result;
-                },
-                templateSelection: function(item) {
-         
-                    var fundingDetails = getFundingDetails(grantNumberParentSelector);
-                    if (fundingDetails.length > 0) {
+            // Check if select2 has already been initialized
+            if (!$(projectInput).next("select").hasClass("select2-hidden-accessible")) {
+                $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
+                $("#" + selectId).select2({
+                    theme: "classic",
+                    tags: $(projectInput).attr('data-cvoc-allowfreetext'),
+                    delay: 500,
+                    templateResult: function(item) {
                         
+                        // No templating right now
+                        if (item.loading) {
+                            return item.text;
+                        }
+                        
+                        // markMatch bolds the search term if/where it appears in the result
+                        var $result = markMatch(item.text, term);
+                        return $result;
+                    },
+                    templateSelection: function(item) {    
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
                             updateFundingOrgs(0, item);
                         } else if (item.funding_orgs) {
@@ -73,7 +74,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             if (newFundingDetails.length > 0) {
                                 var newFundingAgency = newFundingDetails[0].fundingAgency;
                                 var newProjectGrantAcronymInput = newFundingDetails[0].projectGrantAcronym;
-  
+
                                 if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
                                     emptyFundingElementFound = true;
 
@@ -110,105 +111,104 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                     $(addedProjectGrantAcronymInput).val(item.acronym);
                                 }, 500);
                             }
+                        }                    
+
+                        if (item.acronym){
+                            $(projectAcronymInput).val(item.acronym);
+                        }     
+                        if (item.id && item.text != item.id) {
+                            $(fisIdentifierInput).val(item.id);
+                        }                                                      
+                        if ($(projectNameInput).val() === "" && item.text) {
+                            var projectName = item.text;
                         }
-                    }
+                        else{
+                            var projectName = $(projectNameInput).val();
+                        }                    
+                        item.text = projectName;
 
-                    if (item.acronym){
-                        $(projectAcronymInput).val(item.acronym);
-                    }     
-                    if (item.id && item.text != item.id) {
-                        $(fisIdentifierInput).val(item.id);
-                    }                                                      
-                    if ($(projectNameInput).val() === "" && item.text) {
-                        var projectName = item.text;
-                    }
-                    else{
-                        var projectName = $(projectNameInput).val();
-                    }                    
-                    item.text = projectName;
+                        // fisid = $(fisIdentifierInput).val()
 
-                    fisid = $(fisIdentifierInput).val()
+                        // Mark project as selected to prevent re-triggering autofill
+                        projectSelected = true;
 
-                    if (item.text) {
-                        return item.text;
-                    }
-                    else{
-                        return item.id;
-                    }
-                },
-                language: {
-                    searching: function(params) {
-                        return 'Search by project name';
-                    }
-                },
-                placeholder: projectInput.hasAttribute("data-cvoc-placeholder") ? $(projectInput).attr('data-cvoc-placeholder') : "Select a project",
-                minimumInputLength: 3,
-                allowClear: true,
-                ajax: {
-                    // Use an ajax call to FIS to retrieve matching results
-                    url: function(params) {
-                        var term = params.term;
-                        if (!term) {
-                            term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
+                        if (item.text) {
+                            return item.text;
                         }
-                        // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
-                        
-                        // Search both title and acronym
-                        var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
-                        var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-                        return [urlTitle, urlAcronym];
-                    },
-                    data: function(params) {
-                        term = params.term
-                        // term = `title=${params.term}`;
-                        if (!term) {
-                            term = "";
+                        else{
+                            return item.id;
                         }
-                        var query = {
-                            q: term,
-                            rows: 10
-                        };
-                        return term;
                     },
-                    headers: {
-                        'Accept': 'application/json'
+                    language: {
+                        searching: function(params) {
+                            return 'Search by project name';
+                        }
                     },
-                    // Perform AJAX call for both title and acronym
-                    transport: function(params, success, failure) {
-                        var urls = params.url;
-                        
-                        // Make two parallel AJAX requests for title and acronym search
-                        var titleRequest = $.ajax({ url: urls[0], headers: params.headers });
-                        var acronymRequest = $.ajax({ url: urls[1], headers: params.headers });
+                    placeholder: projectInput.hasAttribute("data-cvoc-placeholder") ? $(projectInput).attr('data-cvoc-placeholder') : "Select a project",
+                    minimumInputLength: 3,
+                    allowClear: true,
+                    ajax: {
+                        // Use an ajax call to FIS to retrieve matching results
+                        url: function(params) {
+                            var term = params.term;
+                            if (!term) {
+                                term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
+                            }
+                            // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
+                            
+                            // Search both title and acronym
+                            var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
+                            var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
+                            return [urlTitle, urlAcronym];
+                        },
+                        data: function(params) {
+                            term = params.term
+                            // term = `title=${params.term}`;
+                            if (!term) {
+                                term = "";
+                            }
+                            var query = {
+                                q: term,
+                                rows: 10
+                            };
+                            return term;
+                        },
+                        headers: {
+                            'Accept': 'application/json'
+                        },
+                        // Perform AJAX call for both title and acronym
+                        transport: function(params, success, failure) {
+                            var urls = params.url;
+                            
+                            // Make two parallel AJAX requests for title and acronym search
+                            var titleRequest = $.ajax({ url: urls[0], headers: params.headers });
+                            var acronymRequest = $.ajax({ url: urls[1], headers: params.headers });
 
-                        // Wait for both AJAX requests to finish
-                        $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
-                            // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
-                            var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
-                            // Pass combined data to the success callback
-                            success({
-                                results: combinedData.map(function(element) {
-                                    let projectInfo = element.project;
-                                    return {
-                                        text: projectInfo.title_de, 
-                                        acronym: projectInfo.acronym,
-                                        agency: projectInfo.foerderkennzeichen,
-                                        id: projectInfo.id,
-                                        funding_orgs: element.funding_org
-                                    };
-                                })
-                            });
-                        }).fail(function(jqXHR, textStatus, errorThrown) {
-                            console.error("AJAX request failed:", textStatus, errorThrown);
-                            failure(); // In case one or both requests fail, call the failure callback
-                        }); 
-                    },
-                }
-            });
-
-            $(projectNameInput).on('click', function() {
-                $('#' + selectId).select2('open');
-            });
+                            // Wait for both AJAX requests to finish
+                            $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
+                                // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
+                                var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
+                                // Pass combined data to the success callback
+                                success({
+                                    results: combinedData.map(function(element) {
+                                        let projectInfo = element.project;
+                                        return {
+                                            text: projectInfo.title_de, 
+                                            acronym: projectInfo.acronym,
+                                            agency: projectInfo.foerderkennzeichen,
+                                            id: projectInfo.id,
+                                            funding_orgs: element.funding_org
+                                        };
+                                    })
+                                });
+                            }).fail(function(jqXHR, textStatus, errorThrown) {
+                                console.error("AJAX request failed:", textStatus, errorThrown);
+                                failure(); // In case one or both requests fail, call the failure callback
+                            }); 
+                        },
+                    }
+                });
+            }
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val()
@@ -298,76 +298,11 @@ function getFundingDetails(grantNumberParentSelector) {
 }
 
 // Recursive function to handle async DOM update after each click
-// function updateFundingOrgs(i, item) {
-//     index = 0;
-//     console.log("index", index);
-//     if (i >= item.funding_orgs.length) return;  // Exit condition
-
-//     // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
-//     $(grantNumberParentSelector).each(function() {
-//         var newParentElement = $(this).parent();
-//         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
-//         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
-//         var newFundingAgency = newFundingElement.children().eq(0).find('input');
-//         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
-
-        
-//         console.log("i:", i, "Item processed", item.processed);
-
-//         if (i === 0) {
-//             console.log($(newFundingAgency).val());
-//             console.log($(newProjectGrantAcronymInput).val());
-//             if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
-//                 if (index === 0) {
-//                     newFundingElement.next('.field-add-delete').children().eq(0).click();
-//                     index = index+1;
-//                 }
-                
-//                 setTimeout(function() {
-//                     $(grantNumberParentSelector).each(function() {
-//                         var updatedParentElement = $(this).parent();
-//                         var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
-//                         var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
-//                         var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
-//                         var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
-
-//                         console.log(updatedParentElement);
-//                         console.log(updatedFieldValuesElement);
-//                         console.log(updatedFundingElement);
-//                         console.log("Funding Agency", updatedFundingAgency);
-//                         console.log("Project Acronym", updatedProjectGrantAcronymInput);
-
-//                         $(updatedFundingAgency).val(item.funding_orgs[i].cfacro);
-//                         $(updatedProjectGrantAcronymInput).val(item.acronym);
-                    
-//                     });        
-//                 }, 500);
-//             } else {
-//                 // If both fields are empty, fill them in first
-//                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-//                 $(newProjectGrantAcronymInput).val(item.acronym);
-//             }
-//         } 
-
-//         if (item.processed && i < item.funding_orgs.length - 1) {
-//             console.log("i:", i, "Item processed", item.processed);
-
-//             newFundingElement.next('.field-add-delete').children().eq(0).click();
-
-//             setTimeout(function() {
-//                 updateFundingOrgs(i + 1, item);
-//             }, 500);
-//         }        
-//     });
-//     item.processed = true;
-// }
-
-// Recursive function to handle async DOM update after each click
 function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;  
     
     $(grantNumberParentSelector).each(function() {
-        var newParentElement = $(this).parent();  // Use $(this) to refer to the current element
+        var newParentElement = $(this).parent(); 
         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
         var newFundingAgency = newFundingElement.children().eq(0).find('input');
