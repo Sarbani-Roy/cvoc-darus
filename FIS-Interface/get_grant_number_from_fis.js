@@ -297,6 +297,7 @@ function getFundingDetails(grantNumberParentSelector) {
 
 // Recursive function to handle async DOM update after each click
 function updateFundingOrgs(i, item) {
+    console.log("index", index);
     if (i >= item.funding_orgs.length) return;  // Exit condition
 
     // This can not be replaced with the function getFundingDetails as the position of siblings child depends on 'i'
@@ -308,22 +309,18 @@ function updateFundingOrgs(i, item) {
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
         
+        console.log("i:", i, "Item processed", item.processed);
+        index = 0;
+
         if (i === 0) {
             console.log($(newFundingAgency).val());
             console.log($(newProjectGrantAcronymInput).val());
-            if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
-                // If both fields are empty, fill them in first
-                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-                $(newProjectGrantAcronymInput).val(item.acronym);
-
-                
-            } else {
-                if (item.processed){
+            if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
+                if (index === 0) {
                     newFundingElement.next('.field-add-delete').children().eq(0).click();
+                    index = index+1;
                 }
                 
-                console.log("i:", i, "Item processed", item.processed);
-
                 setTimeout(function() {
                     $(grantNumberParentSelector).each(function() {
                         var updatedParentElement = $(this).parent();
@@ -342,9 +339,13 @@ function updateFundingOrgs(i, item) {
                         $(updatedProjectGrantAcronymInput).val(item.acronym);
                     
                     });        
-                }, 500);
+                }, 1000);
+            } else {
+                // If both fields are empty, fill them in first
+                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                $(newProjectGrantAcronymInput).val(item.acronym);
             }
-        }
+        } 
 
         if (item.processed && i < item.funding_orgs.length - 1) {
             console.log("i:", i, "Item processed", item.processed);
@@ -354,10 +355,9 @@ function updateFundingOrgs(i, item) {
             setTimeout(function() {
                 updateFundingOrgs(i + 1, item);
             }, 500);
-        }  
-        item.processed = true;      
+        }        
     });
-    
+    item.processed = true;
 }
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
