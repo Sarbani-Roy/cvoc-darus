@@ -19,35 +19,16 @@ function expandProject() {
             if (projectElement.children().length > 3) {
                 var projectNameInput = projectElement.children().eq(0).find('input');
                 var projectAcronymInput = projectElement.children().eq(1).find('input');
-                // var projectAcronym = fundingElement.children().eq(1)
                 var fisIdentifier = projectElement.children().eq(3);
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
-                $(grantNumberParentSelector).each(function() {
-                    var parentElement = $(grantNumberParentSelector).parent();
-                    var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                    var compoundFieldElement = fieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
-                        
-                    compoundFieldElement.each(function() {
-                        var fundingElement = $(this);
-                        
-                        if (fundingElement.children().length > 2) {
-                            var fundingAgency = fundingElement.children().eq(0).find('input');
-                            var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
-                            // var fundingIdentifier = fundingElement.children().eq(3).find('input');
-
-                            updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency);                        
-                        }
-                    });
-
-                });
-                
+                updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput);                                        
             }
         });
     });
 }
 
-function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency) {
+function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput) {
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
