@@ -308,12 +308,20 @@ function updateFundingOrgs(i, item) {
         var newProjectGrantAcronymInput = newFundingElement.children().eq(1).find('input');
 
         
-        if (!item.processed && i === 0) {
+        if (i === 0) {
             console.log($(newFundingAgency).val());
             console.log($(newProjectGrantAcronymInput).val());
-            if ($(newFundingAgency).val() !== "" || $(newProjectGrantAcronymInput).val() !== "") {
-                newFundingElement.next('.field-add-delete').children().eq(0).click();
+            if ($(newFundingAgency).val() === "" && $(newProjectGrantAcronymInput).val() === "") {
+                // If both fields are empty, fill them in first
+                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
+                $(newProjectGrantAcronymInput).val(item.acronym);
 
+                
+            } else {
+                if (item.processed){
+                    newFundingElement.next('.field-add-delete').children().eq(0).click();
+                }
+                
                 console.log("i:", i, "Item processed", item.processed);
 
                 setTimeout(function() {
@@ -335,16 +343,7 @@ function updateFundingOrgs(i, item) {
                     
                     });        
                 }, 1000);
-            } else {
-                // If both fields are empty, fill them in first
-                $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-                $(newProjectGrantAcronymInput).val(item.acronym);
             }
-        } else if(item.processed){
-            console.log("i:", i, "Item processed", item.processed);
-        
-            $(newFundingAgency).val(item.funding_orgs[i].cfacro);
-            $(newProjectGrantAcronymInput).val(item.acronym);
         }
 
         if (item.processed && i < item.funding_orgs.length - 1) {
