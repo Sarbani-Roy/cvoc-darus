@@ -297,6 +297,7 @@ function getFundingDetails(grantNumberParentSelector) {
 
 // Recursive function to handle async DOM update after each click
 function updateFundingOrgs(i, item) {
+    index = 0;
     console.log("index", index);
     if (i >= item.funding_orgs.length) return;  // Exit condition
 
