@@ -113,28 +113,28 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }
                     }
 
-                    // if (item.acronym){
-                    //     $(projectAcronymInput).val(item.acronym);
-                    // }     
-                    // if (item.id && item.text != item.id) {
-                    //     $(fisIdentifierInput).val(item.id);
-                    // }                                                      
-                    // if ($(projectNameInput).val() === "" && item.text) {
-                    //     var projectName = item.text;
-                    // }
-                    // else{
-                    //     var projectName = $(projectNameInput).val();
-                    // }                    
-                    // item.text = projectName;
+                    if (item.acronym){
+                        $(projectAcronymInput).val(item.acronym);
+                    }     
+                    if (item.id && item.text != item.id) {
+                        $(fisIdentifierInput).val(item.id);
+                    }                                                      
+                    if ($(projectNameInput).val() === "" && item.text) {
+                        var projectName = item.text;
+                    }
+                    else{
+                        var projectName = $(projectNameInput).val();
+                    }                    
+                    item.text = projectName;
 
-                    // fisid = $(fisIdentifierInput).val()
+                    fisid = $(fisIdentifierInput).val()
 
-                    // if (item.text) {
-                    //     return item.text;
-                    // }
-                    // else{
-                    //     return item.id;
-                    // }
+                    if (item.text) {
+                        return item.text;
+                    }
+                    else{
+                        return item.id;
+                    }
                 },
                 language: {
                     searching: function(params) {
@@ -206,6 +206,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
             });
 
+            $(projectNameInput).on('click', function() {
+                $('#' + selectId).select2('open');
+            });
+
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val()
             var newOption = new Option(projectName, projectName, true, true);
@@ -220,29 +224,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var projectName = data.text;
                     data.text = projectName;
                     $("input[data-project='" + num + "']").val(data.text);
-
-                    $(projectAcronymInput).val(data.acronym);
-                    $(fisIdentifierInput).val(item.id);
                 } else {
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
-                }
-
-                // if (data.acronym){
-                //     $(projectAcronymInput).val(data.acronym);
-                // }     
-                // if (data.id && data.text != data.id) {
-                //     $(fisIdentifierInput).val(data.id);
-                // }        
-
-                // Handle autofill of other fields such as fundingAgency and acronym
-                var fundingDetails = getFundingDetails(grantNumberParentSelector);
-                if (fundingDetails.length > 0 && data.funding_orgs) {
-                    // Autofill funding organization and acronym based on selection
-                    var fundingAgency = fundingDetails[0].fundingAgency;
-                    var projectGrantAcronymInput = fundingDetails[0].projectGrantAcronym;
-                    $(fundingAgency).val(data.funding_orgs[0].cfacro);  // Autofill funding agency
-                    $(projectGrantAcronymInput).val(data.acronym);       // Autofill acronym
                 }
             });
             
