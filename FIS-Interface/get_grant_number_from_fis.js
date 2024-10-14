@@ -311,7 +311,6 @@ function updateFundingOrgs(i, item) {
 
         
         console.log("i:", i, "Item processed", item.processed);
-        index = 0;
 
         if (i === 0) {
             console.log($(newFundingAgency).val());
@@ -340,7 +339,7 @@ function updateFundingOrgs(i, item) {
                         $(updatedProjectGrantAcronymInput).val(item.acronym);
                     
                     });        
-                }, 1000);
+                }, 500);
             } else {
                 // If both fields are empty, fill them in first
                 $(newFundingAgency).val(item.funding_orgs[i].cfacro);
