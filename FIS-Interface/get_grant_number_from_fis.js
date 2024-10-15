@@ -23,7 +23,8 @@ function expandProject() {
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
                 console.log(projectNameInput);
-                projectNameInput.on('input', function () {
+                projectNameInput.on('input', 'input[data-cvoc-parent="projectName"]', function () {
+                    console.log('Input event triggered');
                     console.log($(this));
                     // Get the select2 instance for the corresponding dropdown
                     var selectId = $(this).next('select').attr('id');
