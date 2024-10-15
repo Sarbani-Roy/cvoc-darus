@@ -23,6 +23,7 @@ function expandProject() {
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
                 $(projectNameInput).on('input', function () {
+                    console.log($(this));
                     // Get the select2 instance for the corresponding dropdown
                     var selectId = $(this).next('select').attr('id');
                     console.log(selectId);
