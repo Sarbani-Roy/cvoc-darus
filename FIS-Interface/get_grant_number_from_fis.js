@@ -25,7 +25,7 @@ function expandProject() {
                 console.log(projectElement.children().eq(0));
                 // Add an event listener for the 'input' event
                 (projectElement.children().eq(0)).on('input', function () {
-                    console.log('User is typing:', $(this).val());
+                    console.log('User is typing:', $(this).find('input').val());
                 });
 
                 $(grantNumberParentSelector).each(function() {
