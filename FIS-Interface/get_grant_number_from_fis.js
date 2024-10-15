@@ -51,7 +51,6 @@ function expandProject() {
                             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
                             // var fundingIdentifier = fundingElement.children().eq(3).find('input');
 
-                            console.log(item.processed);
                             updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency);                        
                         }
                     });
