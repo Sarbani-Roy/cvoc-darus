@@ -16,28 +16,28 @@ function expandProject() {
         projectCompoundFieldElement.each(function() {
             var projectElement = $(this);
             
-            $(projectNameInput).on('input', function () {
-                // Get the select2 instance for the corresponding dropdown
-                var selectId = $(this).next('select').attr('id');
-                console.log(selectId);
-                if (selectId) {
-                    var select2Data = $('#' + selectId).data('select2').dataAdapter.current();
-                    console.log(select2Data);
-                    console.log(select2Data.length);
-                    if (select2Data && select2Data.length) {
-                        select2Data.forEach(function (item) {
-                            item.processed = false;
-                        });
-                    }
-                }
-            });
-            
             if (projectElement.children().length > 3) {
                 var projectNameInput = projectElement.children().eq(0).find('input');
                 var projectAcronymInput = projectElement.children().eq(1).find('input');
                 var fisIdentifier = projectElement.children().eq(3);
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
+                $(projectNameInput).on('input', function () {
+                    // Get the select2 instance for the corresponding dropdown
+                    var selectId = $(this).next('select').attr('id');
+                    console.log(selectId);
+                    if (selectId) {
+                        var select2Data = $('#' + selectId).data('select2').dataAdapter.current();
+                        console.log(select2Data);
+                        console.log(select2Data.length);
+                        if (select2Data && select2Data.length) {
+                            select2Data.forEach(function (item) {
+                                item.processed = false;
+                            });
+                        }
+                    }
+                });
+
                 $(grantNumberParentSelector).each(function() {
                     var parentElement = $(grantNumberParentSelector).parent();
                     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
@@ -51,6 +51,7 @@ function expandProject() {
                             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
                             // var fundingIdentifier = fundingElement.children().eq(3).find('input');
 
+                            console.log(item.processed);
                             updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency);                        
                         }
                     });
