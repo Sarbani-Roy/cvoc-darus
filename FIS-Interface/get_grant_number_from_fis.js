@@ -16,6 +16,19 @@ function expandProject() {
         projectCompoundFieldElement.each(function() {
             var projectElement = $(this);
             
+            $(projectNameInput).on('input', function () {
+                // Get the select2 instance for the corresponding dropdown
+                var selectId = $(this).next('select').attr('id');
+                if (selectId) {
+                    var select2Data = $('#' + selectId).data('select2').dataAdapter.current();
+                    if (select2Data && select2Data.length) {
+                        select2Data.forEach(function (item) {
+                            item.processed = false; // Reset processed for all select2 options
+                        });
+                    }
+                }
+            });
+            
             if (projectElement.children().length > 3) {
                 var projectNameInput = projectElement.children().eq(0).find('input');
                 var projectAcronymInput = projectElement.children().eq(1).find('input');
