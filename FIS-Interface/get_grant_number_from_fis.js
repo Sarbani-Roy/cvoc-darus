@@ -22,24 +22,46 @@ function expandProject() {
                 var fisIdentifier = projectElement.children().eq(3);
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
-                console.log(projectNameInput);
-                projectNameInput.on('input', 'input[data-cvoc-parent="projectName"]', function () {
+                // Ensure projectNameInput is a valid jQuery object and get the underlying DOM element
+                var projectNameInputElement = projectNameInput[0]; // Access the first element in the jQuery object
+
+                console.log(projectNameInputElement); // Log the input element
+
+                // Add an event listener for the 'input' event
+                projectNameInputElement.addEventListener('input', function () {
                     console.log('Input event triggered');
-                    console.log($(this));
+                    console.log(this); // 'this' refers to the input element
+
                     // Get the select2 instance for the corresponding dropdown
-                    var selectId = $(this).next('select').attr('id');
-                    console.log(selectId);
+                    var selectId = $(this).next('select').attr('id'); // Use jQuery to get the next select's ID
+                    console.log("Select ID:", selectId);
+
+                    // Check if selectId exists
                     if (selectId) {
-                        var select2Data = $('#' + selectId).data('select2').dataAdapter.current();
-                        console.log(select2Data);
-                        console.log(select2Data.length);
-                        if (select2Data && select2Data.length) {
-                            select2Data.forEach(function (item) {
-                                item.processed = false;
-                            });
+                        var select2Instance = $('#' + selectId).data('select2'); // Get the select2 instance
+
+                        // Ensure select2Instance exists before accessing dataAdapter
+                        if (select2Instance && select2Instance.dataAdapter) {
+                            var select2Data = select2Instance.dataAdapter.current(); // Get the current select2 data
+                            console.log("Select2 Data:", select2Data);
+                            console.log("Select2 Data Length:", select2Data.length);
+
+                            // Ensure there is select2Data and it has length
+                            if (select2Data && select2Data.length) {
+                                select2Data.forEach(function (item) {
+                                    item.processed = false; // Reset the processed flag for each item
+                                });
+                            } else {
+                                console.log("No data found in select2Data.");
+                            }
+                        } else {
+                            console.log("Select2 instance or dataAdapter not found.");
                         }
+                    } else {
+                        console.log("No select element found next to the input.");
                     }
                 });
+
 
                 $(grantNumberParentSelector).each(function() {
                     var parentElement = $(grantNumberParentSelector).parent();
