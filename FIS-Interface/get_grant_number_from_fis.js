@@ -86,7 +86,22 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     item.processed = true;
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
-                        updateFundingOrgs(0, item);
+                        var updatedParentElement = $(grantNumberParentSelector).parent();
+                        var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
+                        var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
+
+                        var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
+                        var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
+        
+                        if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
+                            updateFundingOrgs(0, item);
+                        } else {
+                            newFundingElement.next('.field-add-delete').children().eq(0).click();
+                            setTimeout(function() {
+                                updateFundingOrgs(0, item);
+                            }, 500);
+                            // updateFundingOrgs(0, item);
+                        }
                     } else if (item.funding_orgs) {
                         emptyFundingElementFound = false;
 
@@ -243,7 +258,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:clear', function(e) {
                 
                 $("input[data-project='" + num + "']").attr('value', '');
-                console.log($(projectAcronymInput).val());
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('')
@@ -259,7 +273,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
                         
                         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
-                            console.log($(clearFundingAgency).val());
                             $(clearFundingAgency).val('');
                             $(clearProjectGrantAcronymInput).val('');
 
