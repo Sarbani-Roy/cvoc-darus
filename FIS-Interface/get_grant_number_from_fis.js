@@ -277,7 +277,7 @@ function updateFundingOrgs(i, item) {
             newFundingElement.next('.field-add-delete').children().eq(0).click();
 
             setTimeout(function() {
-                updateFundingOrgs(i + 1);
+                updateFundingOrgs(i + 1, item);
             }, 500);
         }
     });
