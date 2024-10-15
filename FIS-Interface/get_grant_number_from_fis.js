@@ -23,7 +23,7 @@ function expandProject() {
                     var select2Data = $('#' + selectId).data('select2').dataAdapter.current();
                     if (select2Data && select2Data.length) {
                         select2Data.forEach(function (item) {
-                            item.processed = false; // Reset processed for all select2 options
+                            item.processed = false;
                         });
                     }
                 }
@@ -92,8 +92,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 templateSelection: function(item) {
                     
+                    console.log(item.processed, item);
                     // Prevent multiple executions
-                    if (item.processed) {
+                    if (item.processed === true) {
                         return item.text;
                     }
                     item.processed = true;
