@@ -19,8 +19,11 @@ function expandProject() {
             $(projectNameInput).on('input', function () {
                 // Get the select2 instance for the corresponding dropdown
                 var selectId = $(this).next('select').attr('id');
+                console.log(selectId);
                 if (selectId) {
                     var select2Data = $('#' + selectId).data('select2').dataAdapter.current();
+                    console.log(select2Data);
+                    console.log(select2Data.length);
                     if (select2Data && select2Data.length) {
                         select2Data.forEach(function (item) {
                             item.processed = false;
