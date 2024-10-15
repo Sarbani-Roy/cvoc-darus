@@ -96,7 +96,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
                             updateFundingOrgs(0, item);
                         } else {
-                            newFundingElement.next('.field-add-delete').children().eq(0).click();
+                            updatedFundingElement.next('.field-add-delete').children().eq(0).click();
                             setTimeout(function() {
                                 updateFundingOrgs(0, item);
                             }, 500);
