@@ -23,8 +23,8 @@ function expandProject() {
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
                 // Add an event listener for the 'input' event
-                projectNameInput.addEventListener('change', function () {
-                    console.log('change event triggered');
+                $(projectNameInput).on('input', function () {
+                    console.log('User is typing:', $(this).val());
                 });
 
                 $(grantNumberParentSelector).each(function() {
