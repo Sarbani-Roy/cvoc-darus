@@ -22,22 +22,6 @@ function expandProject() {
                 var fisIdentifier = projectElement.children().eq(3);
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
-                // Add an event listener for the 'input' event
-                projectElement.children().eq(0).on('input', function () {
-                    console.log('User is typing:', $(this).find('input').val());
-                });
-
-                // Log the selected projectNameInput to confirm
-                console.log('Selected projectNameInput:', projectNameInput);
-                
-                // Add an event listener for the 'input' event
-                // If a contenteditable element is used
-                var contentEditableDiv = projectElement.children().eq(0).find('div[contenteditable]'); // Adjust selector as needed
-
-                contentEditableDiv.on('input', function() {
-                    console.log('User is typing:', $(this).text()); // .text() instead of .val() for contenteditable
-                });
-
                 $(grantNumberParentSelector).each(function() {
                     var parentElement = $(grantNumberParentSelector).parent();
                     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
@@ -74,8 +58,19 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $(projectInput).attr('data-project', num);
             $(fisIdentifier).hide()
             
-        // Add a select2 element to allow search and provide a list of choices
+            // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
+
+            $("#" + selectId).on('select2:open', function() {
+                console.log("Select2 opened, resetting processed flags");
+                var dataAdapter = $(this).data('select2').dataAdapter;
+                dataAdapter.current(function(data) {
+                    $.each(data, function(i, item) {
+                        item.processed = false; // Reset the processed flag
+                        console.log(`Reset processed flag for item: ${item.text}`);
+                    });
+                });
+            });
             
             $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
             $("#" + selectId).select2({
