@@ -275,6 +275,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
+
+                // Reset item.processed to false for all items
+                var dataAdapter = $(this).data('select2').dataAdapter;
+                dataAdapter.current(function(data) {
+                    $.each(data, function(i, item) {
+                        item.processed = false; // Reset the processed flag
+                    });
+                });
                 
                 $("input[data-project='" + num + "']").attr('value', '');
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
