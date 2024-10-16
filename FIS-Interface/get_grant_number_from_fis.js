@@ -205,32 +205,28 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     // Perform AJAX call for both title and acronym
                     transport: function(params, success, failure) {
                         var urls = params.url;
-                
+                        
                         // Make two parallel AJAX requests for title and acronym search
                         var titleRequest = $.ajax({ url: urls[0], headers: params.headers });
                         var acronymRequest = $.ajax({ url: urls[1], headers: params.headers });
-                
+
                         // Wait for both AJAX requests to finish
                         $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
                             // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
                             var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
-                            
-                            // Reset `processed` flag to false for each item
-                            var processedData = combinedData.map(function(element) {
-                                let projectInfo = element.project;
-                                return {
-                                    text: projectInfo.title_de, 
-                                    acronym: projectInfo.acronym,
-                                    agency: projectInfo.foerderkennzeichen,
-                                    id: projectInfo.id,
-                                    funding_orgs: element.funding_org,
-                                    processed: false  // Reset processed to false on every fetch
-                                };
-                            });
-                
-                            // Pass processed data to the success callback
+                            // Pass combined data to the success callback
                             success({
-                                results: processedData
+                                results: combinedData.map(function(element) {
+                                    let projectInfo = element.project;
+                                    return {
+                                        text: projectInfo.title_de, 
+                                        acronym: projectInfo.acronym,
+                                        agency: projectInfo.foerderkennzeichen,
+                                        id: projectInfo.id,
+                                        funding_orgs: element.funding_org,
+                                        processed: false
+                                    };
+                                })
                             });
                         }).fail(function(jqXHR, textStatus, errorThrown) {
                             console.error("AJAX request failed:", textStatus, errorThrown);
@@ -247,7 +243,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
-                var data = e.params.data;                
+                var data = e.params.data; 
+                data.processed = false;               
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
