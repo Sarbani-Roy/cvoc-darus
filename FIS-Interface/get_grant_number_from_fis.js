@@ -27,10 +27,14 @@ function expandProject() {
                     console.log('User is typing:', $(this).find('input').val());
                 });
 
+                // Log the selected projectNameInput to confirm
+                console.log('Selected projectNameInput:', projectNameInput);
+                
+                // Add an event listener for the 'input' event
                 projectNameInput.on('input', function () {
                     console.log('User is typing:', $(this).val());
                 });
-
+                
                 $(grantNumberParentSelector).each(function() {
                     var parentElement = $(grantNumberParentSelector).parent();
                     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
