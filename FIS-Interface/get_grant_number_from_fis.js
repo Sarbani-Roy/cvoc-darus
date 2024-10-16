@@ -23,7 +23,7 @@ function expandProject() {
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
                 // Add an event listener for the 'input' event
-                (projectElement.children().eq(0)).on('input', function () {
+                projectElement.children().eq(0).on('input', function () {
                     console.log('User is typing:', $(this).find('input').val());
                 });
 
