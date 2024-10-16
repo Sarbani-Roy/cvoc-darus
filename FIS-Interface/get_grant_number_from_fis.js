@@ -80,11 +80,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 templateSelection: function(item) {
                     
                     console.log(item.processed, item);
-                    // // Prevent multiple executions
-                    // if (item.processed === true) {
-                    //     return item.text;
-                    // }
-                    // item.processed = true;
+                    // Prevent multiple executions
+                    if (item.processed === true) {
+                        return item.text;
+                    }
+                    item.processed = true;
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         var updatedParentElement = $(grantNumberParentSelector).parent();
