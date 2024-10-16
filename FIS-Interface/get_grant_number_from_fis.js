@@ -22,10 +22,13 @@ function expandProject() {
                 var fisIdentifier = projectElement.children().eq(3);
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
-                console.log(projectElement.children().eq(0));
                 // Add an event listener for the 'input' event
                 (projectElement.children().eq(0)).on('input', function () {
                     console.log('User is typing:', $(this).find('input').val());
+                });
+
+                projectNameInput.on('input', function () {
+                    console.log('User is typing:', $(this).val());
                 });
 
                 $(grantNumberParentSelector).each(function() {
