@@ -244,10 +244,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                 // Access the data adapter
                 var dataAdapter = $(this).data('select2').dataAdapter;
+                console.log(dataAdapter)
 
                 // Reset the processed flag for the specific item being selected
                 dataAdapter.current(function(data) {
                     $.each(data, function(i, item) {
+                        console.log('item', item)
                         if (item.id === itemToSelect.id) { // Check if this is the item to reset
                             item.processed = false; // Reset the processed flag
                             console.log(`Reset processed flag for item: ${item.text}`);
