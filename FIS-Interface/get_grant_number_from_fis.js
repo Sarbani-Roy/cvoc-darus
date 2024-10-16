@@ -236,19 +236,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
             });
 
-            // $('#' + selectId).on('select2:open', function() {
-            //     // Logic before the dropdown opens
-            //     console.log("Select2 opened, resetting processed flags");
-            //     var dataAdapter = $(this).data('select2').dataAdapter;
-            //     dataAdapter.current(function(data) {
-            //         console.log(data)
-            //         $.each(data, function(i, item) {
-            //             item.processed = false; // Reset the processed flag
-            //             console.log(`Reset processed flag for item: ${item.text}`);
-            //         });
-            //     });
-            // });
-
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val()
             var newOption = new Option(projectName, projectName, true, true);
@@ -271,29 +258,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
-
-                // Access the cleared item from the event parameter
-                var clearedItem = e.params.data; // Get the cleared item
-                console.log("Cleared Item:", clearedItem);
-
-                clearedItem.processed = false;
-
-                // // Reset item.processed to false for the specific cleared item
-                // var dataAdapter = $(this).data('select2').dataAdapter;
-                
-                // // Check if clearedItem is defined
-                // if (clearedItem) {
-                //     dataAdapter.current(function(data) {
-                //         // Find the specific item using its ID (assuming it's stored in clearedItem.id)
-                //         var clearedItemId = clearedItem.id; // or use clearedItem.someProperty if necessary
-                //         $.each(data, function(i, item) {
-                //             if (item.id === clearedItemId) { // Match the item based on ID
-                //                 console.log("Resetting processed flag for item:", item);
-                //                 item.processed = false; // Reset the processed flag for the cleared item
-                //             }
-                //         });
-                //     });
-                // }
                 
                 $("input[data-project='" + num + "']").attr('value', '');
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
