@@ -276,22 +276,24 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var clearedItem = e.params.data; // Get the cleared item
                 console.log("Cleared Item:", clearedItem);
 
-                // Reset item.processed to false for the specific cleared item
-                var dataAdapter = $(this).data('select2').dataAdapter;
+                clearedItem.processed = false;
+
+                // // Reset item.processed to false for the specific cleared item
+                // var dataAdapter = $(this).data('select2').dataAdapter;
                 
-                // Check if clearedItem is defined
-                if (clearedItem) {
-                    dataAdapter.current(function(data) {
-                        // Find the specific item using its ID (assuming it's stored in clearedItem.id)
-                        var clearedItemId = clearedItem.id; // or use clearedItem.someProperty if necessary
-                        $.each(data, function(i, item) {
-                            if (item.id === clearedItemId) { // Match the item based on ID
-                                console.log("Resetting processed flag for item:", item);
-                                item.processed = false; // Reset the processed flag for the cleared item
-                            }
-                        });
-                    });
-                }
+                // // Check if clearedItem is defined
+                // if (clearedItem) {
+                //     dataAdapter.current(function(data) {
+                //         // Find the specific item using its ID (assuming it's stored in clearedItem.id)
+                //         var clearedItemId = clearedItem.id; // or use clearedItem.someProperty if necessary
+                //         $.each(data, function(i, item) {
+                //             if (item.id === clearedItemId) { // Match the item based on ID
+                //                 console.log("Resetting processed flag for item:", item);
+                //                 item.processed = false; // Reset the processed flag for the cleared item
+                //             }
+                //         });
+                //     });
+                // }
                 
                 $("input[data-project='" + num + "']").attr('value', '');
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
