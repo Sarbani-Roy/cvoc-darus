@@ -238,22 +238,32 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // Event before selecting an item
             $('#' + selectId).on('select2:selecting', function(e) {
                 var itemToSelect = e.params.args.data;
-                var dataAdapter = $(this).data('select2').dataAdapter;
-                console.log('dataAdapter:', dataAdapter);
-                
+                console.log('Selecting item:', itemToSelect);
+        
                 // Reset the processed flag for the specific item being selected
-                dataAdapter.current(function(data) {
-                    $.each(data, function(i, item) {
-                        console.log('item', item);
-                        console.log('item id:', item.id);
-                        console.log('item to select id:', itemToSelect.id);
-
-                        if (item.id === itemToSelect.id) { // Check if this is the item to reset
-                            item.processed = false; // Reset the processed flag
-                            console.log(`Reset processed flag for item: ${item.text}`);
-                        }
-                    });
+                $.each(items, function(i, item) {
+                    console.log('Checking item:', item);
+                    if (item.id === itemToSelect.id) { // Check if this is the item to reset
+                        item.processed = false; // Reset the processed flag
+                        console.log(`Reset processed flag for item: ${item.text}`);
+                    }
                 });
+                // var dataAdapter = $(this).data('select2').dataAdapter;
+                // console.log('dataAdapter:', dataAdapter);
+                
+                // // Reset the processed flag for the specific item being selected
+                // dataAdapter.current(function(data) {
+                //     $.each(data, function(i, item) {
+                //         console.log('item', item);
+                //         console.log('item id:', item.id);
+                //         console.log('item to select id:', itemToSelect.id);
+
+                //         if (item.id === itemToSelect.id) { // Check if this is the item to reset
+                //             item.processed = false; // Reset the processed flag
+                //             console.log(`Reset processed flag for item: ${item.text}`);
+                //         }
+                //     });
+                // });
             });
 
             // $('#' + selectId).on('select2:opening', function() {
