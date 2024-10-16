@@ -274,6 +274,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                 // Reset item.processed to false for all items
                 var dataAdapter = $(this).data('select2').dataAdapter;
+                console.log(dataAdapter);
                 dataAdapter.current(function(data) {
                     $.each(data, function(i, item) {
                         console.log(item);
