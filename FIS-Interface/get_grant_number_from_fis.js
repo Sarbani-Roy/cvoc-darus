@@ -289,6 +289,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     }
                     clearFundingOrgs(0);
                 }
+
+                // Reset item.processed for all items in the Select2 dropdown
+                $('#' + selectId).select2('data').forEach(function(item) {
+                    item.processed = false; // Reset processed state for each item
+                });
+
+                // Optionally, re-fetch the data or re-initialize if needed
+                $('#' + selectId).select2('data', null).trigger('change');
             });
         }
     })
