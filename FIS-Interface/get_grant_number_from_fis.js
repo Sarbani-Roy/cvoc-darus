@@ -223,7 +223,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         acronym: projectInfo.acronym,
                                         agency: projectInfo.foerderkennzeichen,
                                         id: projectInfo.id,
-                                        funding_orgs: element.funding_org
+                                        funding_orgs: element.funding_org,
+                                        processed: false
                                     };
                                 })
                             });
@@ -235,38 +236,19 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
             });
 
-            // // Event before selecting an item
-            // $('#' + selectId).on('select2:selecting', function(e) {
-            //     var itemToSelect = e.params.args.data;
+            // $('#' + selectId).on('select2:open', function() {
+            //     // Logic before the dropdown opens
+            //     console.log("Select2 opened, resetting processed flags");
             //     var dataAdapter = $(this).data('select2').dataAdapter;
-            //     console.log('dataAdapter during selecting:', dataAdapter);
-                
-            //     // Reset the processed flag for the specific item being selected
+            //     console.log('dataAdapter during opening:', dataAdapter);
             //     dataAdapter.current(function(data) {
+            //         console.log(data)
             //         $.each(data, function(i, item) {
-            //             console.log('item', item);
-                        
-            //             if (item.id === itemToSelect.id) { // Check if this is the item to reset
-            //                 item.processed = false; // Reset the processed flag
-            //                 console.log(`Reset processed flag for item: ${item.text}`);
-            //             }
+            //             item.processed = false; // Reset the processed flag
+            //             console.log(`Reset processed flag for item: ${item.text}`);
             //         });
             //     });
             // });
-
-            $('#' + selectId).on('select2:open', function() {
-                // Logic before the dropdown opens
-                console.log("Select2 opened, resetting processed flags");
-                var dataAdapter = $(this).data('select2').dataAdapter;
-                console.log('dataAdapter during opening:', dataAdapter);
-                dataAdapter.current(function(data) {
-                    console.log(data)
-                    $.each(data, function(i, item) {
-                        item.processed = false; // Reset the processed flag
-                        console.log(`Reset processed flag for item: ${item.text}`);
-                    });
-                });
-            });
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val()
