@@ -66,8 +66,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             console.log("Current selected value: ", $selectElement); // Get selected value
 
             
-            $("#" + selectId).on('select2:open', function() {
+            $('#' + selectId).on('select2:select', function() {
                 console.log("Select2 opened, resetting processed flags");
+                console.log($(this))
                 var dataAdapter = $(this).data('select2').dataAdapter;
                 dataAdapter.current(function(data) {
                     $.each(data, function(i, item) {
