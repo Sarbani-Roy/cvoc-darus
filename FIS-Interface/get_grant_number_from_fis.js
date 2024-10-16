@@ -258,18 +258,20 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
 
-                // Set item.processed to false after selection
-                data.processed = false; // Set to false after selection
+                if (!data.processed) {
+                    // Set item.processed to false after selection
+                    data.processed = false; // Set to false after selection
 
 
-                //For free-texts, the id and text are same. Otherwise different
-                if (data.id != data.text) {
-                    var projectName = data.text;
-                    data.text = projectName;
-                    $("input[data-project='" + num + "']").val(data.text);
-                } else {
-                    //Tags are allowed, so just enter the text as is
-                    $("input[data-project='" + num + "']").val(data.id);
+                    //For free-texts, the id and text are same. Otherwise different
+                    if (data.id != data.text) {
+                        var projectName = data.text;
+                        data.text = projectName;
+                        $("input[data-project='" + num + "']").val(data.text);
+                    } else {
+                        //Tags are allowed, so just enter the text as is
+                        $("input[data-project='" + num + "']").val(data.id);
+                    }
                 }
             });
     
@@ -280,6 +282,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var dataAdapter = $(this).data('select2').dataAdapter;
                 dataAdapter.current(function(data) {
                     $.each(data, function(i, item) {
+                        console.log(item);
                         item.processed = false; // Reset the processed flag
                     });
                 });
