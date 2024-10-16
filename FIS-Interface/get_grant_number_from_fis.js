@@ -235,24 +235,40 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
             });
 
-            // $('#' + selectId).on('select2:selecting', function(e) {
-            //     // Your logic here before the selection is made
-            //     console.log('Before selection:', e.params.args.data); // Access the data about the item being selected
-            // });
-            
-            $('#' + selectId).on('select2:opening', function() {
-                // Logic before the dropdown opens
-                console.log("Select2 opened, resetting processed flags");
-                console.log($(this))
+            // Event before selecting an item
+            $('#' + selectId).on('select2:selecting', function(e) {
+                console.log('Before selection:', e.params.args.data); // Access the data about the item being selected
+
+                // Find the item that is about to be selected
+                var itemToSelect = e.params.args.data;
+
+                // Access the data adapter
                 var dataAdapter = $(this).data('select2').dataAdapter;
-                console.log(dataAdapter)
+
+                // Reset the processed flag for the specific item being selected
                 dataAdapter.current(function(data) {
                     $.each(data, function(i, item) {
-                        item.processed = false; // Reset the processed flag
-                        console.log(`Reset processed flag for item: ${item.text}`);
+                        if (item.id === itemToSelect.id) { // Check if this is the item to reset
+                            item.processed = false; // Reset the processed flag
+                            console.log(`Reset processed flag for item: ${item.text}`);
+                        }
                     });
                 });
             });
+
+            // $('#' + selectId).on('select2:opening', function() {
+            //     // Logic before the dropdown opens
+            //     console.log("Select2 opened, resetting processed flags");
+            //     console.log($(this))
+            //     var dataAdapter = $(this).data('select2').dataAdapter;
+            //     console.log(dataAdapter)
+            //     dataAdapter.current(function(data) {
+            //         $.each(data, function(i, item) {
+            //             item.processed = false; // Reset the processed flag
+            //             console.log(`Reset processed flag for item: ${item.text}`);
+            //         });
+            //     });
+            // });
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val()
