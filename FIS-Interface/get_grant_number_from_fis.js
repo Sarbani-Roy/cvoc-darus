@@ -79,7 +79,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 templateSelection: function(item) {
                     
-                    // console.log(item.processed, item);
+                    console.log(item.processed, item);
                     // Prevent multiple executions
                     if (item.processed === true) {
                         return item.text;
@@ -240,7 +240,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             //     // Logic before the dropdown opens
             //     console.log("Select2 opened, resetting processed flags");
             //     var dataAdapter = $(this).data('select2').dataAdapter;
-            //     console.log('dataAdapter during opening:', dataAdapter);
             //     dataAdapter.current(function(data) {
             //         console.log(data)
             //         $.each(data, function(i, item) {
@@ -258,6 +257,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
+
+                // Set item.processed to false after selection
+                data.processed = false; // Set to false after selection
+
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
