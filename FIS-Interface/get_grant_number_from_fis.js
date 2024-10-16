@@ -245,6 +245,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 console.log("Select2 opened, resetting processed flags");
                 console.log($(this))
                 var dataAdapter = $(this).data('select2').dataAdapter;
+                console.log(dataAdapter)
                 dataAdapter.current(function(data) {
                     $.each(data, function(i, item) {
                         item.processed = false; // Reset the processed flag
