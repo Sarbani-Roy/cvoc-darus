@@ -61,18 +61,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
             
-            console.log(selectId);
-
-            $('#' + selectId).on('select2:selecting', function(e) {
-                // Your logic here before the selection is made
-                console.log('Before selection:', e.params.args.data); // Access the data about the item being selected
-            });
-            
-            $('#' + selectId).on('select2:opening', function() {
-                // Logic before the dropdown opens
-                console.log('Dropdown is about to open');
-            });
-            
             // $('#' + selectId).on('select2:select', function() {
             //     console.log("Select2 opened, resetting processed flags");
             //     console.log($(this))
@@ -257,6 +245,16 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }); 
                     },
                 }
+            });
+
+            $('#' + selectId).on('select2:selecting', function(e) {
+                // Your logic here before the selection is made
+                console.log('Before selection:', e.params.args.data); // Access the data about the item being selected
+            });
+            
+            $('#' + selectId).on('select2:opening', function() {
+                // Logic before the dropdown opens
+                console.log('Dropdown is about to open');
             });
 
             // format it the same way as if it were a new selection
