@@ -73,6 +73,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         return item.text;
                     }
                     
+                    item.processed = false;
                     // markMatch bolds the search term if/where it appears in the result
                     var $result = markMatch(item.text, term);
                     return $result;
@@ -236,6 +237,15 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
             });
 
+            $('#' + selectId).on('select2:open', function(e) {
+                $('#' + selectId).find('option').each(function() {
+                    var optionData = $(this).data();
+                    if (optionData && optionData.item) {
+                        optionData.item.processed = false;  // Reset processed flag on open
+                    }
+                });
+            });
+
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val()
             var newOption = new Option(projectName, projectName, true, true);
@@ -243,8 +253,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
-                var data = e.params.data; 
-                data.processed = false;               
+                var data = e.params.data;             
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
