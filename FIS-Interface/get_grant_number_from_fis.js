@@ -235,31 +235,32 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
             });
 
-            // Event before selecting an item
-            $('#' + selectId).on('select2:selecting', function(e) {
-                var itemToSelect = e.params.args.data;
-                var dataAdapter = $(this).data('select2').dataAdapter;
-                console.log('dataAdapter during selecting:', dataAdapter);
+            // // Event before selecting an item
+            // $('#' + selectId).on('select2:selecting', function(e) {
+            //     var itemToSelect = e.params.args.data;
+            //     var dataAdapter = $(this).data('select2').dataAdapter;
+            //     console.log('dataAdapter during selecting:', dataAdapter);
                 
-                // Reset the processed flag for the specific item being selected
-                dataAdapter.current(function(data) {
-                    $.each(data, function(i, item) {
-                        console.log('item', item);
+            //     // Reset the processed flag for the specific item being selected
+            //     dataAdapter.current(function(data) {
+            //         $.each(data, function(i, item) {
+            //             console.log('item', item);
                         
-                        if (item.id === itemToSelect.id) { // Check if this is the item to reset
-                            item.processed = false; // Reset the processed flag
-                            console.log(`Reset processed flag for item: ${item.text}`);
-                        }
-                    });
-                });
-            });
+            //             if (item.id === itemToSelect.id) { // Check if this is the item to reset
+            //                 item.processed = false; // Reset the processed flag
+            //                 console.log(`Reset processed flag for item: ${item.text}`);
+            //             }
+            //         });
+            //     });
+            // });
 
-            $('#' + selectId).on('select2:opening', function() {
+            $('#' + selectId).on('select2:open', function() {
                 // Logic before the dropdown opens
                 console.log("Select2 opened, resetting processed flags");
                 var dataAdapter = $(this).data('select2').dataAdapter;
                 console.log('dataAdapter during opening:', dataAdapter);
                 dataAdapter.current(function(data) {
+                    console.log(data)
                     $.each(data, function(i, item) {
                         item.processed = false; // Reset the processed flag
                         console.log(`Reset processed flag for item: ${item.text}`);
