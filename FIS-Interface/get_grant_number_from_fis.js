@@ -61,6 +61,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // Add a select2 element to allow search and provide a list of choices
             var selectId = "projectAddSelect_" + num;
 
+            console.log(selectId);
             $("#" + selectId).on('select2:open', function() {
                 console.log("Select2 opened, resetting processed flags");
                 var dataAdapter = $(this).data('select2').dataAdapter;
