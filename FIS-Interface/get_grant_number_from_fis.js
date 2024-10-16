@@ -31,10 +31,13 @@ function expandProject() {
                 console.log('Selected projectNameInput:', projectNameInput);
                 
                 // Add an event listener for the 'input' event
-                projectNameInput.on('input', function () {
-                    console.log('User is typing:', $(this).val());
+                // If a contenteditable element is used
+                var contentEditableDiv = projectElement.children().eq(0).find('div[contenteditable]'); // Adjust selector as needed
+
+                contentEditableDiv.on('input', function() {
+                    console.log('User is typing:', $(this).text()); // .text() instead of .val() for contenteditable
                 });
-                
+
                 $(grantNumberParentSelector).each(function() {
                     var parentElement = $(grantNumberParentSelector).parent();
                     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
