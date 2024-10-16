@@ -73,8 +73,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         return item.text;
                     }
                     
-                    item.processed = false;
-                    console.log(item);
                     // markMatch bolds the search term if/where it appears in the result
                     var $result = markMatch(item.text, term);
                     return $result;
@@ -177,6 +175,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 allowClear: true,
                 ajax: {
                     // Use an ajax call to FIS to retrieve matching results
+                    cache: false,
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
@@ -236,16 +235,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }); 
                     },
                 }
-            });
-
-            $('#' + selectId).on('select2:open', function(e) {
-                $('#' + selectId).find('option').each(function() {
-                    var optionData = $(this).data();
-                    if (optionData && optionData.item) {
-                        console.log(optionData.item)
-                        optionData.item.processed = false;  // Reset processed flag on open
-                    }
-                });
             });
 
             // format it the same way as if it were a new selection
