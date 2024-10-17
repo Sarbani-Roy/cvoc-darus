@@ -51,6 +51,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
 
+        // Declare previousAcronym outside the event handlers to make it accessible to both
+        var previousAcronym = $(projectAcronymInput).val();  // Store the initial value
+
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
             let num = Math.floor(Math.random() * 100000000000);
