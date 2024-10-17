@@ -248,7 +248,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $("#" + selectId).on('select2:open', function(e) {
                 // Log the existing value before the user modifies it
                 var projectName = $(projectNameInput).val();
-                var previousAcronym = $(projectAcronymInput).val();
+                previousAcronym = $(projectAcronymInput).val();
                 
                 console.log("Project Acronym on open: " + previousAcronym);
             });
@@ -259,6 +259,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 var newAcronym = data.acronym;
                 console.log("New Acronym on select: " + newAcronym);
+                console.log("Prexious Acronym on select: " + previousAcronym);
 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== newAcronym) {
