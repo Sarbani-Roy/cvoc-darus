@@ -238,11 +238,19 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val();
-            console.log(projectName);
-            console.log($(projectAcronymInput).val());
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
 
+            // Detect when the select2 dropdown is opened (user interaction)
+            $("#" + selectId).on('select2:open', function(e) {
+                // Log the existing value before the user modifies it
+                var projectName = $(projectNameInput).val();
+                var projectAcronym = $(projectAcronymInput).val();
+                
+                console.log("Project Name on open: " + projectName);
+                console.log("Project Acronym on open: " + projectAcronym);
+            });
+            
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;             
