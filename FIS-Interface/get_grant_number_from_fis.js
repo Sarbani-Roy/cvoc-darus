@@ -259,7 +259,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== newAcronym) {
-                    deleteGrantInfo(previousAcronym);
+                    setTimeout(function() {
+                        deleteGrantInfo(previousAcronym);
+                    }, 500);
+                    // deleteGrantInfo(previousAcronym);
                 }
 
                 //For free-texts, the id and text are same. Otherwise different
@@ -388,7 +391,7 @@ function deleteGrantInfo(acronymToDelete) {
 
                 setTimeout(function() {
                     var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                    console.log("Clear Funding Element " + clearFundingElement);
+                    console.log(clearFundingElement);
                     clearFundingElement.click();
                     index = index+1;
                 }, 500);
