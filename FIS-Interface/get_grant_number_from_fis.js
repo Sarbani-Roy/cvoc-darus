@@ -276,41 +276,23 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
-            $('#' + selectId).on('select2:clear', function(e) {
-                
+            $('#' + selectId).on('select2:clear', function(e) {                
                 $("input[data-project='" + num + "']").attr('value', '');
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('');
 
+                // Clear the projectNameInput value and set the placeholder text
+                $(projectNameInput).val('');
+                // Determine the placeholder value
+                var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder") 
+                ? $(projectInput).attr('data-cvoc-placeholder') 
+                : "Select a project";
+                $(projectNameInput).attr('placeholder', placeholderText);
+
                 setTimeout(function() {
                     deleteGrantInfo(oldProjectGrantAcronymInput);
                 }, 500);
-                            
-                // var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-                
-                // if (clearFundingDetails.length > 0) {
-                    
-                //     function clearFundingOrgs(i) {
-                //         if (i >= clearFundingDetails.length) return;
-                //         index = 0;
-                //         var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-                //         var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-                        
-                //         if ($(clearProjectGrantAcronymInput).val() === oldProjectGrantAcronymInput) {
-                //             $(clearFundingAgency).val('');
-                //             $(clearProjectGrantAcronymInput).val('');
-
-                //             setTimeout(function() {
-                //                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement
-                //                 clearFundingElement.click();
-                //                 index = index+1;
-                //             }, 500);
-                //         }
-                //         clearFundingOrgs(i + 1);
-                //     }
-                //     clearFundingOrgs(0);
-                // }
             });
         }
     })
