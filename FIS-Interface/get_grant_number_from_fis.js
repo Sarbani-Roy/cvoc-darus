@@ -50,9 +50,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
-        console.log($(projectInput).val());
-        console.log($(projectAcronymInput).val());
-        
+
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
             let num = Math.floor(Math.random() * 100000000000);
@@ -239,7 +237,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
 
             // format it the same way as if it were a new selection
-            var projectName = $(projectNameInput).val()
+            var projectName = $(projectNameInput).val();
+            console.log(projectName);
+            console.log($(projectAcronymInput).val());
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
 
