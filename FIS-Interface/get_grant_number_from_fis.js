@@ -246,7 +246,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 // Log the existing value before the user modifies it
                 var projectName = $(projectNameInput).val();
                 previousAcronym = $(projectAcronymInput).val();
-                processedItemsSet = new Set();
+                // processedItemsSet = new Set();
             });
             
             // When a selection is made, set the value of the hidden input field
@@ -277,6 +277,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:clear', function(e) {                
                 $("input[data-project='" + num + "']").attr('value', '');
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
+                var clearedItemId = $(fisIdentifierInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('');
 
@@ -292,8 +293,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     deleteGrantInfo(oldProjectGrantAcronymInput);
                 }, 500);
 
-                // Remove the item from the Set
-                processedItemsSet.delete(item.id);
+                if (clearedItemId) {
+                    processedItemsSet.delete(clearedItemId);
+                }
             });
         }
     })
