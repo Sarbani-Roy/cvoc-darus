@@ -268,6 +268,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 } else {
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
+                    $(projectNameInput).val(data.id);
                 }   
             });
     
