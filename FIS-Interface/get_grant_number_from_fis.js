@@ -245,9 +245,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $("#" + selectId).on('select2:open', function(e) {
                 // Log the existing value before the user modifies it
                 var projectName = $(projectNameInput).val();
-                var previousProjectAcronym = $(projectAcronymInput).val();
+                var previousAcronym = $(projectAcronymInput).val();
                 
-                console.log("Project Acronym on open: " + previousProjectAcronym);
+                console.log("Project Acronym on open: " + previousAcronym);
             });
             
             // When a selection is made, set the value of the hidden input field
