@@ -19,6 +19,7 @@ function expandProject() {
             if (projectElement.children().length > 3) {
                 var projectNameInput = projectElement.children().eq(0).find('input');
                 var projectAcronymInput = projectElement.children().eq(1).find('input');
+                var projectLevelInput = projectElement.children().eq(2).find('input');
                 var fisIdentifier = projectElement.children().eq(3);
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
@@ -35,7 +36,7 @@ function expandProject() {
                             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
                             var fundingIdentifier = fundingElement.children().eq(2).find('input');
 
-                            updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency, fundingIdentifier);                        
+                            updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, projectLevelInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency, fundingIdentifier);                        
                         }
                     });
 
@@ -46,7 +47,7 @@ function expandProject() {
     });
 }
 
-function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency, fundingIdentifier) {
+function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, projectLevelInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency, fundingIdentifier) {
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
@@ -276,6 +277,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 var clearedItemId = $(fisIdentifierInput).val();
                 $(projectAcronymInput).val('');
+                $(projectLevelInput).val('');
                 $(fisIdentifierInput).val('');
 
                 // Clear the projectNameInput value and set the placeholder text
