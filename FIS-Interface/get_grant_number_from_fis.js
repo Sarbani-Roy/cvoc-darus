@@ -69,8 +69,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 theme: "classic",
                 tags: $(projectInput).attr('data-cvoc-allowfreetext'),
                 delay: 500,
-                templateResult: function(item) {
-                    
+                templateResult: function(item) {                    
                     // No templating right now
                     if (item.loading) {
                         return item.text;
@@ -177,7 +176,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 allowClear: true,
                 ajax: {
                     // Use an ajax call to FIS to retrieve matching results
-                    cache: false,
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
@@ -227,7 +225,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         agency: projectInfo.foerderkennzeichen,
                                         id: projectInfo.id,
                                         funding_orgs: element.funding_org,
-                                        processed: false
                                     };
                                 })
                             });
@@ -246,6 +243,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // Detect when the select2 dropdown is opened (user interaction)
             $("#" + selectId).on('select2:open', function(e) {
+                // Reset the `processed` state for all items in the dropdown when the dropdown is opened
+                $('#' + selectId).find('option').each(function() {
+                    $(this).data('data').processed = false;  // Reset the `processed` flag
+                });
+
                 // Log the existing value before the user modifies it
                 var projectName = $(projectNameInput).val();
                 previousAcronym = $(projectAcronymInput).val();
