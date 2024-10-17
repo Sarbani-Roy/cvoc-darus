@@ -370,25 +370,30 @@ function updateFundingOrgs(i, item) {
 }
 
 function deleteGrantInfo(acronymToDelete) {
-    var fundingDetails = getFundingDetails(grantNumberParentSelector);  // Get all funding details
+    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+                
+    if (clearFundingDetails.length > 0) {
+        
+        function clearFundingOrgs(i) {
+            if (i >= clearFundingDetails.length) return;
+            index = 0;
+            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+            
+            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                $(clearFundingAgency).val('');
+                $(clearProjectGrantAcronymInput).val('');
 
-    fundingDetails.forEach(function(detail) {
-        var fundingAgency = detail.fundingAgency;
-        var projectGrantAcronymInput = detail.projectGrantAcronym;
-        var deleteFundingElement = detail.deleteFundingElement;
-
-        // If the current project's acronym matches the previous one, delete it
-        if ($(projectGrantAcronymInput).val() === acronymToDelete) {
-            console.log("Deleting grant info for acronym: " + acronymToDelete);
-
-            // Clear the funding agency and acronym input fields
-            $(fundingAgency).val('');
-            $(projectGrantAcronymInput).val('');
-
-            // Trigger the delete action (e.g., click the delete button)
-            deleteFundingElement.click();
+                setTimeout(function() {
+                    var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement
+                    clearFundingElement.click();
+                    index = index+1;
+                }, 500);
+            }
+            clearFundingOrgs(i + 1);
         }
-    });
+        clearFundingOrgs(0);
+    }
 }
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
