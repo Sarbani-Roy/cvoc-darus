@@ -259,7 +259,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== newAcronym) {
-                    console.log("Deleting grant info for previous acronym: " + acronymToDelete);
+                    console.log("Deleting grant info for previous acronym: " + previousAcronym);
                     
                     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
                                 
@@ -274,7 +274,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             console.log("Clear Funding Agency: " + clearFundingAgency);
                             console.log("Clear Project Grant Acronym Input " + clearProjectGrantAcronymInput);
                             
-                            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                            if ($(clearProjectGrantAcronymInput).val() === previousAcronym) {
                                 $(clearFundingAgency).val('');
                                 $(clearProjectGrantAcronymInput).val('');
 
