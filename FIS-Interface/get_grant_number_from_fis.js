@@ -83,8 +83,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (processedItemsSet.has(item.id)) {
                         return item.text;
                     }
-                    
-                    // Mark the item as processed by adding it to the Set
                     processedItemsSet.add(item.id);
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
@@ -246,7 +244,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 // Log the existing value before the user modifies it
                 var projectName = $(projectNameInput).val();
                 previousAcronym = $(projectAcronymInput).val();
-                // processedItemsSet = new Set();
             });
             
             // When a selection is made, set the value of the hidden input field
