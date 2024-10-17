@@ -50,9 +50,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
-
-        // Declare previousAcronym outside the event handlers to make it accessible to both
         var previousAcronym = $(projectAcronymInput).val();
+        let processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
@@ -79,13 +78,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var $result = markMatch(item.text, term);
                     return $result;
                 },
-                templateSelection: function(item) {
-                    
-                    // Prevent multiple executions
-                    if (item.processed === true) {
+                templateSelection: function(item) {                    
+                    // Prevent multiple executions using the Set to track processed items
+                    if (processedItemsSet.has(item.id)) {
                         return item.text;
                     }
-                    item.processed = true;
+                    
+                    // Mark the item as processed by adding it to the Set
+                    processedItemsSet.add(item.id);
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         var updatedParentElement = $(grantNumberParentSelector).parent();
@@ -243,14 +243,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // Detect when the select2 dropdown is opened (user interaction)
             $("#" + selectId).on('select2:open', function(e) {
-                // Reset the `processed` state for all items in the dropdown when the dropdown is opened
-                $('#' + selectId).find('option').each(function() {
-                    $(this).data('data').processed = false;  // Reset the `processed` flag
-                });
-
                 // Log the existing value before the user modifies it
                 var projectName = $(projectNameInput).val();
                 previousAcronym = $(projectAcronymInput).val();
+                processedItemsSet = new Set();
             });
             
             // When a selection is made, set the value of the hidden input field
@@ -295,6 +291,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 setTimeout(function() {
                     deleteGrantInfo(oldProjectGrantAcronymInput);
                 }, 500);
+
+                // Remove the item from the Set
+                processedItemsSet.delete(item.id);
             });
         }
     })
