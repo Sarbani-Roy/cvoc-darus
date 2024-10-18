@@ -251,7 +251,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:select', function(e) {
                 // Intialize all the project information in case of new selection
                 $(projectNameInput).val('');
-                $(projectAcronymInput).val('');
+                // $(projectAcronymInput).val('');
                 $(projectLevelInput).val('');
                 
                 var data = e.params.data;         
@@ -265,19 +265,18 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
 
                 //For free-texts, the id and text are same. Otherwise different
-                if (data.id != data.text) {
-                    var projectName = data.text;
-                    data.text = projectName;
-                    $("input[data-project='" + num + "']").val(data.text);
-                    $(projectNameInput).val(data.text);
-                } else {
-                    //Tags are allowed, so just enter the text as is
-                    $("input[data-project='" + num + "']").val(data.id);
-                    $(projectNameInput).val(data.id);
-                }
-
-                // Remove the placeholder after selection
-                $(projectNameInput).attr('placeholder', '');
+                setTimeout(function() {
+                    if (data.id != data.text) {
+                        var projectName = data.text;
+                        data.text = projectName;
+                        $("input[data-project='" + num + "']").val(data.text);
+                        $(projectNameInput).val(data.text);
+                    } else {
+                        //Tags are allowed, so just enter the text as is
+                        $("input[data-project='" + num + "']").val(data.id);
+                        $(projectNameInput).val(data.id);
+                    }
+                }, 500);
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
