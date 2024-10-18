@@ -237,6 +237,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val();
+            console.log(projectName);
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
 
@@ -366,8 +367,7 @@ function deleteGrantInfo(acronymToDelete) {
             index = 0;
             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-            var clearFundingIdentifier = clearFundingDetails[i].fundingIdentifier;
-            
+            var clearFundingIdentifier = clearFundingDetails[i].fundingIdentifier;            
             
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 $(clearFundingAgency).val('');
