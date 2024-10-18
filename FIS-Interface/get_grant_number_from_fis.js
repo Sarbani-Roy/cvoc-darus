@@ -96,17 +96,15 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
                         var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
         
-                        setTimeout(function() {
-                            if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
+                        if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
+                            updateFundingOrgs(0, item);
+                        } else {
+                            updatedFundingElement.next('.field-add-delete').children().eq(0).click();
+                            setTimeout(function() {
                                 updateFundingOrgs(0, item);
-                            } else {
-                                updatedFundingElement.next('.field-add-delete').children().eq(0).click();
-                                setTimeout(function() {
-                                    updateFundingOrgs(0, item);
-                                }, 500);
-                                // updateFundingOrgs(0, item);
-                            }
-                        }, 500);
+                            }, 500);
+                            // updateFundingOrgs(0, item);
+                        }
                     } else if (item.funding_orgs) {
                         emptyFundingElementFound = false;
 
@@ -349,30 +347,37 @@ function updateFundingOrgs(i, item) {
     });
 }
 
-function deleteGrantInfo(acronymToDelete) {                    
-    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+function deleteGrantInfo(acronymToDelete) { 
+    return new Promise(function(resolve, reject) {                   
+        var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+                    
+        if (clearFundingDetails.length > 0) {
+            function clearFundingOrgs(i) {
+                if (i >= clearFundingDetails.length) return;
+                index = 0;
+                var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+                var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
                 
-    if (clearFundingDetails.length > 0) {
-        function clearFundingOrgs(i) {
-            if (i >= clearFundingDetails.length) return;
-            index = 0;
-            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-            
-            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                $(clearFundingAgency).val('');
-                $(clearProjectGrantAcronymInput).val('');
+                if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                    $(clearFundingAgency).val('');
+                    $(clearProjectGrantAcronymInput).val('');
 
-                setTimeout(function() {
-                    var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                    clearFundingElement.click();
-                    index = index+1;
-                }, 500);
+                    setTimeout(function() {
+                        var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+                        clearFundingElement.click();
+                        index = index+1
+                        // setTimeout(function() {
+                        //     index = index+1;
+                        // }, 500);
+                    }, 500);
+                }
+                clearFundingOrgs(i + 1);
             }
-            clearFundingOrgs(i + 1);
+            clearFundingOrgs(0);
+        } else {
+            resolve(); // Resolve immediately if no elements to delete
         }
-        clearFundingOrgs(0);
-    }
+    });
 }
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
