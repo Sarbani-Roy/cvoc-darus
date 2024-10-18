@@ -347,37 +347,33 @@ function updateFundingOrgs(i, item) {
     });
 }
 
-function deleteGrantInfo(acronymToDelete) { 
-    return new Promise(function(resolve, reject) {                   
-        var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-                    
-        if (clearFundingDetails.length > 0) {
-            function clearFundingOrgs(i) {
-                if (i >= clearFundingDetails.length) return;
-                index = 0;
-                var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-                var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+function deleteGrantInfo(acronymToDelete) {                    
+    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
                 
-                if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                    $(clearFundingAgency).val('');
-                    $(clearProjectGrantAcronymInput).val('');
+    if (clearFundingDetails.length > 0) {
+        function clearFundingOrgs(i) {
+            if (i >= clearFundingDetails.length) return;
+            index = 0;
+            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+            
+            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                $(clearFundingAgency).val('');
+                $(clearProjectGrantAcronymInput).val('');
 
-                    setTimeout(function() {
-                        var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                        clearFundingElement.click();
-                        index = index+1
-                        // setTimeout(function() {
-                        //     index = index+1;
-                        // }, 500);
-                    }, 500);
-                }
-                clearFundingOrgs(i + 1);
+                setTimeout(function() {
+                    var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+                    clearFundingElement.click();
+                    index = index+1;
+                    // setTimeout(function() {
+                    //     index = index+1;
+                    // }, 500);
+                }, 500);
             }
-            clearFundingOrgs(0);
-        } else {
-            resolve(); // Resolve immediately if no elements to delete
+            clearFundingOrgs(i + 1);
         }
-    });
+        clearFundingOrgs(0);
+    }
 }
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
