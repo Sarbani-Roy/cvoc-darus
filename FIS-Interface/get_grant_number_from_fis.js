@@ -272,7 +272,26 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 } else {
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
-                }   
+                }
+                
+                if (data.text) {
+                    $(projectNameInput).val(data.text);
+                } else if (data.id) {
+                    $(projectNameInput).val(data.id);
+                }
+                
+                // Update the placeholder for projectNameInput (optional)
+                var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder")
+                    ? $(projectInput).attr('data-cvoc-placeholder')
+                    : "Select a project";
+                $(projectNameInput).attr('placeholder', placeholderText);
+            
+                // Detect when the select2 dropdown is opened (user interaction)
+                $("#" + selectId).on('select2:open', function(e) {
+                    // Log the existing value before the user modifies it
+                    var projectName = $(projectNameInput).val();
+                    previousAcronym = $(projectAcronymInput).val();
+                });
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
