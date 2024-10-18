@@ -50,8 +50,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
+
+        // Declare previousAcronym outside the event handlers to make it accessible to both
         var previousAcronym = $(projectAcronymInput).val();
-        let processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
@@ -68,7 +69,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 theme: "classic",
                 tags: $(projectInput).attr('data-cvoc-allowfreetext'),
                 delay: 500,
-                templateResult: function(item) {                    
+                templateResult: function(item) {
+                    
                     // No templating right now
                     if (item.loading) {
                         return item.text;
@@ -78,12 +80,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var $result = markMatch(item.text, term);
                     return $result;
                 },
-                templateSelection: function(item) {                    
-                    // Prevent multiple executions using the Set to track processed items
-                    if (processedItemsSet.has(item.id)) {
+                templateSelection: function(item) {
+                    
+                    // Prevent multiple executions
+                    if (item.processed === true) {
                         return item.text;
                     }
-                    processedItemsSet.add(item.id);
+                    item.processed = true;
                     
                     if (item.funding_orgs && item.funding_orgs.length > 1) {
                         var updatedParentElement = $(grantNumberParentSelector).parent();
@@ -174,6 +177,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 allowClear: true,
                 ajax: {
                     // Use an ajax call to FIS to retrieve matching results
+                    cache: false,
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
@@ -223,6 +227,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                         agency: projectInfo.foerderkennzeichen,
                                         id: projectInfo.id,
                                         funding_orgs: element.funding_org,
+                                        processed: false
                                     };
                                 })
                             });
@@ -274,7 +279,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:clear', function(e) {                
                 $("input[data-project='" + num + "']").attr('value', '');
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
-                var clearedItemId = $(fisIdentifierInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('');
 
@@ -289,10 +293,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 setTimeout(function() {
                     deleteGrantInfo(oldProjectGrantAcronymInput);
                 }, 500);
-
-                if (clearedItemId) {
-                    processedItemsSet.delete(clearedItemId);
-                }
             });
         }
     })
