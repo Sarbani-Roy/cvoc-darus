@@ -255,9 +255,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
-                
-                // Clear the projectNameInput value after selection
-                $(projectNameInput).val('');
+                console.log('Before:', $(projectInput).val());
+                // Clear the projectNameInput value after
+                $(projectInput).val('');
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== newAcronym) {
@@ -268,16 +268,16 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
 
                 //For free-texts, the id and text are same. Otherwise different
-                setTimeout(function() {
-                    if (data.id != data.text) {
-                        var projectName = data.text;
-                        data.text = projectName;
-                        $("input[data-project='" + num + "']").val(data.text);
-                    } else {
-                        //Tags are allowed, so just enter the text as is
-                        $("input[data-project='" + num + "']").val(data.id);
-                    }
-                }, 500);
+                if (data.id != data.text) {
+                    var projectName = data.text;
+                    data.text = projectName;
+                    $("input[data-project='" + num + "']").val(data.text);
+                } else {
+                    //Tags are allowed, so just enter the text as is
+                    $("input[data-project='" + num + "']").val(data.id);
+                }
+
+                console.log('After:', $(projectInput).val());
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
@@ -288,12 +288,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 $(fisIdentifierInput).val('');
 
                 // Clear the projectNameInput value and set the placeholder text
-                $(projectNameInput).val('');
+                $(projectInput).val('');
                 // Determine the placeholder value
                 var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder") 
                 ? $(projectInput).attr('data-cvoc-placeholder') 
                 : "Select a project";
-                $(projectNameInput).attr('placeholder', placeholderText);
+                $(projectInput).attr('placeholder', placeholderText);
 
                 setTimeout(function() {
                     deleteGrantInfo(oldProjectGrantAcronymInput);
