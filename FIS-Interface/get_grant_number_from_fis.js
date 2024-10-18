@@ -96,15 +96,17 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
                         var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
         
-                        if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
-                            updateFundingOrgs(0, item);
-                        } else {
-                            updatedFundingElement.next('.field-add-delete').children().eq(0).click();
-                            setTimeout(function() {
+                        setTimeout(function() {
+                            if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
                                 updateFundingOrgs(0, item);
-                            }, 500);
-                            // updateFundingOrgs(0, item);
-                        }
+                            } else {
+                                updatedFundingElement.next('.field-add-delete').children().eq(0).click();
+                                setTimeout(function() {
+                                    updateFundingOrgs(0, item);
+                                }, 500);
+                                // updateFundingOrgs(0, item);
+                            }
+                        }, 500);
                     } else if (item.funding_orgs) {
                         emptyFundingElementFound = false;
 
@@ -246,8 +248,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // Detect when the select2 dropdown is opened (user interaction)
             $("#" + selectId).on('select2:open', function(e) {
-                // Log the existing value before the user modifies it
-                var projectName = $(projectNameInput).val();
                 previousAcronym = $(projectAcronymInput).val();
             });
             
@@ -258,9 +258,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                    // setTimeout(function() {
-                    //     deleteGrantInfo(previousAcronym);
-                    // }, 500);
                     deleteGrantInfo(previousAcronym);
                 }
 
