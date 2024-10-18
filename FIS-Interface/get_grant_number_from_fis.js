@@ -237,7 +237,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val();
-            console.log(projectName);
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
 
@@ -250,6 +249,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
+                // Make projectLevelInput empty in case of new selection
+                $(projectLevelInput).val('');
+                
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
                 
@@ -258,7 +260,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     setTimeout(function() {
                         deleteGrantInfo(previousAcronym);
                     }, 500);
-                    // deleteGrantInfo(previousAcronym);
                 }
 
                 //For free-texts, the id and text are same. Otherwise different
@@ -266,11 +267,15 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var projectName = data.text;
                     data.text = projectName;
                     $("input[data-project='" + num + "']").val(data.text);
+                    $(projectNameInput).val(data.text);
                 } else {
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
                     $(projectNameInput).val(data.id);
-                }   
+                }
+                
+                // Remove the placeholder after selection
+                $(projectNameInput).attr('placeholder', '');
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
