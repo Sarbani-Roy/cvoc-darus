@@ -50,8 +50,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
+
+        // Declare previousAcronym outside the event handlers to make it accessible to both
         var previousAcronym = $(projectAcronymInput).val();
-        let processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
@@ -68,7 +69,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 theme: "classic",
                 tags: $(projectInput).attr('data-cvoc-allowfreetext'),
                 delay: 500,
-                templateResult: function(item) {                    
+                templateResult: function(item) {
+                    
                     // No templating right now
                     if (item.loading) {
                         return item.text;
@@ -80,11 +82,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 templateSelection: function(item) {
                     
-                    // Prevent multiple executions using the Set to track processed items
-                    if (processedItemsSet.has(item.id)) {
+                    // Prevent multiple executions
+                    if (item.processed === true) {
                         return item.text;
                     }
-                    processedItemsSet.add(item.id);
+                    item.processed = true;
                     
                     setTimeout(function() {
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
@@ -275,7 +277,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {                
                 $("input[data-project='" + num + "']").attr('value', '');
-                var clearedItemId = $(fisIdentifierInput).val();
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('');
@@ -291,10 +292,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 setTimeout(function() {
                     deleteGrantInfo(oldProjectGrantAcronymInput);
                 }, 500);
-
-                if (clearedItemId) {
-                    processedItemsSet.delete(clearedItemId);
-                }
             });
         }
     })
@@ -372,6 +369,9 @@ function deleteGrantInfo(acronymToDelete) {
                     var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                     clearFundingElement.click();
                     index = index+1;
+                    // setTimeout(function() {
+                    //     index = index+1;
+                    // }, 500);
                 }, 500);
             }
             clearFundingOrgs(i + 1);
