@@ -256,6 +256,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
                 
+                // Clear the projectNameInput value after selection
+                $(projectNameInput).val('');
+                
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== newAcronym) {
                     setTimeout(function() {
@@ -265,33 +268,16 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 }
 
                 //For free-texts, the id and text are same. Otherwise different
-                if (data.id != data.text) {
-                    var projectName = data.text;
-                    data.text = projectName;
-                    $("input[data-project='" + num + "']").val(data.text);
-                } else {
-                    //Tags are allowed, so just enter the text as is
-                    $("input[data-project='" + num + "']").val(data.id);
-                }
-                
-                if (data.text) {
-                    $(projectNameInput).val(data.text);
-                } else if (data.id) {
-                    $(projectNameInput).val(data.id);
-                }
-                
-                // Update the placeholder for projectNameInput (optional)
-                var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder")
-                    ? $(projectInput).attr('data-cvoc-placeholder')
-                    : "Select a project";
-                $(projectNameInput).attr('placeholder', placeholderText);
-            
-                // Detect when the select2 dropdown is opened (user interaction)
-                $("#" + selectId).on('select2:open', function(e) {
-                    // Log the existing value before the user modifies it
-                    var projectName = $(projectNameInput).val();
-                    previousAcronym = $(projectAcronymInput).val();
-                });
+                setTimeout(function() {
+                    if (data.id != data.text) {
+                        var projectName = data.text;
+                        data.text = projectName;
+                        $("input[data-project='" + num + "']").val(data.text);
+                    } else {
+                        //Tags are allowed, so just enter the text as is
+                        $("input[data-project='" + num + "']").val(data.id);
+                    }
+                }, 500);
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
