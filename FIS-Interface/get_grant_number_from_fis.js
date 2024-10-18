@@ -150,11 +150,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     }     
                     if (item.id && item.text != item.id) {
                         $(fisIdentifierInput).val(item.id);
-                    } 
-                    //can not remember why '$(projectNameInput).val() === ""' was added. However, now it is creating problem in refilling.                                                       
-                    // if ($(projectNameInput).val() === "" && item.text) {
-                    //     var projectName = item.text;
-                    // }
+                    }                                                      
                     if (item.text) {
                         var projectName = item.text;
                     }
