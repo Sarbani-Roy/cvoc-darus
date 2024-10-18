@@ -258,6 +258,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 console.log('Before:', $(projectInput).val());
                 // Clear the projectNameInput value after
                 $(projectInput).val('');
+                console.log('After clearing:', $(projectInput).val());
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== newAcronym) {
@@ -269,15 +270,17 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
-                    var projectName = data.text;
-                    data.text = projectName;
+                    // var projectName = data.text;
+                    // data.text = projectName;
                     $("input[data-project='" + num + "']").val(data.text);
+                    console.log('data.text:', $(data.text));
                 } else {
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
+                    console.log('data.id:', $(data.id));
                 }
 
-                console.log('After:', $(projectInput).val());
+                console.log('Final:', $(projectInput).val());
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
