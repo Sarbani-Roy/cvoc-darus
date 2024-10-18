@@ -260,7 +260,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
                     setTimeout(function() {
                         deleteGrantInfo(previousAcronym);
-                    }, 500);
+                    }, 300);
                 }
 
                 //For free-texts, the id and text are same. Otherwise different
