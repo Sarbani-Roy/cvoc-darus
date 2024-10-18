@@ -249,7 +249,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
-                // Make projectLevelInput empty in case of new selection
+                // Intialize all the project information in case of new selection
+                $(projectNameInput).val('');
+                $(projectAcronymInput).val('');
                 $(projectLevelInput).val('');
                 
                 var data = e.params.data;         
@@ -273,7 +275,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     $("input[data-project='" + num + "']").val(data.id);
                     $(projectNameInput).val(data.id);
                 }
-                
+
                 // Remove the placeholder after selection
                 $(projectNameInput).attr('placeholder', '');
             });
