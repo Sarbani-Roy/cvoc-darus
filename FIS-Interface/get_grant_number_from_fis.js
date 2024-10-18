@@ -256,7 +256,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                    deleteGrantInfo(previousAcronym);
+                    setTimeout(function() {
+                        deleteGrantInfo(previousAcronym);
+                    }, 500);
                 }
 
                 //For free-texts, the id and text are same. Otherwise different
