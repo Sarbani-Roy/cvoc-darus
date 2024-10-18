@@ -51,7 +51,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
         var previousAcronym = $(projectAcronymInput).val();
-        var processedItemsSet = new Set();
+        let processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
