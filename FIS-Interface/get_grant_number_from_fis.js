@@ -51,6 +51,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
         var previousAcronym = $(projectAcronymInput).val();
+        var processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
@@ -79,11 +80,15 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 },
                 templateSelection: function(item) {
                     
-                    // Prevent multiple executions
-                    if (item.processed === true) {
+                    // Prevent multiple executions using the Set to track processed items
+                    if (processedItemsSet.has(item.id)) {
                         return item.text;
                     }
-                    item.processed = true;
+                    processedItemsSet.add(item.id);
+                    // if (item.processed === true) {
+                    //     return item.text;
+                    // }
+                    // item.processed = true;
                     
                     setTimeout(function() {
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
@@ -274,6 +279,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {                
                 $("input[data-project='" + num + "']").attr('value', '');
+                var clearedItemId = $(fisIdentifierInput).val();
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('');
@@ -289,6 +295,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 setTimeout(function() {
                     deleteGrantInfo(oldProjectGrantAcronymInput);
                 }, 500);
+
+                if (clearedItemId) {
+                    processedItemsSet.delete(clearedItemId);
+                }
             });
         }
     })
