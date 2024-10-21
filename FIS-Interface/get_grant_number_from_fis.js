@@ -260,6 +260,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
+                    var clearItemId = $(fisIdentifierInput).val();
+                    if (clearItemId) {
+                        processedItemsSet.delete(clearedItemId);
+                    }
                     setTimeout(function() {
                         deleteGrantInfo(previousAcronym);
                     }, 300);
