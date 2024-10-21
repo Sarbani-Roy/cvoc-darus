@@ -270,9 +270,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (previousFisId) {
                         processedItemsSet.delete(previousFisId);
                     }
-                    setTimeout(function() {
-                        deleteGrantInfo(previousAcronym);
-                    }, 300);
+                    // Await the completion of deleteGrantInfo function
+                    deleteGrantInfo(oldProjectGrantAcronymInput).then(() => {
+                        console.log('Grant information deleted successfully');
+                    }).catch((error) => {
+                        console.error('Error deleting grant information:', error);
+                    });
                 }
 
                 console.log("Processed item in select after clearing", processedItemsSet);
@@ -304,9 +307,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 : "Select a project";
                 $(projectNameInput).attr('placeholder', placeholderText);
 
-                setTimeout(function() {
-                    deleteGrantInfo(oldProjectGrantAcronymInput);
-                }, 500);
+                // Await the completion of deleteGrantInfo function
+                deleteGrantInfo(oldProjectGrantAcronymInput).then(() => {
+                    console.log('Grant information deleted successfully');
+                }).catch((error) => {
+                    console.error('Error deleting grant information:', error);
+                });
 
                 if (clearedItemId) {
                     processedItemsSet.delete(clearedItemId);
@@ -346,11 +352,11 @@ function getFundingDetails(grantNumberParentSelector) {
     return fundingDetails;
 }
                
-// Recursive function to handle async DOM update after each click
-function updateFundingOrgs(i, item) {
+// Update funding orgs asynchronously using Promises and async/await
+async function updateFundingOrgs(i, item) {
     if (i >= item.funding_orgs.length) return;  // Exit condition
 
-    $(grantNumberParentSelector).each(function() {
+    await $(grantNumberParentSelector).each(async function() {
         var newParentElement = $(grantNumberParentSelector).parent();
         var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
         var newFundingElement = newFieldValuesElement.find('.edit-compound-field').last();
@@ -359,41 +365,64 @@ function updateFundingOrgs(i, item) {
         
         $(newFundingAgency).val(item.funding_orgs[i].cfacro);
         $(newProjectGrantAcronymInput).val(item.acronym);
-        
-        if (i < item.funding_orgs.length - 1) {
-            newFundingElement.next('.field-add-delete').children().eq(0).click();
 
-            setTimeout(function() {
-                updateFundingOrgs(i + 1, item);
-            }, 500);
+        if (i < item.funding_orgs.length - 1) {
+            await clickAddFundingElement(newFundingElement);
+            await updateFundingOrgs(i + 1, item);
         }
     });
 }
 
-function deleteGrantInfo(acronymToDelete) {                    
-    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-                
-    if (clearFundingDetails.length > 0) {
-        function clearFundingOrgs(i) {
-            if (i >= clearFundingDetails.length) return;
-            index = 0;
-            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-            
-            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                $(clearFundingAgency).val('');
-                $(clearProjectGrantAcronymInput).val('');
+// Function to handle click event and wait until the new funding element is added
+function clickAddFundingElement(fundingElement) {
+    return new Promise((resolve) => {
+        fundingElement.next('.field-add-delete').children().eq(0).click();
+        // Use MutationObserver or wait for the DOM update
+        let observer = new MutationObserver((mutations) => {
+            resolve(); // Resolve the promise when the DOM is updated
+            observer.disconnect();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+}
 
-                setTimeout(function() {
-                    var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                    clearFundingElement.click();
-                    index = index+1;
-                }, 500);
-            }
-            clearFundingOrgs(i + 1);
-        }
-        clearFundingOrgs(0);
+// Use Promises for deleting grant info
+async function deleteGrantInfo(acronymToDelete) {
+    const clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+
+    if (clearFundingDetails.length > 0) {
+        await clearFundingOrgs(0, clearFundingDetails, acronymToDelete);
     }
+}
+
+// Asynchronous function to clear funding orgs
+async function clearFundingOrgs(i, clearFundingDetails, acronymToDelete) {
+    if (i >= clearFundingDetails.length) return;
+    
+    const clearFundingAgency = clearFundingDetails[i].fundingAgency;
+    const clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+    
+    if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+        $(clearFundingAgency).val('');
+        $(clearProjectGrantAcronymInput).val('');
+
+        const clearFundingElement = clearFundingDetails[i].deleteFundingElement;
+        await clickDeleteFundingElement(clearFundingElement);
+    }
+    
+    await clearFundingOrgs(i + 1, clearFundingDetails, acronymToDelete);
+}
+
+// Function to handle the deletion of a funding element and wait for the DOM update
+function clickDeleteFundingElement(clearFundingElement) {
+    return new Promise((resolve) => {
+        clearFundingElement.click();
+        let observer = new MutationObserver((mutations) => {
+            resolve(); // Resolve when the deletion is reflected in the DOM
+            observer.disconnect();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
 }
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
