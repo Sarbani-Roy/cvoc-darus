@@ -84,7 +84,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (processedItemsSet.has(item.id)) {
                         return item.text;
                     }
-                    processedItemsSet.add(item.id);
+                    if (item.id !== ""){
+                        processedItemsSet.add(item.id);
+                    }                    
                     // if (item.processed === true) {
                     //     return item.text;
                     // }
@@ -262,10 +264,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                    // var clearItemId = $(fisIdentifierInput).val();
-                    // if (clearItemId) {
-                    //     processedItemsSet.delete(clearItemId);
-                    // }
+                    var clearItemId = $(fisIdentifierInput).val();
+                    if (clearItemId) {
+                        processedItemsSet.delete(clearItemId);
+                    }
                     setTimeout(function() {
                         deleteGrantInfo(previousAcronym);
                     }, 300);
