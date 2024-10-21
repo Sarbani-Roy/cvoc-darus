@@ -51,6 +51,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
         var previousAcronym = $(projectAcronymInput).val();
+        var previousFisId = $(fisIdentifierInput).val();
         var processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
@@ -253,6 +254,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // Detect when the select2 dropdown is opened (user interaction)
             $("#" + selectId).on('select2:open', function(e) {
                 previousAcronym = $(projectAcronymInput).val();
+                previousFisId = $(fisIdentifierInput).val();
             });
             
             // When a selection is made, set the value of the hidden input field
@@ -264,9 +266,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                    var clearItemId = $(fisIdentifierInput).val();
-                    if (clearItemId) {
-                        processedItemsSet.delete(clearItemId);
+                    console.log("Previous FIS id: ", previousFisId)
+                    if (previousFisId) {
+                        processedItemsSet.delete(previousFisIdd);
                     }
                     setTimeout(function() {
                         deleteGrantInfo(previousAcronym);
