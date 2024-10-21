@@ -252,13 +252,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $("#" + selectId).on('select2:open', function(e) {
                 console.log("Processed item in open", processedItemsSet);
                 previousAcronym = $(projectAcronymInput).val();
-                var processedItemsSet = new Set();
+                processedItemsSet = new Set();
             });
             
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 console.log("Processed item in select", processedItemsSet);
-                var processedItemsSet = new Set();
+                processedItemsSet = new Set();
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
                 
