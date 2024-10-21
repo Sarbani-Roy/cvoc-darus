@@ -78,8 +78,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var $result = markMatch(item.text, term);
                     return $result;
                 },
-                templateSelection: function(item) {
-                    
+                templateSelection: function(item) {                    
                     // Prevent multiple executions using the Set to track processed items
                     if (processedItemsSet.has(item.id)) {
                         return item.text;
@@ -252,13 +251,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $("#" + selectId).on('select2:open', function(e) {
                 console.log("Processed item in open", processedItemsSet);
                 previousAcronym = $(projectAcronymInput).val();
-                processedItemsSet = new Set();
+                processedItemsSet.clear();
             });
             
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
                 console.log("Processed item in select", processedItemsSet);
-                processedItemsSet = new Set();
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
                 
