@@ -257,17 +257,21 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
+
+                console.log("Processed item in select before clearing", processedItemsSet);
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                    var clearItemId = $(fisIdentifierInput).val();
-                    if (clearItemId) {
-                        processedItemsSet.delete(clearItemId);
-                    }
+                    // var clearItemId = $(fisIdentifierInput).val();
+                    // if (clearItemId) {
+                    //     processedItemsSet.delete(clearItemId);
+                    // }
                     setTimeout(function() {
                         deleteGrantInfo(previousAcronym);
                     }, 300);
                 }
+
+                console.log("Processed item in select after clearing", processedItemsSet);
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
