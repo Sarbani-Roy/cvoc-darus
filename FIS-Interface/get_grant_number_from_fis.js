@@ -249,13 +249,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // Detect when the select2 dropdown is opened (user interaction)
             $("#" + selectId).on('select2:open', function(e) {
-                console.log("Processed item in open", processedItemsSet);
                 previousAcronym = $(projectAcronymInput).val();
                 processedItemsSet.clear();
+                console.log("Processed item in open", processedItemsSet);
             });
             
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
+                processedItemsSet.clear();
                 console.log("Processed item in select", processedItemsSet);
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
