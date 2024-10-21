@@ -262,7 +262,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
                     var clearItemId = $(fisIdentifierInput).val();
                     if (clearItemId) {
-                        processedItemsSet.delete(clearedItemId);
+                        processedItemsSet.delete(clearItemId);
                     }
                     setTimeout(function() {
                         deleteGrantInfo(previousAcronym);
