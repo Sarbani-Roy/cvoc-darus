@@ -51,7 +51,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
         var previousAcronym = $(projectAcronymInput).val();
-        let processedItemsSet = new Set();
+        var processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
             // Random identifier added
@@ -262,11 +262,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var newAcronym = data.acronym;
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
-                if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                    setTimeout(function() {
-                        deleteGrantInfo(previousAcronym);
-                    }, 300);
-                }
+                // if (previousAcronym !== "" && previousAcronym !== newAcronym) {
+                //     setTimeout(function() {
+                //         deleteGrantInfo(previousAcronym);
+                //     }, 300);
+                // }
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
