@@ -268,7 +268,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
                     console.log("Previous FIS id: ", previousFisId)
                     if (previousFisId) {
-                        processedItemsSet.delete(previousFisIdd);
+                        processedItemsSet.delete(previousFisId);
                     }
                     setTimeout(function() {
                         deleteGrantInfo(previousAcronym);
