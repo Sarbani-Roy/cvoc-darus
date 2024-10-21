@@ -88,7 +88,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         processedItemsSet.add(item.id);
                     }                    
                     
-                    // setTimeout(function() {
+                    setTimeout(async function() {
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
                             var updatedParentElement = $(grantNumberParentSelector).parent();
                             var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
@@ -109,7 +109,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         } else if (item.funding_orgs) {
                             await handleSingleFundingOrg(item);
                         }
-                    // }, 500);
+                    }, 500);
 
                     if (item.acronym){
                         $(projectAcronymInput).val(item.acronym);
@@ -325,6 +325,19 @@ function updateFundingOrgs(i, item) {
                 updateFundingOrgs(i + 1, item);
             }, 500);
         }
+    });
+}
+
+// Function to handle click event and wait until the new funding element is added
+function clickAddFundingElement(fundingElement) {
+    return new Promise((resolve) => {
+        fundingElement.next('.field-add-delete').children().eq(0).click();
+        // Use MutationObserver or wait for the DOM update
+        let observer = new MutationObserver((mutations) => {
+            resolve(); // Resolve the promise when the DOM is updated
+            observer.disconnect();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
     });
 }
 
