@@ -363,64 +363,43 @@ async function handleSingleFundingOrg(item) {
     }
 }
 
-// async function deleteGrantInfo(acronymToDelete) {                    
-//     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-//     var index = 0;
-                
-//     if (clearFundingDetails.length > 0) {
-//         async function clearFundingOrgs(i) {
-//             if (i >= clearFundingDetails.length) return;
-//             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-//             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-            
-//             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-//                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-//                 await clickDeleteFundingElement(clearFundingElement);
-
-//                 if (i === item.funding_orgs.length - 1) {
-//                     await delay(500);
-//                     $(clearFundingAgency).val('');
-//                     $(clearProjectGrantAcronymInput).val('');
-//                 }
-//                 index = index+1;
-//             }
-//             await clearFundingOrgs(i + 1);
-//         }
-//         await clearFundingOrgs(0);
-//     }         
-// }
-
 async function deleteGrantInfo(acronymToDelete) {                    
-    const grantElements = $(grantNumberParentSelector).toArray(); // Convert jQuery object to an array to use in a for...of loop
-
-    for (let grantElement of grantElements) {
-        var clearParentElement = $(grantElement).parent();
-        var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
-        var clearCompoundFieldElement = clearFieldValuesElement.find('.edit-compound-field');
-        
-        const compoundFields = clearCompoundFieldElement.toArray(); // Convert to array
-
-        for (let field of compoundFields) {
-            var clearFundingElement = $(field);
-            var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
-            var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-
+    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+    var index = 0;
+                
+    if (clearFundingDetails.length > 0) {
+        async function clearFundingOrgs(i) {
+            if (i >= clearFundingDetails.length) return;
+            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+            
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                await clickDeleteFundingElement(clearFundingElement); // Wait for DOM update here
+
+                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+                console.log((i-index), clearFundingElement)
+                await delay(500);
+                await clickDeleteFundingElement(clearFundingElement);
+                index = index+1;
+
+                if (i === clearFundingDetails.length-1){
+                    console.log($(clearFundingAgency).val());
+                    console.log($(clearProjectGrantAcronymInput).val());
+                }
             }
+            await clearFundingOrgs(i + 1);
         }
-    }            
+        await clearFundingOrgs(0);
+    }         
 }
 
 // Function to handle the deletion of a funding element and wait for the DOM update
-function clickDeleteFundingElement(fundingElement) {
+function clickDeleteFundingElement(clearFundingElement) {
     return new Promise((resolve) => {
-        fundingElement.next('.field-add-delete').children().eq(1).click();
-        // Use MutationObserver or wait for the DOM update
+        clearFundingElement.click();
         let observer = new MutationObserver((mutations) => {
-            resolve(); // Resolve the promise when the DOM is updated
+            resolve(); // Resolve when the deletion is reflected in the DOM
             observer.disconnect();
         });
         observer.observe(document.body, { childList: true, subtree: true });
