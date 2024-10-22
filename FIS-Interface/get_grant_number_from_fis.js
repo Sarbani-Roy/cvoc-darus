@@ -391,23 +391,27 @@ async function handleSingleFundingOrg(item) {
 // }
 
 async function deleteGrantInfo(acronymToDelete) {                    
-    $(grantNumberParentSelector).each(async function() {
-        var clearParentElement = $(this).parent();
+    const grantElements = $(grantNumberParentSelector).toArray(); // Convert jQuery object to an array to use in a for...of loop
+
+    for (let grantElement of grantElements) {
+        var clearParentElement = $(grantElement).parent();
         var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
-        var clearCompoundFieldElement = clearFieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+        var clearCompoundFieldElement = clearFieldValuesElement.find('.edit-compound-field');
         
-        await clearCompoundFieldElement.each(async function() {
-            var clearFundingElement = $(this);
-            var clearFundingAgency = fundingElement.children().eq(0).find('input');
-            var clearProjectGrantAcronymInput = fundingElement.children().eq(1).find('input');
-            
+        const compoundFields = clearCompoundFieldElement.toArray(); // Convert to array
+
+        for (let field of compoundFields) {
+            var clearFundingElement = $(field);
+            var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
+            var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
+
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                await clickDeleteFundingElement(clearFundingElement);             
+                await clickDeleteFundingElement(clearFundingElement); // Wait for DOM update here
             }
-        });
-    });            
+        }
+    }            
 }
 
 // Function to handle the deletion of a funding element and wait for the DOM update
