@@ -364,25 +364,22 @@ async function handleSingleFundingOrg(item) {
 }
 
 async function deleteGrantInfo(acronymToDelete) {                    
-    $(grantNumberParentSelector).each(function() {
+    $(grantNumberParentSelector).each(async function() {
         var clearParentElement = $(this).parent();
         var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
         var clearCompoundFieldElement = clearFieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
         
-        clearCompoundFieldElement.each(async function() {
+        await clearCompoundFieldElement.each(async function() {
             var clearFundingElement = $(this);
 
-            // Ensure the fundingElement has enough children
-            if (clearFundingElement.children().length > 2) {
-                var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
-                var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-                var clearFundingElement = clearFundingElement.next('.field-add-delete').children().eq(1);
+            var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
+            var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
+            var clearFundingElement = clearFundingElement.next('.field-add-delete').children().eq(1);
 
-                if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                    $(clearFundingAgency).val('');
-                    $(clearProjectGrantAcronymInput).val('');
-                    await clickDeleteFundingElement(clearFundingElement);             
-                }
+            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                $(clearFundingAgency).val('');
+                $(clearProjectGrantAcronymInput).val('');
+                await clickDeleteFundingElement(clearFundingElement);             
             }
         });
     });            
