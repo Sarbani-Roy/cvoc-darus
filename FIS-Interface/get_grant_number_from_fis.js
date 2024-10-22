@@ -363,39 +363,60 @@ async function handleSingleFundingOrg(item) {
     }
 }
 
-async function deleteGrantInfo(acronymToDelete) {                    
-    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-    var index = 0;
+// async function deleteGrantInfo(acronymToDelete) {                    
+//     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+//     var index = 0;
                 
-    if (clearFundingDetails.length > 0) {
-        async function clearFundingOrgs(i) {
-            if (i >= clearFundingDetails.length) return;
-            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+//     if (clearFundingDetails.length > 0) {
+//         async function clearFundingOrgs(i) {
+//             if (i >= clearFundingDetails.length) return;
+//             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+//             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+            
+//             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+//                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+//                 await clickDeleteFundingElement(clearFundingElement);
+
+//                 if (i === item.funding_orgs.length - 1) {
+//                     await delay(500);
+//                     $(clearFundingAgency).val('');
+//                     $(clearProjectGrantAcronymInput).val('');
+//                 }
+//                 index = index+1;
+//             }
+//             await clearFundingOrgs(i + 1);
+//         }
+//         await clearFundingOrgs(0);
+//     }         
+// }
+
+async function deleteGrantInfo(acronymToDelete) {                    
+    $(grantNumberParentSelector).each(async function() {
+        var clearParentElement = $(this).parent();
+        var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
+        var clearCompoundFieldElement = clearFieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+        
+        await clearCompoundFieldElement.each(async function() {
+            var clearFundingElement = $(this);
+            var clearFundingAgency = fundingElement.children().eq(0).find('input');
+            var clearProjectGrantAcronymInput = fundingElement.children().eq(1).find('input');
             
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                await clickDeleteFundingElement(clearFundingElement);
-
-                if (i === item.funding_orgs.length - 1) {
-                    await delay(500);
-                    $(clearFundingAgency).val('');
-                    $(clearProjectGrantAcronymInput).val('');
-                }
-                index = index+1;
+                $(clearFundingAgency).val('');
+                $(clearProjectGrantAcronymInput).val('');
+                await clickDeleteFundingElement(clearFundingElement);             
             }
-            await clearFundingOrgs(i + 1);
-        }
-        await clearFundingOrgs(0);
-    }         
+        });
+    });            
 }
 
 // Function to handle the deletion of a funding element and wait for the DOM update
 function clickDeleteFundingElement(clearFundingElement) {
     return new Promise((resolve) => {
-        clearFundingElement.click();
+        fundingElement.next('.field-add-delete').children().eq(1).click();
+        // Use MutationObserver or wait for the DOM update
         let observer = new MutationObserver((mutations) => {
-            resolve(); // Resolve when the deletion is reflected in the DOM
+            resolve(); // Resolve the promise when the DOM is updated
             observer.disconnect();
         });
         observer.observe(document.body, { childList: true, subtree: true });
