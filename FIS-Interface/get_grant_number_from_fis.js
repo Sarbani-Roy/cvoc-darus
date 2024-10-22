@@ -411,7 +411,7 @@ async function deleteGrantInfo(acronymToDelete) {
 }
 
 // Function to handle the deletion of a funding element and wait for the DOM update
-function clickDeleteFundingElement(clearFundingElement) {
+function clickDeleteFundingElement(fundingElement) {
     return new Promise((resolve) => {
         fundingElement.next('.field-add-delete').children().eq(1).click();
         // Use MutationObserver or wait for the DOM update
