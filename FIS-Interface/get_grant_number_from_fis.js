@@ -369,25 +369,15 @@ async function deleteGrantInfo(acronymToDelete) {
     if (clearFundingDetails.length > 0) {
         async function clearFundingOrgs(i) {
             if (i >= clearFundingDetails.length) return;
-            var index = 0;
             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
             var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
-            // console.log(clearFundingElement)
             
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                console.log("i-index: ", i)
-                console.log("Funding Agency before", $(clearFundingAgency).val());
-                console.log("Funding Acronym before", $(clearProjectGrantAcronymInput).val());
+                await delay(500);
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                console.log("Funding Agency after", $(clearFundingAgency).val());
-                console.log("Funding Acronym after", $(clearProjectGrantAcronymInput).val());
-                await delay(500);
-                // var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                // console.log(clearFundingElement)
                 await clickDeleteFundingElement(clearFundingElement);
-                // var index = index+1;
             }
             await clearFundingOrgs(i + 1);
         }
