@@ -217,20 +217,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
 
-                console.log("Processed item in select before clearing", processedItemsSet);
-                
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
                     console.log("Previous FIS id: ", previousFisId)
                     if (previousFisId) {
                         processedItemsSet.delete(previousFisId);
-                    }
-    
+                    }    
                     await deleteGrantInfo(previousAcronym);                   
                 }
-
-                console.log("Processed item in select after clearing", processedItemsSet);
-
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
                     var projectName = data.text;
@@ -380,10 +374,14 @@ async function deleteGrantInfo(acronymToDelete) {
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
             
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                console.log("i: ", i)
+                console.log("Funding Agency", $(clearFundingAgency).val());
+                console.log("Funding Acronym", $(clearProjectGrantAcronymInput).val());
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
                 await delay(500);
-                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+                var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
+                console.log(clearFundingElement)
                 await clickDeleteFundingElement(clearFundingElement);
                 var index = index+1;
             }
