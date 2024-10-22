@@ -382,11 +382,10 @@ async function deleteGrantInfo(acronymToDelete) {
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
+                await delay(500);
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 await clickDeleteFundingElement(clearFundingElement);
                 var index = index+1;
-
-                await delay(500);
             }
             await clearFundingOrgs(i + 1);
         }
