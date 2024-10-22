@@ -364,26 +364,28 @@ async function handleSingleFundingOrg(item) {
 }
 
 async function deleteGrantInfo(acronymToDelete) {                    
-    $(grantNumberParentSelector).each(async function() {
-        var clearParentElement = $(this).parent();
-        var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
-        var clearCompoundFieldElement = clearFieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
-        
-        await clearCompoundFieldElement.each(async function() {
-            var clearFundingElement = $(this);
-
-            var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
-            var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
-            var clearFundingElement = clearFundingElement.next('.field-add-delete').children().eq(1);
-
+    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+                
+    if (clearFundingDetails.length > 0) {
+        async function clearFundingOrgs(i) {
+            if (i >= clearFundingDetails.length) return;
+            var index = 0;
+            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+            // var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+            
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                console.log(clearFundingElement);
-                // await clickDeleteFundingElement(clearFundingElement);             
+
+                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+                console.log(clearFundingElement)
+                // await clickDeleteFundingElement(clearFundingElement);
+                var index = index+1;
             }
-        });
-    });            
+            await clearFundingOrgs(i + 1);
+        }
+        await clearFundingOrgs(0);
+    }         
 }
 
 // Function to handle the deletion of a funding element and wait for the DOM update
