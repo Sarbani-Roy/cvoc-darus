@@ -213,18 +213,25 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
             
             // When a selection is made, set the value of the hidden input field
-            $('#' + selectId).on('select2:select', async function(e) {
+            $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
 
+                console.log("Processed item in select before clearing", processedItemsSet);
+                
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
                     console.log("Previous FIS id: ", previousFisId)
                     if (previousFisId) {
                         processedItemsSet.delete(previousFisId);
-                    }    
-                    await deleteGrantInfo(previousAcronym);                   
+                    }
+                    setTimeout(function() {
+                        deleteGrantInfo(previousAcronym);
+                    }, 300);
                 }
+
+                console.log("Processed item in select after clearing", processedItemsSet);
+
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
                     var projectName = data.text;
@@ -237,7 +244,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
-            $('#' + selectId).on('select2:clear', async function(e) {                
+            $('#' + selectId).on('select2:clear', function(e) {                
                 $("input[data-project='" + num + "']").attr('value', '');
                 var clearedItemId = $(fisIdentifierInput).val();
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
@@ -251,8 +258,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 ? $(projectInput).attr('data-cvoc-placeholder') 
                 : "Select a project";
                 $(projectNameInput).attr('placeholder', placeholderText);
-                
-                await deleteGrantInfo(oldProjectGrantAcronymInput);
+
+                setTimeout(function() {
+                    deleteGrantInfo(oldProjectGrantAcronymInput);
+                }, 500);
 
                 if (clearedItemId) {
                     processedItemsSet.delete(clearedItemId);
@@ -363,50 +372,30 @@ async function handleSingleFundingOrg(item) {
     }
 }
 
-async function deleteGrantInfo(acronymToDelete) {                    
+function deleteGrantInfo(acronymToDelete) {                    
     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-    var index = 0;
                 
     if (clearFundingDetails.length > 0) {
-        async function clearFundingOrgs(i) {
+        function clearFundingOrgs(i) {
             if (i >= clearFundingDetails.length) return;
+            index = 0;
             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
             
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                var newClearFundingAgency = clearFundingDetails[(i-index)].fundingAgency;
-                var newClearProjectGrantAcronymInput = clearFundingDetails[(i-index)].projectGrantAcronym;
-            
-                $(newClearFundingAgency).val('');
-                $(newClearProjectGrantAcronymInput).val('');
+                $(clearFundingAgency).val('');
+                $(clearProjectGrantAcronymInput).val('');
 
-                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                console.log((i-index), clearFundingElement)
-                await delay(500);
-                await clickDeleteFundingElement(clearFundingElement);
-                index = index+1;
+                setTimeout(function() {
+                    var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+                    clearFundingElement.click();
+                    index = index+1;
+                }, 500);
             }
-            await clearFundingOrgs(i + 1);
+            clearFundingOrgs(i + 1);
         }
-        await clearFundingOrgs(0);
-    }         
-}
-
-// Function to handle the deletion of a funding element and wait for the DOM update
-function clickDeleteFundingElement(clearFundingElement) {
-    return new Promise((resolve) => {
-        clearFundingElement.click();
-        let observer = new MutationObserver((mutations) => {
-            resolve(); // Resolve when the deletion is reflected in the DOM
-            observer.disconnect();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-    });
-}
-
-// Define the delay function
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+        clearFundingOrgs(0);
+    }
 }
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
