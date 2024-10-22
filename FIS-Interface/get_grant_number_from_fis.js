@@ -364,22 +364,28 @@ async function handleSingleFundingOrg(item) {
 }
 
 async function deleteGrantInfo(acronymToDelete) {                    
-    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-                
-    if (clearFundingDetails.length > 0) {
-        for (let i = 0; i < clearFundingDetails.length; i++) {
-            console.log("i:", i)
-            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-            var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
-            
-            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                $(clearFundingAgency).val('');
-                $(clearProjectGrantAcronymInput).val('');
-                await clickDeleteFundingElement(clearFundingElement);             
+    $(grantNumberParentSelector).each(function() {
+        var clearParentElement = $(this).parent();
+        var clearFieldValuesElement = clearParentElement.siblings('.dataset-field-values');
+        var clearCompoundFieldElement = clearFieldValuesElement.find('.edit-compound-field'); // Select all children with class 'edit-compound-field'
+        
+        clearCompoundFieldElement.each(async function() {
+            var clearFundingElement = $(this);
+
+            // Ensure the fundingElement has enough children
+            if (clearFundingElement.children().length > 2) {
+                var clearFundingAgency = fundingElement.children().eq(0).find('input');
+                var clearProjectGrantAcronymInput = fundingElement.children().eq(1).find('input');
+                var clearFundingElement = fundingElement.next('.field-add-delete').children().eq(1);
+
+                if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                    $(clearFundingAgency).val('');
+                    $(clearProjectGrantAcronymInput).val('');
+                    await clickDeleteFundingElement(clearFundingElement);             
+                }
             }
-        }
-    }
+        });
+    });            
 }
 
 // Function to handle the deletion of a funding element and wait for the DOM update
