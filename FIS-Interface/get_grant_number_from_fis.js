@@ -385,6 +385,8 @@ async function deleteGrantInfo(acronymToDelete) {
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 await clickDeleteFundingElement(clearFundingElement);
                 var index = index+1;
+
+                await delay(500);
             }
             await clearFundingOrgs(i + 1);
         }
