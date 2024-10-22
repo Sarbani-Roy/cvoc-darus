@@ -404,32 +404,27 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {                    
     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-    var index = 0;
-                
-    if (clearFundingDetails.length > 0) {
-        async function clearFundingOrgs(i) {
-            if (i >= clearFundingDetails.length) return;
+    var matchingFundingDetails = [];
 
-            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
-            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-            
-            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                // Clear the values
-                $(clearFundingAgency).val('');
-                $(clearProjectGrantAcronymInput).val('');
-
-                // Wait for the element to be clicked and DOM to update
-                var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
-                await clickDeleteFundingElement(clearFundingElement);  // Make sure click is awaited
-                index = index + 1;
-            }
-
-            // Proceed to the next funding org
-            await clearFundingOrgs(i + 1);
+    // Filter and collect matching funding details
+    clearFundingDetails.forEach(function(detail) {
+        var clearProjectGrantAcronymInput = detail.projectGrantAcronym;
+        if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+            matchingFundingDetails.push(detail); // Collect only matching entries
         }
+    });
 
-        // Start the recursive clearing process
-        await clearFundingOrgs(0);
+    if (matchingFundingDetails.length > 0) {
+        for (let i = 0; i < matchingFundingDetails.length; i++) {
+            var detail = matchingFundingDetails[i];
+
+            // Clear the values for both agency and acronym
+            $(detail.fundingAgency).val('');
+            $(detail.projectGrantAcronym).val('');
+
+            // Wait for the delete button to be clicked and DOM to update
+            await clickDeleteFundingElement(detail.deleteFundingElement); // Ensure async click is handled
+        }
     }         
 }
 
