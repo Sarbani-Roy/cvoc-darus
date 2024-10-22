@@ -367,8 +367,7 @@ async function deleteGrantInfo(acronymToDelete) {
     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
                 
     if (clearFundingDetails.length > 0) {
-        async function clearFundingOrgs(i) {
-            if (i >= clearFundingDetails.length) return;
+        for (let i = 0; i < clearFundingDetails.length; i++) {
             console.log("i:", i)
             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
@@ -377,14 +376,9 @@ async function deleteGrantInfo(acronymToDelete) {
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-
-                if (i < clearFundingDetails.length - 1) {
-                    await clickDeleteFundingElement(clearFundingElement);
-                }                
+                await clickDeleteFundingElement(clearFundingElement);             
             }
-            await clearFundingOrgs(i + 1);
         }
-        await clearFundingOrgs(0);
     }
 }
 
