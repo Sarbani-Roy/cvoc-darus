@@ -379,7 +379,8 @@ async function deleteGrantInfo(acronymToDelete) {
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                await clickDeleteFundingElement(clearFundingElement);             
+                console.log(clearFundingElement);
+                // await clickDeleteFundingElement(clearFundingElement);             
             }
         });
     });            
