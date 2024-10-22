@@ -374,9 +374,9 @@ async function deleteGrantInfo(acronymToDelete) {
 
             // Ensure the fundingElement has enough children
             if (clearFundingElement.children().length > 2) {
-                var clearFundingAgency = fundingElement.children().eq(0).find('input');
-                var clearProjectGrantAcronymInput = fundingElement.children().eq(1).find('input');
-                var clearFundingElement = fundingElement.next('.field-add-delete').children().eq(1);
+                var clearFundingAgency = clearFundingElement.children().eq(0).find('input');
+                var clearProjectGrantAcronymInput = clearFundingElement.children().eq(1).find('input');
+                var clearFundingElement = clearFundingElement.next('.field-add-delete').children().eq(1);
 
                 if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                     $(clearFundingAgency).val('');
