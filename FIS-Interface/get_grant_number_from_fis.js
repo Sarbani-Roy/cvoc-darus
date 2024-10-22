@@ -365,11 +365,11 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {                    
     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+    var index = 0;
                 
     if (clearFundingDetails.length > 0) {
         async function clearFundingOrgs(i) {
             if (i >= clearFundingDetails.length) return;
-            var index = 0;
             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
             
@@ -377,7 +377,7 @@ async function deleteGrantInfo(acronymToDelete) {
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
 
-                var clearFundingElement = clearFundingDetails[0].deleteFundingElement;
+                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 console.log((i-index), clearFundingElement)
                 await clickDeleteFundingElement(clearFundingElement);
                 index = index+1;
