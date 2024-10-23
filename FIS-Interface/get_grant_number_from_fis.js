@@ -413,6 +413,9 @@ async function deleteGrantInfo(acronymToDelete) {
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
             
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                var clearFundingAgency = clearFundingDetails[(i-index)].fundingAgency;
+                var clearProjectGrantAcronymInput = clearFundingDetails[(i-index)].projectGrantAcronym;
+            
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
                 await delay(5000);
