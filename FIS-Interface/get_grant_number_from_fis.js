@@ -404,27 +404,25 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {                    
     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
-    var matchingFundingDetails = [];
-
-    // Filter and collect matching funding details
-    clearFundingDetails.forEach(function(detail) {
-        var clearProjectGrantAcronymInput = detail.projectGrantAcronym;
-        if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-            matchingFundingDetails.push(detail); // Collect only matching entries
+    var index = 0;
+                
+    if (clearFundingDetails.length > 0) {
+        async function clearFundingOrgs(i) {
+            if (i >= clearFundingDetails.length) return;
+            var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+            
+            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                $(clearFundingAgency).val('');
+                $(clearProjectGrantAcronymInput).val('');
+                await delay(500);
+                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+                await clickDeleteFundingElement(clearFundingElement);  // Make sure click is awaited
+                index = index + 1;
+            }
+            await clearFundingOrgs(i + 1);
         }
-    });
-
-    if (matchingFundingDetails.length > 0) {
-        for (let i = 0; i < matchingFundingDetails.length; i++) {
-            var detail = matchingFundingDetails[i];
-
-            // Clear the values for both agency and acronym
-            $(detail.fundingAgency).val('');
-            $(detail.projectGrantAcronym).val('');
-
-            // Wait for the delete button to be clicked and DOM to update
-            await clickDeleteFundingElement(detail.deleteFundingElement); // Ensure async click is handled
-        }
+        await clearFundingOrgs(0);
     }         
 }
 
@@ -438,14 +436,13 @@ function clickDeleteFundingElement(deleteElement) {
             observer.disconnect();
         });
         observer.observe(document.body, { childList: true, subtree: true });
-
-        // Alternatively, use a timeout for a delay (less reliable, but can work)
-        setTimeout(() => {
-            resolve();
-        }, 500);  // Adjust timing based on how long the UI typically takes
     });
 }
 
+// Define the delay function
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
