@@ -370,7 +370,6 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {    
     await clearFundingValues(acronymToDelete);
-    await delay(1000);
     await deleteEmptyFundingElements();
 }
 
@@ -388,6 +387,7 @@ async function clearFundingValues(acronymToDelete) {
                 console.log("clearFundingValues", $(clearFundingAgency).val());
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
+                await delay(100);
             }
         }
     }
