@@ -415,9 +415,9 @@ async function deleteGrantInfo(acronymToDelete) {
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                await delay(500);
+                await delay(5000);
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                await clickDeleteFundingElement(clearFundingElement);  // Make sure click is awaited
+                await clickDeleteFundingElement(clearFundingElement);
                 index = index + 1;
             }
             await clearFundingOrgs(i + 1);
@@ -429,11 +429,10 @@ async function deleteGrantInfo(acronymToDelete) {
 // Helper function to click the delete button and wait for the DOM update
 function clickDeleteFundingElement(deleteElement) {
     return new Promise((resolve) => {
-        deleteElement.click();  // Trigger the click
-        // Use MutationObserver or a timeout to wait for DOM update (choose the one fitting your UI)
+        deleteElement.click();
         let observer = new MutationObserver((mutations) => {
-            resolve();  // Resolve the promise when DOM is updated
             observer.disconnect();
+            resolve();
         });
         observer.observe(document.body, { childList: true, subtree: true });
     });
