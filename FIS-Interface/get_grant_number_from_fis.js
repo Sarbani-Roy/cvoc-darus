@@ -378,6 +378,7 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {    
     await clearFundingValues(acronymToDelete);
+    await delay(500);
     await deleteEmptyFundingElements();
 }
 
@@ -412,7 +413,7 @@ async function deleteEmptyFundingElements() {
 
             // If the fields are empty, delete the corresponding element
             if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '') {
-                var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
+                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 await clickDeleteFundingElement(clearFundingElement);
                 index += 1;
                 // await delay(2000); 
