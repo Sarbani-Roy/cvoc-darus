@@ -414,13 +414,11 @@ async function deleteGrantInfo(acronymToDelete) {
             console.log(clearFundingAgency);
             
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                var clearFundingAgency = clearFundingDetails[(i-index)].fundingAgency;
-                var clearProjectGrantAcronymInput = clearFundingDetails[(i-index)].projectGrantAcronym;
-                console.log(clearFundingAgency);
-            
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                await delay(5000);
+            }
+            await delay(5000);
+            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 await clickDeleteFundingElement(clearFundingElement);
                 index = index + 1;
@@ -428,7 +426,7 @@ async function deleteGrantInfo(acronymToDelete) {
             await clearFundingOrgs(i + 1);
         }
         await clearFundingOrgs(0);
-    }         
+    } 
 }
 
 // Helper function to click the delete button and wait for the DOM update
