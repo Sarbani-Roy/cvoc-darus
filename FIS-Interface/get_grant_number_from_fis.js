@@ -79,7 +79,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var $result = markMatch(item.text, term);
                     return $result;
                 },
-                templateSelection: async function(item) {                    
+                templateSelection: function(item) {                    
                     // Prevent multiple executions using the Set to track processed items
                     if (processedItemsSet.has(item.id)) {
                         return item.text;
@@ -87,7 +87,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (item.id !== ""){
                         processedItemsSet.add(item.id);
                     }                    
-                    await delay(500);
+                    
                     setTimeout(async function() {
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
                             var updatedParentElement = $(grantNumberParentSelector).parent();
@@ -213,6 +213,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
             
             // When a selection is made, set the value of the hidden input field
+            // $('#' + selectId).on('select2:select', function(e) {
             $('#' + selectId).on('select2:select', async function(e) {
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
@@ -226,6 +227,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         processedItemsSet.delete(previousFisId);
                     }
                     await deleteGrantInfo(previousAcronym);
+                    // setTimeout(function() {
+                    //     deleteGrantInfo(previousAcronym);
+                    // }, 300);
                 }
 
                 console.log("Processed item in select after clearing", processedItemsSet);
@@ -242,6 +246,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
+            // $('#' + selectId).on('select2:clear', function(e) {  
             $('#' + selectId).on('select2:clear', async function(e) {               
                 $("input[data-project='" + num + "']").attr('value', '');
                 var clearedItemId = $(fisIdentifierInput).val();
@@ -257,6 +262,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 : "Select a project";
                 $(projectNameInput).attr('placeholder', placeholderText);
                 await deleteGrantInfo(oldProjectGrantAcronymInput);
+
+                // setTimeout(function() {
+                //     deleteGrantInfo(oldProjectGrantAcronymInput);
+                // }, 500);
 
                 if (clearedItemId) {
                     processedItemsSet.delete(clearedItemId);
