@@ -213,7 +213,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
             
             // When a selection is made, set the value of the hidden input field
-            // $('#' + selectId).on('select2:select', function(e) {
             $('#' + selectId).on('select2:select', async function(e) {
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
@@ -244,16 +243,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
-            // $('#' + selectId).on('select2:clear', function(e) {  
             $('#' + selectId).on('select2:clear', async function(e) {               
                 $("input[data-project='" + num + "']").attr('value', '');
                 var clearedItemId = $(fisIdentifierInput).val();
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('');
-
-                // Clear the projectNameInput value and set the placeholder text
                 $(projectNameInput).val('');
+                
                 // Determine the placeholder value
                 var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder") 
                 ? $(projectInput).attr('data-cvoc-placeholder') 
@@ -301,7 +298,7 @@ function getFundingDetails(grantNumberParentSelector) {
                
 // Recursive function to handle async DOM update after each click
 async function updateFundingOrgs(i, item) {
-    if (i >= item.funding_orgs.length) return;  // Exit condition
+    if (i >= item.funding_orgs.length) return;
 
     $(grantNumberParentSelector).each(async function() {
         var newParentElement = $(grantNumberParentSelector).parent();
@@ -326,7 +323,7 @@ function clickAddFundingElement(fundingElement) {
         fundingElement.next('.field-add-delete').children().eq(0).click();
         // Use MutationObserver or wait for the DOM update
         let observer = new MutationObserver((mutations) => {
-            resolve(); // Resolve the promise when the DOM is updated
+            resolve();
             observer.disconnect();
         });
         observer.observe(document.body, { childList: true, subtree: true });
@@ -389,7 +386,6 @@ async function clearFundingValues(acronymToDelete) {
                 var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                // await delay(5000);
             }
         }
     }
@@ -410,7 +406,6 @@ async function deleteEmptyFundingElements() {
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 await clickDeleteFundingElement(clearFundingElement);
                 index += 1;
-                // await delay(2000); 
             }
         }
     }
@@ -432,7 +427,6 @@ function clickDeleteFundingElement(deleteElement) {
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
