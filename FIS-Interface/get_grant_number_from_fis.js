@@ -221,6 +221,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (previousFisId) {
                         processedItemsSet.delete(previousFisId);
                     }
+                    await delay(1000);
                     await deleteGrantInfo(previousAcronym);
                 }
 
@@ -421,7 +422,6 @@ function clickDeleteFundingElement(deleteElement) {
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
