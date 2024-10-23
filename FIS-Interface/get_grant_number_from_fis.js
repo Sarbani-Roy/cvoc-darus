@@ -370,7 +370,7 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {    
     await clearFundingValues(acronymToDelete);
-    await delay(500);
+    await delay(1000);
     await deleteEmptyFundingElements();
 }
 
