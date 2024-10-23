@@ -219,7 +219,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var newAcronym = data.acronym;
 
                 console.log("Processed item in select before clearing", processedItemsSet);
-                await delay(1000);
+                
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
                     console.log("Previous FIS id: ", previousFisId)
@@ -227,6 +227,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         processedItemsSet.delete(previousFisId);
                     }
                     await deleteGrantInfo(previousAcronym);
+                    // setTimeout(function() {
+                    //     deleteGrantInfo(previousAcronym);
+                    // }, 300);
                 }
 
                 console.log("Processed item in select after clearing", processedItemsSet);
@@ -259,6 +262,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 : "Select a project";
                 $(projectNameInput).attr('placeholder', placeholderText);
                 await deleteGrantInfo(oldProjectGrantAcronymInput);
+
+                // setTimeout(function() {
+                //     deleteGrantInfo(oldProjectGrantAcronymInput);
+                // }, 500);
 
                 if (clearedItemId) {
                     processedItemsSet.delete(clearedItemId);
@@ -371,7 +378,7 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {    
     await clearFundingValues(acronymToDelete);
-    await delay(5000);
+    await delay(500);
     await deleteEmptyFundingElements();
 }
 
