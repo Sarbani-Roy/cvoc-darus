@@ -402,31 +402,56 @@ async function handleSingleFundingOrg(item) {
 //     }
 // }
 
-async function deleteGrantInfo(acronymToDelete) {                    
+async function deleteGrantInfo(acronymToDelete) {
+    // Step 1: Clear values for matching acronyms
+    await clearFundingValues(acronymToDelete);
+
+    // Step 2: Delete elements with empty values
+    await deleteEmptyFundingElements();
+}
+
+async function clearFundingValues(acronymToDelete) {
+    var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
+
+    if (clearFundingDetails.length > 0) {
+        for (let i = 0; i < clearFundingDetails.length; i++) {
+            var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+
+            // If the acronym matches, clear the funding agency and project acronym
+            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
+                var clearFundingAgency = clearFundingDetails[i].fundingAgency;
+                $(clearFundingAgency).val('');  // Clear funding agency
+                $(clearProjectGrantAcronymInput).val('');  // Clear project grant acronym
+                
+                // Wait for a few seconds after clearing the values
+                await delay(5000);
+            }
+        }
+    }
+}
+
+async function deleteEmptyFundingElements() {
     var clearFundingDetails = getFundingDetails(grantNumberParentSelector);
     var index = 0;
-                
+
     if (clearFundingDetails.length > 0) {
-        async function clearFundingOrgs(i) {
-            if (i >= clearFundingDetails.length) return;
+        for (let i = 0; i < clearFundingDetails.length; i++) {
             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
-            console.log(clearFundingAgency);
-            
-            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                $(clearFundingAgency).val('');
-                $(clearProjectGrantAcronymInput).val('');
-            }
-            await delay(5000);
-            if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
-                var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
+
+            // If the fields are empty, delete the corresponding element
+            if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '') {
+                var clearFundingElement = clearFundingDetails[i].deleteFundingElement;
+
+                // Click the delete button and wait for the DOM update
                 await clickDeleteFundingElement(clearFundingElement);
-                index = index + 1;
+                index += 1;
+
+                // Optionally wait between deletions
+                await delay(2000); // You can adjust this delay as needed
             }
-            await clearFundingOrgs(i + 1);
         }
-        await clearFundingOrgs(0);
-    } 
+    }
 }
 
 // Helper function to click the delete button and wait for the DOM update
@@ -441,10 +466,11 @@ function clickDeleteFundingElement(deleteElement) {
     });
 }
 
-// Define the delay function
+// Delay function
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
