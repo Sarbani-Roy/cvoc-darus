@@ -145,7 +145,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (!term) {
                             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                         }
-                        // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
                         
                         // Search both title and acronym
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
@@ -154,7 +153,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     },
                     data: function(params) {
                         term = params.term
-                        // term = `title=${params.term}`;
                         if (!term) {
                             term = "";
                         }
@@ -177,9 +175,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         // Wait for both AJAX requests to finish
                         $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
-                            // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
                             var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
-                            // Pass combined data to the success callback
                             success({
                                 results: combinedData.map(function(element) {
                                     let projectInfo = element.project;
@@ -248,10 +244,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('');
-
-                // Clear the projectNameInput value and set the placeholder text
                 $(projectNameInput).val('');
-                // Determine the placeholder value
+                
                 var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder") 
                 ? $(projectInput).attr('data-cvoc-placeholder') 
                 : "Select a project";
@@ -386,7 +380,6 @@ async function clearFundingValues(acronymToDelete) {
                 var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                // await delay(5000);
             }
         }
     }
@@ -406,8 +399,7 @@ async function deleteEmptyFundingElements() {
             if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '') {
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 await clickDeleteFundingElement(clearFundingElement);
-                index += 1;
-                // await delay(2000); 
+                index += 1; 
             }
         }
     }
