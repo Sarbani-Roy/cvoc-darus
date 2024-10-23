@@ -79,7 +79,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var $result = markMatch(item.text, term);
                     return $result;
                 },
-                templateSelection: function(item) {                    
+                templateSelection: async function(item) {                    
                     // Prevent multiple executions using the Set to track processed items
                     if (processedItemsSet.has(item.id)) {
                         return item.text;
@@ -87,7 +87,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (item.id !== ""){
                         processedItemsSet.add(item.id);
                     }                    
-                    
+                    await delay(500);
                     setTimeout(async function() {
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
                             var updatedParentElement = $(grantNumberParentSelector).parent();
