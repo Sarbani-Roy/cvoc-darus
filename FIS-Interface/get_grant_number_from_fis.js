@@ -87,28 +87,26 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (item.id !== ""){
                         processedItemsSet.add(item.id);
                     }                    
-                    
-                    // setTimeout(async function() {
-                    //     if (item.funding_orgs && item.funding_orgs.length > 1) {
-                    //         var updatedParentElement = $(grantNumberParentSelector).parent();
-                    //         var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
-                    //         var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
+                    await delay(500);
+                    setTimeout(async function() {
+                        if (item.funding_orgs && item.funding_orgs.length > 1) {
+                            var updatedParentElement = $(grantNumberParentSelector).parent();
+                            var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
+                            var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
 
-                    //         var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
-                    //         var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
+                            var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
+                            var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
             
-                    //         if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
-                    //             await updateFundingOrgs(0, item);
-                    //         } else {
-                    //             await clickAddFundingElement(updatedFundingElement);
-                    //             await updateFundingOrgs(0, item);
-                    //         }
-                    //     } else if (item.funding_orgs) {
-                    //         await handleSingleFundingOrg(item);
-                    //     }
-                    // }, 500);
-
-                    await handleProjectSelection(item, projectAcronymInput, fisIdentifierInput, projectNameInput, num);
+                            if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
+                                await updateFundingOrgs(0, item);
+                            } else {
+                                await clickAddFundingElement(updatedFundingElement);
+                                await updateFundingOrgs(0, item);
+                            }
+                        } else if (item.funding_orgs) {
+                            await handleSingleFundingOrg(item);
+                        }
+                    }, 500);
 
                     if (item.acronym){
                         $(projectAcronymInput).val(item.acronym);
@@ -297,43 +295,6 @@ function getFundingDetails(grantNumberParentSelector) {
     });
     return fundingDetails;
 }
-
-async function handleProjectSelection(item, projectAcronymInput, fisIdentifierInput, projectNameInput, num) {
-    // var previousAcronym = $(projectAcronymInput).val();
-    // var previousFisId = $(fisIdentifierInput).val();
-    
-    // // If the previous acronym exists and differs from the new one, delete the grant info
-    // if (previousAcronym !== "" && previousAcronym !== item.acronym) {
-    //     console.log("Previous FIS id: ", previousFisId);
-    //     if (previousFisId) {
-    //         processedItemsSet.delete(previousFisId);
-    //     }
-    //     await deleteGrantInfo(previousAcronym); // Ensure this completes before updating
-    // }
-    
-    // // Introduce a small delay if needed
-    // await delay(500);
-
-    // Now, proceed with updating based on the new selection
-    if (item.funding_orgs && item.funding_orgs.length > 1) {
-        var updatedParentElement = $(grantNumberParentSelector).parent();
-        var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
-        var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
-
-        var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
-        var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
-
-        if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
-            await updateFundingOrgs(0, item);
-        } else {
-            await clickAddFundingElement(updatedFundingElement);
-            await updateFundingOrgs(0, item);
-        }
-    } else if (item.funding_orgs) {
-        await handleSingleFundingOrg(item);
-    }
-}
-
                
 // Recursive function to handle async DOM update after each click
 async function updateFundingOrgs(i, item) {
