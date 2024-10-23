@@ -387,7 +387,7 @@ async function clearFundingValues(acronymToDelete) {
                 console.log("clearFundingValues", $(clearFundingAgency).val());
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
-                await delay(100);
+                await delay(1000);
             }
         }
     }
