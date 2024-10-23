@@ -299,20 +299,20 @@ function getFundingDetails(grantNumberParentSelector) {
 }
 
 async function handleProjectSelection(item, projectAcronymInput, fisIdentifierInput, projectNameInput, num) {
-    var previousAcronym = $(projectAcronymInput).val();
-    var previousFisId = $(fisIdentifierInput).val();
+    // var previousAcronym = $(projectAcronymInput).val();
+    // var previousFisId = $(fisIdentifierInput).val();
     
-    // If the previous acronym exists and differs from the new one, delete the grant info
-    if (previousAcronym !== "" && previousAcronym !== item.acronym) {
-        console.log("Previous FIS id: ", previousFisId);
-        if (previousFisId) {
-            processedItemsSet.delete(previousFisId);
-        }
-        await deleteGrantInfo(previousAcronym); // Ensure this completes before updating
-    }
+    // // If the previous acronym exists and differs from the new one, delete the grant info
+    // if (previousAcronym !== "" && previousAcronym !== item.acronym) {
+    //     console.log("Previous FIS id: ", previousFisId);
+    //     if (previousFisId) {
+    //         processedItemsSet.delete(previousFisId);
+    //     }
+    //     await deleteGrantInfo(previousAcronym); // Ensure this completes before updating
+    // }
     
-    // Introduce a small delay if needed
-    await delay(500);
+    // // Introduce a small delay if needed
+    // await delay(500);
 
     // Now, proceed with updating based on the new selection
     if (item.funding_orgs && item.funding_orgs.length > 1) {
