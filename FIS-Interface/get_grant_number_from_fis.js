@@ -145,6 +145,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (!term) {
                             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                         }
+                        // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
                         
                         // Search both title and acronym
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
@@ -153,6 +154,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     },
                     data: function(params) {
                         term = params.term
+                        // term = `title=${params.term}`;
                         if (!term) {
                             term = "";
                         }
@@ -175,7 +177,9 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
                         // Wait for both AJAX requests to finish
                         $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
+                            // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
                             var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
+                            // Pass combined data to the success callback
                             success({
                                 results: combinedData.map(function(element) {
                                     let projectInfo = element.project;
@@ -209,6 +213,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
             
             // When a selection is made, set the value of the hidden input field
+            // $('#' + selectId).on('select2:select', function(e) {
             $('#' + selectId).on('select2:select', async function(e) {
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
@@ -221,8 +226,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (previousFisId) {
                         processedItemsSet.delete(previousFisId);
                     }
-                    await delay(1000);
                     await deleteGrantInfo(previousAcronym);
+                    // setTimeout(function() {
+                    //     deleteGrantInfo(previousAcronym);
+                    // }, 300);
                 }
 
                 console.log("Processed item in select after clearing", processedItemsSet);
@@ -239,19 +246,26 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
+            // $('#' + selectId).on('select2:clear', function(e) {  
             $('#' + selectId).on('select2:clear', async function(e) {               
                 $("input[data-project='" + num + "']").attr('value', '');
                 var clearedItemId = $(fisIdentifierInput).val();
                 var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
                 $(projectAcronymInput).val('');
                 $(fisIdentifierInput).val('');
+
+                // Clear the projectNameInput value and set the placeholder text
                 $(projectNameInput).val('');
-                
+                // Determine the placeholder value
                 var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder") 
                 ? $(projectInput).attr('data-cvoc-placeholder') 
                 : "Select a project";
                 $(projectNameInput).attr('placeholder', placeholderText);
                 await deleteGrantInfo(oldProjectGrantAcronymInput);
+
+                // setTimeout(function() {
+                //     deleteGrantInfo(oldProjectGrantAcronymInput);
+                // }, 500);
 
                 if (clearedItemId) {
                     processedItemsSet.delete(clearedItemId);
@@ -381,6 +395,7 @@ async function clearFundingValues(acronymToDelete) {
                 var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
+                // await delay(5000);
             }
         }
     }
@@ -400,7 +415,8 @@ async function deleteEmptyFundingElements() {
             if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '') {
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 await clickDeleteFundingElement(clearFundingElement);
-                index += 1; 
+                index += 1;
+                // await delay(2000); 
             }
         }
     }
@@ -422,6 +438,7 @@ function clickDeleteFundingElement(deleteElement) {
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 
 // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
 function markMatch(text, term) {
