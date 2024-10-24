@@ -33,7 +33,7 @@ function expandProject() {
                         if (fundingElement.children().length > 2) {
                             var fundingAgency = fundingElement.children().eq(0).find('input');
                             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
-                            var fundingIdentifier = fundingElement.children().eq(3).find('input');
+                            var fundingIdentifier = fundingElement.children().eq(2).find('input');
 
                             updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency, fundingIdentifier);                        
                         }
@@ -291,7 +291,7 @@ function getFundingDetails(grantNumberParentSelector) {
             if (fundingElement.children().length > 2) {
                 var fundingAgency = fundingElement.children().eq(0).find('input');
                 var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
-                var fundingIdentifier = fundingElement.children().eq(3).find('input');
+                var fundingIdentifier = fundingElement.children().eq(2).find('input');
                 var deleteFundingElement = fundingElement.next('.field-add-delete').children().eq(1);
 
                 // Store the funding agency and project acronym in the array
