@@ -33,9 +33,9 @@ function expandProject() {
                         if (fundingElement.children().length > 2) {
                             var fundingAgency = fundingElement.children().eq(0).find('input');
                             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
-                            // var fundingIdentifier = fundingElement.children().eq(3).find('input');
+                            var fundingIdentifier = fundingElement.children().eq(3).find('input');
 
-                            updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency);                        
+                            updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency, fundingIdentifier);                        
                         }
                     });
 
@@ -46,7 +46,7 @@ function expandProject() {
     });
 }
 
-function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency) {
+function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency, fundingIdentifier) {
 
     $(projectElement).find(projectInputSelector).each(function() {
         var projectInput = this;
@@ -291,12 +291,14 @@ function getFundingDetails(grantNumberParentSelector) {
             if (fundingElement.children().length > 2) {
                 var fundingAgency = fundingElement.children().eq(0).find('input');
                 var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
+                var fundingIdentifier = fundingElement.children().eq(3).find('input');
                 var deleteFundingElement = fundingElement.next('.field-add-delete').children().eq(1);
 
                 // Store the funding agency and project acronym in the array
                 fundingDetails.push({
                     deleteFundingElement: deleteFundingElement,
                     fundingAgency: fundingAgency,
+                    fundingIdentifier: fundingIdentifier,
                     projectGrantAcronym: projectGrantAcronymInput
                 });
             }
@@ -389,12 +391,14 @@ async function clearFundingValues(acronymToDelete) {
     if (clearFundingDetails.length > 0) {
         for (let i = 0; i < clearFundingDetails.length; i++) {
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+            var clearFundingIdentifier = clearFundingDetails[i].fundingIdentifier;
 
             // If the acronym matches, clear the funding agency and project acronym
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
                 var clearFundingAgency = clearFundingDetails[i].fundingAgency;
                 $(clearFundingAgency).val('');
                 $(clearProjectGrantAcronymInput).val('');
+                $(clearFundingIdentifier).val('');
                 // await delay(5000);
             }
         }
@@ -410,9 +414,10 @@ async function deleteEmptyFundingElements() {
         for (let i = 0; i < clearFundingDetails.length; i++) {
             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
+            var clearFundingIdentifier = clearFundingDetails[i].fundingIdentifier;
 
             // If the fields are empty, delete the corresponding element
-            if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '') {
+            if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '' && $(clearFundingIdentifier).val() === '') {
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
                 await clickDeleteFundingElement(clearFundingElement);
                 index += 1;
