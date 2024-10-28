@@ -90,6 +90,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     }                    
                     
                     setTimeout(async function() {
+                        console.log("Previous Acronym: ", previousAcronym);
+                        var newAcronym = item.acronym;
+                        console.log("New Acronym: ", newAcronym);
+
                         if (item.funding_orgs && item.funding_orgs.length > 1) {
                             var updatedParentElement = $(grantNumberParentSelector).parent();
                             var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
