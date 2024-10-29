@@ -89,7 +89,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }
                         console.log("Previous FIS ID: ", previousFisId)
                         console.log("Item ID: ", item.id)
-                        if (item.id !== "" && previousFisId === ""){
+                        if (item.id !== ""){
                             processedItemsSet.add(item.id);
                         }                 
                         
