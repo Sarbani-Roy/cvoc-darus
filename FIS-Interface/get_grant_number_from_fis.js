@@ -232,12 +232,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
                     console.log("Previous FIS id: ", previousFisId);
                     console.log("previous project: ", previousProject);
-                    if (previousFisId) {
-                        processedItemsSet.delete(previousFisId);
-                    } else if (previousProject && processedItemsSet.has(previousProject)) {
+                    if (previousProject && processedItemsSet.has(previousProject)) {
                         console.log("previous project: ", previousProject);
                         processedItemsSet.delete(previousProject);
-                    }
+                    } else if (previousFisId) {
+                        processedItemsSet.delete(previousFisId);
+                    } 
                     await deleteGrantInfo(previousAcronym);
                 }
 
