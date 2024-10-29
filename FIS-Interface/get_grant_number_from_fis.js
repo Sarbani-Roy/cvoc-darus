@@ -89,9 +89,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }
                         console.log("Previous FIS ID: ", previousFisId)
                         console.log("Item ID: ", item.id)
-                        if (previousFisId !== "") {
-                            processedItemsSet.add(previousFisId);
-                        } else if (item.id !== "" && previousFisId === ""){
+                        if (item.id !== "" && previousFisId === ""){
                             processedItemsSet.add(item.id);
                         }                 
                         
@@ -398,7 +396,6 @@ async function clearFundingValues(acronymToDelete) {
         for (let i = 0; i < clearFundingDetails.length; i++) {
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
             var clearFundingIdentifier = clearFundingDetails[i].fundingIdentifier;
-            console.log(clearFundingIdentifier);
 
             // If the acronym matches, clear the funding agency and project acronym
             if ($(clearProjectGrantAcronymInput).val() === acronymToDelete) {
@@ -422,7 +419,6 @@ async function deleteEmptyFundingElements() {
             var clearFundingAgency = clearFundingDetails[i].fundingAgency;
             var clearProjectGrantAcronymInput = clearFundingDetails[i].projectGrantAcronym;
             var clearFundingIdentifier = clearFundingDetails[i].fundingIdentifier;
-            console.log(clearFundingIdentifier);
 
             // If the fields are empty, delete the corresponding element
             if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '' && $(clearFundingIdentifier).val() === '') {
