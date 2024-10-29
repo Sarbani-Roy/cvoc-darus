@@ -92,11 +92,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }                 
                         
                         setTimeout(async function() {
-                            console.log("Previous Acronym: ", previousAcronym);
                             var newAcronym = item.acronym;
-                            console.log("New Acronym: ", newAcronym);
                             if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
-                                console.log("Previous Acronym: ", previousAcronym)
                                 if (previousProject && processedItemsSet.has(previousProject)) {
                                     processedItemsSet.delete(previousProject);
                                 } else if (previousFisId) {
