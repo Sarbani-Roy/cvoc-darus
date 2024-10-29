@@ -235,6 +235,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     if (previousFisId) {
                         processedItemsSet.delete(previousFisId);
                     } else if (previousProject && processedItemsSet.has(previousProject)) {
+                        console.log("previous project: ", previousProject);
                         processedItemsSet.delete(previousProject);
                     }
                     await deleteGrantInfo(previousAcronym);
