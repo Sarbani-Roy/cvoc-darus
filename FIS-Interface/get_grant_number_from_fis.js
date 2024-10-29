@@ -120,7 +120,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 await handleSingleFundingOrg(item);
                             }
                             resolve();
-                        }, 500);
+                        }, 5);
 
                         if (item.acronym){
                             $(projectAcronymInput).val(item.acronym);
@@ -385,7 +385,7 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {    
     await clearFundingValues(acronymToDelete);
-    await delay(500);
+    // await delay(500);
     await deleteEmptyFundingElements();
 }
 
