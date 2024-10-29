@@ -128,6 +128,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (item.id && item.text != item.id) {
                             $(fisIdentifierInput).val(item.id);
                         }
+                        $(projectAcronymInput).trigger('change');
                         $(projectLevelInput).val('');                                                      
                         if (item.text) {
                             var projectName = item.text;
