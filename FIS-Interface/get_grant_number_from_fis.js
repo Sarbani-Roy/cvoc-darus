@@ -119,7 +119,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }     
                         if (item.id && item.text != item.id) {
                             $(fisIdentifierInput).val(item.id);
-                        }                                                      
+                        }
+                        $(projectLevelInput).val('');                                                      
                         if (item.text) {
                             var projectName = item.text;
                         }
@@ -153,7 +154,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (!term) {
                             term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                         }
-                        // return "https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects";
                         
                         // Search both title and acronym
                         var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
@@ -162,7 +162,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     },
                     data: function(params) {
                         term = params.term
-                        // term = `title=${params.term}`;
                         if (!term) {
                             term = "";
                         }
@@ -230,10 +229,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                    console.log("Previous FIS id: ", previousFisId);
-                    console.log("previous project: ", previousProject);
                     if (previousProject && processedItemsSet.has(previousProject)) {
-                        console.log("previous project: ", previousProject);
                         processedItemsSet.delete(previousProject);
                     } else if (previousFisId) {
                         processedItemsSet.delete(previousFisId);
@@ -271,10 +267,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 : "Select a project";
                 $(projectNameInput).attr('placeholder', placeholderText);
                 await deleteGrantInfo(oldProjectGrantAcronymInput);
-
-                // setTimeout(function() {
-                //     deleteGrantInfo(oldProjectGrantAcronymInput);
-                // }, 500);
 
                 if (clearedItemId) {
                     processedItemsSet.delete(clearedItemId);
