@@ -87,13 +87,18 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             resolve();
                             return item.text;
                         }
-                        console.log("Previous FIS ID: ", previousFisId)
-                        console.log("Item ID: ", item.id)
                         if (item.id !== ""){
                             processedItemsSet.add(item.id);
                         }                 
                         
                         setTimeout(async function() {
+                            console.log("Previous Acronym: ", previousAcronym);
+                            var newAcronym = item.acronym;
+                            console.log("New Acronym: ", newAcronym);
+                            if (previousAcronym !== "" && previousAcronym !== newAcronym) {
+                                console.log("Previous FIS id: ", previousFisId)
+                            }
+
                             if (item.funding_orgs && item.funding_orgs.length > 1) {
                                 var updatedParentElement = $(grantNumberParentSelector).parent();
                                 var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
@@ -225,8 +230,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 var data = e.params.data;         
                 var newAcronym = data.acronym;
 
-                console.log("Processed item in select before clearing", processedItemsSet);
-                
                 // If the previous acronym exists and differs from the new one, delete the grant info
                 if (previousAcronym !== "" && previousAcronym !== newAcronym) {
                     if (previousProject && processedItemsSet.has(previousProject)) {
@@ -236,8 +239,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     } 
                     await deleteGrantInfo(previousAcronym);
                 }
-
-                console.log("Processed item in select after clearing", processedItemsSet);
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
