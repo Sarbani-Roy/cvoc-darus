@@ -80,71 +80,60 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     var $result = markMatch(item.text, term);
                     return $result;
                 },
-                templateSelection: function(item) {                    
-                    // Prevent multiple executions using the Set to track processed items
-                    if (processedItemsSet.has(item.id)) {
-                        return item.text;
-                    }
-                    if (item.id !== ""){
-                        processedItemsSet.add(item.id);
-                    }                    
-                    
-                    setTimeout(async function() {
-                        var newAcronym = item.acronym;
+                templateSelection: function(item) { 
+                    selectionPromise = new Promise((resolve) => {
+                        // Prevent multiple executions using the Set to track processed items
+                        if (processedItemsSet.has(item.id)) {
+                            resolve();
+                            return item.text;
+                        }
+                        if (item.id !== ""){
+                            processedItemsSet.add(item.id);
+                        }                    
+                        
+                        setTimeout(async function() {
+                            if (item.funding_orgs && item.funding_orgs.length > 1) {
+                                var updatedParentElement = $(grantNumberParentSelector).parent();
+                                var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
+                                var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
+
+                                var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
+                                var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
                 
-                        // If the previous acronym exists and differs from the new one, delete the grant info
-                        if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                            console.log("Previous Acronym: ", previousAcronym);
-                            console.log("New Acronym: ", newAcronym);
-                            console.log("Processed item in select before clearing", processedItemsSet);                
-                            console.log("Previous FIS id: ", previousFisId)
-                            if (previousFisId) {
-                                processedItemsSet.delete(previousFisId);
+                                if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
+                                    await updateFundingOrgs(0, item);
+                                } else {
+                                    await clickAddFundingElement(updatedFundingElement);
+                                    await updateFundingOrgs(0, item);
+                                }
+                            } else if (item.funding_orgs) {
+                                await handleSingleFundingOrg(item);
                             }
-                            await deleteGrantInfo(previousAcronym);
+                            resolve();
+                        }, 500);
+
+                        if (item.acronym){
+                            $(projectAcronymInput).val(item.acronym);
+                        }     
+                        if (item.id && item.text != item.id) {
+                            $(fisIdentifierInput).val(item.id);
+                        }                                                      
+                        if (item.text) {
+                            var projectName = item.text;
                         }
+                        else{
+                            var projectName = $(projectNameInput).val();
+                        }                    
+                        item.text = projectName;
 
-                        console.log("Processed item in select after clearing", processedItemsSet);
-
-                        if (item.funding_orgs && item.funding_orgs.length > 1) {
-                            var updatedParentElement = $(grantNumberParentSelector).parent();
-                            var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
-                            var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
-
-                            var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
-                            var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
-            
-                            if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
-                                await updateFundingOrgs(0, item);
-                            } else {
-                                await clickAddFundingElement(updatedFundingElement);
-                                await updateFundingOrgs(0, item);
-                            }
-                        } else if (item.funding_orgs) {
-                            await handleSingleFundingOrg(item);
+                        if (item.text) {
+                            return item.text;
                         }
-                    }, 500);
-
-                    if (item.acronym){
-                        $(projectAcronymInput).val(item.acronym);
-                    }     
-                    if (item.id && item.text != item.id) {
-                        $(fisIdentifierInput).val(item.id);
-                    }                                                      
-                    if (item.text) {
-                        var projectName = item.text;
-                    }
-                    else{
-                        var projectName = $(projectNameInput).val();
-                    }                    
-                    item.text = projectName;
-
-                    if (item.text) {
-                        return item.text;
-                    }
-                    else{
-                        return item.id;
-                    }
+                        else{
+                            return item.id;
+                        }
+                    });
+                    return item.text;                   
                 },
                 language: {
                     searching: function(params) {
@@ -230,26 +219,22 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
             
             // When a selection is made, set the value of the hidden input field
-            // $('#' + selectId).on('select2:select', function(e) {
             $('#' + selectId).on('select2:select', async function(e) {
                 var data = e.params.data;         
-                // var newAcronym = data.acronym;
+                var newAcronym = data.acronym;
 
-                // console.log("Processed item in select before clearing", processedItemsSet);
+                console.log("Processed item in select before clearing", processedItemsSet);
                 
-                // // If the previous acronym exists and differs from the new one, delete the grant info
-                // if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                //     console.log("Previous FIS id: ", previousFisId)
-                //     if (previousFisId) {
-                //         processedItemsSet.delete(previousFisId);
-                //     }
-                //     await deleteGrantInfo(previousAcronym);
-                //     // setTimeout(function() {
-                //     //     deleteGrantInfo(previousAcronym);
-                //     // }, 300);
-                // }
+                // If the previous acronym exists and differs from the new one, delete the grant info
+                if (previousAcronym !== "" && previousAcronym !== newAcronym) {
+                    console.log("Previous FIS id: ", previousFisId)
+                    if (previousFisId) {
+                        processedItemsSet.delete(previousFisId);
+                    }
+                    await deleteGrantInfo(previousAcronym);
+                }
 
-                // console.log("Processed item in select after clearing", processedItemsSet);
+                console.log("Processed item in select after clearing", processedItemsSet);
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
@@ -263,7 +248,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
     
             // When a selection is cleared, clear the hidden input and all corresponding inputs
-            // $('#' + selectId).on('select2:clear', function(e) {  
             $('#' + selectId).on('select2:clear', async function(e) {               
                 $("input[data-project='" + num + "']").attr('value', '');
                 var clearedItemId = $(fisIdentifierInput).val();
