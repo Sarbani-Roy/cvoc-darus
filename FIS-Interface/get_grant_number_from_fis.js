@@ -95,8 +95,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             console.log("Previous Acronym: ", previousAcronym);
                             var newAcronym = item.acronym;
                             console.log("New Acronym: ", newAcronym);
-                            if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                                console.log("Previous FIS id: ", previousFisId)
+                            if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
+                                console.log("Previous Acronym: ", previousAcronym)
+                                if (previousProject && processedItemsSet.has(previousProject)) {
+                                    processedItemsSet.delete(previousProject);
+                                } else if (previousFisId) {
+                                    processedItemsSet.delete(previousFisId);
+                                } 
+                                await deleteGrantInfo(previousAcronym);
                             }
 
                             if (item.funding_orgs && item.funding_orgs.length > 1) {
@@ -228,17 +234,17 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', async function(e) {
                 var data = e.params.data;         
-                var newAcronym = data.acronym;
+                // var newAcronym = data.acronym;
 
-                // If the previous acronym exists and differs from the new one, delete the grant info
-                if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                    if (previousProject && processedItemsSet.has(previousProject)) {
-                        processedItemsSet.delete(previousProject);
-                    } else if (previousFisId) {
-                        processedItemsSet.delete(previousFisId);
-                    } 
-                    await deleteGrantInfo(previousAcronym);
-                }
+                // // If the previous acronym exists and differs from the new one, delete the grant info
+                // if (previousAcronym !== "" && previousAcronym !== newAcronym) {
+                //     if (previousProject && processedItemsSet.has(previousProject)) {
+                //         processedItemsSet.delete(previousProject);
+                //     } else if (previousFisId) {
+                //         processedItemsSet.delete(previousFisId);
+                //     } 
+                //     await deleteGrantInfo(previousAcronym);
+                // }
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
