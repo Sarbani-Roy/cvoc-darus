@@ -87,9 +87,11 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             resolve();
                             return item.text;
                         }
-                        if (item.id !== ""){
+                        if (previousFisId !== "") {
+                            processedItemsSet.add(previousFisId);
+                        } else if (item.id !== "" && previousFisId === ""){
                             processedItemsSet.add(item.id);
-                        }                    
+                        }                 
                         
                         setTimeout(async function() {
                             if (item.funding_orgs && item.funding_orgs.length > 1) {
