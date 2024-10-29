@@ -120,7 +120,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 await handleSingleFundingOrg(item);
                             }
                             resolve();
-                        }, 5);
+                        }, 1);
 
                         if (item.acronym){
                             $(projectAcronymInput).val(item.acronym);
@@ -230,18 +230,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', async function(e) {
-                var data = e.params.data;         
-                // var newAcronym = data.acronym;
-
-                // // If the previous acronym exists and differs from the new one, delete the grant info
-                // if (previousAcronym !== "" && previousAcronym !== newAcronym) {
-                //     if (previousProject && processedItemsSet.has(previousProject)) {
-                //         processedItemsSet.delete(previousProject);
-                //     } else if (previousFisId) {
-                //         processedItemsSet.delete(previousFisId);
-                //     } 
-                //     await deleteGrantInfo(previousAcronym);
-                // }
+                var data = e.params.data;
 
                 //For free-texts, the id and text are same. Otherwise different
                 if (data.id != data.text) {
