@@ -218,6 +218,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val();
+            console.log(projectName)
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
 
