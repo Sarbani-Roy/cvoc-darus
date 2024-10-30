@@ -96,7 +96,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 await handleSingleFundingOrg(item);
                             }
 
-                            await delay(5000);
+                            // await delay(5000);
 
                             var newAcronym = item.acronym;
                             console.log("Previous Acronym", previousAcronym);
@@ -364,7 +364,7 @@ async function handleSingleFundingOrg(item) {
 
 async function deleteGrantInfo(acronymToDelete) {    
     await clearFundingValues(acronymToDelete);
-    await delay(5000);
+    await delay(500);
     await deleteEmptyFundingElements();
 }
 
