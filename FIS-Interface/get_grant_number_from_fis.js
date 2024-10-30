@@ -24,25 +24,6 @@ function expandProject() {
                 var fisIdentifierInput = projectElement.children().eq(3).find('input');
                 
                 updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, projectLevelInput, fisIdentifier, fisIdentifierInput);
-                // $(grantNumberParentSelector).each(function() {
-                //     var parentElement = $(grantNumberParentSelector).parent();
-                //     var fieldValuesElement = parentElement.siblings('.dataset-field-values');
-                //     var compoundFieldElement = fieldValuesElement.find('.edit-compound-field');
-                        
-                //     compoundFieldElement.each(function() {
-                //         var fundingElement = $(this);
-                        
-                //         if (fundingElement.children().length > 2) {
-                //             var fundingAgency = fundingElement.children().eq(0).find('input');
-                //             var projectGrantAcronymInput = fundingElement.children().eq(1).find('input');
-                //             var fundingIdentifier = fundingElement.children().eq(2).find('input');
-
-                //             updateGrantInputs(projectElement, projectNameInput, projectAcronymInput, projectLevelInput, fisIdentifier, fisIdentifierInput, fundingElement, projectGrantAcronymInput, fundingAgency, fundingIdentifier);                        
-                //         }
-                //     });
-
-                // });
-                
             }
         });
     });
@@ -95,14 +76,14 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         
                         setTimeout(async function() {
                             var newAcronym = item.acronym;
-                            if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
-                                if (previousProject && processedItemsSet.has(previousProject)) {
-                                    processedItemsSet.delete(previousProject);
-                                } else if (previousFisId) {
-                                    processedItemsSet.delete(previousFisId);
-                                } 
-                                await deleteGrantInfo(previousAcronym);
-                            }
+                            // if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
+                            //     if (previousProject && processedItemsSet.has(previousProject)) {
+                            //         processedItemsSet.delete(previousProject);
+                            //     } else if (previousFisId) {
+                            //         processedItemsSet.delete(previousFisId);
+                            //     } 
+                            //     await deleteGrantInfo(previousAcronym);
+                            // }
 
                             if (item.funding_orgs && item.funding_orgs.length > 1) {
                                 var updatedParentElement = $(grantNumberParentSelector).parent();
