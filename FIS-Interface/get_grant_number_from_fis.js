@@ -56,6 +56,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
         var processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
+            console.log("Setting up select2 for: ", projectInput);
             // Random identifier added
             let num = Math.floor(Math.random() * 100000000000);
             $(projectInput).hide();
@@ -128,9 +129,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         if (item.id && item.text != item.id) {
                             $(fisIdentifierInput).val(item.id);
                         }
-                        // $(projectAcronymInput).trigger('change');
-                        // Update the Select2 value immediately
-                        // $('#' + selectId).val(projectName).trigger('change').trigger('select2:select'); 
                         $(projectLevelInput).val('');                                                      
                         if (item.text) {
                             var projectName = item.text;
@@ -220,9 +218,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
 
             // format it the same way as if it were a new selection
-            // var projectName = $(projectNameInput).val();
-            var projectName = $(projectInput).val();
-            console.log(projectName)
+            var projectName = $(projectNameInput).val();
+            console.log(projectName);
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
 
@@ -235,6 +232,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             
             // When a selection is made, set the value of the hidden input field
             $('#' + selectId).on('select2:select', function(e) {
+                projectInput.removeAttribute('data-project');
                 var data = e.params.data;
 
                 //For free-texts, the id and text are same. Otherwise different
