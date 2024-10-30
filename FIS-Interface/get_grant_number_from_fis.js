@@ -83,8 +83,10 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 } else if (previousFisId) {
                                     processedItemsSet.delete(previousFisId);
                                 }
-                                // await deleteGrantInfo(previousAcronym);
+                                await deleteGrantInfo(previousAcronym);
                             }
+
+                            await delay(5000);
 
                             if (item.funding_orgs && item.funding_orgs.length > 1) {
                                 var updatedParentElement = $(grantNumberParentSelector).parent();
