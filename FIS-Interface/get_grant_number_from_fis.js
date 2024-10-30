@@ -38,7 +38,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
         var processedItemsSet = new Set();
 
         if (!projectInput.hasAttribute('data-project')) {
-            console.log("Setting up select2 for: ", projectInput);
             // Random identifier added
             let num = Math.floor(Math.random() * 100000000000);
             $(projectInput).hide();
@@ -76,14 +75,15 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         
                         setTimeout(async function() {
                             var newAcronym = item.acronym;
-                            // if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
-                            //     if (previousProject && processedItemsSet.has(previousProject)) {
-                            //         processedItemsSet.delete(previousProject);
-                            //     } else if (previousFisId) {
-                            //         processedItemsSet.delete(previousFisId);
-                            //     } 
-                            //     await deleteGrantInfo(previousAcronym);
-                            // }
+                            if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
+                                if (previousProject && processedItemsSet.has(previousProject)) {
+                                    processedItemsSet.delete(previousProject);
+                                } else if (previousFisId) {
+                                    processedItemsSet.delete(previousFisId);
+                                }
+                                console.log(previousAcronym) 
+                                // await deleteGrantInfo(previousAcronym);
+                            }
 
                             if (item.funding_orgs && item.funding_orgs.length > 1) {
                                 var updatedParentElement = $(grantNumberParentSelector).parent();
@@ -201,7 +201,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
 
             // format it the same way as if it were a new selection
             var projectName = $(projectNameInput).val();
-            console.log(projectName);
             var newOption = new Option(projectName, projectName, true, true);
             $('#' + selectId).append(newOption).trigger('change');
 
