@@ -399,7 +399,10 @@ async function deleteEmptyFundingElements() {
             // If the fields are empty, delete the corresponding element
             if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '' && $(clearFundingIdentifier).val() === '') {
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                await clickDeleteFundingElement(clearFundingElement);
+                console.log(clearFundingElement)
+                if (clearFundingElement) {
+                    await clickDeleteFundingElement(clearFundingElement);
+                }
                 index += 1;
                 // await delay(2000); 
             }
