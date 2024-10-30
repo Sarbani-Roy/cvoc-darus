@@ -96,7 +96,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 await handleSingleFundingOrg(item);
                             }
 
-                            // await delay(5000);
+                            await delay(500);
 
                             var newAcronym = item.acronym;
                             console.log("Previous Acronym", previousAcronym);
