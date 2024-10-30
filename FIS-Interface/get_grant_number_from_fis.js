@@ -95,12 +95,8 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                             } else if (item.funding_orgs) {
                                 await handleSingleFundingOrg(item);
                             }
-
                             await delay(500);
-
                             var newAcronym = item.acronym;
-                            console.log("Previous Acronym", previousAcronym);
-                            console.log("New Acronym", newAcronym);
                             if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
                                 if (previousProject && processedItemsSet.has(previousProject)) {
                                     processedItemsSet.delete(previousProject);
@@ -219,7 +215,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
             
             // When a selection is made, set the value of the hidden input field
-            $('#' + selectId).on('select2:select', function(e) {
+            $('#' + selectId).on('select2:select', async function(e) {
                 var data = e.params.data;
 
                 //For free-texts, the id and text are same. Otherwise different
@@ -230,6 +226,13 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                 } else {
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
+
+                    var oldGrantAcronymInput = $(projectAcronymInput).val();
+                    $(projectAcronymInput).val('');
+                    $(projectLevelInput).val('');
+                    $(fisIdentifierInput).val('');
+                    await deleteGrantInfo(oldGrantAcronymInput);
+                    processedItemsSet.delete(data.id);
                 }   
             });
     
@@ -403,10 +406,7 @@ async function deleteEmptyFundingElements() {
             // If the fields are empty, delete the corresponding element
             if ($(clearFundingAgency).val() === '' && $(clearProjectGrantAcronymInput).val() === '' && $(clearFundingIdentifier).val() === '') {
                 var clearFundingElement = clearFundingDetails[(i-index)].deleteFundingElement;
-                console.log(clearFundingElement)
-                if (clearFundingElement) {
-                    await clickDeleteFundingElement(clearFundingElement);
-                }
+                await clickDeleteFundingElement(clearFundingElement);
                 index += 1;
                 // await delay(2000); 
             }
