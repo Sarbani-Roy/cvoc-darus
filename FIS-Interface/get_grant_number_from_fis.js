@@ -130,7 +130,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }
                         // $(projectAcronymInput).trigger('change');
                         // Update the Select2 value immediately
-                        $('#' + selectId).val(projectName).trigger('change').trigger('select2:select'); 
+                        // $('#' + selectId).val(projectName).trigger('change').trigger('select2:select'); 
                         $(projectLevelInput).val('');                                                      
                         if (item.text) {
                             var projectName = item.text;
@@ -233,7 +233,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
             });
             
             // When a selection is made, set the value of the hidden input field
-            $('#' + selectId).on('select2:select', async function(e) {
+            $('#' + selectId).on('select2:select', function(e) {
                 var data = e.params.data;
 
                 //For free-texts, the id and text are same. Otherwise different
