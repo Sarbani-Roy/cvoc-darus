@@ -224,6 +224,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     //Tags are allowed, so just enter the text as is
                     $("input[data-project='" + num + "']").val(data.id);
 
+                    if (previousProject && processedItemsSet.has(previousProject)) {
+                        processedItemsSet.delete(previousProject);
+                    } else if (previousFisId) {
+                        processedItemsSet.delete(previousFisId);
+                    }
+                    
                     var oldGrantAcronymInput = $(projectAcronymInput).val();
                     $(projectAcronymInput).val('');
                     $(projectLevelInput).val('');
