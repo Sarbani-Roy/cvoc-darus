@@ -75,15 +75,6 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         
                         setTimeout(async function() {
                             var newAcronym = item.acronym;
-                            if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
-                                if (previousProject && processedItemsSet.has(previousProject)) {
-                                    processedItemsSet.delete(previousProject);
-                                } else if (previousFisId) {
-                                    processedItemsSet.delete(previousFisId);
-                                }
-                                console.log(previousAcronym) 
-                                // await deleteGrantInfo(previousAcronym);
-                            }
 
                             if (item.funding_orgs && item.funding_orgs.length > 1) {
                                 var updatedParentElement = $(grantNumberParentSelector).parent();
@@ -101,6 +92,16 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                                 }
                             } else if (item.funding_orgs) {
                                 await handleSingleFundingOrg(item);
+                            }
+
+                            if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
+                                if (previousProject && processedItemsSet.has(previousProject)) {
+                                    processedItemsSet.delete(previousProject);
+                                } else if (previousFisId) {
+                                    processedItemsSet.delete(previousFisId);
+                                }
+                                console.log(previousAcronym) 
+                                await deleteGrantInfo(previousAcronym);
                             }
                             resolve();
                         }, 1);
