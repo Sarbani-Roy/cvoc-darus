@@ -54,220 +54,226 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
         var previousAcronym = $(projectAcronymInput).val();
         var previousFisId = $(fisIdentifierInput).val();
         var processedItemsSet = new Set();
-
+        let num;
+        
         if (!projectInput.hasAttribute('data-project')) {
             console.log("Setting up select2 for: ", projectInput);
             // Random identifier added
-            let num = Math.floor(Math.random() * 100000000000);
+            num = Math.floor(Math.random() * 100000000000);
             $(projectInput).hide();
             $(projectInput).attr('data-project', num);
-            $(fisIdentifier).hide()
-            
-            // Add a select2 element to allow search and provide a list of choices
-            var selectId = "projectAddSelect_" + num;
-            
-            $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
-            $("#" + selectId).select2({
-                theme: "classic",
-                tags: $(projectInput).attr('data-cvoc-allowfreetext'),
-                delay: 500,
-                templateResult: function(item) {                    
-                    // No templating right now
-                    if (item.loading) {
+        } else {
+            // Retrieve the existing identifier from the data-project attribute
+            num = $(projectInput).attr('data-project');
+            console.log("Reusing existing data-project identifier for: ", projectInput, " with num: ", num);
+        }
+        
+        $(fisIdentifier).hide()
+        
+        // Add a select2 element to allow search and provide a list of choices
+        var selectId = "projectAddSelect_" + num;
+        
+        $(projectInput).after('<select id=' + selectId + ' class="form-control add-resource select2" tabindex="-1" aria-hidden="true">');
+        $("#" + selectId).select2({
+            theme: "classic",
+            tags: $(projectInput).attr('data-cvoc-allowfreetext'),
+            delay: 500,
+            templateResult: function(item) {                    
+                // No templating right now
+                if (item.loading) {
+                    return item.text;
+                }
+                
+                // markMatch bolds the search term if/where it appears in the result
+                var $result = markMatch(item.text, term);
+                return $result;
+            },
+            templateSelection: function(item) { 
+                selectionPromise = new Promise((resolve) => {
+                    // Prevent multiple executions using the Set to track processed items
+                    if (processedItemsSet.has(item.id)) {
+                        resolve();
                         return item.text;
                     }
+                    if (item.id !== ""){
+                        processedItemsSet.add(item.id);
+                    }                 
                     
-                    // markMatch bolds the search term if/where it appears in the result
-                    var $result = markMatch(item.text, term);
-                    return $result;
-                },
-                templateSelection: function(item) { 
-                    selectionPromise = new Promise((resolve) => {
-                        // Prevent multiple executions using the Set to track processed items
-                        if (processedItemsSet.has(item.id)) {
-                            resolve();
-                            return item.text;
+                    setTimeout(async function() {
+                        var newAcronym = item.acronym;
+                        if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
+                            if (previousProject && processedItemsSet.has(previousProject)) {
+                                processedItemsSet.delete(previousProject);
+                            } else if (previousFisId) {
+                                processedItemsSet.delete(previousFisId);
+                            } 
+                            await deleteGrantInfo(previousAcronym);
                         }
-                        if (item.id !== ""){
-                            processedItemsSet.add(item.id);
-                        }                 
-                        
-                        setTimeout(async function() {
-                            var newAcronym = item.acronym;
-                            if (previousAcronym !== "" && newAcronym !== undefined && previousAcronym !== newAcronym) {
-                                if (previousProject && processedItemsSet.has(previousProject)) {
-                                    processedItemsSet.delete(previousProject);
-                                } else if (previousFisId) {
-                                    processedItemsSet.delete(previousFisId);
-                                } 
-                                await deleteGrantInfo(previousAcronym);
-                            }
 
-                            if (item.funding_orgs && item.funding_orgs.length > 1) {
-                                var updatedParentElement = $(grantNumberParentSelector).parent();
-                                var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
-                                var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
+                        if (item.funding_orgs && item.funding_orgs.length > 1) {
+                            var updatedParentElement = $(grantNumberParentSelector).parent();
+                            var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
+                            var updatedFundingElement = updatedFieldValuesElement.find('.edit-compound-field').last();
 
-                                var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
-                                var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
-                
-                                if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
-                                    await updateFundingOrgs(0, item);
-                                } else {
-                                    await clickAddFundingElement(updatedFundingElement);
-                                    await updateFundingOrgs(0, item);
-                                }
-                            } else if (item.funding_orgs) {
-                                await handleSingleFundingOrg(item);
-                            }
-                            resolve();
-                        }, 1);
-
-                        if (item.acronym){
-                            $(projectAcronymInput).val(item.acronym);
-                        }     
-                        if (item.id && item.text != item.id) {
-                            $(fisIdentifierInput).val(item.id);
-                        }
-                        $(projectLevelInput).val('');                                                      
-                        if (item.text) {
-                            var projectName = item.text;
-                        }
-                        else{
-                            var projectName = $(projectNameInput).val();
-                        }                    
-                        item.text = projectName;
-
-                        if (item.text) {
-                            return item.text;
-                        }
-                        else{
-                            return item.id;
-                        }
-                    });
-                    return item.text;                   
-                },
-                language: {
-                    searching: function(params) {
-                        return 'Search by project name';
-                    }
-                },
-                placeholder: projectInput.hasAttribute("data-cvoc-placeholder") ? $(projectInput).attr('data-cvoc-placeholder') : "Select a project",
-                minimumInputLength: 3,
-                allowClear: true,
-                ajax: {
-                    // Use an ajax call to FIS to retrieve matching results
-                    cache: false,
-                    url: function(params) {
-                        var term = params.term;
-                        if (!term) {
-                            term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
-                        }
-                        
-                        // Search both title and acronym
-                        var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
-                        var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
-                        return [urlTitle, urlAcronym];
-                    },
-                    data: function(params) {
-                        term = params.term
-                        if (!term) {
-                            term = "";
-                        }
-                        var query = {
-                            q: term,
-                            rows: 10
-                        };
-                        return term;
-                    },
-                    headers: {
-                        'Accept': 'application/json'
-                    },
-                    // Perform AJAX call for both title and acronym
-                    transport: function(params, success, failure) {
-                        var urls = params.url;
-                        
-                        // Make two parallel AJAX requests for title and acronym search
-                        var titleRequest = $.ajax({ url: urls[0], headers: params.headers });
-                        var acronymRequest = $.ajax({ url: urls[1], headers: params.headers });
-
-                        // Wait for both AJAX requests to finish
-                        $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
-                            // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
-                            var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
-                            // Pass combined data to the success callback
-                            success({
-                                results: combinedData.map(function(element) {
-                                    let projectInfo = element.project;
-                                    return {
-                                        text: projectInfo.title_de, 
-                                        acronym: projectInfo.acronym,
-                                        agency: projectInfo.foerderkennzeichen,
-                                        id: projectInfo.id,
-                                        funding_orgs: element.funding_org,
-                                        processed: false
-                                    };
-                                })
-                            });
-                        }).fail(function(jqXHR, textStatus, errorThrown) {
-                            console.error("AJAX request failed:", textStatus, errorThrown);
-                            failure(); // In case one or both requests fail, call the failure callback
-                        }); 
-                    },
-                }
-            });
-
-            // format it the same way as if it were a new selection
-            var projectName = $(projectNameInput).val();
-            console.log(projectName);
-            var newOption = new Option(projectName, projectName, true, true);
-            $('#' + selectId).append(newOption).trigger('change');
-
-            // Detect when the select2 dropdown is opened (user interaction)
-            $("#" + selectId).on('select2:open', function(e) {
-                previousProject = $(projectNameInput).val();
-                previousAcronym = $(projectAcronymInput).val();
-                previousFisId = $(fisIdentifierInput).val();
-            });
+                            var updatedFundingAgency = updatedFundingElement.children().eq(0).find('input');
+                            var updatedProjectGrantAcronymInput = updatedFundingElement.children().eq(1).find('input');
             
-            // When a selection is made, set the value of the hidden input field
-            $('#' + selectId).on('select2:select', function(e) {
-                var data = e.params.data;
+                            if ($(updatedFundingAgency).val() === "" && $(updatedProjectGrantAcronymInput).val() === "") {
+                                await updateFundingOrgs(0, item);
+                            } else {
+                                await clickAddFundingElement(updatedFundingElement);
+                                await updateFundingOrgs(0, item);
+                            }
+                        } else if (item.funding_orgs) {
+                            await handleSingleFundingOrg(item);
+                        }
+                        resolve();
+                    }, 1);
 
-                //For free-texts, the id and text are same. Otherwise different
-                if (data.id != data.text) {
-                    var projectName = data.text;
-                    data.text = projectName;
-                    $("input[data-project='" + num + "']").val(data.text);
-                } else {
-                    //Tags are allowed, so just enter the text as is
-                    $("input[data-project='" + num + "']").val(data.id);
-                }   
-            });
-    
-            // When a selection is cleared, clear the hidden input and all corresponding inputs
-            $('#' + selectId).on('select2:clear', async function(e) {               
-                $("input[data-project='" + num + "']").attr('value', '');
-                var clearedItemId = $(fisIdentifierInput).val();
-                var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
-                $(projectAcronymInput).val('');
-                $(projectLevelInput).val('');
-                $(fisIdentifierInput).val('');
+                    if (item.acronym){
+                        $(projectAcronymInput).val(item.acronym);
+                    }     
+                    if (item.id && item.text != item.id) {
+                        $(fisIdentifierInput).val(item.id);
+                    }
+                    $(projectLevelInput).val('');                                                      
+                    if (item.text) {
+                        var projectName = item.text;
+                    }
+                    else{
+                        var projectName = $(projectNameInput).val();
+                    }                    
+                    item.text = projectName;
 
-                // Clear the projectNameInput value and set the placeholder text
-                $(projectNameInput).val('');
-                // Determine the placeholder value
-                var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder") 
-                ? $(projectInput).attr('data-cvoc-placeholder') 
-                : "Select a project";
-                $(projectNameInput).attr('placeholder', placeholderText);
-                await deleteGrantInfo(oldProjectGrantAcronymInput);
-
-                if (clearedItemId) {
-                    processedItemsSet.delete(clearedItemId);
+                    if (item.text) {
+                        return item.text;
+                    }
+                    else{
+                        return item.id;
+                    }
+                });
+                return item.text;                   
+            },
+            language: {
+                searching: function(params) {
+                    return 'Search by project name';
                 }
-            });
-        }
+            },
+            placeholder: projectInput.hasAttribute("data-cvoc-placeholder") ? $(projectInput).attr('data-cvoc-placeholder') : "Select a project",
+            minimumInputLength: 3,
+            allowClear: true,
+            ajax: {
+                // Use an ajax call to FIS to retrieve matching results
+                cache: false,
+                url: function(params) {
+                    var term = params.term;
+                    if (!term) {
+                        term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
+                    }
+                    
+                    // Search both title and acronym
+                    var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
+                    var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
+                    return [urlTitle, urlAcronym];
+                },
+                data: function(params) {
+                    term = params.term
+                    if (!term) {
+                        term = "";
+                    }
+                    var query = {
+                        q: term,
+                        rows: 10
+                    };
+                    return term;
+                },
+                headers: {
+                    'Accept': 'application/json'
+                },
+                // Perform AJAX call for both title and acronym
+                transport: function(params, success, failure) {
+                    var urls = params.url;
+                    
+                    // Make two parallel AJAX requests for title and acronym search
+                    var titleRequest = $.ajax({ url: urls[0], headers: params.headers });
+                    var acronymRequest = $.ajax({ url: urls[1], headers: params.headers });
+
+                    // Wait for both AJAX requests to finish
+                    $.when(titleRequest, acronymRequest).done(function(titleData, acronymData) {
+                        // titleData[0] and acronymData[0] contain the actual data (due to how $.when works)
+                        var combinedData = [].concat(titleData[0]['data_elements'], acronymData[0]['data_elements']);
+                        // Pass combined data to the success callback
+                        success({
+                            results: combinedData.map(function(element) {
+                                let projectInfo = element.project;
+                                return {
+                                    text: projectInfo.title_de, 
+                                    acronym: projectInfo.acronym,
+                                    agency: projectInfo.foerderkennzeichen,
+                                    id: projectInfo.id,
+                                    funding_orgs: element.funding_org,
+                                    processed: false
+                                };
+                            })
+                        });
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX request failed:", textStatus, errorThrown);
+                        failure(); // In case one or both requests fail, call the failure callback
+                    }); 
+                },
+            }
+        });
+
+        // format it the same way as if it were a new selection
+        var projectName = $(projectNameInput).val();
+        console.log(projectName);
+        var newOption = new Option(projectName, projectName, true, true);
+        $('#' + selectId).append(newOption).trigger('change');
+
+        // Detect when the select2 dropdown is opened (user interaction)
+        $("#" + selectId).on('select2:open', function(e) {
+            previousProject = $(projectNameInput).val();
+            previousAcronym = $(projectAcronymInput).val();
+            previousFisId = $(fisIdentifierInput).val();
+        });
+        
+        // When a selection is made, set the value of the hidden input field
+        $('#' + selectId).on('select2:select', function(e) {
+            var data = e.params.data;
+
+            //For free-texts, the id and text are same. Otherwise different
+            if (data.id != data.text) {
+                var projectName = data.text;
+                data.text = projectName;
+                $("input[data-project='" + num + "']").val(data.text);
+            } else {
+                //Tags are allowed, so just enter the text as is
+                $("input[data-project='" + num + "']").val(data.id);
+            }   
+        });
+
+        // When a selection is cleared, clear the hidden input and all corresponding inputs
+        $('#' + selectId).on('select2:clear', async function(e) {               
+            $("input[data-project='" + num + "']").attr('value', '');
+            var clearedItemId = $(fisIdentifierInput).val();
+            var oldProjectGrantAcronymInput = $(projectAcronymInput).val();
+            $(projectAcronymInput).val('');
+            $(projectLevelInput).val('');
+            $(fisIdentifierInput).val('');
+
+            // Clear the projectNameInput value and set the placeholder text
+            $(projectNameInput).val('');
+            // Determine the placeholder value
+            var placeholderText = projectInput.hasAttribute("data-cvoc-placeholder") 
+            ? $(projectInput).attr('data-cvoc-placeholder') 
+            : "Select a project";
+            $(projectNameInput).attr('placeholder', placeholderText);
+            await deleteGrantInfo(oldProjectGrantAcronymInput);
+
+            if (clearedItemId) {
+                processedItemsSet.delete(clearedItemId);
+            }
+        });
     })
 }
 
