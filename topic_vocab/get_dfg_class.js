@@ -26,10 +26,8 @@ function expandDFGclass() {
 }
 
 function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
-    console.log("Topic Element:", topicElement)
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
-        console.log(topicInput);
 
         if (!topicInput.hasAttribute('data-topic')) {
             // Random identifier added
@@ -46,7 +44,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 tags: $(topicInput).attr('data-cvoc-allowfreetext') === "true",
                 delay: 500,
                 templateResult: function(item) {
-                    console.log(item);
                     if (item.loading) {
                         return item.text;
                     }
@@ -56,7 +53,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log(item)
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     $(topicClassVocab).val("");
                     $(topicClassVocabURI).val("");
@@ -94,10 +90,11 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         return queryParams;
                     },
                     processResults: function(data) {
-                        console.log(data);  // Print the API response to the console
+                        console.log(data.response.docs);  // Print the API response to the console
                         
                         // Map data to select2 format
-                        var results = data.results.map(function(item) {
+                        var results = data.response.docs.map(function(item) {
+                            console.log(results)
                             return {
                                 id: item.notation,
                                 text: item['prefLabel@en'] + " (" + item.notation + ")",
