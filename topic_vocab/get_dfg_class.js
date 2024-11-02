@@ -49,8 +49,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     }
 
                     // markMatch bolds the search term if/where it appears in the result
-                    var $result = markMatch(item.text, term);
-                    return $result;
+                    // var $result = markMatch(item.text, term);
+                    // return $result;
                 },
                 templateSelection: function(item) {
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
@@ -97,8 +97,10 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             console.log(item)
                             return {
                                 id: item.id,
-                                text: item.label,
-                                name: item.label
+                                text: item.label + "(" + item.short_form + ")",
+                                name: item.label,
+                                onto_name: item.ontology_prefix,
+                                class_no: item.short_form
                             };
                         });
                         return {
