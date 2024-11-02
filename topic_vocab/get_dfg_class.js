@@ -65,7 +65,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         return 'Search by a topic name';
                     }
                 },
-                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select an Author",
+                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select a Topic Classification",
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
@@ -147,6 +147,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $("input[data-topic='" + num + "']").val('');
                 $(topicClassVocab).val("");
                 $(topicClassVocabURI).val("");
+                $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
             });
         }
     });
