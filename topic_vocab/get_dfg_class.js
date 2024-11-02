@@ -49,8 +49,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     }
 
                     // markMatch bolds the search term if/where it appears in the result
-                    // var $result = markMatch(item.text, term);
-                    // return $result;
+                    var $result = markMatch(item.text, term);
+                    return $result;
                 },
                 templateSelection: function(item) {
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
@@ -69,10 +69,21 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
-                    url: 'https://service.tib.eu/ts4tib/api/select',
+                    url: function(params) {
+                        var term = params.term;
+                        if (!term) {
+                            term = "";
+                        }
+                        // Use expanded-search to get the names, affiliations directly in the results
+                        return "https://pub.orcid.org/v3.0/expanded-search";
+                    },
                     dataType: 'json',
                     delay: 500,
                     data: function(params) {
+                        term = params.term;
+                        if (!term) {
+                            term = "";
+                        }
                         var queryParams = {
                             q: params.term,
                             exclusiveFilter: false,
@@ -82,10 +93,10 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             rows: 10
                         };
                 
-                        // Construct the full URL with query parameters and log it
-                        var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                        var urlWithParams = baseUrl + '?' + $.param(queryParams);
-                        console.log("API URL:", urlWithParams);
+                        // // Construct the full URL with query parameters and log it
+                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        // console.log("API URL:", urlWithParams);
                 
                         return queryParams;
                     },
