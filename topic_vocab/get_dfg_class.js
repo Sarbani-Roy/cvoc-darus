@@ -75,7 +75,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             term = "";
                         }
                         // Use expanded-search to get the names, affiliations directly in the results
-                        return "https://pub.orcid.org/v3.0/expanded-search";
+                        return "https://service.tib.eu/ts4tib/api/select";
                     },
                     dataType: 'json',
                     delay: 500,
@@ -93,10 +93,10 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             rows: 10
                         };
                 
-                        // // Construct the full URL with query parameters and log it
-                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
-                        // console.log("API URL:", urlWithParams);
+                        // Construct the full URL with query parameters and log it
+                        var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        console.log("API URL:", urlWithParams);
                 
                         return queryParams;
                     },
