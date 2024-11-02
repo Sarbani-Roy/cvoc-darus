@@ -94,11 +94,11 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         
                         // Map data to select2 format
                         var results = data.response.docs.map(function(item) {
-                            console.log(results)
+                            console.log(item)
                             return {
-                                id: item.notation,
-                                text: item['prefLabel@en'] + " (" + item.notation + ")",
-                                name: item['prefLabel@en']
+                                id: item.id,
+                                text: item.label,
+                                name: item.label
                             };
                         });
                         return {
