@@ -1,6 +1,6 @@
 var topicParentSelector = "div#metadata_topicClassification";
-var topicSelector = "span[data-cvoc-protocol='dfgTopicClass']";
-var topicInputSelector = "input[data-cvoc-protocol='dfgTopicClass']";
+var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
+var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 
 $(document).ready(function() {
     expandDFGclass();
@@ -26,6 +26,7 @@ function expandDFGclass() {
 }
 
 function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
+    console.log("Topic Element:", topicElement)
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
         console.log(topicInput);
