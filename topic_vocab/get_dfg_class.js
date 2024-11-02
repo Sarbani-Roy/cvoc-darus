@@ -28,6 +28,7 @@ function expandDFGclass() {
 function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
+        console.log(topicInput);
 
         if (!topicInput.hasAttribute('data-topic')) {
             // Random identifier added
@@ -44,6 +45,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 tags: $(topicInput).attr('data-cvoc-allowfreetext') === "true",
                 delay: 500,
                 templateResult: function(item) {
+                    console.log(item);
                     if (item.loading) {
                         return item.text;
                     }
@@ -53,6 +55,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
+                    console.log(item)
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     $(topicClassVocab).val("");
                     $(topicClassVocabURI).val("");
@@ -73,14 +76,19 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     dataType: 'json',
                     delay: 500,
                     data: function(params) {
-                        return {
-                            q: params.term,  // search term
+                        // Construct full URL with query parameters for logging
+                        var queryParams = {
+                            q: params.term,
                             exclusiveFilter: false,
                             ontology: 'dfgfo2024',
                             obsoletes: false,
                             local: false,
                             rows: 10
                         };
+                        var urlWithParams = this.url + '?' + $.param(queryParams);
+                        console.log("API URL:", urlWithParams);
+
+                        return queryParams;
                     },
                     processResults: function(data) {
                         console.log(data);  // Print the API response to the console
