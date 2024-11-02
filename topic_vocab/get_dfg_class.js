@@ -97,8 +97,10 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             console.log(item)
                             return {
                                 id: item.id,
-                                text: item.label,
-                                name: item.label
+                                text: item.label + "(" + item.short_form + ")",
+                                name: item.label,
+                                onto_name: item.ontology_prefix,
+                                class_no: item.short_form
                             };
                         });
                         return {
