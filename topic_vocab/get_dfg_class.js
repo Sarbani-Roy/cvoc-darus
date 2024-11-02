@@ -77,7 +77,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     dataType: 'json',
                     delay: 500,
                     data: function(params) {
-                        // Construct full URL with query parameters for logging
                         var queryParams = {
                             q: params.term,
                             exclusiveFilter: false,
@@ -86,9 +85,12 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             local: false,
                             rows: 10
                         };
-                        var urlWithParams = this.url + '?' + $.param(queryParams);
+                
+                        // Construct the full URL with query parameters and log it
+                        var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        var urlWithParams = baseUrl + '?' + $.param(queryParams);
                         console.log("API URL:", urlWithParams);
-
+                
                         return queryParams;
                     },
                     processResults: function(data) {
