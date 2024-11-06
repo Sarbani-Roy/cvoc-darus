@@ -54,8 +54,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 },
                 templateSelection: function(item) {
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
-                    $(topicClassVocab).val("");
-                    $(topicClassVocabURI).val("");
+                    $(topicClassVocab).val("DFGFO2024");
+                    $(topicClassVocabURI).val(item.id);
 
                     item.text = topicClass;
                     return item.text;
@@ -93,19 +93,16 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             rows: 10
                         };
                 
-                        // Construct the full URL with query parameters and log it
-                        var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                        var urlWithParams = baseUrl + '?' + $.param(queryParams);
-                        console.log("API URL:", urlWithParams);
+                        // // Construct the full URL with query parameters and log it
+                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        // console.log("API URL:", urlWithParams);
                 
                         return queryParams;
                     },
                     processResults: function(data) {
-                        console.log(data.response.docs);  // Print the API response to the console
-                        
                         // Map data to select2 format
                         var results = data.response.docs.map(function(item) {
-                            console.log(item)
                             return {
                                 id: item.id,
                                 text: item.label + "(" + item.short_form + ")",
