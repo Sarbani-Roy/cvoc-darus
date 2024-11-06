@@ -17,15 +17,15 @@ function expandDFGclass() {
             if (topicElement.children().length > 2) {
                 var topicClassInput = topicElement.children().eq(0).find('input');
                 var topicClassVocab = topicElement.children().eq(1).find('input');
-                var topicClassVocabURI = topicElement.children().eq(2).find('input');
+                var topicClassTermURI = topicElement.children().eq(2).find('input');
 
-                updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI);
+                updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI);
             }
         });
     });
 }
 
-function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
+function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI) {
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
 
@@ -54,7 +54,14 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 },
                 templateSelection: function(item) {
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
-
+                    
+                    // Autofill the corresponding values                
+                    if (item.id) {
+                        var termURI = item.id.split(":class:")[0] + ":class";
+                        $(topicClassTermURI).val(termURI);
+                    }
+                    $(topicClassVocab).val("DFGFO2024");
+                    
                     item.text = topicClass;
                     return item.text;
                 },
@@ -135,18 +142,13 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Tags are allowed, so just enter the text as is
                     $("input[data-topic='" + num + "']").val(data.id);
                 }
-
-                // Autofill the corresponding values
-                $(topicClassVocab).val("DFGFO2024");
-                var itemURI = item.id.split(":class:")[0] + ":class";
-                $(topicClassVocabURI).val(itemURI);
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-topic='" + num + "']").val('');
                 $(topicClassVocab).val("");
-                $(topicClassVocabURI).val("");
+                $(topicClassTermURI).val("");
                 $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
             });
         }
