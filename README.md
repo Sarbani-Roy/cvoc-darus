@@ -1,35 +1,29 @@
 # CVOC_for_DaRUS
 
 ## Configuration File
-- [**Filename**: `cvoc-conf.json`](https://github.tik.uni-stuttgart.de/fokus/CVOC_for_DaRUS/blob/main/ORCID-Vocab/cvoc-conf.json)
+- [**Filename**: `cvocConf.json`](https://github.tik.uni-stuttgart.de/fokus/CVOC_for_DaRUS/blob/main/cvocConf.json)
 
 ## Script Location
-- **Original Path in dev machine 2**: `/srv/www/dataverse_previewers/js/get_authors_from_orcid.js`
-- One may need update the path in configuration file for `"js_url": "__dataverse_previewers__/js/get_authors_from_orcid.js"` 
+- **Original Path in dev machine 2**: `/srv/www/dataverse_previewers/js/get_your_cvoc.js`
+- One may need update the path in configuration file for `"js_url": "__dataverse_previewers__/js/get_your_cvoc.js"` 
 
 ## Steps to Update the Script
 
-1. Change directory to the script location:
+1. Upload the configuration file:
+    ```sh
+    curl -X PUT --upload-file cvocConf.json http://localhost:8080/api/admin/settings/:CVocConf 
+
+2. Change directory to the script location:
     ```sh
     cd /srv/www/dataverse_previewers/js
     ```
 
-2. Download the updated script(file in this repo has a token in the link):
+3. Download the updated script(file in this repo has a token in the link):
     ```sh
-    sudo wget https://raw.githubusercontent.com/Sarbani-Roy/cvoc-darus/main/ORCID-Vocab/update_config/get_authors_orcid.js
+    sudo wget https://raw.github.tik.uni-stuttgart.de/fokus/CVOC_for_DaRUS/main/ORCID-Vocab/get_authors_orcid.js?token=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
 
-3. Return to the previous home:
-    ```sh
-    cd --
-    ```
-
-4. Upload the configuration file:
-    ```sh
-    curl -X PUT --upload-file cvov-conf.json http://localhost:8080/api/admin/settings/:CVocConf
-    ```
-
-5. Verify the changes at [demoDarus](https://nfldevdataverse2.rus.uni-stuttgart.de/)
+4. Verify the changes at [demoDarus](https://nfldevdataverse2.rus.uni-stuttgart.de/)
 
 ### Re: 
-- [Dataverse's example](https://github.com/gdcc/dataverse-external-vocab-support)
+- [Dataverse's CVOC repo](https://github.com/gdcc/dataverse-external-vocab-support)
