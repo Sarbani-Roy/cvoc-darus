@@ -1,5 +1,5 @@
 var topicParentSelector = "div#metadata_topicClassification";
-var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
+var topicSelector = "span[data-cvoc-protocol='dfgClassifications']";
 var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 
 $(document).ready(function() {
@@ -65,7 +65,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         return 'Search by a topic name';
                     }
                 },
-                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select a Topic Classification",
+                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select an Author",
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
@@ -73,19 +73,14 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     dataType: 'json',
                     delay: 500,
                     data: function(params) {
-                        // Construct full URL with query parameters for logging
-                        var queryParams = {
-                            q: params.term,
+                        return {
+                            q: params.term,  // search term
                             exclusiveFilter: false,
                             ontology: 'dfgfo2024',
                             obsoletes: false,
                             local: false,
                             rows: 10
                         };
-                        var urlWithParams = this.url + '?' + $.param(queryParams);
-                        console.log("API URL:", urlWithParams);
-
-                        return queryParams;
                     },
                     processResults: function(data) {
                         console.log(data);  // Print the API response to the console
