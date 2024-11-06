@@ -57,10 +57,9 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     
                     // Autofill the corresponding values                
                     if (item.id) {
-                        var termURI = item.id.split(":class:")[0] + ":class";
+                        var termURI = item.id.split(":class:")[1];
                         $(topicClassTermURI).val(termURI);
                     }
-                    $(topicClassVocab).val("DFGFO2024");
                     
                     item.text = topicClass;
                     return item.text;
@@ -142,6 +141,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Tags are allowed, so just enter the text as is
                     $("input[data-topic='" + num + "']").val(data.id);
                 }
+
+                $(topicClassVocab).val("DFGFO2024");
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
