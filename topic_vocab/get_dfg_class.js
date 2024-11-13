@@ -18,15 +18,15 @@ function expandDFGclass() {
             if (topicElement.children().length > 2) {
                 var topicClassInput = topicElement.children().eq(0).find('input');
                 var topicClassVocab = topicElement.children().eq(1).find('input');
-                var topicClassVocabURI = topicElement.children().eq(2).find('input');
+                var topicClassTermURI = topicElement.children().eq(2).find('input');
 
-                updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI);
+                updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI);
             }
         });
     });
 }
 
-function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
+function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI) {
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
         console.log(topicInput);
@@ -58,9 +58,13 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 templateSelection: function(item) {
                     console.log(item)
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
-                    $(topicClassVocab).val("");
-                    $(topicClassVocabURI).val("");
-
+                    
+                    // Autofill the corresponding values                
+                    if (item.id) {
+                        var termURI = item.id.split(":class:")[1];
+                        $(topicClassTermURI).val(termURI);
+                    }
+                    
                     item.text = topicClass;
                     return item.text;
                 },
@@ -73,23 +77,50 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
-                    transport: function(params, success, failure) {
-                        $.getJSON('__dataverse_previewers__/js/dfg-2024.json', function(data) {
-                            var processedResults = data.map(function(item) {
-                                return {
-                                    text: item['prefLabel@en'] + " (" + item['notation'] + ")",
-                                    name: item['prefLabel@en'],
-                                    id: item['notation']
-                                };
-                            });
-                            success({
-                                results: processedResults
-                            });
-                        }).fail(failure);
+                    url: function(params) {
+                        var term = params.term;
+                        if (!term) {
+                            term = "";
+                        }
+                        // Use expanded-search to get the names, affiliations directly in the results
+                        return "https://service.tib.eu/ts4tib/api/select";
                     },
-                    processResults: function(data, params) {
+                    dataType: 'json',
+                    delay: 500,
+                    data: function(params) {
+                        term = params.term;
+                        if (!term) {
+                            term = "";
+                        }
+                        var queryParams = {
+                            q: params.term,
+                            exclusiveFilter: false,
+                            ontology: 'dfgfo2024',
+                            obsoletes: false,
+                            local: false,
+                            rows: 10
+                        };
+                
+                        // // Construct the full URL with query parameters and log it
+                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        // console.log("API URL:", urlWithParams);
+                
+                        return queryParams;
+                    },
+                    processResults: function(data) {
+                        // Map data to select2 format
+                        var results = data.response.docs.map(function(item) {
+                            return {
+                                id: item.id,
+                                text: item.label + "(" + item.short_form + ")",
+                                name: item.label,
+                                onto_name: item.ontology_prefix,
+                                class_no: item.short_form
+                            };
+                        });
                         return {
-                            results: data.results
+                            results: results
                         };
                     }
                 }
@@ -114,13 +145,16 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Tags are allowed, so just enter the text as is
                     $("input[data-topic='" + num + "']").val(data.id);
                 }
+
+                $(topicClassVocab).val("DFGFO2024");
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-topic='" + num + "']").val('');
                 $(topicClassVocab).val("");
-                $(topicClassVocabURI).val("");
+                $(topicClassTermURI).val("");
+                // $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
             });
         }
     });
