@@ -55,7 +55,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 },
                 templateSelection: function(item) {
                     console.log(item)
-                    var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
+                    // var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     
                     // Autofill the corresponding values                
                     if (item.id) {
@@ -63,7 +63,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         $(topicClassTermURI).val(termURI);
                     }
                     
-                    item.text = topicClass;
+                    // item.text = topicClass;
                     return item.text;
                 },
                 language: {
