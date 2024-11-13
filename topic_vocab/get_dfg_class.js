@@ -26,8 +26,10 @@ function expandDFGclass() {
 }
 
 function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
+    console.log("Topic Element:", topicElement)
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
+        console.log(topicInput);
 
         if (!topicInput.hasAttribute('data-topic')) {
             // Random identifier added
@@ -44,6 +46,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 tags: $(topicInput).attr('data-cvoc-allowfreetext') === "true",
                 delay: 500,
                 templateResult: function(item) {
+                    console.log(item);
                     if (item.loading) {
                         return item.text;
                     }
@@ -53,6 +56,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
+                    console.log(item)
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     $(topicClassVocab).val("");
                     $(topicClassVocabURI).val("");
@@ -65,25 +69,15 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         return 'Search by a topic name';
                     }
                 },
-                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select a Topic Classification",
+                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select an Author",
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
-                    url: function(params) {
-                        var term = params.term;
-                        if (!term) {
-                            term = "";
-                        }
-                        // Use expanded-search to get the names, affiliations directly in the results
-                        return "https://service.tib.eu/ts4tib/api/select";
-                    },
+                    url: 'https://service.tib.eu/ts4tib/api/select',
                     dataType: 'json',
                     delay: 500,
                     data: function(params) {
-                        term = params.term;
-                        if (!term) {
-                            term = "";
-                        }
+                        // Construct full URL with query parameters for logging
                         var queryParams = {
                             q: params.term,
                             exclusiveFilter: false,
@@ -92,26 +86,20 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             local: false,
                             rows: 10
                         };
-                
-                        // Construct the full URL with query parameters and log it
-                        var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                        var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        var urlWithParams = this.url + '?' + $.param(queryParams);
                         console.log("API URL:", urlWithParams);
-                
+
                         return queryParams;
                     },
                     processResults: function(data) {
-                        console.log(data.response.docs);  // Print the API response to the console
+                        console.log(data);  // Print the API response to the console
                         
                         // Map data to select2 format
-                        var results = data.response.docs.map(function(item) {
-                            console.log(item)
+                        var results = data.results.map(function(item) {
                             return {
-                                id: item.id,
-                                text: item.label + "(" + item.short_form + ")",
-                                name: item.label,
-                                onto_name: item.ontology_prefix,
-                                class_no: item.short_form
+                                id: item.notation,
+                                text: item['prefLabel@en'] + " (" + item.notation + ")",
+                                name: item['prefLabel@en']
                             };
                         });
                         return {
@@ -147,7 +135,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $("input[data-topic='" + num + "']").val('');
                 $(topicClassVocab).val("");
                 $(topicClassVocabURI).val("");
-                $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
             });
         }
     });
