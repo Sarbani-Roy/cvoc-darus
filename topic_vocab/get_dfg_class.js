@@ -148,6 +148,14 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-topic='" + num + "']").val('');
+
+                // Clear the topicClassInput value and set the placeholder text
+                $(topicClassInput).val('');
+                var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
+                ? $(topicInput).attr('data-cvoc-placeholder') 
+                : "Select a Topic Classification";
+                $(topicClassInput).attr('placeholder', placeholderText);
+
                 $(topicClassVocab).val("");
                 $(topicClassTermURI).val("");
                 $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
