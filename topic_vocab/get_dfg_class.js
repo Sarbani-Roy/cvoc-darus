@@ -43,16 +43,16 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 theme: "classic",
                 tags: $(topicInput).attr('data-cvoc-allowfreetext') === "true",
                 delay: 500,
-                // templateResult: function(item) {
-                //     console.log(item);
-                //     if (item.loading) {
-                //         return item.text;
-                //     }
+                templateResult: function(item) {
+                    console.log(item);
+                    if (item.loading) {
+                        return item.text;
+                    }
 
-                //     // markMatch bolds the search term if/where it appears in the result
-                //     var $result = markMatch(item.text, term);
-                //     return $result;
-                // },
+                    // markMatch bolds the search term if/where it appears in the result
+                    var $result = markMatch(item.text, term);
+                    return $result;
+                },
                 // templateSelection: function(item) {
                 //     console.log(item)
                 //     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
