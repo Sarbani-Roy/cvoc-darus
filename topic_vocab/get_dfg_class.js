@@ -1,6 +1,6 @@
 var topicParentSelector = "div#metadata_topicClassification";
-var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
-var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
+var topicSelector = "span[data-cvoc-protocol='dfgTopicClass']";
+var topicInputSelector = "input[data-cvoc-protocol='dfgTopicClass']";
 
 $(document).ready(function() {
     expandDFGclass();
@@ -14,6 +14,7 @@ function expandDFGclass() {
             
         compoundFieldElement.each(function() {
             var topicElement = $(this);
+            console.log(topicElement)
             if (topicElement.children().length > 2) {
                 var topicClassInput = topicElement.children().eq(0).find('input');
                 var topicClassVocab = topicElement.children().eq(1).find('input');
@@ -28,6 +29,7 @@ function expandDFGclass() {
 function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
+        console.log(topicInput);
 
         if (!topicInput.hasAttribute('data-topic')) {
             // Random identifier added
@@ -44,6 +46,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 tags: $(topicInput).attr('data-cvoc-allowfreetext') === "true",
                 delay: 500,
                 templateResult: function(item) {
+                    console.log(item);
                     if (item.loading) {
                         return item.text;
                     }
@@ -53,6 +56,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
+                    console.log(item)
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     $(topicClassVocab).val("");
                     $(topicClassVocabURI).val("");
@@ -69,32 +73,23 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
-                    url: 'https://service.tib.eu/ts4tib/api/select',
-                    dataType: 'json',
-                    delay: 500,
-                    data: function(params) {
-                        return {
-                            q: params.term,  // search term
-                            exclusiveFilter: false,
-                            ontology: 'dfgfo2024',
-                            obsoletes: false,
-                            local: false,
-                            rows: 10
-                        };
+                    transport: function(params, success, failure) {
+                        $.getJSON('__dataverse_previewers__/js/dfg-2024.json', function(data) {
+                            var processedResults = data.map(function(item) {
+                                return {
+                                    text: item['prefLabel@en'] + " (" + item['notation'] + ")",
+                                    name: item['prefLabel@en'],
+                                    id: item['notation']
+                                };
+                            });
+                            success({
+                                results: processedResults
+                            });
+                        }).fail(failure);
                     },
-                    processResults: function(data) {
-                        console.log(data);  // Print the API response to the console
-                        
-                        // Map data to select2 format
-                        var results = data.results.map(function(item) {
-                            return {
-                                id: item.notation,
-                                text: item['prefLabel@en'] + " (" + item.notation + ")",
-                                name: item['prefLabel@en']
-                            };
-                        });
+                    processResults: function(data, params) {
                         return {
-                            results: results
+                            results: data.results
                         };
                     }
                 }
