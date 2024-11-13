@@ -124,36 +124,36 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 }
             });
 
-            // // Handle existing values
-            // var topicName = $(topicInput).val();
-            // if (topicName) {
-            //     var newOption = new Option(topicName, topicName, true, true);
-            //     $('#' + selectId).append(newOption).trigger('change');
-            // }
+            // Handle existing values
+            var topicName = $(topicInput).val();
+            if (topicName) {
+                var newOption = new Option(topicName, topicName, true, true);
+                $('#' + selectId).append(newOption).trigger('change');
+            }
 
-            // // When a selection is made, set the value of the hidden input field
-            // $('#' + selectId).on('select2:select', function(e) {
-            //     var data = e.params.data;
-            //     // For free-texts, the id and text are the same. Otherwise, different
-            //     if (data.id !== data.text) {
-            //         var topicName = data.name;
-            //         data.name = topicName;
-            //         $("input[data-topic='" + num + "']").val(data.name);
-            //     } else {
-            //         // Tags are allowed, so just enter the text as is
-            //         $("input[data-topic='" + num + "']").val(data.id);
-            //     }
+            // When a selection is made, set the value of the hidden input field
+            $('#' + selectId).on('select2:select', function(e) {
+                var data = e.params.data;
+                // For free-texts, the id and text are the same. Otherwise, different
+                if (data.id !== data.text) {
+                    var topicName = data.name;
+                    data.name = topicName;
+                    $("input[data-topic='" + num + "']").val(data.name);
+                } else {
+                    // Tags are allowed, so just enter the text as is
+                    $("input[data-topic='" + num + "']").val(data.id);
+                }
 
-            //     $(topicClassVocab).val("DFGFO2024");
-            // });
+                $(topicClassVocab).val("DFGFO2024");
+            });
 
-            // // When a selection is cleared, clear the hidden input and all corresponding inputs
-            // $('#' + selectId).on('select2:clear', function(e) {
-            //     $("input[data-topic='" + num + "']").val('');
-            //     $(topicClassVocab).val("");
-            //     $(topicClassTermURI).val("");
-            //     // $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
-            // });
+            // When a selection is cleared, clear the hidden input and all corresponding inputs
+            $('#' + selectId).on('select2:clear', function(e) {
+                $("input[data-topic='" + num + "']").val('');
+                $(topicClassVocab).val("");
+                $(topicClassTermURI).val("");
+                // $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
+            });
         }
     });
 }
