@@ -45,29 +45,29 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 theme: "classic",
                 tags: $(topicInput).attr('data-cvoc-allowfreetext') === "true",
                 delay: 500,
-                templateResult: function(item) {
-                    console.log(item);
-                    if (item.loading) {
-                        return item.text;
-                    }
+                // templateResult: function(item) {
+                //     console.log(item);
+                //     if (item.loading) {
+                //         return item.text;
+                //     }
 
-                    // markMatch bolds the search term if/where it appears in the result
-                    var $result = markMatch(item.text, term);
-                    return $result;
-                },
-                templateSelection: function(item) {
-                    console.log(item)
-                    var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
+                //     // markMatch bolds the search term if/where it appears in the result
+                //     var $result = markMatch(item.text, term);
+                //     return $result;
+                // },
+                // templateSelection: function(item) {
+                //     console.log(item)
+                //     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     
-                    // Autofill the corresponding values                
-                    if (item.id) {
-                        var termURI = item.id.split(":class:")[1];
-                        $(topicClassTermURI).val(termURI);
-                    }
+                //     // Autofill the corresponding values                
+                //     if (item.id) {
+                //         var termURI = item.id.split(":class:")[1];
+                //         $(topicClassTermURI).val(termURI);
+                //     }
                     
-                    item.text = topicClass;
-                    return item.text;
-                },
+                //     item.text = topicClass;
+                //     return item.text;
+                // },
                 language: {
                     searching: function(params) {
                         return 'Search by a topic name';
@@ -76,109 +76,109 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select an Author",
                 minimumInputLength: 3,
                 allowClear: true,
-                ajax: {
-                    url: function(params) {
-                        var term = params.term;
-                        if (!term) {
-                            term = "";
-                        }
-                        // Use expanded-search to get the names, affiliations directly in the results
-                        return "https://service.tib.eu/ts4tib/api/select";
-                    },
-                    dataType: 'json',
-                    delay: 500,
-                    data: function(params) {
-                        term = params.term;
-                        if (!term) {
-                            term = "";
-                        }
-                        var queryParams = {
-                            q: params.term,
-                            exclusiveFilter: false,
-                            ontology: 'dfgfo2024',
-                            obsoletes: false,
-                            local: false,
-                            rows: 10
-                        };
+                // ajax: {
+                //     url: function(params) {
+                //         var term = params.term;
+                //         if (!term) {
+                //             term = "";
+                //         }
+                //         // Use expanded-search to get the names, affiliations directly in the results
+                //         return "https://service.tib.eu/ts4tib/api/select";
+                //     },
+                //     dataType: 'json',
+                //     delay: 500,
+                //     data: function(params) {
+                //         term = params.term;
+                //         if (!term) {
+                //             term = "";
+                //         }
+                //         var queryParams = {
+                //             q: params.term,
+                //             exclusiveFilter: false,
+                //             ontology: 'dfgfo2024',
+                //             obsoletes: false,
+                //             local: false,
+                //             rows: 10
+                //         };
                 
-                        // // Construct the full URL with query parameters and log it
-                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
-                        // console.log("API URL:", urlWithParams);
+                //         // // Construct the full URL with query parameters and log it
+                //         // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                //         // var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                //         // console.log("API URL:", urlWithParams);
                 
-                        return queryParams;
-                    },
-                    processResults: function(data) {
-                        // Map data to select2 format
-                        var results = data.response.docs.map(function(item) {
-                            return {
-                                id: item.id,
-                                text: item.label + "(" + item.short_form + ")",
-                                name: item.label,
-                                onto_name: item.ontology_prefix,
-                                class_no: item.short_form
-                            };
-                        });
-                        return {
-                            results: results
-                        };
-                    }
-                }
+                //         return queryParams;
+                //     },
+                //     processResults: function(data) {
+                //         // Map data to select2 format
+                //         var results = data.response.docs.map(function(item) {
+                //             return {
+                //                 id: item.id,
+                //                 text: item.label + "(" + item.short_form + ")",
+                //                 name: item.label,
+                //                 onto_name: item.ontology_prefix,
+                //                 class_no: item.short_form
+                //             };
+                //         });
+                //         return {
+                //             results: results
+                //         };
+                //     }
+                // }
             });
 
-            // Handle existing values
-            var topicName = $(topicInput).val();
-            if (topicName) {
-                var newOption = new Option(topicName, topicName, true, true);
-                $('#' + selectId).append(newOption).trigger('change');
-            }
+            // // Handle existing values
+            // var topicName = $(topicInput).val();
+            // if (topicName) {
+            //     var newOption = new Option(topicName, topicName, true, true);
+            //     $('#' + selectId).append(newOption).trigger('change');
+            // }
 
-            // When a selection is made, set the value of the hidden input field
-            $('#' + selectId).on('select2:select', function(e) {
-                var data = e.params.data;
-                // For free-texts, the id and text are the same. Otherwise, different
-                if (data.id !== data.text) {
-                    var topicName = data.name;
-                    data.name = topicName;
-                    $("input[data-topic='" + num + "']").val(data.name);
-                } else {
-                    // Tags are allowed, so just enter the text as is
-                    $("input[data-topic='" + num + "']").val(data.id);
-                }
+            // // When a selection is made, set the value of the hidden input field
+            // $('#' + selectId).on('select2:select', function(e) {
+            //     var data = e.params.data;
+            //     // For free-texts, the id and text are the same. Otherwise, different
+            //     if (data.id !== data.text) {
+            //         var topicName = data.name;
+            //         data.name = topicName;
+            //         $("input[data-topic='" + num + "']").val(data.name);
+            //     } else {
+            //         // Tags are allowed, so just enter the text as is
+            //         $("input[data-topic='" + num + "']").val(data.id);
+            //     }
 
-                $(topicClassVocab).val("DFGFO2024");
-            });
+            //     $(topicClassVocab).val("DFGFO2024");
+            // });
 
-            // When a selection is cleared, clear the hidden input and all corresponding inputs
-            $('#' + selectId).on('select2:clear', function(e) {
-                $("input[data-topic='" + num + "']").val('');
-                $(topicClassVocab).val("");
-                $(topicClassTermURI).val("");
-                // $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
-            });
+            // // When a selection is cleared, clear the hidden input and all corresponding inputs
+            // $('#' + selectId).on('select2:clear', function(e) {
+            //     $("input[data-topic='" + num + "']").val('');
+            //     $(topicClassVocab).val("");
+            //     $(topicClassTermURI).val("");
+            //     // $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
+            // });
         }
     });
 }
 
-// Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
-function markMatch(text, term) {
-    var match = text.toUpperCase().indexOf(term.toUpperCase());
-    var $result = $('<span></span>');
+// // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
+// function markMatch(text, term) {
+//     var match = text.toUpperCase().indexOf(term.toUpperCase());
+//     var $result = $('<span></span>');
     
-    // If there is no match, move on
-    if (match < 0) {
-        return $result.text(text);
-    }
-    $result.text(text.substring(0, match));
+//     // If there is no match, move on
+//     if (match < 0) {
+//         return $result.text(text);
+//     }
+//     $result.text(text.substring(0, match));
     
-    // Put in whatever text is before the match
-    var $match = $('<span class="select2-rendered__match"></span>');
+//     // Put in whatever text is before the match
+//     var $match = $('<span class="select2-rendered__match"></span>');
     
-    // Mark and append the matching text
-    $match.text(text.substring(match, match + term.length));
-    $result.append($match);
+//     // Mark and append the matching text
+//     $match.text(text.substring(match, match + term.length));
+//     $result.append($match);
     
-    // Put in whatever is after the match
-    $result.append(text.substring(match + term.length));
-    return $result;
-}
+//     // Put in whatever is after the match
+//     $result.append(text.substring(match + term.length));
+//     return $result;
+// }
