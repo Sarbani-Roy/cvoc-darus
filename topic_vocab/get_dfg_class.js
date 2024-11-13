@@ -55,19 +55,19 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 //     var $result = markMatch(item.text, term);
                 //     return $result;
                 // },
-                templateSelection: function(item) {
-                    console.log(item)
-                    var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
+                // templateSelection: function(item) {
+                //     console.log(item)
+                //     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     
-                    // Autofill the corresponding values                
-                    if (item.id) {
-                        var termURI = item.id.split(":class:")[1];
-                        $(topicClassTermURI).val(termURI);
-                    }
+                //     // Autofill the corresponding values                
+                //     if (item.id) {
+                //         var termURI = item.id.split(":class:")[1];
+                //         $(topicClassTermURI).val(termURI);
+                //     }
                     
-                    item.text = topicClass;
-                    return item.text;
-                },
+                //     item.text = topicClass;
+                //     return item.text;
+                // },
                 language: {
                     searching: function(params) {
                         return 'Search by a topic name';
