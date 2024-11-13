@@ -55,13 +55,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 },
                 templateSelection: function(item) {
                     console.log(item)
-                    var topicClassValue = $(topicClassInput).val();
-                    if (topicClassValue === "" && !!item.name) {
-                        topicClass = item.name;
-                    } else {
-                        topicClass = topicClassValue;
-                    }
-
                     // var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     
                     // Autofill the corresponding values                
@@ -70,8 +63,22 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         $(topicClassTermURI).val(termURI);
                     }
                     
-                    item.text = topicClass;
-                    return item.text;
+                    if (item.text) {
+                        var topicName = item.text;
+                    }
+                    else{
+                        var topicName = $(topicNameInput).val();
+                    }                    
+                    item.text = topicName;
+
+                    if (item.text) {
+                        return item.text;
+                    }
+                    else{
+                        return item.id;
+                    }
+                    // item.text = topicClass;
+                    // return item.text;
                 },
                 language: {
                     searching: function(params) {
