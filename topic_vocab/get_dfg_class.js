@@ -99,10 +99,10 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             rows: 10
                         };
                 
-                        // // Construct the full URL with query parameters and log it
-                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
-                        // console.log("API URL:", urlWithParams);
+                        // Construct the full URL with query parameters and log it
+                        var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        console.log("API URL:", urlWithParams);
                 
                         return queryParams;
                     },
