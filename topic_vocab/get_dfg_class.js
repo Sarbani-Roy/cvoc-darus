@@ -14,7 +14,6 @@ function expandDFGclass() {
             
         compoundFieldElement.each(function() {
             var topicElement = $(this);
-            console.log(topicElement)
             if (topicElement.children().length > 2) {
                 var topicClassInput = topicElement.children().eq(0).find('input');
                 var topicClassVocab = topicElement.children().eq(1).find('input');
@@ -29,7 +28,6 @@ function expandDFGclass() {
 function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI) {
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
-        console.log(topicInput);
 
         if (!topicInput.hasAttribute('data-topic')) {
             // Random identifier added
@@ -160,25 +158,25 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
     });
 }
 
-// // Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
-// function markMatch(text, term) {
-//     var match = text.toUpperCase().indexOf(term.toUpperCase());
-//     var $result = $('<span></span>');
+// Put the text in a result that matches the term in a span with class select2-rendered__match that can be styled
+function markMatch(text, term) {
+    var match = text.toUpperCase().indexOf(term.toUpperCase());
+    var $result = $('<span></span>');
     
-//     // If there is no match, move on
-//     if (match < 0) {
-//         return $result.text(text);
-//     }
-//     $result.text(text.substring(0, match));
+    // If there is no match, move on
+    if (match < 0) {
+        return $result.text(text);
+    }
+    $result.text(text.substring(0, match));
     
-//     // Put in whatever text is before the match
-//     var $match = $('<span class="select2-rendered__match"></span>');
+    // Put in whatever text is before the match
+    var $match = $('<span class="select2-rendered__match"></span>');
     
-//     // Mark and append the matching text
-//     $match.text(text.substring(match, match + term.length));
-//     $result.append($match);
+    // Mark and append the matching text
+    $match.text(text.substring(match, match + term.length));
+    $result.append($match);
     
-//     // Put in whatever is after the match
-//     $result.append(text.substring(match + term.length));
-//     return $result;
-// }
+    // Put in whatever is after the match
+    $result.append(text.substring(match + term.length));
+    return $result;
+}
