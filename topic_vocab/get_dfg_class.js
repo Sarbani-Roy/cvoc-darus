@@ -55,6 +55,13 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 },
                 templateSelection: function(item) {
                     console.log(item)
+                    var topicClassValue = $(topicClassInput).val();
+                    if (topicClassValue === "" && !!item.name) {
+                        topicClass = item.name;
+                    } else {
+                        topicClass = topicClassValue;
+                    }
+
                     // var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     
                     // Autofill the corresponding values                
@@ -63,7 +70,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         $(topicClassTermURI).val(termURI);
                     }
                     
-                    // item.text = topicClass;
+                    item.text = topicClass;
                     return item.text;
                 },
                 language: {
@@ -99,10 +106,10 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             rows: 10
                         };
                 
-                        // Construct the full URL with query parameters and log it
-                        var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                        var urlWithParams = baseUrl + '?' + $.param(queryParams);
-                        console.log("API URL:", urlWithParams);
+                        // // Construct the full URL with query parameters and log it
+                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        // console.log("API URL:", urlWithParams);
                 
                         return queryParams;
                     },
