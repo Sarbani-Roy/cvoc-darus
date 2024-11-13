@@ -55,75 +55,75 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 //     var $result = markMatch(item.text, term);
                 //     return $result;
                 // },
-                // templateSelection: function(item) {
-                //     console.log(item)
-                //     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
+                templateSelection: function(item) {
+                    console.log(item)
+                    var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     
-                //     // Autofill the corresponding values                
-                //     if (item.id) {
-                //         var termURI = item.id.split(":class:")[1];
-                //         $(topicClassTermURI).val(termURI);
-                //     }
+                    // Autofill the corresponding values                
+                    if (item.id) {
+                        var termURI = item.id.split(":class:")[1];
+                        $(topicClassTermURI).val(termURI);
+                    }
                     
-                //     item.text = topicClass;
-                //     return item.text;
-                // },
+                    item.text = topicClass;
+                    return item.text;
+                },
                 language: {
                     searching: function(params) {
                         return 'Search by a topic name';
                     }
                 },
-                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select an Author",
+                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select a DFG Topic Classification",
                 minimumInputLength: 3,
                 allowClear: true,
-                // ajax: {
-                //     url: function(params) {
-                //         var term = params.term;
-                //         if (!term) {
-                //             term = "";
-                //         }
-                //         // Use expanded-search to get the names, affiliations directly in the results
-                //         return "https://service.tib.eu/ts4tib/api/select";
-                //     },
-                //     dataType: 'json',
-                //     delay: 500,
-                //     data: function(params) {
-                //         term = params.term;
-                //         if (!term) {
-                //             term = "";
-                //         }
-                //         var queryParams = {
-                //             q: params.term,
-                //             exclusiveFilter: false,
-                //             ontology: 'dfgfo2024',
-                //             obsoletes: false,
-                //             local: false,
-                //             rows: 10
-                //         };
+                ajax: {
+                    url: function(params) {
+                        var term = params.term;
+                        if (!term) {
+                            term = "";
+                        }
+                        // Use expanded-search to get the names, affiliations directly in the results
+                        return "https://service.tib.eu/ts4tib/api/select";
+                    },
+                    dataType: 'json',
+                    delay: 500,
+                    data: function(params) {
+                        term = params.term;
+                        if (!term) {
+                            term = "";
+                        }
+                        var queryParams = {
+                            q: params.term,
+                            exclusiveFilter: false,
+                            ontology: 'dfgfo2024',
+                            obsoletes: false,
+                            local: false,
+                            rows: 10
+                        };
                 
-                //         // // Construct the full URL with query parameters and log it
-                //         // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                //         // var urlWithParams = baseUrl + '?' + $.param(queryParams);
-                //         // console.log("API URL:", urlWithParams);
+                        // // Construct the full URL with query parameters and log it
+                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        // console.log("API URL:", urlWithParams);
                 
-                //         return queryParams;
-                //     },
-                //     processResults: function(data) {
-                //         // Map data to select2 format
-                //         var results = data.response.docs.map(function(item) {
-                //             return {
-                //                 id: item.id,
-                //                 text: item.label + "(" + item.short_form + ")",
-                //                 name: item.label,
-                //                 onto_name: item.ontology_prefix,
-                //                 class_no: item.short_form
-                //             };
-                //         });
-                //         return {
-                //             results: results
-                //         };
-                //     }
-                // }
+                        return queryParams;
+                    },
+                    processResults: function(data) {
+                        // Map data to select2 format
+                        var results = data.response.docs.map(function(item) {
+                            return {
+                                id: item.id,
+                                text: item.label + "(" + item.short_form + ")",
+                                name: item.label,
+                                onto_name: item.ontology_prefix,
+                                class_no: item.short_form
+                            };
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
             });
 
             // // Handle existing values
