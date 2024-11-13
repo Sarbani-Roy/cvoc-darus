@@ -17,15 +17,15 @@ function expandDFGclass() {
             if (topicElement.children().length > 2) {
                 var topicClassInput = topicElement.children().eq(0).find('input');
                 var topicClassVocab = topicElement.children().eq(1).find('input');
-                var topicClassTermURI = topicElement.children().eq(2).find('input');
+                var topicClassVocabURI = topicElement.children().eq(2).find('input');
 
-                updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI);
+                updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI);
             }
         });
     });
 }
 
-function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI) {
+function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassVocabURI) {
     $(topicElement).find(topicInputSelector).each(function() {
         var topicInput = this;
 
@@ -54,13 +54,9 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 },
                 templateSelection: function(item) {
                     var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
-                    
-                    // Autofill the corresponding values                
-                    if (item.id) {
-                        var termURI = item.id.split(":class:")[1];
-                        $(topicClassTermURI).val(termURI);
-                    }
-                    
+                    $(topicClassVocab).val("");
+                    $(topicClassVocabURI).val("");
+
                     item.text = topicClass;
                     return item.text;
                 },
@@ -97,16 +93,19 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             rows: 10
                         };
                 
-                        // // Construct the full URL with query parameters and log it
-                        // var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
-                        // var urlWithParams = baseUrl + '?' + $.param(queryParams);
-                        // console.log("API URL:", urlWithParams);
+                        // Construct the full URL with query parameters and log it
+                        var baseUrl = 'https://service.tib.eu/ts4tib/api/select';
+                        var urlWithParams = baseUrl + '?' + $.param(queryParams);
+                        console.log("API URL:", urlWithParams);
                 
                         return queryParams;
                     },
                     processResults: function(data) {
+                        console.log(data.response.docs);  // Print the API response to the console
+                        
                         // Map data to select2 format
                         var results = data.response.docs.map(function(item) {
+                            console.log(item)
                             return {
                                 id: item.id,
                                 text: item.label + "(" + item.short_form + ")",
@@ -141,23 +140,13 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Tags are allowed, so just enter the text as is
                     $("input[data-topic='" + num + "']").val(data.id);
                 }
-
-                $(topicClassVocab).val("DFGFO2024");
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-topic='" + num + "']").val('');
-
-                // Clear the topicClassInput value and set the placeholder text
-                $(topicClassInput).val('');
-                var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
-                ? $(topicInput).attr('data-cvoc-placeholder') 
-                : "Select a Topic Classification";
-                $(topicClassInput).attr('placeholder', placeholderText);
-
                 $(topicClassVocab).val("");
-                $(topicClassTermURI).val("");
+                $(topicClassVocabURI).val("");
                 $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
             });
         }
