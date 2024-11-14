@@ -1,5 +1,5 @@
 var topicParentSelector = "div#metadata_topicClassification";
-var descriptionParentSelector = "metadata_dsDescription";
+var descriptionParentSelector = "div#metadata_dsDescription";
 var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
 var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 
