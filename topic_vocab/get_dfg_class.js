@@ -203,17 +203,15 @@ function markMatch(text, term) {
 }
 
 function executeDAFDM(topicElement) {
-    var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');
-    
+    var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');   
     
     button.on('click', function() {
         var baseUrl = "https://services.eurospider.com/fdm-upload/rest";
         var url = `${baseUrl}/suggestions`;
 
-        // Initialize an array to store all dsInputValue values
+        // Preparing the querytext
         var allDsInputValues = [];
 
-        // Iterate over each matching element
         $(descriptionParentSelector).each(function() {
             var dsParentElement = $(descriptionParentSelector).parent();
             var dsFieldValuesElement = dsParentElement.siblings('.dataset-field-values');
@@ -224,18 +222,14 @@ function executeDAFDM(topicElement) {
                 var dsInput = dsElement.children().children().eq(2);
                 var dsInputValue = $(dsInput).val();
 
-                // Add the value to the array if it’s not empty or undefined
                 if (dsInputValue) {
                     allDsInputValues.push(dsInputValue);
                 }
             });
         });
 
-        // Merge all values into a single queryText
-        var QueryText = allDsInputValues.join(" ");
-        console.log("Merged queryText:", QueryText);
-        
-        queryText = "A reduced all-body model parametrised using generic literature data for the geometry of the skeleton including attachment points for ligaments and muscles";
+        var queryText = allDsInputValues.join(" ");
+        console.log("Merged queryText:", queryText);
 
         // Prepare the request body
         var requestBody = {
