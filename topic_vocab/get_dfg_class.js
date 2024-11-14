@@ -225,7 +225,7 @@ function executeDAFDM(topicElement) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Api-Key": apiKey
+                "Api-Key": "xhdvERDHJL83qQUsMS4kAm6XrnNWYKu"
             },
             data: JSON.stringify(requestBody),
             success: function(response) {
