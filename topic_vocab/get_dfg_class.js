@@ -1,4 +1,5 @@
 var topicParentSelector = "div#metadata_topicClassification";
+var descriptionParentSelector = "metadata_dsDescription";
 var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
 var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 
@@ -202,15 +203,28 @@ function markMatch(text, term) {
 }
 
 function executeDAFDM(topicElement) {
-    // Create the button element
     var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');
     
-    // Attach any additional functionality you want to this button
+    
     button.on('click', function() {
-        alert("Button clicked for topic element: " + topicElement.attr('data-topic'));
         var baseUrl = "https://services.eurospider.com/fdm-upload/rest";
         var url = `${baseUrl}/suggestions`;
 
+        // Prepare the queryText
+        $(descriptionParentSelector).each(function() {
+            var dsParentElement = $(descriptionParentSelector).parent();
+            var dsFieldValuesElement = dsParentElement.siblings('.dataset-field-values');
+            var dsCompoundFieldElement = dsFieldValuesElement.find('.edit-compound-field');
+                
+            dsCompoundFieldElement.each(function() {
+                var dsElement = $(this);
+                if (dsElement.children().length > 1) {
+                    var dsInput = topicElement.children().eq(0).find('input');
+                    var dsInputValue = $(dsInput).val();
+                    console.log(dsInputValue)
+                }
+            });
+        });
         queryText = "A reduced all-body model parametrised using generic literature data for the geometry of the skeleton including attachment points for ligaments and muscles";
 
         // Prepare the request body
