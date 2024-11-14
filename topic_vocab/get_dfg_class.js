@@ -211,17 +211,21 @@ function executeDAFDM(topicElement) {
         var url = `${baseUrl}/suggestions`;
 
         // Prepare the queryText
+        console.log(descriptionParentSelector);
         $(descriptionParentSelector).each(function() {
             var dsParentElement = $(descriptionParentSelector).parent();
+            console.log(dsParentElement);
             var dsFieldValuesElement = dsParentElement.siblings('.dataset-field-values');
-            var dsCompoundFieldElement = dsFieldValuesElement.find('.edit-compound-field');
-                
+            console.log(dsFieldValuesElement);
+            var dsCompoundFieldElement = dsFieldValuesElement.find('.edit-compound-field');                
             console.log(dsCompoundFieldElement);
             
             dsCompoundFieldElement.each(function() {
                 var dsElement = $(this);
+                console.log(dsElement);
                 if (dsElement.children().length > 1) {
                     var dsInput = dsElement.children().eq(0).find('input');
+                    console.log(dsInput)
                     var dsInputValue = $(dsInput).val();
                     console.log(dsInputValue)
                 }
