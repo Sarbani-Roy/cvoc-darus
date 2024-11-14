@@ -20,6 +20,8 @@ function expandDFGclass() {
                 var topicClassTermURI = topicElement.children().eq(2).find('input');
 
                 updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI);
+
+                executeDAFDM(topicElement);
             }
         });
     });
@@ -163,14 +165,14 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $(topicClassTermURI).val('');
 
                 // Clear the topicInput value and set the placeholder text
-                $(topicInput).val('');
-                console.log($(topicInput).val())
+                $(topicClassInput).val('');
+                console.log($(topicClassInput).val())
                 
                 // Determine the placeholder value
                 var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
                 ? $(topicInput).attr('data-cvoc-placeholder') 
                 : "Select a DFG Topic Classification";
-                $(topicInput).attr('placeholder', placeholderText);
+                $(topicClassInput).attr('placeholder', placeholderText);
             });
         }
     });
@@ -197,4 +199,17 @@ function markMatch(text, term) {
     // Put in whatever is after the match
     $result.append(text.substring(match + term.length));
     return $result;
+}
+
+function executeDAFDM(topicElement) {
+    // Create the button element
+    var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');
+    
+    // Attach any additional functionality you want to this button
+    button.on('click', function() {
+        alert("Button clicked for topic element: " + topicElement.attr('data-topic'));
+    });
+    
+    // Append the button after the topicElement
+    topicElement.append(button);
 }
