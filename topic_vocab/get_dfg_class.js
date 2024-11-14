@@ -163,7 +163,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $(topicClassTermURI).val("");
 
                 // Clear the topicInput value and set the placeholder text
-                $(topicClassInput).val('');
+                $(topicClassInput).val("");
+                console.log($(topicClassInput))
                 // Determine the placeholder value
                 var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
                 ? $(topicInput).attr('data-cvoc-placeholder') 
