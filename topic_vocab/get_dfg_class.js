@@ -44,7 +44,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 tags: $(topicInput).attr('data-cvoc-allowfreetext') === "true",
                 delay: 500,
                 templateResult: function(item) {
-                    console.log(item);
                     if (item.loading) {
                         return item.text;
                     }
@@ -54,17 +53,12 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
-                    console.log(item)
-                    // var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
-                    // item.text = topicClass;
-                    // return item.text;
-
                     // Autofill the corresponding values                
-                    if (item.id) {
-                        var termURI = item.id.split(":class:")[1];
-                        $(topicClassTermURI).val(termURI);
+                    if (item.iri) {
+                        $(topicClassTermURI).val(item.iri);
                     }
-                    
+                    $(topicClassVocab).val("DFGFO2024");
+
                     if (item.text) {
                         var topicName = item.text;
                     }
@@ -72,8 +66,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         var topicName = $(topicNameInput).val();
                     }                    
                     item.text = topicName;
-                    console.log(item.text)
-
+                    
                     if (item.text) {
                         return item.text;
                     }
@@ -126,7 +119,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         var results = data.response.docs.map(function(item) {
                             return {
                                 id: item.id,
-                                text: item.label + "(" + item.short_form + ")",
+                                iri: item.iri,
+                                text: item.label + " (" + item.short_form + ")",
                                 name: item.label,
                                 onto_name: item.ontology_prefix,
                                 class_no: item.short_form
@@ -159,7 +153,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     $("input[data-topic='" + num + "']").val(data.id);
                 }
 
-                $(topicClassVocab).val("DFGFO2024");
+                // $(topicClassVocab).val("DFGFO2024");
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
@@ -167,7 +161,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $("input[data-topic='" + num + "']").val('');
                 $(topicClassVocab).val("");
                 $(topicClassTermURI).val("");
-                // $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
             });
         }
     });
