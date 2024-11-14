@@ -210,22 +210,30 @@ function executeDAFDM(topicElement) {
         var baseUrl = "https://services.eurospider.com/fdm-upload/rest";
         var url = `${baseUrl}/suggestions`;
 
-        // Prepare the queryText
+        // Initialize an array to store all dsInputValue values
+        var allDsInputValues = [];
+
+        // Iterate over each matching element
         $(descriptionParentSelector).each(function() {
             var dsParentElement = $(descriptionParentSelector).parent();
             var dsFieldValuesElement = dsParentElement.siblings('.dataset-field-values');
-            var dsCompoundFieldElement = dsFieldValuesElement.find('.edit-compound-field');                
-            
+            var dsCompoundFieldElement = dsFieldValuesElement.find('.edit-compound-field');
+
             dsCompoundFieldElement.each(function() {
                 var dsElement = $(this);
-                console.log(dsElement)
                 var dsInput = dsElement.children().children().eq(2);
-                console.log(dsInput);
                 var dsInputValue = $(dsInput).val();
-                console.log(dsInputValue);
-                
+
+                // Add the value to the array if it’s not empty or undefined
+                if (dsInputValue) {
+                    allDsInputValues.push(dsInputValue);
+                }
             });
         });
+
+        // Merge all values into a single queryText
+        var QueryText = allDsInputValues.join(" ");
+        console.log("Merged queryText:", QueryText);
         
         queryText = "A reduced all-body model parametrised using generic literature data for the geometry of the skeleton including attachment points for ligaments and muscles";
 
