@@ -173,7 +173,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         ? $(topicInput).attr('data-cvoc-placeholder') 
                         : "Select a DFG Topic Classification";
                     $(topicClassInput).attr('placeholder', placeholderText);
-                }, 10);
+                }, 1000);
             });
         }
     });
