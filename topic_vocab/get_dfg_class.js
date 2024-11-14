@@ -163,17 +163,14 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $(topicClassTermURI).val('');
 
                 // Clear the topicInput value and set the placeholder text
-                $(topicClassInput).val('');
-                console.log($(topicClassInput).val())
+                $(topicInput).val('');
+                console.log($(topicInput).val())
                 
                 // Determine the placeholder value
-                setTimeout(function() {
-                    // Determine the placeholder value
-                    var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
-                        ? $(topicInput).attr('data-cvoc-placeholder') 
-                        : "Select a DFG Topic Classification";
-                    $(topicClassInput).attr('placeholder', placeholderText);
-                }, 1000);
+                var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
+                ? $(topicInput).attr('data-cvoc-placeholder') 
+                : "Select a DFG Topic Classification";
+                $(topicInput).attr('placeholder', placeholderText);
             });
         }
     });
