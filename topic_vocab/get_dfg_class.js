@@ -227,30 +227,30 @@ function executeDAFDM(topicElement) {
                 }
             });
         });
-        queryText = "A reduced all-body model parametrised using generic literature data for the geometry of the skeleton including attachment points for ligaments and muscles";
+        // queryText = "A reduced all-body model parametrised using generic literature data for the geometry of the skeleton including attachment points for ligaments and muscles";
 
-        // Prepare the request body
-        var requestBody = {
-            query: queryText,
-            resultSize: 5
-        };
+        // // Prepare the request body
+        // var requestBody = {
+        //     query: queryText,
+        //     resultSize: 5
+        // };
 
-        // Perform the AJAX POST request
-        $.ajax({
-            url: url,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Api-Key": "xhdvERDHJL83qQUsMS4kAm6XrnNWYKu"
-            },
-            data: JSON.stringify(requestBody),
-            success: function(response) {
-                console.log("Suggestions Response:", response);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error in suggestions request:", error);
-            }
-        });
+        // // Perform the AJAX POST request
+        // $.ajax({
+        //     url: url,
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Api-Key": "xhdvERDHJL83qQUsMS4kAm6XrnNWYKu"
+        //     },
+        //     data: JSON.stringify(requestBody),
+        //     success: function(response) {
+        //         console.log("Suggestions Response:", response);
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error("Error in suggestions request:", error);
+        //     }
+        // });
     });
     
     // Append the button after the topicElement
