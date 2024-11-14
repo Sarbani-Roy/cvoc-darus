@@ -208,6 +208,33 @@ function executeDAFDM(topicElement) {
     // Attach any additional functionality you want to this button
     button.on('click', function() {
         alert("Button clicked for topic element: " + topicElement.attr('data-topic'));
+        var baseUrl = "https://services.eurospider.com/fdm-upload/rest";
+        var url = `${baseUrl}/suggestions`;
+
+        queryText = "A reduced all-body model parametrised using generic literature data for the geometry of the skeleton including attachment points for ligaments and muscles";
+
+        // Prepare the request body
+        var requestBody = {
+            query: queryText,
+            resultSize: 5
+        };
+
+        // Perform the AJAX POST request
+        $.ajax({
+            url: url,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Api-Key": apiKey
+            },
+            data: JSON.stringify(requestBody),
+            success: function(response) {
+                console.log("Suggestions Response:", response);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error in suggestions request:", error);
+            }
+        });
     });
     
     // Append the button after the topicElement
