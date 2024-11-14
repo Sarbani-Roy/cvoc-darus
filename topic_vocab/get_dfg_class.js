@@ -56,14 +56,14 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Autofill the corresponding values                
                     if (item.iri) {
                         $(topicClassTermURI).val(item.iri);
+                        $(topicClassVocab).val("DFGFO2024");
                     }
-                    $(topicClassVocab).val("DFGFO2024");
 
                     if (item.text) {
                         var topicName = item.text;
                     }
                     else{
-                        var topicName = $(topicNameInput).val();
+                        var topicName = $(topicClassInput).val();
                     }                    
                     item.text = topicName;
                     
@@ -161,6 +161,14 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $("input[data-topic='" + num + "']").val('');
                 $(topicClassVocab).val("");
                 $(topicClassTermURI).val("");
+
+                // Clear the topicInput value and set the placeholder text
+                $(topicClassInput).val('');
+                // Determine the placeholder value
+                var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
+                ? $(topicInput).attr('data-cvoc-placeholder') 
+                : "Select a DFG Topic Classification";
+                $(topicClassInput).attr('placeholder', placeholderText);
             });
         }
     });
