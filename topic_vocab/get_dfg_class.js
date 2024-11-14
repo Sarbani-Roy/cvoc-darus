@@ -219,9 +219,10 @@ function executeDAFDM(topicElement) {
             dsCompoundFieldElement.each(function() {
                 var dsElement = $(this);
                 if (dsElement.children().length > 1) {
-                    var dsInput = dsElement.children().children().eq(0);
+                    var dsInput = dsElement.children().children().eq(2).find('textarea');
                     console.log(dsInput);
                     var dsInputValue = $(dsInput).val();
+                    console.log(dsInputValue);
                 }
             });
         });
