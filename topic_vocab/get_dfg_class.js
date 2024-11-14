@@ -216,10 +216,12 @@ function executeDAFDM(topicElement) {
             var dsFieldValuesElement = dsParentElement.siblings('.dataset-field-values');
             var dsCompoundFieldElement = dsFieldValuesElement.find('.edit-compound-field');
                 
+            console.log(dsCompoundFieldElement);
+            
             dsCompoundFieldElement.each(function() {
                 var dsElement = $(this);
                 if (dsElement.children().length > 1) {
-                    var dsInput = topicElement.children().eq(0).find('input');
+                    var dsInput = dsElement.children().eq(0).find('input');
                     var dsInputValue = $(dsInput).val();
                     console.log(dsInputValue)
                 }
