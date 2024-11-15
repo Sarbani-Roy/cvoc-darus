@@ -273,22 +273,7 @@ function executeDAFDM(topicElement) {
         var fetchPromises = [];
 
         mockResponse.data.forEach(item => {
-            // API call to fetch the label for each item.value
-            var fetchPromise = $.ajax({
-                url: "https://service.tib.eu/ts4tib/api/select",
-                method: "GET",
-                dataType: "json",
-                data: {
-                    q: item.value,
-                    exclusiveFilter: false,
-                    ontology: "dfgfo2024",
-                    obsoletes: false,
-                    local: false,
-                    rows: 10
-                }
-            }).then(function (response) {
-                console.log(response.response)
-                // Fetch the label from the response
+            fetchResponse(item.value).then(function (response) {
                 var label = response.response?.docs[0]?.label || "Unknown Label";
                 modalContent += `<li><strong>Label:</strong> ${label} <strong>Value:</strong> ${item.value}</li>`;
             }).catch(function (error) {
@@ -338,4 +323,24 @@ function executeDAFDM(topicElement) {
     
     // Append the button after the topicElement
     topicElement.append(button);
+}
+
+function fetchResponse(queryValue) {
+    var baseUrl = "https://service.tib.eu/ts4tib/api/select";
+    var queryParams = {
+        q: queryValue,
+        exclusiveFilter: false,
+        ontology: 'dfgfo2024',
+        obsoletes: false,
+        local: false,
+        rows: 10
+    };
+    var fullUrl = baseUrl + '?' + $.param(queryParams);
+    console.log("Query URL:", fullUrl);
+
+    return $.ajax({
+        url: fullUrl,
+        method: 'GET',
+        dataType: 'json'
+    });
 }
