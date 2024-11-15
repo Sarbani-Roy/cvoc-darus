@@ -287,13 +287,13 @@ function executeDAFDM(topicElement) {
                     rows: 1
                 }
             }).then(function (response) {
-                console.log(response)
+                console.log(response.response)
                 // Fetch the label from the response
                 var label = response.response?.docs[0]?.label || "Unknown Label";
-                modalContent += `<strong>Label:</strong> ${label} <li><strong>Value:</strong> ${item.value}</li>`;
+                modalContent += `<li><strong>Label:</strong> ${label} <strong>Value:</strong> ${item.value}</li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
-                modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> Error fetching label, <strong>Score:</strong> ${item.score}</li>`;
+                // modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> Error fetching label, <strong>Score:</strong> ${item.score}</li>`;
             });
 
             fetchPromises.push(fetchPromise);
