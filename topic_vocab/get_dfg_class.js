@@ -273,31 +273,29 @@ function executeDAFDM(topicElement) {
         var fetchPromises = [];
 
         mockResponse.data.forEach(item => {
-            // Construct the full URL with query parameters
-            var baseUrl = "https://service.tib.eu/ts4tib/api/select";
-            var queryParams = {
-                q: item.value,
-                exclusiveFilter: false,
-                ontology: 'dfgfo2024',
-                obsoletes: false,
-                local: false,
-                rows: 10
-            };
-            var fullUrl = baseUrl + '?' + $.param(queryParams); // Construct URL with parameters
-            console.log("Constructed Query URL:", fullUrl);
-        
-            // Perform the AJAX call
-            $.ajax({
-                url: fullUrl, // Use the constructed full URL
-                method: 'GET',
-                dataType: 'json'
+            // API call to fetch the label for each item.value
+            var fetchPromise = $.ajax({
+                url: "https://service.tib.eu/ts4tib/api/select",
+                method: "GET",
+                dataType: "json",
+                data: {
+                    q: item.value,
+                    exclusiveFilter: false,
+                    ontology: "dfgfo",
+                    obsoletes: false,
+                    local: false,
+                    rows: 1
+                }
             }).then(function (response) {
+                // Fetch the label from the response
                 var label = response.response?.docs[0]?.label || "Unknown Label";
-                console.log(`Fetched label for ${item.value}: ${label}`);
-                modalContent += `<li>${label} <strong>(</strong> ${item.value}<strong>)</strong></li>`;
+                modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> ${label}, <strong>Score:</strong> ${item.score}</li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
+                modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> Error fetching label, <strong>Score:</strong> ${item.score}</li>`;
             });
+
+            fetchPromises.push(fetchPromise);
         });
 
         // Wait for all fetches to complete
