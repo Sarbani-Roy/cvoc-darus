@@ -284,7 +284,7 @@ function executeDAFDM(topicElement) {
                     ontology: "dfgfo2024",
                     obsoletes: false,
                     local: false,
-                    rows: 1
+                    rows: 10
                 }
             }).then(function (response) {
                 console.log(response.response)
