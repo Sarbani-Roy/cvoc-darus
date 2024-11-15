@@ -271,14 +271,15 @@ function executeDAFDM(topicElement) {
         // Prepare the content for the modal
         var modalContent = `<ul>`;
         mockResponse.data.forEach(item => {
-            modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Score:</strong> ${item.score}</li>`;
+            // modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Score:</strong> ${item.score}</li>`;
+            modalContent += `<li>${item.value}</li>`;
         });
         modalContent += `</ul>`;
 
         // Display the content in a Bootstrap modal
         var modalHtml = `
             <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
