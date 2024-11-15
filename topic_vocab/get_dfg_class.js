@@ -206,6 +206,7 @@ function executeDAFDM(topicElement) {
     var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');   
     
     button.on('click', function() {
+        // alert("Button clicked");   
         var baseUrl = "https://services.eurospider.com/fdm-upload/rest";
         var url = `${baseUrl}/suggestions`;
 
@@ -237,22 +238,36 @@ function executeDAFDM(topicElement) {
             resultSize: 5
         };
 
-        // Perform the AJAX POST request
-        $.ajax({
-            url: url,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Api-Key": "xhdvERDHJL83qQUsMS4kAm6XrnNWYKu"
-            },
-            data: JSON.stringify(requestBody),
-            success: function(response) {
-                console.log("Suggestions Response:", response);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error in suggestions request:", error);
-            }
-        });
+        // // Perform the AJAX POST request
+        // $.ajax({
+        //     url: url,
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Api-Key": "xhdvERDHJL83qQUsMS4kAm6XrnNWYKu"
+        //     },
+        //     data: JSON.stringify(requestBody),
+        //     success: function(response) {
+        //         console.log("Suggestions Response:", response);
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error("Error in suggestions request:", error);
+        //     }
+        // });
+
+        // Mock JSON response
+        var mockResponse = {
+            "data": [
+                {"value": "dfg-fs$407-01", "score": 1.0},
+                {"value": "dfg-fs$310-01", "score": 0.5}
+            ],
+            "error": null,
+            "state": "OK",
+            "message": null
+        };
+
+        console.log("Mock Response:", mockResponse);
+
     });
     
     // Append the button after the topicElement
