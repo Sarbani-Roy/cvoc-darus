@@ -268,43 +268,70 @@ function executeDAFDM(topicElement) {
 
         console.log("Mock Response:", mockResponse);
 
-        // Prepare the content for the modal
+        // Prepare content for the modal
         var modalContent = `<ul>`;
-        mockResponse.data.forEach(item => {
-            // modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Score:</strong> ${item.score}</li>`;
-            modalContent += `<li>${item.value}</li>`;
-        });
-        modalContent += `</ul>`;
+        var fetchPromises = [];
 
-        // Display the content in a Bootstrap modal
-        var modalHtml = `
-            <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ${modalContent}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        mockResponse.data.forEach(item => {
+            // API call to fetch the label for each item.value
+            var fetchPromise = $.ajax({
+                url: "https://service.tib.eu/ts4tib/api/select",
+                method: "GET",
+                dataType: "json",
+                data: {
+                    q: item.value,
+                    exclusiveFilter: false,
+                    ontology: "dfgfo2024",
+                    obsoletes: false,
+                    local: false,
+                    rows: 1
+                }
+            }).then(function (response) {
+                // Fetch the label from the response
+                var label = response.response?.docs[0]?.label || "Unknown Label";
+                modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> ${label}, <strong>Score:</strong> ${item.score}</li>`;
+            }).catch(function (error) {
+                console.error(`Error fetching label for ${item.value}:`, error);
+                modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> Error fetching label, <strong>Score:</strong> ${item.score}</li>`;
+            });
+
+            fetchPromises.push(fetchPromise);
+        });
+
+        // Wait for all fetches to complete
+        Promise.all(fetchPromises).then(() => {
+            modalContent += `</ul>`;
+
+            // Display the content in a Bootstrap modal
+            var modalHtml = `
+                <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ${modalContent}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
 
-        // Append the modal to the body and show it
-        $('body').append(modalHtml);
-        $('#dafdmModal').modal('show');
+            // Append the modal to the body and show it
+            $('body').append(modalHtml);
+            $('#dafdmModal').modal('show');
 
-        // Clean up the modal after it is hidden
-        $('#dafdmModal').on('hidden.bs.modal', function () {
-            $(this).remove();
+            // Clean up the modal after it is hidden
+            $('#dafdmModal').on('hidden.bs.modal', function () {
+                $(this).remove();
+            });
         });
     });
     
