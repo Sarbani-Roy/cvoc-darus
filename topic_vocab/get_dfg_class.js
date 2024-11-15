@@ -268,6 +268,43 @@ function executeDAFDM(topicElement) {
 
         console.log("Mock Response:", mockResponse);
 
+        // Prepare the content for the modal
+        var modalContent = `<ul>`;
+        mockResponse.data.forEach(item => {
+            modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Score:</strong> ${item.score}</li>`;
+        });
+        modalContent += `</ul>`;
+
+        // Display the content in a Bootstrap modal
+        var modalHtml = `
+            <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ${modalContent}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Append the modal to the body and show it
+        $('body').append(modalHtml);
+        $('#dafdmModal').modal('show');
+
+        // Clean up the modal after it is hidden
+        $('#dafdmModal').on('hidden.bs.modal', function () {
+            $(this).remove();
+        });
     });
     
     // Append the button after the topicElement
