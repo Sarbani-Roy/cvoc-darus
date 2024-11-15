@@ -273,15 +273,31 @@ function executeDAFDM(topicElement) {
         var fetchPromises = [];
 
         mockResponse.data.forEach(item => {
-            fetchResponse(item.value).then(function (response) {
+            // Construct the full URL with query parameters
+            var baseUrl = "https://service.tib.eu/ts4tib/api/select";
+            var queryParams = {
+                q: item.value,
+                exclusiveFilter: false,
+                ontology: 'dfgfo2024',
+                obsoletes: false,
+                local: false,
+                rows: 10
+            };
+            var fullUrl = baseUrl + '?' + $.param(queryParams); // Construct URL with parameters
+            console.log("Constructed Query URL:", fullUrl);
+        
+            // Perform the AJAX call
+            $.ajax({
+                url: fullUrl, // Use the constructed full URL
+                method: 'GET',
+                dataType: 'json'
+            }).then(function (response) {
                 var label = response.response?.docs[0]?.label || "Unknown Label";
-                modalContent += `<li><strong>Label:</strong> ${label} <strong>Value:</strong> ${item.value}</li>`;
+                console.log(`Fetched label for ${item.value}: ${label}`);
+                modalContent += `<li>${label} <strong>(</strong> ${item.value}<strong>)</strong></li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
-                // modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> Error fetching label, <strong>Score:</strong> ${item.score}</li>`;
             });
-
-            fetchPromises.push(fetchPromise);
         });
 
         // Wait for all fetches to complete
@@ -323,24 +339,4 @@ function executeDAFDM(topicElement) {
     
     // Append the button after the topicElement
     topicElement.append(button);
-}
-
-function fetchResponse(queryValue) {
-    var baseUrl = "https://service.tib.eu/ts4tib/api/select";
-    var queryParams = {
-        q: queryValue,
-        exclusiveFilter: false,
-        ontology: 'dfgfo2024',
-        obsoletes: false,
-        local: false,
-        rows: 10
-    };
-    var fullUrl = baseUrl + '?' + $.param(queryParams);
-    console.log("Query URL:", fullUrl);
-
-    return $.ajax({
-        url: fullUrl,
-        method: 'GET',
-        dataType: 'json'
-    });
 }
