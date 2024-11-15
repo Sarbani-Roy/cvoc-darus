@@ -284,9 +284,10 @@ function executeDAFDM(topicElement) {
                     ontology: "dfgfo",
                     obsoletes: false,
                     local: false,
-                    rows: 1
+                    rows: 10
                 }
             }).then(function (response) {
+                console.log(response.response)
                 // Fetch the label from the response
                 var label = response.response?.docs[0]?.label || "Unknown Label";
                 modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> ${label}, <strong>Score:</strong> ${item.score}</li>`;
