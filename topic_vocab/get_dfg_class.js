@@ -14,6 +14,7 @@ $(document).ready(function() {
     $("head").append(style);
 
     expandDFGclass();
+    observeDomChanges();
 });
 
 function expandDFGclass() {
@@ -297,7 +298,6 @@ function executeDAFDM(topicElement) {
                 method: "GET",
                 dataType: "json"
             }).then(function (response) {
-                console.log(response.response.docs[0]);
                 var label = response.response?.docs[0]?.label || "Unknown Label";
                 var labeliri = response.response?.docs[0]?.iri || "";
                 modalContent += `
@@ -375,4 +375,30 @@ function executeDAFDM(topicElement) {
     
     // Append the button after the topicElement
     topicElement.append(button);
+}
+
+function observeDomChanges() {
+    // Select the target nodes to observe
+    var targetNode = document.querySelector("body"); // Or select a more specific parent node
+    
+    // Create an observer instance
+    var observer = new MutationObserver(function(mutationsList, observer) {
+        // Loop through all mutations
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'childList' || mutation.type === 'attributes') {
+                // Check if there's a change and trigger a reload if needed
+                console.log("DOM change detected, reloading...");
+                location.reload(); // Reload the page
+                break;
+            }
+        }
+    });
+    
+    // Create an observer configuration
+    var config = { childList: true, subtree: true, attributes: true };
+
+    // Start observing the target node with the configured options
+    observer.observe(targetNode, config);
+
+    // Optional: To stop observing later, you can call observer.disconnect();
 }
