@@ -351,30 +351,27 @@ function executeDAFDM(topicElement) {
 
             // Add click event to each suggestion item in the modal
             $('.suggestion-item').on('click', function() {
+                console.log("Before applying highlighted-selection:", $(this).attr('class'));
                 $('.suggestion-item').removeClass('highlighted-selection');
                 $(this).addClass('highlighted-selection');
+                console.log("After applying highlighted-selection:", $(this).attr('class'));
 
                 var selectedValue = $(this).data('label');
-                $(topicParentSelector).each(function() {
-                    var newParentElement = $(topicParentSelector).parent();
-                    var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
-                    var newCompoundFieldElement = newFieldValuesElement.find('.edit-compound-field');
+                var newCompoundFieldElement = topicElement.find('.edit-compound-field');
                         
-                    newCompoundFieldElement.each(function() {
-                        var newTopicElement = $(this);
-                        if (newTopicElement.children().length > 2) {
-                            var topicClassInput = newTopicElement.children().eq(0).find('input');
-                            var topicClassVocab = newTopicElement.children().eq(1).find('input');
-                            var topicClassTermURI = newTopicElement.children().eq(2).find('input');
+                newCompoundFieldElement.each(function() {
+                    var newTopicElement = $(this);
+                    if (newTopicElement.children().length > 2) {
+                        var topicClassInput = newTopicElement.children().eq(0).find('input');
+                        var topicClassVocab = newTopicElement.children().eq(1).find('input');
+                        var topicClassTermURI = newTopicElement.children().eq(2).find('input');
 
-                            console.log(topicElement);
-                            console.log(newTopicElement);
-                            console.log(topicClassInput);
-                            
-                            $(topicClassInput).val(selectedValue);
-                        }
-                    });
-                });                  
+                        console.log(topicElement);
+                        console.log(topicClassInput);
+                        
+                        $(topicClassInput).val(selectedValue);
+                    }
+                });                 
                 
                 $('#dafdmModal').modal('hide');
             });
