@@ -300,7 +300,7 @@ function executeDAFDM(topicElement) {
                 var label = response.response?.docs[0]?.label || "Unknown Label";
                 modalContent += `
                     <li data-value="${item.value}" class="suggestion-item">
-                        ${label}(${item.value.split("$")[1] || item.value})                    
+                        ${label} (${item.value.split("$")[1] || item.value})                    
                     </li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
@@ -352,6 +352,7 @@ function executeDAFDM(topicElement) {
                 
                 var selectedValue = $(this).data('label');
                 console.log(topicElement);
+                console.log(topicElement.children().eq(0));
                 var newCompoundFieldElement = topicElement.find('.edit-compound-field');
                 console.log(newCompoundFieldElement);        
                 newCompoundFieldElement.each(function() {
