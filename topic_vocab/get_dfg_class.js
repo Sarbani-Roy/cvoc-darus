@@ -266,28 +266,32 @@ function executeDAFDM(topicElement) {
             "message": null
         };
 
-        console.log("Mock Response:", mockResponse);
-
         // Prepare content for the modal
         var modalContent = `<ul>`;
         var fetchPromises = [];
 
         mockResponse.data.forEach(item => {
+            // Construct query parameters manually
+            var dataParams = {
+                q: item.value,
+                exclusiveFilter: false,
+                ontology: "dfgfo",
+                obsoletes: false,
+                local: false,
+                rows: 10
+            };
+        
+            // Build the full query URL
+            var fullQueryUrl = "https://service.tib.eu/ts4tib/api/select" + "?" + $.param(dataParams);
+            console.log("Full Query URL:", fullQueryUrl); // Logs the full URL
+        
             // API call to fetch the label for each item.value
             var fetchPromise = $.ajax({
-                url: "https://service.tib.eu/ts4tib/api/select",
+                url: fullQueryUrl, // Use the constructed URL
                 method: "GET",
-                dataType: "json",
-                data: {
-                    q: item.value,
-                    exclusiveFilter: false,
-                    ontology: "dfgfo",
-                    obsoletes: false,
-                    local: false,
-                    rows: 10
-                }
+                dataType: "json"
             }).then(function (response) {
-                console.log(response.response)
+                console.log(response.response);
                 // Fetch the label from the response
                 var label = response.response?.docs[0]?.label || "Unknown Label";
                 modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> ${label}, <strong>Score:</strong> ${item.score}</li>`;
@@ -295,7 +299,7 @@ function executeDAFDM(topicElement) {
                 console.error(`Error fetching label for ${item.value}:`, error);
                 modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> Error fetching label, <strong>Score:</strong> ${item.score}</li>`;
             });
-
+        
             fetchPromises.push(fetchPromise);
         });
 
