@@ -378,27 +378,18 @@ function executeDAFDM(topicElement) {
 }
 
 function observeDomChanges() {
-    // Select the target nodes to observe
-    var targetNode = document.querySelector("body"); // Or select a more specific parent node
-    
-    // Create an observer instance
+    var targetNode = document.querySelector("body");
     var observer = new MutationObserver(function(mutationsList, observer) {
-        // Loop through all mutations
         for (let mutation of mutationsList) {
             if (mutation.type === 'childList' || mutation.type === 'attributes') {
-                // Check if there's a change and trigger a reload if needed
                 console.log("DOM change detected, reloading...");
+                observer.disconnect();  // Stop observing after the first mutation
                 location.reload(); // Reload the page
                 break;
             }
         }
     });
-    
-    // Create an observer configuration
+
     var config = { childList: true, subtree: true, attributes: true };
-
-    // Start observing the target node with the configured options
     observer.observe(targetNode, config);
-
-    // Optional: To stop observing later, you can call observer.disconnect();
 }
