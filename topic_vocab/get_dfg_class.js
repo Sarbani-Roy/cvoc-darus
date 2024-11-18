@@ -209,7 +209,7 @@ function markMatch(text, term) {
     return $result;
 }
 
-function executeDAFDM(topicElement, topicClassInput) {
+function executeDAFDM(topicElement) {
     var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');   
     
     button.on('click', function() {
@@ -368,6 +368,7 @@ function executeDAFDM(topicElement, topicClassInput) {
                             var topicClassTermURI = newTopicElement.children().eq(2).find('input');
 
                             console.log(topicElement);
+                            console.log(newtopicElement);
                             console.log(topicClassInput);
                             
                             $(topicClassInput).val(selectedValue);
