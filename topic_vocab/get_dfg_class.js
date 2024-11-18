@@ -270,10 +270,11 @@ function executeDAFDM(topicElement) {
         var modalContent = `<ul>`;
         var fetchPromises = [];
 
-        mockResponse.data.forEach(item => {
-            // Construct query parameters manually
+        mockResponse.data.forEach(item => {            
+            var extractedValue = item.value.split("$")[1] || item.value;
+
             var dataParams = {
-                q: item.value,
+                q: extractedValue,
                 exclusiveFilter: false,
                 ontology: "dfgfo",
                 obsoletes: false,
