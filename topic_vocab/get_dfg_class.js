@@ -22,7 +22,7 @@ function expandDFGclass() {
 
                 updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI);
 
-                executeDAFDM(topicElement);
+                executeDAFDM(topicElement, topicClassInput);
             }
         });
     });
@@ -202,7 +202,7 @@ function markMatch(text, term) {
     return $result;
 }
 
-function executeDAFDM(topicElement) {
+function executeDAFDM(topicElement, topicClassInput) {
     var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');   
     
     button.on('click', function() {
@@ -266,14 +266,13 @@ function executeDAFDM(topicElement) {
             "message": null
         };
 
-        // Sort the suggestions by score (descending)
+        // Sort the data based on the score in descending order
         mockResponse.data.sort((a, b) => b.score - a.score);
 
-        // Prepare content for the modal
         var modalContent = `<ul>`;
         var fetchPromises = [];
 
-        mockResponse.data.forEach(item => {            
+        mockResponse.data.forEach(item => {
             var extractedValue = item.value.split("$")[1] || item.value;
 
             var dataParams = {
@@ -284,34 +283,26 @@ function executeDAFDM(topicElement) {
                 local: false,
                 rows: 1
             };
-        
-            // Build the full query URL
+
             var fullQueryUrl = "https://service.tib.eu/ts4tib/api/select" + "?" + $.param(dataParams);
-            console.log("Full Query URL:", fullQueryUrl); // Logs the full URL
-        
-            // API call to fetch the label for each item.value
             var fetchPromise = $.ajax({
-                url: fullQueryUrl, // Use the constructed URL
+                url: fullQueryUrl, 
                 method: "GET",
                 dataType: "json"
             }).then(function (response) {
-                console.log(response.response);
-                // Fetch the label from the response
                 var label = response.response?.docs[0]?.label || "Unknown Label";
                 modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> ${label}, <strong>Score:</strong> ${item.score}</li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
                 modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> Error fetching label, <strong>Score:</strong> ${item.score}</li>`;
             });
-        
             fetchPromises.push(fetchPromise);
         });
 
-        // Wait for all fetches to complete
+        // Wait for all fetches to complete and then show modal
         Promise.all(fetchPromises).then(() => {
             modalContent += `</ul>`;
 
-            // Display the content in a Bootstrap modal
             var modalHtml = `
                 <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -333,7 +324,6 @@ function executeDAFDM(topicElement) {
                 </div>
             `;
 
-            // Append the modal to the body and show it
             $('body').append(modalHtml);
             $('#dafdmModal').modal('show');
 
