@@ -363,6 +363,22 @@ function executeDAFDM(topicElement) {
                 var topicClassVocab = topicElement.children().eq(1).find('input');
                 var topicClassTermURI = topicElement.children().eq(2).find('input');
                 console.log(topicClassInput);
+
+                $(topicParentSelector).each(function() {
+                    var newParentElement = $(topicParentSelector).parent();
+                    console.log(newParentElement);
+                    var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                    console.log(newFieldValuesElement);
+                    var newCompoundFieldElement = newFieldValuesElement.find('.edit-compound-field');
+                    console.log(newCompoundFieldElement);
+
+                    newCompoundFieldElement.each(function() {
+                        var newTopicElement = $(this);
+                        console.log(newTopicClassInput);
+                        var newTopicClassInput = newTopicElement.children().eq(0);
+                        console.log(newTopicClassInput);
+                    });
+                });
                 
                 $(topicClassInput).val(selectedValue);  
                 $(topicClassVocab).val("dfgfo");
