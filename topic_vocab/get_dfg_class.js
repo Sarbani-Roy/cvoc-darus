@@ -368,7 +368,7 @@ function executeDAFDM(topicElement) {
                             var topicClassTermURI = newTopicElement.children().eq(2).find('input');
 
                             console.log(topicElement);
-                            console.log(newtopicElement);
+                            console.log(newTopicElement);
                             console.log(topicClassInput);
                             
                             $(topicClassInput).val(selectedValue);
