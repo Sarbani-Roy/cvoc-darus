@@ -266,6 +266,9 @@ function executeDAFDM(topicElement) {
             "message": null
         };
 
+        // Sort the suggestions by score (descending)
+        mockResponse.data.sort((a, b) => b.score - a.score);
+
         // Prepare content for the modal
         var modalContent = `<ul>`;
         var fetchPromises = [];
