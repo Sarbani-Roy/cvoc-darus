@@ -352,6 +352,7 @@ function executeDAFDM(topicElement) {
                 
                 var selectedValue = $(this).data('label');
                 console.log(topicElement);
+                console.log(topicElement.eq(0));
                 console.log(topicElement.children().eq(0));
                 var newCompoundFieldElement = topicElement.find('.edit-compound-field');
                 console.log(newCompoundFieldElement);        
