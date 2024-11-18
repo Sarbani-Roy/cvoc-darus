@@ -68,7 +68,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Autofill the corresponding values                
                     if (item.iri) {
                         $(topicClassTermURI).val(item.iri);
-                        $(topicClassVocab).val("DFGFO2024");
+                        $(topicClassVocab).val("dfgfo2024");
                     }
 
                     if (item.text) {
@@ -351,20 +351,13 @@ function executeDAFDM(topicElement) {
                 $(this).addClass('highlighted-selection');
                 
                 var selectedValue = $(this).data('label');
-                console.log(topicElement);
-                console.log(topicElement.eq(0));
-                console.log(topicElement.children().eq(0));
-                var newCompoundFieldElement = topicElement.find('.edit-compound-field');
-                console.log(newCompoundFieldElement);        
-                newCompoundFieldElement.each(function() {
-                    var newTopicElement = $(this);
-                    var topicClassInput = newTopicElement.children().eq(0).find('input');
-                    var topicClassVocab = newTopicElement.children().eq(1).find('input');
-                    var topicClassTermURI = newTopicElement.children().eq(2).find('input');
-                    console.log(topicClassInput);
-                    
-                    $(topicClassInput).val(selectedValue);
-                });                 
+                var topicClassInput = topicElement.children().eq(0).find('input');
+                var topicClassVocab = topicElement.children().eq(1).find('input');
+                var topicClassTermURI = topicElement.children().eq(2).find('input');
+                console.log(topicClassInput);
+                
+                $(topicClassInput).val(selectedValue);  
+                $(topicClassVocab).val("dfgfo");               
                 
                 $('#dafdmModal').modal('hide');
             });
