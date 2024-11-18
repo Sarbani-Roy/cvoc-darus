@@ -291,10 +291,20 @@ function executeDAFDM(topicElement, topicClassInput) {
                 dataType: "json"
             }).then(function (response) {
                 var label = response.response?.docs[0]?.label || "Unknown Label";
-                modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> ${label}, <strong>Score:</strong> ${item.score}</li>`;
+                modalContent += `
+                    <li data-value="${item.value}" class="suggestion-item">
+                        <strong>Value:</strong> ${item.value}, 
+                        <strong>Label:</strong> ${label}, 
+                        <strong>Score:</strong> ${item.score}
+                    </li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
-                modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Label:</strong> Error fetching label, <strong>Score:</strong> ${item.score}</li>`;
+                modalContent += `
+                    <li data-value="${item.value}" class="suggestion-item">
+                        <strong>Value:</strong> ${item.value}, 
+                        <strong>Label:</strong> Error fetching label, 
+                        <strong>Score:</strong> ${item.score}
+                    </li>`;
             });
             fetchPromises.push(fetchPromise);
         });
@@ -330,6 +340,13 @@ function executeDAFDM(topicElement, topicClassInput) {
             // Clean up the modal after it is hidden
             $('#dafdmModal').on('hidden.bs.modal', function () {
                 $(this).remove();
+            });
+
+            // Add click event to each suggestion item in the modal
+            $('.suggestion-item').on('click', function() {
+                var selectedValue = $(this).data('value');  // Get the value of the clicked suggestion
+                $(topicClassInput).val(selectedValue);  // Set the value in the input field
+                $('#dafdmModal').modal('hide');  // Optionally close the modal after selection
             });
         });
     });
