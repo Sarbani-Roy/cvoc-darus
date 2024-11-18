@@ -4,21 +4,16 @@ var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
 var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 
 $(document).ready(function() {
-    expandDFGclass();
-    
-    // Create a <style> tag
-    var style = $("<style>");
-    
-    // Add CSS rules inside the <style> tag
+    var style = $("<style>");    
     style.text(`
         .highlighted-selection {
-            background-color: #f0f8ff; /* Light blue background */
-            font-weight: bold;
+            background-color: #f0f8ff !important;
+            font-weight: bold !important;
         }
-    `);
-    
-    // Append the <style> tag to the <head> of the document
+    `);    
     $("head").append(style);
+
+    expandDFGclass();
 });
 
 function expandDFGclass() {
@@ -360,11 +355,25 @@ function executeDAFDM(topicElement, topicClassInput) {
                 $(this).addClass('highlighted-selection');
 
                 var selectedValue = $(this).data('label');
-                var topicClassInput = topicElement.children().eq(0).find('input');
-                console.log(topicElement);
-                console.log(topicClassInput);
-                
-                $(topicClassInput).val(selectedValue);  
+                $(topicParentSelector).each(function() {
+                    var newParentElement = $(topicParentSelector).parent();
+                    var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                    var newCompoundFieldElement = newFieldValuesElement.find('.edit-compound-field');
+                        
+                    newCompoundFieldElement.each(function() {
+                        var newTopicElement = $(this);
+                        if (newTopicElement.children().length > 2) {
+                            var topicClassInput = newTopicElement.children().eq(0).find('input');
+                            var topicClassVocab = newTopicElement.children().eq(1).find('input');
+                            var topicClassTermURI = newTopicElement.children().eq(2).find('input');
+
+                            console.log(topicElement);
+                            console.log(topicClassInput);
+                            
+                            $(topicClassInput).val(selectedValue);
+                        }
+                    });
+                });                  
                 
                 $('#dafdmModal').modal('hide');
             });
