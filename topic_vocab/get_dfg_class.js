@@ -378,18 +378,18 @@ function executeDAFDM(topicElement) {
 }
 
 function observeDomChanges() {
-    var targetNode = document.querySelector("body");
+    var targetNode = document.querySelector("#specificElement"); // Adjust to your specific target node
     var observer = new MutationObserver(function(mutationsList, observer) {
         for (let mutation of mutationsList) {
-            if (mutation.type === 'childList' || mutation.type === 'attributes') {
-                console.log("DOM change detected, reloading...");
-                observer.disconnect();  // Stop observing after the first mutation
+            // Check only for specific mutations that should trigger the reload
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                console.log("Specific DOM change detected, reloading...");
                 location.reload(); // Reload the page
                 break;
             }
         }
     });
 
-    var config = { childList: true, subtree: true, attributes: true };
+    var config = { childList: true, subtree: true };  // Adjust the config based on your needs
     observer.observe(targetNode, config);
 }
