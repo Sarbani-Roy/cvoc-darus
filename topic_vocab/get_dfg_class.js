@@ -297,15 +297,21 @@ function executeDAFDM(topicElement) {
                 method: "GET",
                 dataType: "json"
             }).then(function (response) {
+                console.log(response.response.docs[0]);
                 var label = response.response?.docs[0]?.label || "Unknown Label";
+                var labeliri = response.response?.docs[0]?.iri || "";
                 modalContent += `
-                    <li data-value="${item.value}" class="suggestion-item">
-                        ${label} (${item.value.split("$")[1] || item.value})                    
+                    <li data-value="${item.value}" 
+                        data-labeliri="${labeliri}"
+                        class="suggestion-item">
+                        ${label} (${item.value.split("$")[1] || item.value})
                     </li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
                 modalContent += `
-                    <li data-value="${item.value}" class="suggestion-item">
+                    <li data-value="${item.value}" 
+                        data-labeliri=""
+                        class="suggestion-item">
                         Error fetching label (${item.value.split("$")[1] || item.value})
                     </li>`;
             });
@@ -351,13 +357,16 @@ function executeDAFDM(topicElement) {
                 $(this).addClass('highlighted-selection');
                 
                 var selectedValue = $(this).data('label');
+                var selectediri = $(this).data('labeliri');
+                console.log(topicElement.children().eq(0));
                 var topicClassInput = topicElement.children().eq(0).find('input');
                 var topicClassVocab = topicElement.children().eq(1).find('input');
                 var topicClassTermURI = topicElement.children().eq(2).find('input');
                 console.log(topicClassInput);
                 
                 $(topicClassInput).val(selectedValue);  
-                $(topicClassVocab).val("dfgfo");               
+                $(topicClassVocab).val("dfgfo");
+                $(topicClassTermURI).val(selectediri);               
                 
                 $('#dafdmModal').modal('hide');
             });
