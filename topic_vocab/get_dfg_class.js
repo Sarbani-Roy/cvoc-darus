@@ -344,7 +344,9 @@ function executeDAFDM(topicElement, topicClassInput) {
 
             // Add click event to each suggestion item in the modal
             $('.suggestion-item').on('click', function() {
-                var selectedValue = $(this).data('value');  // Get the value of the clicked suggestion
+                var selectedValue = $(this).data('value');
+                console.log($(this));
+                console.log(selectedValue);
                 $(topicClassInput).val(selectedValue);  // Set the value in the input field
                 $('#dafdmModal').modal('hide');  // Optionally close the modal after selection
             });
