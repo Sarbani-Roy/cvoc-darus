@@ -5,6 +5,20 @@ var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 
 $(document).ready(function() {
     expandDFGclass();
+    
+    // Create a <style> tag
+    var style = $("<style>");
+    
+    // Add CSS rules inside the <style> tag
+    style.text(`
+        .highlighted-selection {
+            background-color: #f0f8ff; /* Light blue background */
+            font-weight: bold;
+        }
+    `);
+    
+    // Append the <style> tag to the <head> of the document
+    $("head").append(style);
 });
 
 function expandDFGclass() {
@@ -342,6 +356,9 @@ function executeDAFDM(topicElement, topicClassInput) {
 
             // Add click event to each suggestion item in the modal
             $('.suggestion-item').on('click', function() {
+                $('.suggestion-item').removeClass('highlighted-selection');
+                $(this).addClass('highlighted-selection');
+
                 var selectedValue = $(this).data('label');
                 var topicClassInput = topicElement.children().eq(0).find('input');
                 console.log(topicElement);
