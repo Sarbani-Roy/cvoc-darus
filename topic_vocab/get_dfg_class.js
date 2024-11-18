@@ -22,7 +22,7 @@ function expandDFGclass() {
 
                 updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, topicClassTermURI);
 
-                executeDAFDM(topicElement, topicClassInput);
+                executeDAFDM(topicElement);
             }
         });
     });
@@ -343,8 +343,14 @@ function executeDAFDM(topicElement, topicClassInput) {
             // Add click event to each suggestion item in the modal
             $('.suggestion-item').on('click', function() {
                 var selectedValue = $(this).data('label');
+
+                var topicClassInput = topicElement.children().eq(0).find('input');
+                var topicClassVocab = topicElement.children().eq(1).find('input');
+                var topicClassTermURI = topicElement.children().eq(2).find('input');
+
                 console.log($(topicClassInput));
                 $(topicClassInput).val(selectedValue);  
+                
                 $('#dafdmModal').modal('hide');
             });
         });
