@@ -232,11 +232,11 @@ function executeDAFDM(topicElement) {
         var queryText = allDsInputValues.join(" ");
         console.log("Merged queryText:", queryText);
 
-        // Prepare the request body
-        var requestBody = {
-            query: queryText,
-            resultSize: 5
-        };
+        // // Prepare the request body
+        // var requestBody = {
+        //     query: queryText,
+        //     resultSize: 5
+        // };
 
         // // Perform the AJAX POST request
         // $.ajax({
@@ -279,7 +279,7 @@ function executeDAFDM(topicElement) {
                 ontology: "dfgfo",
                 obsoletes: false,
                 local: false,
-                rows: 10
+                rows: 1
             };
         
             // Build the full query URL
