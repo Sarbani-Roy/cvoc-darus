@@ -155,8 +155,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Tags are allowed, so just enter the text as is
                     $("input[data-topic='" + num + "']").val(data.id);
                 }
-
-                // $(topicClassVocab).val("DFGFO2024");
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
@@ -344,11 +342,10 @@ function executeDAFDM(topicElement, topicClassInput) {
 
             // Add click event to each suggestion item in the modal
             $('.suggestion-item').on('click', function() {
-                var selectedValue = $(this).data('value');
-                console.log($(this));
-                console.log(selectedValue);
-                $(topicClassInput).val(selectedValue);  // Set the value in the input field
-                $('#dafdmModal').modal('hide');  // Optionally close the modal after selection
+                var selectedValue = $(this).data('label');
+                console.log($(topicClassInput));
+                $(topicClassInput).val(selectedValue);  
+                $('#dafdmModal').modal('hide');
             });
         });
     });
