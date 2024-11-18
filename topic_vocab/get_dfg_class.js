@@ -300,17 +300,13 @@ function executeDAFDM(topicElement) {
                 var label = response.response?.docs[0]?.label || "Unknown Label";
                 modalContent += `
                     <li data-value="${item.value}" class="suggestion-item">
-                        <strong>Value:</strong> ${item.value}, 
-                        <strong>Label:</strong> ${label}, 
-                        <strong>Score:</strong> ${item.score}
+                        ${label}(${item.value.split("$")[1] || item.value})                    
                     </li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
                 modalContent += `
                     <li data-value="${item.value}" class="suggestion-item">
-                        <strong>Value:</strong> ${item.value}, 
-                        <strong>Label:</strong> Error fetching label, 
-                        <strong>Score:</strong> ${item.score}
+                        Error fetching label (${item.value.split("$")[1] || item.value})
                     </li>`;
             });
             fetchPromises.push(fetchPromise);
@@ -351,26 +347,21 @@ function executeDAFDM(topicElement) {
 
             // Add click event to each suggestion item in the modal
             $('.suggestion-item').on('click', function() {
-                console.log("Before applying highlighted-selection:", $(this).attr('class'));
                 $('.suggestion-item').removeClass('highlighted-selection');
                 $(this).addClass('highlighted-selection');
-                console.log("After applying highlighted-selection:", $(this).attr('class'));
-
+                
                 var selectedValue = $(this).data('label');
+                console.log(topicElement);
                 var newCompoundFieldElement = topicElement.find('.edit-compound-field');
-                        
+                console.log(newCompoundFieldElement);        
                 newCompoundFieldElement.each(function() {
                     var newTopicElement = $(this);
-                    if (newTopicElement.children().length > 2) {
-                        var topicClassInput = newTopicElement.children().eq(0).find('input');
-                        var topicClassVocab = newTopicElement.children().eq(1).find('input');
-                        var topicClassTermURI = newTopicElement.children().eq(2).find('input');
-
-                        console.log(topicElement);
-                        console.log(topicClassInput);
-                        
-                        $(topicClassInput).val(selectedValue);
-                    }
+                    var topicClassInput = newTopicElement.children().eq(0).find('input');
+                    var topicClassVocab = newTopicElement.children().eq(1).find('input');
+                    var topicClassTermURI = newTopicElement.children().eq(2).find('input');
+                    console.log(topicClassInput);
+                    
+                    $(topicClassInput).val(selectedValue);
                 });                 
                 
                 $('#dafdmModal').modal('hide');
