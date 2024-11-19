@@ -1,5 +1,4 @@
 var topicParentSelector = "div#metadata_topicClassification";
-var descriptionParentSelector = "div#metadata_dsDescription";
 var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
 var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 
@@ -57,7 +56,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Autofill the corresponding values                
                     if (item.iri) {
                         $(topicClassTermURI).val(item.iri);
-                        $(topicClassVocab).val("dfgfo2024");
+                        $(topicClassVocab).val("DFGFO2024");
                     }
 
                     if (item.text) {
@@ -153,6 +152,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     // Tags are allowed, so just enter the text as is
                     $("input[data-topic='" + num + "']").val(data.id);
                 }
+
+                // $(topicClassVocab).val("DFGFO2024");
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
