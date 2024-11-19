@@ -150,17 +150,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $("input[data-topic='" + num + "']").val('');
                 $(topicClassVocab).val("");
                 $(topicClassTermURI).val("");
-                
-                // Clear the topicInput value and set the placeholder text
-                $(topicClassInput).val('');
-                console.log($(topicClassInput).val())
-
-                // Determine the placeholder value
-                var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
-                ? $(topicInput).attr('data-cvoc-placeholder') 
-                : "Select a DFG Topic Classification";
-                $(topicClassInput).attr('placeholder', placeholderText);
-                $('#' + selectId).val(null).trigger('change');
+                $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
             });
         }
     });
