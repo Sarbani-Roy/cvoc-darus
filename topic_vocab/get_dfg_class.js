@@ -358,6 +358,8 @@ function executeDAFDM(topicElement, num) {
                 $(this).addClass('highlighted-selection');
                 
                 var selectedValue = $(this).data('label');
+                console.log("Selected item", $(this).data);
+                console.log("Selected value", selectedValue);
                 var selectediri = $(this).data('labeliri');
                 // console.log(topicElement.children().eq(0));
                 // var topicClassInput = topicElement.children().eq(0).find('input');
@@ -381,7 +383,6 @@ function executeDAFDM(topicElement, num) {
                 //     });
                 // });
                 
-                console.log("Selected value", selectedValue)
                 $("input[data-topic='" + num + "']").val(selectedValue)
                 // $(topicClassInput).val(selectedValue);  
                 // $(topicClassVocab).val("dfgfo");
