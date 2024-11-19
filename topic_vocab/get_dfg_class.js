@@ -83,7 +83,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         if (!term) {
                             term = "";
                         }
-                        // Use expanded-search to get the names, affiliations directly in the results
                         return "https://service.tib.eu/ts4tib/api/select";
                     },
                     dataType: 'json',
@@ -110,8 +109,13 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         return queryParams;
                     },
                     processResults: function(data) {
-                        // Map data to select2 format
-                        var results = data.response.docs.map(function(item) {
+                        // Filter only items where item.type is "class"
+                        var filteredDocs = data.response.docs.filter(function(item) {
+                            return item.type === "class";
+                        });
+
+                        // Map the filtered results to Select2 format
+                        var results = filteredDocs.map(function(item) {
                             return {
                                 id: item.id,
                                 iri: item.iri,
