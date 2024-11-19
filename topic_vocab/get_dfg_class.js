@@ -4,6 +4,14 @@ var topicSelector = "span[data-cvoc-protocol='dfgClassification']";
 var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 
 $(document).ready(function() {
+    var style = $("<style>");    
+    style.text(`
+        .highlighted-selection {
+            background-color: #f0f8ff !important;
+            font-weight: bold !important;
+        }
+    `);    
+    $("head").append(style);
     expandDFGclass();
 });
 
@@ -233,11 +241,11 @@ function executeDAFDM(topicElement, num) {
         var queryText = allDsInputValues.join(" ");
         console.log("Merged queryText:", queryText);
 
-        // Prepare the request body
-        var requestBody = {
-            query: queryText,
-            resultSize: 5
-        };
+        // // Prepare the request body
+        // var requestBody = {
+        //     query: queryText,
+        //     resultSize: 5
+        // };
 
         // // Perform the AJAX POST request
         // $.ajax({
@@ -267,44 +275,118 @@ function executeDAFDM(topicElement, num) {
             "message": null
         };
 
-        console.log("Mock Response:", mockResponse);
+        // Sort the data based on the score in descending order
+        mockResponse.data.sort((a, b) => b.score - a.score);
 
-        // Prepare the content for the modal
         var modalContent = `<ul>`;
-        mockResponse.data.forEach(item => {
-            modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Score:</strong> ${item.score}</li>`;
-        });
-        modalContent += `</ul>`;
+        var fetchPromises = [];
 
-        // Display the content in a Bootstrap modal
-        var modalHtml = `
-            <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ${modalContent}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        mockResponse.data.forEach(item => {
+            var extractedValue = item.value.split("$")[1] || item.value;
+
+            var dataParams = {
+                q: extractedValue,
+                exclusiveFilter: false,
+                ontology: "dfgfo",
+                obsoletes: false,
+                local: false,
+                rows: 1
+            };
+
+            var fullQueryUrl = "https://service.tib.eu/ts4tib/api/select" + "?" + $.param(dataParams);
+            var fetchPromise = $.ajax({
+                url: fullQueryUrl, 
+                method: "GET",
+                dataType: "json"
+            }).then(function (response) {
+                var label = response.response?.docs[0]?.label || "Unknown Label";
+                var labeliri = response.response?.docs[0]?.iri || "";
+                modalContent += `
+                    <li data-value="${item.value}" 
+                        data-labeliri="${labeliri}"
+                        class="suggestion-item">
+                        ${label} (${item.value.split("$")[1] || item.value})
+                    </li>`;
+            }).catch(function (error) {
+                console.error(`Error fetching label for ${item.value}:`, error);
+                modalContent += `
+                    <li data-value="${item.value}" 
+                        data-labeliri=""
+                        class="suggestion-item">
+                        Error fetching label (${item.value.split("$")[1] || item.value})
+                    </li>`;
+            });
+            fetchPromises.push(fetchPromise);
+        });
+
+        // Wait for all fetches to complete and then show modal
+        Promise.all(fetchPromises).then(() => {
+            modalContent += `</ul>`;
+
+            var modalHtml = `
+                <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ${modalContent}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
 
-        // Append the modal to the body and show it
-        $('body').append(modalHtml);
-        $('#dafdmModal').modal('show');
+            $('body').append(modalHtml);
+            $('#dafdmModal').modal('show');
 
-        // Clean up the modal after it is hidden
-        $('#dafdmModal').on('hidden.bs.modal', function () {
-            $(this).remove();
+            // Clean up the modal after it is hidden
+            $('#dafdmModal').on('hidden.bs.modal', function () {
+                $(this).remove();
+            });
+
+            // Add click event to each suggestion item in the modal
+            $('.suggestion-item').on('click', function() {
+                $('.suggestion-item').removeClass('highlighted-selection');
+                $(this).addClass('highlighted-selection');
+                
+                var selectedValue = $(this).data('label');
+                var selectediri = $(this).data('labeliri');
+                console.log(topicElement.children().eq(0));
+                var topicClassInput = topicElement.children().eq(0).find('input');
+                var topicClassVocab = topicElement.children().eq(1).find('input');
+                var topicClassTermURI = topicElement.children().eq(2).find('input');
+                console.log(topicClassInput);
+
+                $(topicParentSelector).each(function() {
+                    var newParentElement = $(topicParentSelector).parent();
+                    console.log(newParentElement);
+                    var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
+                    console.log(newFieldValuesElement);
+                    var newCompoundFieldElement = newFieldValuesElement.find('.edit-compound-field');
+                    console.log(newCompoundFieldElement);
+
+                    newCompoundFieldElement.each(function() {
+                        var newTopicElement = $(this);
+                        console.log(newTopicClassInput);
+                        var newTopicClassInput = newTopicElement.children().eq(0);
+                        console.log(newTopicClassInput);
+                    });
+                });
+                
+                $(topicClassInput).val(selectedValue);  
+                $(topicClassVocab).val("dfgfo");
+                $(topicClassTermURI).val(selectediri);               
+                
+                $('#dafdmModal').modal('hide');
+            });
         });
     });
     
