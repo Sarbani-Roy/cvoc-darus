@@ -54,7 +54,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
-                    $(topicClassVocab).val('dfgfo2024');
+                    $(topicClassVocab).val('dfgfo24');
                     
                     if (item.iri) {
                         $(topicClassTermURI).val(item.iri);
