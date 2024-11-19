@@ -173,7 +173,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 : "Select a DFG Topic Classification";
                 $(topicClassInput).attr('placeholder', placeholderText);
 
-                await new Promise(resolve => setTimeout(resolve, 100));
+                await new Promise(resolve => setTimeout(resolve, 500));
 
                 $('#' + selectId).val(null).trigger('change');
             });
@@ -203,26 +203,3 @@ function markMatch(text, term) {
     $result.append(text.substring(match + term.length));
     return $result;
 }
-
-// async function clearValuesAsync(topicClassInput, topicClassVocab, topicClassTermURI, selectId) {
-//     // Clear input fields
-//     $("input[data-topic='" + num + "']").val('');
-//     $(topicClassInput).val('');
-//     $(topicClassVocab).val('');
-//     $(topicClassTermURI).val('');
-
-//     console.log("Values cleared");
-
-//     // Set placeholder text
-//     const placeholderText = topicClassInput.hasAttribute("data-cvoc-placeholder") 
-//         ? $(topicClassInput).attr('data-cvoc-placeholder') 
-//         : "Select a DFG Topic Classification";
-//     $(topicClassInput).attr('placeholder', placeholderText);
-
-//     // Wait for a small delay to ensure DOM updates propagate
-//     await new Promise(resolve => setTimeout(resolve, 100));
-
-//     // Reset the Select2 dropdown
-//     $('#' + selectId).val(null).trigger('change');
-//     console.log("Select2 cleared and reset");
-// }
