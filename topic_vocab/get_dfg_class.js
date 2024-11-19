@@ -53,33 +53,23 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
-                    // Autofill the corresponding values                
-                    if (item.iri) {
-                        $(topicClassTermURI).val(item.iri);
-                        $(topicClassVocab).val("DFGFO2024");
-                    }
-
-                    if (item.text) {
-                        var topicName = item.text;
-                    }
-                    else{
-                        var topicName = $(topicClassInput).val();
-                    }                    
-                    item.text = topicName;
+                    var topicClass = $(topicClassInput).val() === "" && item.name ? item.name : $(topicClassInput).val();
                     
-                    if (item.text) {
-                        return item.text;
+                    // Autofill the corresponding values                
+                    if (item.id) {
+                        var termURI = item.id.split(":class:")[1];
+                        $(topicClassTermURI).val(termURI);
                     }
-                    else{
-                        return item.id;
-                    }
+                    
+                    item.text = topicClass;
+                    return item.text;
                 },
                 language: {
                     searching: function(params) {
                         return 'Search by a topic name';
                     }
                 },
-                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select a DFG Topic Classification",
+                placeholder: topicInput.hasAttribute("data-cvoc-placeholder") ? $(topicInput).attr('data-cvoc-placeholder') : "Select a Topic Classification",
                 minimumInputLength: 3,
                 allowClear: true,
                 ajax: {
@@ -119,8 +109,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                         var results = data.response.docs.map(function(item) {
                             return {
                                 id: item.id,
-                                iri: item.iri,
-                                text: item.label + " (" + item.short_form + ")",
+                                text: item.label + "(" + item.short_form + ")",
                                 name: item.label,
                                 onto_name: item.ontology_prefix,
                                 class_no: item.short_form
@@ -153,24 +142,15 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     $("input[data-topic='" + num + "']").val(data.id);
                 }
 
-                // $(topicClassVocab).val("DFGFO2024");
+                $(topicClassVocab).val("DFGFO2024");
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', function(e) {
                 $("input[data-topic='" + num + "']").val('');
-                $(topicClassVocab).val('');
-                $(topicClassTermURI).val('');
-
-                // Clear the topicInput value and set the placeholder text
-                $(topicClassInput).val('');
-                console.log($(topicClassInput).val())
-                
-                // Determine the placeholder value
-                var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
-                ? $(topicInput).attr('data-cvoc-placeholder') 
-                : "Select a DFG Topic Classification";
-                $(topicClassInput).attr('placeholder', placeholderText);
+                $(topicClassVocab).val("");
+                $(topicClassTermURI).val("");
+                $('#' + selectId).val(null).trigger('change'); // Reset Select2 value
             });
         }
     });
