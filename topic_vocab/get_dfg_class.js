@@ -54,10 +54,10 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
-                    // Autofill the corresponding values                
+                    $(topicClassVocab).val('dfgfo2024');
+                    
                     if (item.iri) {
                         $(topicClassTermURI).val(item.iri);
-                        $(topicClassVocab).val("dfgfo2024");
                     }
 
                     if (item.text) {
