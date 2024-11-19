@@ -54,12 +54,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     return $result;
                 },
                 templateSelection: function(item) {
-                    $(topicClassVocab).val('dfgfo24');
-                    
-                    if (item.iri) {
-                        $(topicClassTermURI).val(item.iri);
-                    }
-
                     if (item.text) {
                         var topicName = item.text;
                     }
@@ -149,10 +143,15 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     var topicName = data.name;
                     data.name = topicName;
                     $("input[data-topic='" + num + "']").val(data.name);
+                    $(topicClassVocab).val('dfgfo24');
+                    if (data.iri) {
+                        $(topicClassTermURI).val(data.iri);
+                    }
+
                 } else {
                     // Tags are allowed, so just enter the text as is
                     $("input[data-topic='" + num + "']").val(data.id);
-                }
+                }   
             });
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
