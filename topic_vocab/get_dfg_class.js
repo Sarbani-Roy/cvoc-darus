@@ -147,7 +147,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     if (data.iri) {
                         $(topicClassTermURI).val(data.iri);
                     }
-
                 } else {
                     // Tags are allowed, so just enter the text as is
                     $("input[data-topic='" + num + "']").val(data.id);
@@ -156,13 +155,6 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', async function(e) {
-                console.log($(topicClassInput).val())
-                console.log($("input[data-topic='" + num + "']").val());
-                console.log($(topicClassVocab).val());
-                console.log($(topicClassTermURI).val());
-                console.log(topicClassVocab);
-                console.log(topicClassTermURI);
-
                 $("input[data-topic='" + num + "']").attr('value', '');
                 // $(topicClassInput).val('');
                 $(topicClassVocab).val('');
