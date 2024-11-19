@@ -157,27 +157,27 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
 
             // When a selection is cleared, clear the hidden input and all corresponding inputs
             $('#' + selectId).on('select2:clear', async function(e) {
-                // console.log($(topicClassInput).val())
-                // console.log($("input[data-topic='" + num + "']").val());
-                // console.log($(topicClassVocab).val());
-                // console.log($(topicClassTermURI).val());
-                // console.log(topicClassVocab);
-                // console.log(topicClassTermURI);
+                console.log($(topicClassInput).val())
+                console.log($("input[data-topic='" + num + "']").val());
+                console.log($(topicClassVocab).val());
+                console.log($(topicClassTermURI).val());
+                console.log(topicClassVocab);
+                console.log(topicClassTermURI);
 
                 $("input[data-topic='" + num + "']").attr('value', '');
                 // $(topicClassInput).val('');
                 $(topicClassVocab).val('');
                 $(topicClassTermURI).val('');
                 
-                // // Determine the placeholder value
-                // var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
-                // ? $(topicInput).attr('data-cvoc-placeholder') 
-                // : "Select a DFG Topic Classification";
-                // $(topicClassInput).attr('placeholder', placeholderText);
+                // Determine the placeholder value
+                var placeholderText = topicInput.hasAttribute("data-cvoc-placeholder") 
+                ? $(topicInput).attr('data-cvoc-placeholder') 
+                : "Select a DFG Topic Classification";
+                $(topicClassInput).attr('placeholder', placeholderText);
 
-                // await new Promise(resolve => setTimeout(resolve, 100));
+                await new Promise(resolve => setTimeout(resolve, 100));
 
-                // $('#' + selectId).val(null).trigger('change');
+                $('#' + selectId).val(null).trigger('change');
             });
         }
     });
