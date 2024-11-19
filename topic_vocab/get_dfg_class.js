@@ -239,7 +239,7 @@ function executeDAFDM(topicElement, num) {
         });
 
         var queryText = allDsInputValues.join(" ");
-        console.log("Merged queryText:", queryText);
+        // console.log("Merged queryText:", queryText);
 
         // // Prepare the request body
         // var requestBody = {
@@ -381,6 +381,7 @@ function executeDAFDM(topicElement, num) {
                 //     });
                 // });
                 
+                console.log("Selected value", selectedValue)
                 $("input[data-topic='" + num + "']").val(selectedValue)
                 // $(topicClassInput).val(selectedValue);  
                 // $(topicClassVocab).val("dfgfo");
