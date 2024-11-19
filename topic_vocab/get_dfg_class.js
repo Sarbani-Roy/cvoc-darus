@@ -347,10 +347,10 @@ function executeDAFDM(topicElement, num) {
             $('body').append(modalHtml);
             $('#dafdmModal').modal('show');
 
-            // Clean up the modal after it is hidden
-            $('#dafdmModal').on('hidden.bs.modal', function () {
-                $(this).remove();
-            });
+            // // Clean up the modal after it is hidden
+            // $('#dafdmModal').on('hidden.bs.modal', function () {
+            //     $(this).remove();
+            // });
 
             // Add click event to each suggestion item in the modal
             $('.suggestion-item').on('click', function() {
