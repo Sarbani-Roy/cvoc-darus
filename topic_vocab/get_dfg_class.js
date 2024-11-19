@@ -203,185 +203,111 @@ function markMatch(text, term) {
     return $result;
 }
 
-function executeDAFDM(topicElement, num){
+function executeDAFDM(topicElement, num) {
     var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');   
     
-//     button.on('click', function() {
-//         // alert("Button clicked");   
-//         var baseUrl = "https://services.eurospider.com/fdm-upload/rest";
-//         var url = `${baseUrl}/suggestions`;
+    button.on('click', function() {
+        // alert("Button clicked");   
+        var baseUrl = "https://services.eurospider.com/fdm-upload/rest";
+        var url = `${baseUrl}/suggestions`;
 
-//         // Preparing the querytext
-//         var allDsInputValues = [];
+        // Preparing the querytext
+        var allDsInputValues = [];
 
-//         $(descriptionParentSelector).each(function() {
-//             var dsParentElement = $(descriptionParentSelector).parent();
-//             var dsFieldValuesElement = dsParentElement.siblings('.dataset-field-values');
-//             var dsCompoundFieldElement = dsFieldValuesElement.find('.edit-compound-field');
+        $(descriptionParentSelector).each(function() {
+            var dsParentElement = $(descriptionParentSelector).parent();
+            var dsFieldValuesElement = dsParentElement.siblings('.dataset-field-values');
+            var dsCompoundFieldElement = dsFieldValuesElement.find('.edit-compound-field');
 
-//             dsCompoundFieldElement.each(function() {
-//                 var dsElement = $(this);
-//                 var dsInput = dsElement.children().children().eq(2);
-//                 var dsInputValue = $(dsInput).val();
+            dsCompoundFieldElement.each(function() {
+                var dsElement = $(this);
+                var dsInput = dsElement.children().children().eq(2);
+                var dsInputValue = $(dsInput).val();
 
-//                 if (dsInputValue) {
-//                     allDsInputValues.push(dsInputValue);
-//                 }
-//             });
-//         });
+                if (dsInputValue) {
+                    allDsInputValues.push(dsInputValue);
+                }
+            });
+        });
 
-//         var queryText = allDsInputValues.join(" ");
-//         console.log("Merged queryText:", queryText);
+        var queryText = allDsInputValues.join(" ");
+        console.log("Merged queryText:", queryText);
 
-//         // // Prepare the request body
-//         // var requestBody = {
-//         //     query: queryText,
-//         //     resultSize: 5
-//         // };
+        // Prepare the request body
+        var requestBody = {
+            query: queryText,
+            resultSize: 5
+        };
 
-//         // // Perform the AJAX POST request
-//         // $.ajax({
-//         //     url: url,
-//         //     method: "POST",
-//         //     headers: {
-//         //         "Content-Type": "application/json",
-//         //         "Api-Key": "xhdvERDHJL83qQUsMS4kAm6XrnNWYKu"
-//         //     },
-//         //     data: JSON.stringify(requestBody),
-//         //     success: function(response) {
-//         //         console.log("Suggestions Response:", response);
-//         //     },
-//         //     error: function(xhr, status, error) {
-//         //         console.error("Error in suggestions request:", error);
-//         //     }
-//         // });
+        // // Perform the AJAX POST request
+        // $.ajax({
+        //     url: url,
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Api-Key": "xhdvERDHJL83qQUsMS4kAm6XrnNWYKu"
+        //     },
+        //     data: JSON.stringify(requestBody),
+        //     success: function(response) {
+        //         console.log("Suggestions Response:", response);
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error("Error in suggestions request:", error);
+        //     }
+        // });
 
-//         // Mock JSON response
-//         var mockResponse = {
-//             "data": [
-//                 {"value": "dfg-fs$407-01", "score": 1.0},
-//                 {"value": "dfg-fs$310-01", "score": 0.5}
-//             ],
-//             "error": null,
-//             "state": "OK",
-//             "message": null
-//         };
+        // Mock JSON response
+        var mockResponse = {
+            "data": [
+                {"value": "dfg-fs$407-01", "score": 1.0},
+                {"value": "dfg-fs$310-01", "score": 0.5}
+            ],
+            "error": null,
+            "state": "OK",
+            "message": null
+        };
 
-//         // Sort the data based on the score in descending order
-//         mockResponse.data.sort((a, b) => b.score - a.score);
+        console.log("Mock Response:", mockResponse);
 
-//         var modalContent = `<ul>`;
-//         var fetchPromises = [];
+        // Prepare the content for the modal
+        var modalContent = `<ul>`;
+        mockResponse.data.forEach(item => {
+            modalContent += `<li><strong>Value:</strong> ${item.value}, <strong>Score:</strong> ${item.score}</li>`;
+        });
+        modalContent += `</ul>`;
 
-//         mockResponse.data.forEach(item => {
-//             var extractedValue = item.value.split("$")[1] || item.value;
+        // Display the content in a Bootstrap modal
+        var modalHtml = `
+            <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ${modalContent}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
 
-//             var dataParams = {
-//                 q: extractedValue,
-//                 exclusiveFilter: false,
-//                 ontology: "dfgfo",
-//                 obsoletes: false,
-//                 local: false,
-//                 rows: 1
-//             };
+        // Append the modal to the body and show it
+        $('body').append(modalHtml);
+        $('#dafdmModal').modal('show');
 
-//             var fullQueryUrl = "https://service.tib.eu/ts4tib/api/select" + "?" + $.param(dataParams);
-//             var fetchPromise = $.ajax({
-//                 url: fullQueryUrl, 
-//                 method: "GET",
-//                 dataType: "json"
-//             }).then(function (response) {
-//                 var label = response.response?.docs[0]?.label || "Unknown Label";
-//                 var labeliri = response.response?.docs[0]?.iri || "";
-//                 modalContent += `
-//                     <li data-value="${item.value}" 
-//                         data-labeliri="${labeliri}"
-//                         class="suggestion-item">
-//                         ${label} (${item.value.split("$")[1] || item.value})
-//                     </li>`;
-//             }).catch(function (error) {
-//                 console.error(`Error fetching label for ${item.value}:`, error);
-//                 modalContent += `
-//                     <li data-value="${item.value}" 
-//                         data-labeliri=""
-//                         class="suggestion-item">
-//                         Error fetching label (${item.value.split("$")[1] || item.value})
-//                     </li>`;
-//             });
-//             fetchPromises.push(fetchPromise);
-//         });
-
-//         // Wait for all fetches to complete and then show modal
-//         Promise.all(fetchPromises).then(() => {
-//             modalContent += `</ul>`;
-
-//             var modalHtml = `
-//                 <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
-//                     <div class="modal-dialog modal-dialog-centered" role="document">
-//                         <div class="modal-content">
-//                             <div class="modal-header">
-//                                 <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
-//                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-//                                     <span aria-hidden="true">&times;</span>
-//                                 </button>
-//                             </div>
-//                             <div class="modal-body">
-//                                 ${modalContent}
-//                             </div>
-//                             <div class="modal-footer">
-//                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             `;
-
-//             $('body').append(modalHtml);
-//             $('#dafdmModal').modal('show');
-
-//             // Clean up the modal after it is hidden
-//             $('#dafdmModal').on('hidden.bs.modal', function () {
-//                 $(this).remove();
-//             });
-
-//             // Add click event to each suggestion item in the modal
-//             $('.suggestion-item').on('click', function() {
-//                 $('.suggestion-item').removeClass('highlighted-selection');
-//                 $(this).addClass('highlighted-selection');
-                
-//                 var selectedValue = $(this).data('label');
-//                 var selectediri = $(this).data('labeliri');
-//                 console.log(topicElement.children().eq(0));
-//                 var topicClassInput = topicElement.children().eq(0).find('input');
-//                 var topicClassVocab = topicElement.children().eq(1).find('input');
-//                 var topicClassTermURI = topicElement.children().eq(2).find('input');
-//                 console.log(topicClassInput);
-
-//                 $(topicParentSelector).each(function() {
-//                     var newParentElement = $(topicParentSelector).parent();
-//                     console.log(newParentElement);
-//                     var newFieldValuesElement = newParentElement.siblings('.dataset-field-values');
-//                     console.log(newFieldValuesElement);
-//                     var newCompoundFieldElement = newFieldValuesElement.find('.edit-compound-field');
-//                     console.log(newCompoundFieldElement);
-
-//                     newCompoundFieldElement.each(function() {
-//                         var newTopicElement = $(this);
-//                         console.log(newTopicClassInput);
-//                         var newTopicClassInput = newTopicElement.children().eq(0);
-//                         console.log(newTopicClassInput);
-//                     });
-//                 });
-                
-//                 $(topicClassInput).val(selectedValue);  
-//                 $(topicClassVocab).val("dfgfo");
-//                 $(topicClassTermURI).val(selectediri);               
-                
-//                 $('#dafdmModal').modal('hide');
-//             });
-//         });
-//     });
+        // Clean up the modal after it is hidden
+        $('#dafdmModal').on('hidden.bs.modal', function () {
+            $(this).remove();
+        });
+    });
     
-//     // Append the button after the topicElement
-//     topicElement.append(button);
+    // Append the button after the topicElement
+    topicElement.append(button);
 }
