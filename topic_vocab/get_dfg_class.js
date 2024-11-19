@@ -6,9 +6,10 @@ var topicInputSelector = "input[data-cvoc-protocol='dfgClassification']";
 $(document).ready(function() {
     var style = $("<style>");    
     style.text(`
-        .highlighted-selection {
-            background-color: #f0f8ff !important;
-            font-weight: bold !important;
+        .suggestion-item:hover {
+            background-color: #f0f8ff; /* Light blue background */
+            font-weight: bold;         /* Bold text */
+            cursor: pointer;           /* Pointer cursor for better UX */
         }
     `);    
     $("head").append(style);
@@ -347,18 +348,23 @@ function executeDAFDM(topicElement, num) {
             $('body').append(modalHtml);
             $('#dafdmModal').modal('show');
 
-            // // Clean up the modal after it is hidden
-            // $('#dafdmModal').on('hidden.bs.modal', function () {
-            //     $(this).remove();
-            // });
+            // Clean up the modal after it is hidden
+            $('#dafdmModal').on('hidden.bs.modal', function () {
+                $(this).remove();
+            });
+
+            $('.suggestion-item').on('mouseout', '.suggestion-item', function () {
+                $(this).removeClass('highlighted-selection');
+            });
 
             // Add click event to each suggestion item in the modal
-            $('.suggestion-item').on('click', function() {
-                $('.suggestion-item').removeClass('highlighted-selection');
+            $('.suggestion-item').on('mouseover', '.suggestion-item', function () {
                 $(this).addClass('highlighted-selection');
-                
+            });
+
+            $('.suggestion-item').on('click', function() {                
                 var selectedValue = $(this).data('label');
-                console.log("Selected item", $(this).data);
+                console.log("Selected item", $(this));
                 console.log("Selected value", selectedValue);
                 var selectediri = $(this).data('labeliri');
                 // console.log(topicElement.children().eq(0));
