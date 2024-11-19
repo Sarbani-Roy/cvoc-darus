@@ -121,6 +121,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                                 class_no: item.short_form
                             };
                         });
+                        console.log("API response:", data.response.docs);
+                        console.log("Mapped results:", results);
                         return {
                             results: results
                         };
