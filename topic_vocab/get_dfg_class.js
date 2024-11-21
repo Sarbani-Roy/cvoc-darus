@@ -382,14 +382,14 @@ function executeDAFDM(topicElement, num) {
 
                     newCompoundFieldElement.each(function() {
                         var newTopicElement = $(this);
-                        console.log(newTopicClassInput);
+                        console.log(newTopicElement);
                         var newTopicClassInput = newTopicElement.children().eq(0);
                         console.log(newTopicClassInput);
                     });
                 });
                 
                 $("input[data-topic='" + num + "']").val(selectedText)
-                $(topicClassInput).val(selectedText);  
+                $(newTopicClassInput).val(selectedText);  
                 $(topicClassVocab).val("dfgfo");
                 $(topicClassTermURI).val(selectediri);               
                 
