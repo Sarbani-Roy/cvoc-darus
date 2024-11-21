@@ -7,9 +7,9 @@ $(document).ready(function() {
     var style = $("<style>");    
     style.text(`
         .suggestion-item:hover {
-            background-color: #f0f8ff; /* Light blue background */
-            font-weight: bold;         /* Bold text */
-            cursor: pointer;           /* Pointer cursor for better UX */
+            background-color: #f0f8ff;
+            font-weight: bold;
+            cursor: pointer;
         }
     `);    
     $("head").append(style);
@@ -128,7 +128,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                             return {
                                 id: item.id,
                                 iri: item.iri,
-                                text: item.label + " (" + item.short_form + ")",
+                                text: item.label,
                                 name: item.label,
                                 onto_name: item.ontology_prefix,
                                 class_no: item.short_form
@@ -156,7 +156,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     var topicName = data.name;
                     data.name = topicName;
                     $("input[data-topic='" + num + "']").val(data.name);
-                    $(topicClassVocab).val('dfgfo24');
+                    $(topicClassVocab).val('DFGFO');
                     if (data.iri) {
                         $(topicClassTermURI).val(data.iri);
                     }
@@ -365,6 +365,7 @@ function executeDAFDM(topicElement, num) {
             $('.suggestion-item').on('click', function() {                
                 var selectedValue = $(this).data('label');
                 console.log("Selected item", $(this));
+                var selectedText = $(this).text().trim();
                 console.log("Selected value", selectedValue);
                 var selectediri = $(this).data('labeliri');
                 // console.log(topicElement.children().eq(0));
