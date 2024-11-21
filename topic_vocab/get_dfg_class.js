@@ -212,7 +212,7 @@ function markMatch(text, term) {
     return $result;
 }
 
-function executeDAFDM(topicElement, num) {
+function executeDAFDM(topicElement, num, topicClassVocab, topicClassTermURI) {
     var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');   
     
     button.on('click', function() {
@@ -306,7 +306,7 @@ function executeDAFDM(topicElement, num) {
                     <li data-value="${item.value}" 
                         data-labeliri="${labeliri}"
                         class="suggestion-item">
-                        ${label} (${item.value.split("$")[1] || item.value})
+                        ${label}
                     </li>`;
             }).catch(function (error) {
                 console.error(`Error fetching label for ${item.value}:`, error);
@@ -314,7 +314,7 @@ function executeDAFDM(topicElement, num) {
                     <li data-value="${item.value}" 
                         data-labeliri=""
                         class="suggestion-item">
-                        Error fetching label (${item.value.split("$")[1] || item.value})
+                        Error fetching label
                     </li>`;
             });
             fetchPromises.push(fetchPromise);
