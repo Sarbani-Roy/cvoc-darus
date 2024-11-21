@@ -366,6 +366,7 @@ function executeDAFDM(topicElement, num) {
                 var selectedValue = $(this).data('label');
                 console.log("Selected item", $(this));
                 var selectedText = $(this).text().trim();
+                console.log("Selected text", selectedText);
                 console.log("Selected value", selectedValue);
                 var selectediri = $(this).data('labeliri');
                 // console.log(topicElement.children().eq(0));
