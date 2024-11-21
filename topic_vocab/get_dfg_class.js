@@ -363,12 +363,10 @@ function executeDAFDM(topicElement, num) {
             });
 
             $('.suggestion-item').on('click', function() {                
-                var selectedValue = $(this).data('label');
-                console.log("Selected item", $(this));
                 var selectedText = $(this).text().trim();
                 console.log("Selected text", selectedText);
-                console.log("Selected value", selectedValue);
                 var selectediri = $(this).data('labeliri');
+                console.log("Selected IRI", selectediri);
                 // console.log(topicElement.children().eq(0));
                 // var topicClassInput = topicElement.children().eq(0).find('input');
                 // var topicClassVocab = topicElement.children().eq(1).find('input');
@@ -391,10 +389,10 @@ function executeDAFDM(topicElement, num) {
                 //     });
                 // });
                 
-                $("input[data-topic='" + num + "']").val(selectedValue)
+                $("input[data-topic='" + num + "']").val(selectedText)
                 // $(topicClassInput).val(selectedValue);  
-                // $(topicClassVocab).val("dfgfo");
-                // $(topicClassTermURI).val(selectediri);               
+                $(topicClassVocab).val("dfgfo");
+                $(topicClassTermURI).val(selectediri);               
                 
                 $('#dafdmModal').modal('hide');
             });
