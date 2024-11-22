@@ -68,7 +68,8 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                     }
                     else{
                         var topicName = $(topicClassInput).val();
-                    }                    
+                    }
+                    console.log(topicName)                    
                     item.text = topicName;
                     
                     if (item.text) {
@@ -167,7 +168,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 
                 executeDAFDM(topicElement).then(({ selectedText, selectediri }) => {
                     $("input[data-topic='" + num + "']").val(selectedText);
-                    $(topicClassInput).val(selectedText);
+                    // $(topicClassInput).val(selectedText);
                     $(topicClassVocab).val('DFGFO');
                     $(topicClassTermURI).val(selectediri);
                 });
