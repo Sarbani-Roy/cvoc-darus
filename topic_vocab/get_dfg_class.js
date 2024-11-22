@@ -370,10 +370,11 @@ function executeDAFDM(topicElement, selectId, num) {
                 var topicClassVocab = topicElement.children().eq(1).find('input');
                 var topicClassTermURI = topicElement.children().eq(2).find('input');
 
+                console.log(selectId)
                 $('#' + selectId).on('select2:select', function() {
                     $("input[data-topic='" + num + "']").val(selectedText);
                 });
-                $(topicClassInput).val(selectedText);  
+                // $(topicClassInput).val(selectedText);  
                 $(topicClassVocab).val("dfgfo");
                 $(topicClassTermURI).val(selectediri);
 
