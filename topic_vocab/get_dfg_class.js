@@ -385,14 +385,13 @@ function executeDAFDM(topicElement, num) {
                         console.log(newTopicElement);
                         var newTopicClassInput = newTopicElement.children().eq(0);
                         console.log(newTopicClassInput);
+
+                        $("input[data-topic='" + num + "']").val(selectedText)
+                        $(newTopicClassInput).val(selectedText);  
+                        $(topicClassVocab).val("dfgfo");
+                        $(topicClassTermURI).val(selectediri);
                     });
-                });
-                
-                $("input[data-topic='" + num + "']").val(selectedText)
-                $(newTopicClassInput).val(selectedText);  
-                $(topicClassVocab).val("dfgfo");
-                $(topicClassTermURI).val(selectediri);               
-                
+                });               
                 $('#dafdmModal').modal('hide');
             });
         });
