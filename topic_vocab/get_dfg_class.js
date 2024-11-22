@@ -8,16 +8,16 @@ $(document).ready(function() {
     style.text(`
         .suggestion-item:hover {
             background-color: #f0f8ff;
-            font-weight: bold;
+            /*font-weight: bold;*/
             cursor: pointer;
         }
 
-        // #dafdmModal .modal-dialog {
-        //     display: flex;
-        //     align-items: center;
-        //     justify-content: center;
-        //     min-height: 100vh; /* Ensures the modal centers within the full viewport */
-        // }
+        #dafdmModal .modal-dialog {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Ensures the modal centers within the full viewport */
+        }
     `);    
     $("head").append(style);
     expandDFGclass();
