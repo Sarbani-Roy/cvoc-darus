@@ -17,7 +17,6 @@ $(document).ready(function() {
             align-items: center;
             justify-content: center;
             min-height: 100vh; /* Ensures the modal centers within the full viewport */
-            margin: 0 auto; /* Optional: centers horizontally */
         }
     `);    
     $("head").append(style);
