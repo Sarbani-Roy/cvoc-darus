@@ -168,7 +168,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 
                 executeDAFDM(topicElement).then(({ selectedText, selectediri }) => {
                     $("input[data-topic='" + num + "']").val(selectedText);
-                    // $(topicClassInput).val(selectedText);
+                    $(topicClassInput).val(selectedText);
                     $(topicClassVocab).val('DFGFO');
                     $(topicClassTermURI).val(selectediri);
                 });
@@ -374,6 +374,8 @@ async function executeDAFDM(topicElement) {
                 $('.suggestion-item').on('click', function() {                
                     var selectedText = $(this).text().trim();
                     var selectediri = $(this).data('labeliri');
+
+                    console.log(selectedText, selectediri);
                     
                     // // console.log(topicElement.children().eq(0));
                     // var topicClassInput = topicElement.children().eq(0).find('input');
