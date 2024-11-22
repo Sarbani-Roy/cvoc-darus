@@ -184,7 +184,7 @@ function updateDFGclassInputs(topicElement, topicClassInput, topicClassVocab, to
                 $('#' + selectId).val(null).trigger('change');
             });
 
-            executeDAFDM(topicElement, topicInput, num)
+            executeDAFDM(topicElement, selectId, num)
         }
     });
 }
@@ -212,7 +212,7 @@ function markMatch(text, term) {
     return $result;
 }
 
-function executeDAFDM(topicElement, topicInput, num) {
+function executeDAFDM(topicElement, selectId, num) {
     var button = $('<button type="button" class="btn btn-secondary">Try DAFDM</button>');   
     
     button.on('click', function() {
