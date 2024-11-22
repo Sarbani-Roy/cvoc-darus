@@ -370,13 +370,19 @@ function executeDAFDM(topicElement, selectId, num) {
                 var topicClassVocab = topicElement.children().eq(1).find('input');
                 var topicClassTermURI = topicElement.children().eq(2).find('input');
 
-                console.log(selectId)
-                $('#' + selectId).on('select2:select', function() {
-                    $("input[data-topic='" + num + "']").val(selectedText);
-                });
-                // $(topicClassInput).val(selectedText);  
+                console.log(selectId);
+                console.log(selectedText);
+                // $('#' + selectId).on('select2:select', function() {
+                //     $("input[data-topic='" + num + "']").val(selectedText);
+                // });
+                $(topicClassInput).val(selectedText);  
                 $(topicClassVocab).val("dfgfo");
                 $(topicClassTermURI).val(selectediri);
+
+                // Programmatically set the value in the select2 dropdown
+                var newOption = new Option(selectedText, selectedText, true, true);
+                $('#' + selectId).append(newOption).trigger('change');  // Update select2 and trigger its change event
+
 
                 $('#dafdmModal').modal('hide');
             });
