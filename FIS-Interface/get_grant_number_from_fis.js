@@ -143,12 +143,12 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                     url: function(params) {
                         var term = params.term;
                         if (!term) {
-                            term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis-qs.campus.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
+                            term = "";return $('<span></span>').append(item.text.replace(projectName, "<a href=' https://fis.uni-stuttgart.de/converis/portal/detail/Project/" + item.id + "'>" + projectName + "</a>"));
                         }
                         
                         // Search both title and acronym
-                        var urlTitle = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
-                        var urlAcronym = 'https://fis-qs.campus.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
+                        var urlTitle = 'https://fis.uni-stuttgart.de/openfis/api/extern/projects/by?title=' + encodeURIComponent(term);
+                        var urlAcronym = 'https://fis.uni-stuttgart.de/openfis/api/extern/projects/by?acronym=' + encodeURIComponent(term);
                         return [urlTitle, urlAcronym];
                     },
                     data: function(params) {
