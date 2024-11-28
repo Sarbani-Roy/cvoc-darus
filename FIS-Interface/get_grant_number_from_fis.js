@@ -74,7 +74,7 @@ function updateGrantInputs(projectElement, projectNameInput, projectAcronymInput
                         }                 
                         
                         setTimeout(async function() {
-                            console.log(processedItemsSet);
+                            // console.log(processedItemsSet);
                             if (item.funding_orgs && item.funding_orgs.length > 1) {
                                 var updatedParentElement = $(grantNumberParentSelector).parent();
                                 var updatedFieldValuesElement = updatedParentElement.siblings('.dataset-field-values');
