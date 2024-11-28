@@ -247,7 +247,7 @@ function executeDAFDM(topicElement, selectId) {
         });
 
         var queryText = allDsInputValues.join(" ");
-        console.log("Merged queryText:", queryText);
+        // console.log("Merged queryText:", queryText);
 
         // Prepare the request body
         var requestBody = {
@@ -266,112 +266,6 @@ function executeDAFDM(topicElement, selectId) {
             data: JSON.stringify(requestBody),
             success: function(response) {
                 console.log("Suggestions Response:", response);
-
-                response.data.sort((a, b) => b.score - a.score)
-
-                var modalContent = `<ul>`;
-                var fetchPromises = [];
-
-                // mockResponse.data.forEach(item => {
-                response.data.forEach(item => {
-                    var extractedValue = item.value.split("$")[1] || item.value;
-
-                    var dataParams = {
-                        q: extractedValue,
-                        exclusiveFilter: false,
-                        ontology: "dfgfo",
-                        obsoletes: false,
-                        local: false,
-                        rows: 1
-                    };
-
-                    var fullQueryUrl = "https://service.tib.eu/ts4tib/api/select" + "?" + $.param(dataParams);
-                    var fetchPromise = $.ajax({
-                        url: fullQueryUrl, 
-                        method: "GET",
-                        dataType: "json"
-                    }).then(function (response) {
-                        var label = response.response?.docs[0]?.label || "Unknown Label";
-                        var labeliri = response.response?.docs[0]?.iri || "";
-                        modalContent += `
-                            <li data-value="${item.value}" 
-                                data-labeliri="${labeliri}"
-                                class="suggestion-item">
-                                ${label}
-                            </li>`;
-                    }).catch(function (error) {
-                        console.error(`Error fetching label for ${item.value}:`, error);
-                        modalContent += `
-                            <li data-value="${item.value}" 
-                                data-labeliri=""
-                                class="suggestion-item">
-                                Error fetching label
-                            </li>`;
-                    });
-                    fetchPromises.push(fetchPromise);
-                });
-
-                // Wait for all fetches to complete and then show modal
-                Promise.all(fetchPromises).then(() => {
-                    modalContent += `</ul>`;
-
-                    var modalHtml = `
-                        <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ${modalContent}
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    $('body').append(modalHtml);
-                    $('#dafdmModal').modal('show');
-
-                    // Clean up the modal after it is hidden
-                    $('#dafdmModal').on('hidden.bs.modal', function () {
-                        $(this).remove();
-                    });
-
-                    $('.suggestion-item').on('mouseout', '.suggestion-item', function () {
-                        $(this).removeClass('highlighted-selection');
-                    });
-
-                    // Add click event to each suggestion item in the modal
-                    $('.suggestion-item').on('mouseover', '.suggestion-item', function () {
-                        $(this).addClass('highlighted-selection');
-                    });
-
-                    $('.suggestion-item').on('click', function() {                
-                        var selectedText = $(this).text().trim();
-                        var selectediri = $(this).data('labeliri');
-                        
-                        var topicClassInput = topicElement.children().eq(0).find('input');
-                        var topicClassVocab = topicElement.children().eq(1).find('input');
-                        var topicClassTermURI = topicElement.children().eq(2).find('input');
-
-                        $(topicClassInput).val(selectedText);  
-                        $(topicClassVocab).val("DFGFO");
-                        $(topicClassTermURI).val(selectediri);
-
-                        // Programmatically set and update the value in the select2 dropdown and trigger its change
-                        var newOption = new Option(selectedText, selectedText, true, true);
-                        $('#' + selectId).append(newOption).trigger('change');  
-
-                        $('#dafdmModal').modal('hide');
-                    });
-                });
             },
             error: function(xhr, status, error) {
                 console.error("Error in suggestions request:", error);
@@ -379,19 +273,121 @@ function executeDAFDM(topicElement, selectId) {
         });
 
         // Mock JSON response
-        // var mockResponse = {
-        //     "data": [
-        //         {"value": "dfg-fs$407-01", "score": 1.0},
-        //         {"value": "dfg-fs$310-01", "score": 0.5}
-        //     ],
-        //     "error": null,
-        //     "state": "OK",
-        //     "message": null
-        // };
+        var mockResponse = {
+            "data": [
+                {"value": "dfg-fs$407-01", "score": 1.0},
+                {"value": "dfg-fs$310-01", "score": 0.5}
+            ],
+            "error": null,
+            "state": "OK",
+            "message": null
+        };
 
         // Sort the data based on the score in descending order
-        // mockResponse.data.sort((a, b) => b.score - a.score);
-        
+        mockResponse.data.sort((a, b) => b.score - a.score);
+
+        var modalContent = `<ul>`;
+        var fetchPromises = [];
+
+        mockResponse.data.forEach(item => {
+            var extractedValue = item.value.split("$")[1] || item.value;
+
+            var dataParams = {
+                q: extractedValue,
+                exclusiveFilter: false,
+                ontology: "dfgfo",
+                obsoletes: false,
+                local: false,
+                rows: 1
+            };
+
+            var fullQueryUrl = "https://service.tib.eu/ts4tib/api/select" + "?" + $.param(dataParams);
+            var fetchPromise = $.ajax({
+                url: fullQueryUrl, 
+                method: "GET",
+                dataType: "json"
+            }).then(function (response) {
+                var label = response.response?.docs[0]?.label || "Unknown Label";
+                var labeliri = response.response?.docs[0]?.iri || "";
+                modalContent += `
+                    <li data-value="${item.value}" 
+                        data-labeliri="${labeliri}"
+                        class="suggestion-item">
+                        ${label}
+                    </li>`;
+            }).catch(function (error) {
+                console.error(`Error fetching label for ${item.value}:`, error);
+                modalContent += `
+                    <li data-value="${item.value}" 
+                        data-labeliri=""
+                        class="suggestion-item">
+                        Error fetching label
+                    </li>`;
+            });
+            fetchPromises.push(fetchPromise);
+        });
+
+        // Wait for all fetches to complete and then show modal
+        Promise.all(fetchPromises).then(() => {
+            modalContent += `</ul>`;
+
+            var modalHtml = `
+                <div class="modal fade" id="dafdmModal" tabindex="-1" role="dialog" aria-labelledby="dafdmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="dafdmModalLabel">DAFDM Suggestions</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ${modalContent}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            $('body').append(modalHtml);
+            $('#dafdmModal').modal('show');
+
+            // Clean up the modal after it is hidden
+            $('#dafdmModal').on('hidden.bs.modal', function () {
+                $(this).remove();
+            });
+
+            $('.suggestion-item').on('mouseout', '.suggestion-item', function () {
+                $(this).removeClass('highlighted-selection');
+            });
+
+            // Add click event to each suggestion item in the modal
+            $('.suggestion-item').on('mouseover', '.suggestion-item', function () {
+                $(this).addClass('highlighted-selection');
+            });
+
+            $('.suggestion-item').on('click', function() {                
+                var selectedText = $(this).text().trim();
+                var selectediri = $(this).data('labeliri');
+                
+                var topicClassInput = topicElement.children().eq(0).find('input');
+                var topicClassVocab = topicElement.children().eq(1).find('input');
+                var topicClassTermURI = topicElement.children().eq(2).find('input');
+
+                $(topicClassInput).val(selectedText);  
+                $(topicClassVocab).val("DFGFO");
+                $(topicClassTermURI).val(selectediri);
+
+                // Programmatically set and update the value in the select2 dropdown and trigger its change
+                var newOption = new Option(selectedText, selectedText, true, true);
+                $('#' + selectId).append(newOption).trigger('change');  
+
+                $('#dafdmModal').modal('hide');
+            });
+        });
     });
     
     // Append the button after the topicElement
